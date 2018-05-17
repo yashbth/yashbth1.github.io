@@ -1,0 +1,75 @@
+nav{
+    width:100%;
+    color: white;
+    justify-content: space-between;
+    background:  #33334d;
+    box-shadow: 0px 0px 20px black;
+    z-index: 100;
+}
+.container-fluid{
+    padding: 0%;
+    position: fixed;
+}
+#fontColor{
+    color: #00ccff;
+}
+#enlarge{
+    font-size: 2em;
+}
+.navbar-brand{
+    font-size: 1.7em;
+    font-family: monospace;
+    padding-left: 3em ;
+    
+}
+.nav-link{
+    color:white !important  ;
+    font-size: 1.1em;
+    padding-right: 3em ;
+}
+.nav .navbar-nav{
+    padding-right: 2em ;
+}
+a{
+    padding: 0px 20px;
+}
+.verticalNav{
+    z-index: 2;
+    height:50vw;
+}
+.spacing{
+    padding: 20px;
+    position: absolute  ;
+    top : 0px;
+}
+
+.spacing h3{
+    text-align: center;
+}
+.dropdown{
+  list-style-type: circle;
+  padding: 20px 0px 0px 15px;
+}
+.dropdown a{
+    font-size: 1em;
+    color: rgb(112, 196, 196) !important;
+}
+.active{
+    list-style-type: disc;
+}
+.dropdown-menu{
+    background: none;
+}
+.dropdown-menu li{
+    list-style-type: disc;
+    color: whitesmoke !important;
+}
+.dropdown-menu a{
+    color: whitesmoke !important;
+}
+.dropdown-menu a:hover{
+    background: rgb(112, 196, 196);
+}
+.selected{
+    list-style-type: disc;
+}
