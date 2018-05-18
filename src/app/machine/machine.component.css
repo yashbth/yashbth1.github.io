@@ -8,7 +8,7 @@ nav{
 }
 .container-fluid{
     padding: 0%;
-    position: fixed;
+    /* position: fixed; */
 }
 #fontColor{
     color: #00ccff;

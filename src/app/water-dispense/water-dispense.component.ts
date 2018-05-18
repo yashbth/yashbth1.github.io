@@ -11,6 +11,7 @@ import {Data} from './test'
 export class WaterDispenseComponent implements OnInit{
   place : string = 'GuruGram , Haryana';
   water_info :waterDispenserParam[];
+  id="VSDMDV11710AAG"
   
   data = Data;
   constructor( private service : FetchWaterDispenseDataService){
@@ -21,7 +22,7 @@ export class WaterDispenseComponent implements OnInit{
     this.getWaterinfo();
   }
   getWaterinfo():void{
-    this.service.getData().subscribe(water_info=>this.water_info=water_info);
+    this.service.getData(this.id).subscribe(water_info=>this.water_info=water_info);
 
   }
   
