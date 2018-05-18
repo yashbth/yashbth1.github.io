@@ -1,14 +1,16 @@
 <div class="container">
     <div class="jumbotron text-center">
-        <h1>{{place}} <span>( Machine Id : {{id}} )</span></h1> 
-        <h1 class="blockquote-footer">Last Updated at {{today | date}}</h1> 
+        <h1>{{place}} <span>( Machine Id : {{water_info[0].DeviceID}} )</span></h1> 
+        <h1 class="blockquote-footer">Last Updated at {{water_info[0].TimeStamp}}</h1> 
       </div>
 </div>
 <div class="container">
-    <div class="col-sm-3 text-center tabs" *ngFor="let data of water_info">
-        <dl>
-                <dt>{{data.name}}</dt>
-                <dd>{{data.value}}</dd>
-          </dl>
+    <div *ngFor="let value of water_info" class="innerContainer">
+        <div class="col-sm-3 text-center tabs" *ngFor="let name of data[1];let rowIndex = index" >
+            <dl>
+                <dt>{{name}}</dt>
+                <dd>{{value[data[0][rowIndex]]}}</dd>
+            </dl>
+        </div>
     </div>
 </div>

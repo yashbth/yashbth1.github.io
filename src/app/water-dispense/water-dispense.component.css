@@ -4,7 +4,7 @@
 span{
     font-size:.7em !important;
 }
-.container{
+.innerContainer{
     display: flex;
     justify-content: space-evenly;
     flex-wrap: wrap;
