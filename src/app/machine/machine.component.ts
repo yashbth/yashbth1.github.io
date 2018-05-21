@@ -18,7 +18,8 @@ export class MachineComponent{
   dropdownlist = Dropdown; 
   constructor(private router : Router) { }
   ngDoCheck(){
-    $('app-water-dispense').addClass('col-sm-10');    
+    $('app-water-dispense').addClass('col-sm-10'); 
+    $('app-transaction').addClass('col-sm-10');   
   }
   ngAfterContentChecked(){
     let param=this.router.url.split('/');

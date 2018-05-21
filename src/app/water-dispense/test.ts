@@ -45,10 +45,51 @@ export const RoData=[
         "Raw Water Pump Current",
         "High Pressure Pump Current",
         "Total Treated Volume",
-        "total Reject Volume",
+        "Total Reject Volume",
         "UV State",
         "Trip State",
         "Tank Level"
     ]
 
+]
+
+export const CupDispenseData =[
+    [
+        "TotalCupsDispensed",
+        "TotalCoinCollection",
+        "TotalCardCollection",
+        "TripState"
+    ],
+    [
+        "Total Cups Dispensed (Till Date)",
+        "Total Coin Collection (Till Date)",
+        "Total Card Collection (Till Date)",
+        "Last Transaction State"
+    ]
+]
+
+export const transaction=[
+    [
+        "Time",
+        "TapNo",
+        "Type_of_Request",
+        "CardNo",
+        "Quantity",
+        "Amount",
+        "DispenseTime",
+        "Card_Balance",
+        "Total_Recharge"
+
+    ],
+    [
+        "Time",
+        "Tap No.",
+        "Type Of Request",
+        "Card No.",
+        "Quantity",
+        "Amount",
+        "Dispense Time",
+        "Card Balance",
+        "Total Recharge",
+    ]
 ]
