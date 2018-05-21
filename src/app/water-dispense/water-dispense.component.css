@@ -1,7 +1,7 @@
 .jumbotron{
     padding-bottom: 20px;   
 }
-span{
+h1 span{
     font-size:.7em !important;
 }
 .innerContainer{
@@ -19,4 +19,7 @@ dd{
     padding: 20px;
     margin: 10px;
     justify-content: center
+}
+form{
+    margin-top:50px; 
 }

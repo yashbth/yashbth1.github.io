@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import {FormsModule} from '@angular/forms'
 import {HttpClientModule} from '@angular/common/http';
 import {ChartModule} from 'angular2-chartjs'
 import { AppComponent } from './app.component';
@@ -21,7 +22,8 @@ import { ChartsComponent } from './charts/charts.component';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    ChartModule
+    ChartModule,
+    FormsModule
   ],
   providers: [FetchWaterDispenseDataService],
   bootstrap: [AppComponent,MachineComponent]
