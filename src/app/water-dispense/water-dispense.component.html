@@ -1,16 +1,31 @@
-<div class="container">
+<div>
+    <div class="container">
     <div class="jumbotron text-center">
-        <h1>{{place}} <span>( Machine Id : {{water_info[0].DeviceID}} )</span></h1> 
-        <h1 class="blockquote-footer">Last Updated at {{water_info[0].TimeStamp}}</h1> 
-      </div>
-</div>
-<div class="container">
-    <div *ngFor="let value of water_info" class="innerContainer">
-        <div class="col-sm-3 text-center tabs" *ngFor="let name of data[1];let rowIndex = index" >
-            <dl>
-                <dt>{{name}}</dt>
-                <dd>{{value[data[0][rowIndex]]}}</dd>
-            </dl>
+        <h1>{{place}} <span>( Machine Id : {{info[0]?.DeviceID}} )</span></h1> 
+        <h1 class="blockquote-footer">Last Updated at {{info[0]?.TimeStamp}}</h1> 
         </div>
     </div>
+    <div class="container">
+        <div class=" innerContainer">
+            <div class="col-sm-3 text-center tabs" *ngFor="let name of data[1];let rowIndex = index;">
+                    <dl>
+                        <dt>{{name}}</dt>
+                        <dd>{{info[0][data[0][rowIndex]]}}</dd>
+                    </dl>
+            </div>
+        </div>
+
+        <form (ngSubmit)="test()">
+            <div class="form-group">
+                <label for="sel1" >Graph Select :</label>
+                <select class="form-control" [(ngModel)]="property1" name="data">
+                <option *ngFor="let name of data[0]" [value]="name">{{name}}</option>
+                 </select>
+            </div>
+        </form>
+        <app-charts [property1]="property1" [property2]="'TimeStamp'" ></app-charts>
+        <app-charts [property1]="'pH_of_water'" [property2]="'TimeStamp'"></app-charts>
+
+    </div>
 </div>
+
