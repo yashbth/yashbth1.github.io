@@ -9,6 +9,7 @@ import { AppRoutingModule } from './/app-routing.module';
 import { WaterDispenseComponent } from './water-dispense/water-dispense.component';
 import { FetchWaterDispenseDataService } from './fetch-water-dispense-data.service';
 import { ChartsComponent } from './charts/charts.component';
+import { TransactionComponent } from './transaction/transaction.component';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { ChartsComponent } from './charts/charts.component';
     AppComponent,
     MachineComponent,
     WaterDispenseComponent,
-    ChartsComponent
+    ChartsComponent,
+    TransactionComponent
   ],
   imports: [
     BrowserModule,

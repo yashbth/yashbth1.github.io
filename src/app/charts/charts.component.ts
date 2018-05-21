@@ -18,7 +18,7 @@ export class ChartsComponent implements OnInit {
   @Input() 
   set property1(property1:string){
     this._property1=property1;
-    console.log(this._property1)
+    this.checkGraph = true;
   };
   @Input() property2:string;
   Data1=[];
@@ -26,20 +26,25 @@ export class ChartsComponent implements OnInit {
   type : string;
   data : any;
   options: any;
+  checkGraph : boolean=true;
   constructor(private chartData : WaterDispenseComponent,private router : Router) { 
-    router.events.subscribe((val)=>{    
-      if (val instanceof NavigationEnd) {
-      }   
-    })
   }
   ngOnInit(){
-    this.ConvertIntoArray(this.chartData.info,this._property1,this.property2);
-    this.Chart('bar');
+    setTimeout(()=>{
+      this.ConvertIntoArray(this.chartData.info,this._property1,this.property2);
+      this.Chart('bar');
+    },1000);
+
   }
-  ngAfterViewInit(){
-    console.log(this._property1)
-    this.ConvertIntoArray(this.chartData.info,this._property1,this.property2);
-    this.Chart('bar');    
+  ngAfterContentChecked(){
+    console.log("ng");
+    if(this.checkGraph){
+      this.ConvertIntoArray(this.chartData.info,this._property1,this.property2);
+      this.Chart('bar');
+      if(this.chartData.info[0][this._property1]){
+        this.checkGraph = false;
+      }
+    }
   }
   
   ngOnChanges(){

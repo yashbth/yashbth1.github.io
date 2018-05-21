@@ -43,7 +43,7 @@ a{
     padding: 0px 20px;
 }
 .verticalNav{
-    /* z-index: 2; */
+    z-index: 0;
     position: fixed;
 }
 .spacing{

@@ -3,7 +3,7 @@ import {  Router,NavigationEnd, ActivationStart,ActivatedRoute} from '@angular/r
 
 import {FetchWaterDispenseDataService} from '../fetch-water-dispense-data.service'
 import {waterDispenserParam} from './waterDispenserparam'
-import {WaterDispenseData,RoData} from './test'
+import {WaterDispenseData,RoData,CupDispenseData} from './test'
 declare var jquery:any;
 declare var $ :any; 
 
@@ -49,12 +49,16 @@ export class WaterDispenseComponent implements OnInit{
   panelParameters(){
     switch (this.panel){
       case 'WaterDispenser' : this.data= WaterDispenseData;
-                          this.filename = 'testfile.php';
+                          this.filename = 'Water.php';
                           this.property1 = 'Total_Volume_Dispensed';
                           break;
       case 'Ro' :  this.data = RoData;
-                        this.filename = 't2.php';
+                        this.filename = 'Ro.php';
                         this.property1 = 'Operational_Minutes';
+                        break;
+      case 'CupDispenser' :  this.data = CupDispenseData;
+                        this.filename = 'Cup.php';
+                        this.property1 = 'TotalCupsDispensed';
                         break;
       default  :    break;
     }
