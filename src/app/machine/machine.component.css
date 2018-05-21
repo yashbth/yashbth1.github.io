@@ -1,14 +1,23 @@
 nav{
     width:100%;
     color: white;
-    justify-content: space-between;
-    background:  #33334d;
-    box-shadow: 0px 0px 20px black;
+    justify-content: space-between;;
     z-index: 100;
+    
+}
+.navbar-dark{
+    background: #33334d;
+    box-shadow: 0px 0px 20px black
+}
+.row{
+    top:80px;
+    position: relative;
 }
 .container-fluid{
     padding: 0%;
-    /* position: fixed; */
+}
+.col-sm-2{
+    background: #33334d
 }
 #fontColor{
     color: #00ccff;
@@ -34,13 +43,11 @@ a{
     padding: 0px 20px;
 }
 .verticalNav{
-    z-index: 2;
-    height:50vw;
+    z-index: 0;
+    position: fixed;
 }
 .spacing{
     padding: 20px;
-    position: absolute  ;
-    top : 0px;
 }
 
 .spacing h3{
@@ -72,4 +79,7 @@ a{
 }
 .selected{
     list-style-type: disc;
+}
+app-water-dispense{
+    overflow-y: scroll;
 }

@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import {FormsModule} from '@angular/forms'
 import {HttpClientModule} from '@angular/common/http';
 import {ChartModule} from 'angular2-chartjs'
 import { AppComponent } from './app.component';
@@ -8,7 +9,9 @@ import { AppRoutingModule } from './/app-routing.module';
 import { WaterDispenseComponent } from './water-dispense/water-dispense.component';
 import { FetchWaterDispenseDataService } from './fetch-water-dispense-data.service';
 import { ChartsComponent } from './charts/charts.component';
-import { ROComponent } from './ro/ro.component';
+
+import { TransactionComponent } from './transaction/transaction.component';
+
 
 
 @NgModule({
@@ -17,13 +20,18 @@ import { ROComponent } from './ro/ro.component';
     MachineComponent,
     WaterDispenseComponent,
     ChartsComponent,
+<<<<<<< HEAD
     ROComponent
+=======
+    TransactionComponent
+>>>>>>> 77462c79b39b97c162a3f7e00d77daf78f374703
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    ChartModule
+    ChartModule,
+    FormsModule
   ],
   providers: [FetchWaterDispenseDataService],
   bootstrap: [AppComponent,MachineComponent]
