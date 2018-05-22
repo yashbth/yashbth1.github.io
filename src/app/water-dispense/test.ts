@@ -93,3 +93,16 @@ export const transaction=[
         "Total Recharge",
     ]
 ]
+
+export const operator = [
+    [   
+        "OperatorID",
+        "PunchTime" 
+    ],
+    [
+        "Operator Id",
+        "Date",
+        "Expected Punches" ,
+        
+    ],
+]

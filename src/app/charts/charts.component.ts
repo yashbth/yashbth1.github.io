@@ -15,6 +15,7 @@ declare var $ :any;
 })
 export class ChartsComponent implements OnInit {
   private _property1: string;
+  private chartData : any;
   @Input() 
   set property1(property1:string){
     this._property1=property1;
@@ -27,17 +28,18 @@ export class ChartsComponent implements OnInit {
   data : any;
   options: any;
   checkGraph : boolean=true;
-  constructor(private chartData : WaterDispenseComponent,private router : Router) { 
+  constructor(private water : WaterDispenseComponent,private router : Router) { 
   }
   ngOnInit(){
     setTimeout(()=>{
+      console.log(this.router.url)
+      this.chartData = this.water;
       this.ConvertIntoArray(this.chartData.info,this._property1,this.property2);
       this.Chart('bar');
-    },1000);
+    },100);
 
   }
   ngAfterContentChecked(){
-    console.log("ng");
     if(this.checkGraph){
       this.ConvertIntoArray(this.chartData.info,this._property1,this.property2);
       this.Chart('bar');

@@ -1,3 +1,7 @@
 .charts{
     margin-top:100px;
 }
+.doughnut{
+    display: flex;
+    justify-content: center;
+}

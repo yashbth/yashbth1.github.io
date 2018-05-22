@@ -19,7 +19,8 @@ export class MachineComponent{
   constructor(private router : Router) { }
   ngDoCheck(){
     $('app-water-dispense').addClass('col-sm-10'); 
-    $('app-transaction').addClass('col-sm-10');   
+    $('app-transaction').addClass('col-sm-10');
+    $('app-operator').addClass('col-sm-10');   
   }
   ngAfterContentChecked(){
     let param=this.router.url.split('/');

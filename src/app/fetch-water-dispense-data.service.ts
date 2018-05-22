@@ -15,7 +15,10 @@ export class FetchWaterDispenseDataService {
 
   getData(id,filename) : Observable<waterDispenserParam[]>{
     let data = new FormData();
-    data.append('id',id);
+    data.append('id',id[0]);
+    data.append('operatorId',id[1]);
+    data.append('date',id[2]);
+    console.log(id[2],id[1],id[0]);
     return this.http.post<waterDispenserParam[]>(this.url+filename,data);
    
   }

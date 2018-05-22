@@ -10,6 +10,9 @@ import { WaterDispenseComponent } from './water-dispense/water-dispense.componen
 import { FetchWaterDispenseDataService } from './fetch-water-dispense-data.service';
 import { ChartsComponent } from './charts/charts.component';
 import { TransactionComponent } from './transaction/transaction.component';
+import { OperatorComponent } from './operator/operator.component';
+import { OperatorChartsComponent } from './charts/operatorcharts.component';
+
 
 
 @NgModule({
@@ -18,7 +21,9 @@ import { TransactionComponent } from './transaction/transaction.component';
     MachineComponent,
     WaterDispenseComponent,
     ChartsComponent,
-    TransactionComponent
+    TransactionComponent,
+    OperatorComponent,
+    OperatorChartsComponent
   ],
   imports: [
     BrowserModule,
