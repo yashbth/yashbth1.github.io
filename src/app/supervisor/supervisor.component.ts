@@ -35,9 +35,7 @@ export class SupervisorComponent implements OnInit {
       }   
     })
   }
-  ngOnInit() {
-    $('#table').DataTable();
-    
+  ngOnInit() {    
   }
 
   getWaterinfo():void{ 

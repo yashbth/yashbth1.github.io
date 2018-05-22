@@ -27,14 +27,9 @@
                 <br>
                 <ul class="navbar-nav text-center">
                     <li class="nav-item dropdown" *ngFor="let nav of dropdownlist" (click)="toggle('#'+nav.id)" >
-                        <a class="nav-link dropdown-toggle" routerLink="/device/{{id}}/{{nav.id}}" id="navbardrop" >
+                        <a class="nav-link " routerLink="/device/{{id}}/{{nav.id}}" id="navbardrop" >
                           {{nav.division}}
                         </a>
-                        <div class="dropdown-menu" id="{{nav.id}}">
-                          <li><a class="dropdown-item" href="#">{{nav.link1}}</a></li>   
-                          <li><a class="dropdown-item" href="#">{{nav.link2}}</a></li>
-                          <li><a class="dropdown-item" href="#">{{nav.link3}}</a></li>
-                        </div>
                       </li>
                   </ul>
             </div>
