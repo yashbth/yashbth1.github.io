@@ -20,6 +20,7 @@ export class MachineComponent{
   ngDoCheck(){
     $('app-water-dispense').addClass('col-sm-10'); 
     $('app-transaction').addClass('col-sm-10');   
+    $('app-supervisor').addClass('col-sm-10');
   }
   ngAfterContentChecked(){
     let param=this.router.url.split('/');

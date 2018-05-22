@@ -93,3 +93,28 @@ export const transaction=[
         "Total Recharge",
     ]
 ]
+export const supervisorData=[
+    [
+        "TimeStamp",
+        "Trip_CollectionID",
+        "Trip_Total_Reset_Count",
+        "Trip_Total_Volume_Dispensed",
+        "Trip_Total_Smartcard_Collection",
+        "Trip_Total_CoinCollection",
+        "Trip_Total_Card_Recharge",
+        "Total_Collection_Sale",
+        "Trip_Actual_Amount_Collection"
+    ],
+    [
+        "Time",
+        "Trip Collection ID",
+        "Trip Total Reset Count",
+        "Trip Total Volume Dispensed",
+        "Trip Total Smartcard Collection",
+        "Trip Total Coin Collection",
+        "Trip Total Card Recharge",
+        "Total Collection Sale",
+        "Trip Actual Amount Collection"
+
+    ]
+]
