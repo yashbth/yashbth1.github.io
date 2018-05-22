@@ -93,7 +93,6 @@ export const transaction=[
         "Total Recharge",
     ]
 ]
-
 export const supervisorData=[
     [
         "TimeStamp",
@@ -117,8 +116,8 @@ export const supervisorData=[
         "Total Collection Sale",
         "Trip Actual Amount Collection"
 
-    ]]
-
+    ]
+]
 
 export const operator = [
     [   
@@ -131,5 +130,4 @@ export const operator = [
         "Expected Punches" ,
         
     ],
-
 ]

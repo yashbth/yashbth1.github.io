@@ -16,7 +16,7 @@ export class SupervisorComponent implements OnInit {
 
   property1:string;
   filename: string; 
-  id: string;
+  id = [];
   place : string = 'GuruGram , Haryana';
   info =[];
   checkRouteChange=['waterPanel'] ;
@@ -25,7 +25,7 @@ export class SupervisorComponent implements OnInit {
   constructor( private service : FetchWaterDispenseDataService,private router : Router,private route: ActivatedRoute){
     router.events.subscribe((val)=>{    
       if (val instanceof NavigationEnd) { 
-        this.id = route.snapshot.paramMap.get('id');                                                       
+        this.id[0] = route.snapshot.paramMap.get('id');                                                       
         this.panelParameters();
         if(this.checkRouteChange.indexOf(this.property1)<0){
           this.getWaterinfo();

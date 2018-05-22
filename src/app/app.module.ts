@@ -9,14 +9,10 @@ import { AppRoutingModule } from './/app-routing.module';
 import { WaterDispenseComponent } from './water-dispense/water-dispense.component';
 import { FetchWaterDispenseDataService } from './fetch-water-dispense-data.service';
 import { ChartsComponent } from './charts/charts.component';
-
 import { TransactionComponent } from './transaction/transaction.component';
-
 import { SupervisorComponent } from './supervisor/supervisor.component';
-
 import { OperatorComponent } from './operator/operator.component';
 import { OperatorChartsComponent } from './charts/operatorcharts.component';
-
 
 
 
@@ -30,7 +26,6 @@ import { OperatorChartsComponent } from './charts/operatorcharts.component';
     TransactionComponent,
     OperatorComponent,
     OperatorChartsComponent
-
   ],
   imports: [
     BrowserModule,
