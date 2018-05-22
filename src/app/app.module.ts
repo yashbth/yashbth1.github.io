@@ -16,6 +16,7 @@ import { SupervisorComponent } from './supervisor/supervisor.component';
 
 import { OperatorComponent } from './operator/operator.component';
 import { OperatorChartsComponent } from './charts/operatorcharts.component';
+import { SupervisorChartsComponent } from './charts/supervisorcharts.component';
 
 
 
@@ -29,7 +30,8 @@ import { OperatorChartsComponent } from './charts/operatorcharts.component';
     SupervisorComponent,
     TransactionComponent,
     OperatorComponent,
-    OperatorChartsComponent
+    OperatorChartsComponent,
+    SupervisorChartsComponent
 
   ],
   imports: [

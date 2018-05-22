@@ -15,7 +15,6 @@ const routes: Routes = [
   { path: '', component: AppComponent },
   {path : 'device/:id' , component: MachineComponent},
   {path : 'device/:id/transactionLog', component : TransactionComponent},
-
   {path : 'device/:id/supervisor', component : SupervisorComponent},
   {path : 'device/:id/operator',component : OperatorComponent},
   {path : 'device/:id/:panel' , component : WaterDispenseComponent},
