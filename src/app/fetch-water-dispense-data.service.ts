@@ -9,7 +9,7 @@ let headers = new HttpHeaders().set('Content-Type', 'application/json; charset=U
 })
 export class FetchWaterDispenseDataService {
 
-  private url = 'http://localhost:8080/';
+  private url = 'http://localhost/~yashbahetiiitk/swajal_dashboard/src/assets/Php/';
 
   
   constructor(private http : HttpClient) {
