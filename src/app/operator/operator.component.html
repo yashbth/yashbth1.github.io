@@ -1,0 +1,32 @@
+<div class="maxHeight">
+    <div class="container">
+        <div class="jumbotron text-center">
+          <h1>{{place}} <span>( Machine Id : {{info[0]?.DeviceID}} )</span></h1> 
+          <h1 class="blockquote-footer">Last Updated at {{info[0]?.PunchTime}}</h1> 
+        </div>
+    </div>
+    <div class="table-responsive-sm spacing">
+      <table class="table text-center table-striped rounded">
+        <thead class="thead-light ">
+          <tr>
+            <td>Sr. No.</td>
+            <td *ngFor="let col of data[1]">{{col}}</td>
+            <td>Select</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let row of operators;let rowIndex = index;let rowIndex = index" class="text-center">
+            <td>{{rowIndex+1}}</td>
+            <td>{{row[data[0][0]]}}</td>
+            <td><input type="date"  [(ngModel)]="date"></td>            
+            <td><input type="text" [(ngModel)]="expected_attendance[rowIndex]" ></td>
+            <td><button type="button" (click)="generateChart(row[data[0][0]],rowIndex)" class="btn btn-secondary">Inspect</button></td>            
+            <!-- <input type="submit" value="Go" (click)="generateChart()">  -->
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+    <app-other-chart [property1]="'present'" [property2]="'absent'" *ngIf="chart"></app-other-chart>
+    </div>
+</div>

@@ -16,7 +16,7 @@ export class WaterDispenseComponent implements OnInit{
   property1:string;
   filename: string; 
   panel:string;
-  id: string;
+  id=[];
   place : string = 'GuruGram , Haryana';
   info =[];
   checkRouteChange=['waterPanel'] ;
@@ -27,7 +27,7 @@ export class WaterDispenseComponent implements OnInit{
     router.events.subscribe((val)=>{    
       if (val instanceof NavigationEnd) {
         this.panel = route.snapshot.paramMap.get('panel');  
-        this.id = route.snapshot.paramMap.get('id');                                                       
+        this.id[0] = route.snapshot.paramMap.get('id');                                                       
         this.panelParameters();
         if(this.checkRouteChange.indexOf(this.property1)<0){
           this.getWaterinfo();
@@ -43,7 +43,7 @@ export class WaterDispenseComponent implements OnInit{
   getWaterinfo():void{ 
     this.info=[];
     this.service.getData(this.id,this.filename).subscribe(info=>this.info=info); 
-
+    console.log(this.info);
   }
 
   panelParameters(){

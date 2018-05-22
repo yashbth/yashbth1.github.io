@@ -11,7 +11,12 @@ import { FetchWaterDispenseDataService } from './fetch-water-dispense-data.servi
 import { ChartsComponent } from './charts/charts.component';
 
 import { TransactionComponent } from './transaction/transaction.component';
+
 import { SupervisorComponent } from './supervisor/supervisor.component';
+
+import { OperatorComponent } from './operator/operator.component';
+import { OperatorChartsComponent } from './charts/operatorcharts.component';
+
 
 
 
@@ -21,10 +26,10 @@ import { SupervisorComponent } from './supervisor/supervisor.component';
     MachineComponent,
     WaterDispenseComponent,
     ChartsComponent,
-
+    SupervisorComponent,
     TransactionComponent,
-
-    SupervisorComponent
+    OperatorComponent,
+    OperatorChartsComponent
 
   ],
   imports: [
