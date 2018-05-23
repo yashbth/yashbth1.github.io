@@ -1,3 +1,17 @@
 .bold{
     font-weight: bold;
 }
+#deviceLoc{
+    font-size: 1.17em !important;
+}
+.jumbotron{
+    padding-bottom: 5px;   
+    margin-bottom:5px; 
+}
+#place{
+    font-size:1em !important;    
+}
+.blockquote-footer{
+    font-size: 1em;
+    margin-top: 20px; 
+}
