@@ -9,7 +9,7 @@
       <table id="table" class="table table-hover " style="width:100%">
           <thead class="thead-dark">
               <tr>
-                  <th *ngFor="let thead of data[1]">{{thead}}</th>
+                  <th *ngFor="let thead of data[1];let rowIndex = index">{{thead}} <span *ngIf = "data[2][rowIndex] != ''">(in {{data[2][rowIndex]}})</span></th>
               </tr>
           </thead>
           <tbody class="text-center">

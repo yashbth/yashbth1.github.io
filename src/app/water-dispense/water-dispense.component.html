@@ -10,7 +10,8 @@
             <div class="col-sm-3 text-center tabs" *ngFor="let name of data[1];let rowIndex = index;">
                     <dl>
                         <dt>{{name}}</dt>
-                        <dd>{{info[0][data[0][rowIndex]]}}</dd>
+                        <dd *ngIf = "data[2][rowIndex] != 'Rs'" >{{info[0][data[0][rowIndex]]}} {{data[2][rowIndex]}}</dd>
+                        <dd *ngIf = "data[2][rowIndex] == 'Rs'" >{{data[2][rowIndex]}} {{info[0][data[0][rowIndex]]}}</dd>
                     </dl>
             </div>
         </div>
@@ -28,4 +29,13 @@
 
     </div>
 </div>
-
+<div class="container">
+    <form class="innerContainer">
+        <h2>Select a custom date range to analyze:</h2>
+        From: <input id="date_from" type="date">
+        &nbsp;
+        &nbsp;
+        To: <input id="date_to" type="date">
+        <button type="submit">Analyse</button>
+    </form>
+</div>

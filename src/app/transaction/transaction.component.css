@@ -7,3 +7,6 @@ span{
 #tabel_paginate a{
     padding: 10px;
 }
+th span{
+    font-size: 1em !important;
+}

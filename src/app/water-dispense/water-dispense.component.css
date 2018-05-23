@@ -8,6 +8,7 @@ h1 span{
     display: flex;
     justify-content: space-evenly;
     flex-wrap: wrap;
+    padding: 3em;
 }
 dd{
     padding-left: 2em;
