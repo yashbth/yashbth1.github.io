@@ -1,5 +1,6 @@
 .jumbotron{
-    padding-bottom: 20px;   
+    padding-bottom: 5px;   
+    margin-bottom:5px; 
 }
 h1 span{
     font-size:.7em !important;
@@ -8,6 +9,7 @@ h1 span{
     display: flex;
     justify-content: space-evenly;
     flex-wrap: wrap;
+    padding: 2.5em 0; 
 }
 dd{
     padding-left: 2em;
@@ -22,4 +24,11 @@ dd{
 }
 form{
     margin-top:50px; 
+}
+.blockquote-footer{
+    font-size: 1em;
+    margin-top: 20px; 
+}
+#deviceLoc{
+    font-size: 1.17em;
 }

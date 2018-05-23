@@ -19,7 +19,7 @@
 
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
-    <script>
+    <script src="./assets/scripts/map.js">
 
     </script>
     
@@ -27,20 +27,7 @@
   <!-- Web Gui For Map -->
     <script src="http://www.webglearth.com/v2/api.js"></script>
     <script>
-      function initialize() {
-        var earth = new WE.map('earth_div');
-        WE.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(earth);
 
-        var marker = WE.marker([51.5, -0.09]).addTo(earth);
-        marker.bindPopup("<b>Hello world!</b><br>I am a popup.<br /><span style='font-size:10px;color:#999'>Tip: Another popup is hidden in Cairo..</span>", {maxWidth: 150, closeButton: true}).openPopup();
-
-        var marker2 = WE.marker([30.058056, 31.228889]).addTo(earth);
-        marker2.bindPopup("<b>Cairo</b><br>Yay, you found me!", {maxWidth: 120, closeButton: true});
-
-        var markerCustom = WE.marker([50, -9], '/img/logo-webglearth-black-100.png', 100, 24).addTo(earth);
-
-        earth.setView([28.61, 77.6], 6);
-      }
     </script>
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -48,8 +35,6 @@
 </head>
 <body onload="initialize()">
   <app-root ></app-root>
-  <app-machine></app-machine>
-  <app-charts></app-charts>
-  
+  <app-machine ></app-machine>
 </body>
 </html>

@@ -1,23 +1,25 @@
-import { Component, Input, OnInit,OnChanges, AfterContentChecked,DoCheck} from '@angular/core';
+import { Component, Input, OnInit,OnChanges, AfterContentChecked,DoCheck, AfterContentInit} from '@angular/core';
 import {  Router,NavigationEnd, ActivationStart,ActivatedRoute} from '@angular/router'
+// import  '../../assets/scripts/map.js'
 
 import {FetchWaterDispenseDataService} from '../fetch-water-dispense-data.service'
 import {waterDispenserParam} from './waterDispenserparam'
 import {WaterDispenseData,RoData,CupDispenseData} from './test'
 declare var jquery:any;
 declare var $ :any; 
+declare var displayLocation : any;
 
 @Component({
   selector: 'app-water-dispense',
   templateUrl: './water-dispense.component.html',
   styleUrls: ['./water-dispense.component.css']
 })
-export class WaterDispenseComponent implements OnInit{
+export class WaterDispenseComponent implements AfterContentInit{
   property1:string;
   filename: string; 
   panel:string;
   id=[];
-  place : string = 'GuruGram , Haryana';
+  place : string = 'New Delhi Cluster';
   info =[];
   checkRouteChange=['waterPanel'] ;
   data = [];
@@ -38,12 +40,21 @@ export class WaterDispenseComponent implements OnInit{
     })
   }
   ngOnInit(){
-  }
 
+  }
+  ngAfterContentInit(){
+
+  }
   getWaterinfo():void{ 
     this.info=[];
     this.service.getData(this.id,this.filename).subscribe(info=>this.info=info); 
-    console.log(this.info);
+    setTimeout(()=>{
+      let lat = parseInt(this.info[0].Lattitude)/1000000;
+      let lon = parseInt(this.info[0].Longitude)/1000000;
+      $(document).ready(function(){
+        displayLocation(lat,lon,'place');
+      })
+    },500)
   }
 
   panelParameters(){
