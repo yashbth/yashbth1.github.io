@@ -18,6 +18,7 @@ import { OperatorComponent } from './operator/operator.component';
 import { OperatorChartsComponent } from './charts/operatorcharts.component';
 import { SupervisorChartsComponent } from './charts/supervisorcharts.component';
 import { HomeComponent } from './home/home.component';
+import { Globals } from './global';
 
 
 
@@ -44,7 +45,7 @@ import { HomeComponent } from './home/home.component';
     ChartModule,
     FormsModule
   ],
-  providers: [FetchWaterDispenseDataService],
+  providers: [FetchWaterDispenseDataService,Globals],
   bootstrap: [AppComponent,MachineComponent]                                                                                                                                                                                                                                                                                                                                                                                                     
 })
 

@@ -1,3 +1,9 @@
+import {Injectable} from '@angular/core'
+
+@Injectable({
+    providedIn : 'root'
+})
 export class Globals{
-    formatted_address:string;
+    public lat: number=1;
+    public lon : number=2;
 }

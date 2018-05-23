@@ -1,10 +1,11 @@
 import { Component, Input, OnInit,OnChanges, AfterContentChecked,DoCheck, AfterContentInit} from '@angular/core';
 import {  Router,NavigationEnd, ActivationStart,ActivatedRoute} from '@angular/router'
-// import  '../../assets/scripts/map.js'
+import  '../../assets/scripts/map.js'
 
 import {FetchWaterDispenseDataService} from '../fetch-water-dispense-data.service'
 import {waterDispenserParam} from './waterDispenserparam'
 import {WaterDispenseData,RoData,CupDispenseData} from './test'
+import {Globals} from '../global';
 declare var jquery:any;
 declare var $ :any; 
 declare var displayLocation : any;
@@ -12,9 +13,10 @@ declare var displayLocation : any;
 @Component({
   selector: 'app-water-dispense',
   templateUrl: './water-dispense.component.html',
-  styleUrls: ['./water-dispense.component.css']
+  styleUrls: ['./water-dispense.component.css'],
+  providers:[Globals]
 })
-export class WaterDispenseComponent implements AfterContentInit{
+export class WaterDispenseComponent implements OnInit{
   property1:string;
   filename: string; 
   panel:string;
@@ -25,7 +27,8 @@ export class WaterDispenseComponent implements AfterContentInit{
   data = [];
 
 
-  constructor( private service : FetchWaterDispenseDataService,private router : Router,private route: ActivatedRoute){
+  constructor( private service : FetchWaterDispenseDataService,private router : Router,private route: ActivatedRoute,public address : Globals){
+
     router.events.subscribe((val)=>{    
       if (val instanceof NavigationEnd) {
         this.panel = route.snapshot.paramMap.get('panel');  
@@ -39,7 +42,7 @@ export class WaterDispenseComponent implements AfterContentInit{
       }   
     })
   }
-  ngOnInit(){
+  ngOnInit(){ 
 
   }
   ngAfterContentInit(){
@@ -51,10 +54,14 @@ export class WaterDispenseComponent implements AfterContentInit{
     setTimeout(()=>{
       let lat = parseInt(this.info[0].Lattitude)/1000000;
       let lon = parseInt(this.info[0].Longitude)/1000000;
+      this.address.lat = lat;
+      this.address.lon = lon;
+      console.log(this.address.lat);
       $(document).ready(function(){
-        displayLocation(lat,lon,'place');
+        displayLocation(lat,lon,'place');   
       })
     },500)
+
   }
 
   panelParameters(){

@@ -29,7 +29,6 @@ function displayLocation(latitude,longitude,id){
         var data = JSON.parse(request.responseText);
         var address = data.results[0];
         document.getElementById(id).innerText= address.formatted_address;
-        return address.formatted_address;
       }
     };
     request.send();
