@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import * as $ from 'jquery';
 
 @Component({
@@ -10,8 +10,8 @@ import * as $ from 'jquery';
 export class AppComponent {
   title = 'app';
   router : any;
-  constructor(private _route : Router){
-    this.router = _route;
+  constructor(private _router : Router){
+    this.router = _router;
   }
   
 }
