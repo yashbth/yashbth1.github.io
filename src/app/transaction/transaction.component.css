@@ -7,3 +7,14 @@ span{
 #tabel_paginate a{
     padding: 10px;
 }
+.blockquote-footer{
+    font-size: 1em;
+    margin-top: 20px; 
+}
+#deviceLoc{
+    font-size: 1.17em !important;
+}
+.jumbotron{
+    padding-bottom: 5px;   
+    margin-bottom:5px; 
+}

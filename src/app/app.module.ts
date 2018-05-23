@@ -17,6 +17,9 @@ import { SupervisorComponent } from './supervisor/supervisor.component';
 import { OperatorComponent } from './operator/operator.component';
 import { OperatorChartsComponent } from './charts/operatorcharts.component';
 import { SupervisorChartsComponent } from './charts/supervisorcharts.component';
+import { HomeComponent } from './home/home.component';
+import { Globals } from './global';
+
 
 
 
@@ -31,7 +34,8 @@ import { SupervisorChartsComponent } from './charts/supervisorcharts.component';
     TransactionComponent,
     OperatorComponent,
     OperatorChartsComponent,
-    SupervisorChartsComponent
+    SupervisorChartsComponent,
+    HomeComponent
 
   ],
   imports: [
@@ -41,8 +45,8 @@ import { SupervisorChartsComponent } from './charts/supervisorcharts.component';
     ChartModule,
     FormsModule
   ],
-  providers: [FetchWaterDispenseDataService],
-  bootstrap: [AppComponent,MachineComponent]
+  providers: [FetchWaterDispenseDataService,Globals],
+  bootstrap: [AppComponent,MachineComponent]                                                                                                                                                                                                                                                                                                                                                                                                     
 })
 
 export class AppModule { }
