@@ -1,5 +1,6 @@
 .spacing{
-    padding: 0 40px;
+    padding: 2.5em 40px;
+
 }
 .maxHeight{
     height: -webkit-fill-available;
@@ -14,4 +15,18 @@ thead{
 }
 .table{
     border-radius:20px !important;
+}
+#deviceLoc{
+    font-size: 1.17em !important;
+}
+.jumbotron{
+    padding-bottom: 5px;   
+    margin-bottom:5px; 
+}
+#place{
+    font-size:1em !important;    
+}
+.blockquote-footer{
+    font-size: 1em;
+    margin-top: 20px; 
 }
