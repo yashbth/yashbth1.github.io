@@ -3,9 +3,12 @@ import { FetchWaterDispenseDataService } from '../fetch-water-dispense-data.serv
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { operator } from '../water-dispense/test'
 import { DatePipe } from '@angular/common';
+import { GlobalService } from '../global.service';
+
 
 declare var jquery : any;
 declare var $ : any;
+declare var displayLocation : any;
 
 @Component({
   selector: 'app-operator',
@@ -16,7 +19,7 @@ export class OperatorComponent implements OnInit {
   id=[];
   data = operator;
   date : any=new Date(Date.now());
-  place:string = "Gurgaon , Haryana";
+  place:string = "New Delhi Cluster";
   info :any; 
   operators = [];
   expected_attendance=[];
@@ -26,11 +29,12 @@ export class OperatorComponent implements OnInit {
   absent: number;
   chart:boolean=false;
   
-  constructor(private service : FetchWaterDispenseDataService,private router:Router,private route: ActivatedRoute) { 
+  constructor(private service : FetchWaterDispenseDataService,private router:Router,private route: ActivatedRoute,private globalservice : GlobalService) { 
     router.events.subscribe((val)=>{
       if(val instanceof NavigationEnd){
         this.id[0] = route.snapshot.paramMap.get('id');
         this.getOperators('operator.php');
+          displayLocation(this.globalservice.lat,this.globalservice.lon,'place');
       }
     })
   }

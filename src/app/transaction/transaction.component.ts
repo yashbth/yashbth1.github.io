@@ -3,7 +3,7 @@ import {FetchWaterDispenseDataService} from '../fetch-water-dispense-data.servic
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import {transaction} from '../water-dispense/test'
 import '../../assets/scripts/map.js'
-import { Globals } from '../global';
+import { GlobalService } from '../global.service';
 
 declare var jquery : any;
 declare var $ : any;
@@ -12,7 +12,6 @@ declare var displayLocation: any;
   selector: 'app-transaction',
   templateUrl: './transaction.component.html',
   styleUrls: ['./transaction.component.css'],
-  providers : [Globals]
 })
 export class TransactionComponent implements OnInit {
   private id =[];
@@ -20,11 +19,12 @@ export class TransactionComponent implements OnInit {
   private filename : string='transactionLog.php';
   info : any;
   data = transaction;
-  constructor(private service : FetchWaterDispenseDataService, private router : Router,private route : ActivatedRoute,private address : Globals) { 
+  constructor(private service : FetchWaterDispenseDataService, private router : Router,private route : ActivatedRoute,private globalservice : GlobalService) { 
     router.events.subscribe((val)=>{
       if(val instanceof NavigationEnd){
 
-
+       displayLocation(this.globalservice.lat,this.globalservice.lon,'place');
+        
       }
     })
   }
@@ -42,15 +42,12 @@ export class TransactionComponent implements OnInit {
   getInfo(){
     this.info=[];
     this.service.getData(this.id,this.filename).subscribe(info=>this.info=info);
-  
     setTimeout(()=>{
-      console.log("called"); 
-      console.log(this.address.lat);
       $(document).ready(function(){
             $('#table').DataTable();
-            $('.paginate_button').css({"padding":"10px"})
-            console.log(this.address.lat)
-            displayLocation(this.address.lat,this.address.lon,'place');
+            $('.paginate_button').css({"padding":"10px"});
+           
+
           })
     },100)
   }

@@ -5,7 +5,7 @@ import  '../../assets/scripts/map.js'
 import {FetchWaterDispenseDataService} from '../fetch-water-dispense-data.service'
 import {waterDispenserParam} from './waterDispenserparam'
 import {WaterDispenseData,RoData,CupDispenseData} from './test'
-import {Globals} from '../global';
+import { GlobalService } from '../global.service';
 declare var jquery:any;
 declare var $ :any; 
 declare var displayLocation : any;
@@ -14,7 +14,6 @@ declare var displayLocation : any;
   selector: 'app-water-dispense',
   templateUrl: './water-dispense.component.html',
   styleUrls: ['./water-dispense.component.css'],
-  providers:[Globals]
 })
 export class WaterDispenseComponent implements OnInit{
   property1:string;
@@ -27,8 +26,7 @@ export class WaterDispenseComponent implements OnInit{
   data = [];
 
 
-  constructor( private service : FetchWaterDispenseDataService,private router : Router,private route: ActivatedRoute,public address : Globals){
-
+  constructor( private service : FetchWaterDispenseDataService,private router : Router,private route: ActivatedRoute,private globalservice : GlobalService){
     router.events.subscribe((val)=>{    
       if (val instanceof NavigationEnd) {
         this.panel = route.snapshot.paramMap.get('panel');  
@@ -52,14 +50,24 @@ export class WaterDispenseComponent implements OnInit{
     this.info=[];
     this.service.getData(this.id,this.filename).subscribe(info=>this.info=info); 
     setTimeout(()=>{
-      let lat = parseInt(this.info[0].Lattitude)/1000000;
-      let lon = parseInt(this.info[0].Longitude)/1000000;
-      this.address.lat = lat;
-      this.address.lon = lon;
-      console.log(this.address.lat);
-      $(document).ready(function(){
+      
+      let lat = parseInt(this.info[0].Lattitude)
+      let lon = parseInt(this.info[0].Longitude)
+      while(Math.abs(lat)>100){
+        if(lat/100<1) {break};
+        lat = lat/10;
+      }
+      while(Math.abs(lon)>100){
+        if(lon/100<1) {break};
+        lon = lon/10;
+      }
+      if(this.info[0].Lattitude){
+        this.globalservice.lat=lat;
+        this.globalservice.lon =lon;
         displayLocation(lat,lon,'place');   
-      })
+        
+      }
+
     },500)
 
   }
