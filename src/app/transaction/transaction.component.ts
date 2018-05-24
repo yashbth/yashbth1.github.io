@@ -15,7 +15,7 @@ declare var displayLocation : any;
 })
 export class TransactionComponent implements OnInit {
   private id =[];
-  place: string = "Gurgaon, Haryana"
+  place: string = "New Delhi Cluster"
   private filename : string='transactionLog.php';
   info : any;
   data = transaction;

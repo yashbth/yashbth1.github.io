@@ -2,9 +2,9 @@
 function initialize() {
     var earth = new WE.map('earth_div',{sky:true});
     WE.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(earth);
-    var id = 'VSDMDV11710AAG';
+    var id = '\"VSDMDV11710AAG\"';
     var marker = WE.marker([28.4595, 77.0266]).addTo(earth);
-    marker.bindPopup("<b>Device Located At <span id='loc'></span></b><br><br /><span style='font-size:10px;color:#999'>Device Id : VSDMDV11710AAG</span><button type='button' onclick='redirect(\"VSDMDV11710AAG\")'>Analyse</button>", {maxWidth: 150, closeButton: false});
+    marker.bindPopup("<b>Device Located At <span id='loc'></span></b><br><br /><span style='font-size:10px;color:#999'>Device Id : VSDMDV11710AAG</span><button type='button' onclick='redirect("+ id +")'>Analyse</button>", {maxWidth: 150, closeButton: false});
    
     var marker2 = WE.marker([28.6139, 77.2090]).addTo(earth);
     marker2.bindPopup("<b>Device Located At New Delhi</b><br><span style='font-size:10px;color:#999'>Device Id : 1234567881</span>", {maxWidth: 120, closeButton: true});

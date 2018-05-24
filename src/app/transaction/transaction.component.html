@@ -3,14 +3,14 @@
       <div class="jumbotron text-center">
           <h1> {{place}} <span> ( Machine Id : {{info[0]?.DeviceID}} )</span></h1>
           <span id="deviceLoc"><b>Device located at :</b> <span id="place"></span></span>
-          <h1 class="blockquote-footer ">Last Updated at {{info[0]?.TimeStamp}}</h1> 
+          <h1 class="blockquote-footer ">Transactions Division</h1> 
   </div>
   </div>
   <div class="table-responsive-sm">
       <table id="table" class="table table-hover " style="width:100%">
           <thead class="thead-dark">
               <tr>
-                  <th *ngFor="let thead of data[1];let rowIndex = index">{{thead}} <span *ngIf = "data[2][rowIndex] != ''">(in {{data[2][rowIndex]}})</span></th>
+                  <th *ngFor="let thead of data[1]">{{thead}} <span *ngIf = "data[2][rowIndex] != ''">(in {{data[2][rowIndex]}})</span></th>
               </tr>
           </thead>
           <tbody class="text-center">
