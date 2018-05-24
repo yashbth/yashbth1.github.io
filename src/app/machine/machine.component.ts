@@ -11,7 +11,7 @@ declare var $ :any;
 })
 export class MachineComponent{
   user = 'Admin';
-  title = 'DashBoard';
+  title = 'Dash-Board';
   param=[];
   url:string;
   id:string;
@@ -23,6 +23,7 @@ export class MachineComponent{
     $('app-transaction').addClass('col-sm-10');   
     $('app-supervisor').addClass('col-sm-10');
     $('app-operator').addClass('col-sm-10');   
+
   }
   ngAfterContentChecked(){
     let param=this.router.url.split('/');
@@ -33,4 +34,5 @@ export class MachineComponent{
   toggle(this,id){
     $(id).slideToggle();    
   }
+
 }

@@ -1,0 +1,15 @@
+<li>
+    <form class="form-inline" >
+        <input class="form-control mr-sm-2"  placeholder="Search" [(ngModel)]="selectId" name="searchId" (keyup)="search(selectId)" (mouseenter)="largewidth()" (mouseleave)="smallwidth()">
+        <button class="btn btn-info " type="submit" (click)="selectOther(searchId)"><i class="fas fa-search"> </i></button>
+      </form>
+      <div class="text-center"> 
+          <ul class="search-result rounded">
+              <li *ngFor="let device of devices$ | async" >
+                <a routerLink="/device/{{device.DeviceID}}/WaterDispenser" (click)="selectOther()" (mouseenter)="onmouseover(device.DeviceID)">
+                  {{device.DeviceID}}
+                </a>
+               </li>
+          </ul>
+      </div>
+</li>

@@ -87,3 +87,7 @@ app-water-dispense{
     font-size: 1.1em;
     
 }
+ 
+.pad a{ 
+    padding-top: 5px;
+} 
