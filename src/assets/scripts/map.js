@@ -16,6 +16,7 @@ function initialize() {
 function redirect(id){
     window.location.href = window.location.href + '/device/'+id+'/WaterDispenser';
 }
+
 function displayLocation(latitude,longitude,id){
     var request = new XMLHttpRequest();
 
@@ -24,11 +25,16 @@ function displayLocation(latitude,longitude,id){
     var async = true;
 
     request.open(method, url, async);
+
     request.onreadystatechange = function(){
       if(request.readyState == 4 && request.status == 200){
         var data = JSON.parse(request.responseText);
         var address = data.results[0];
-        document.getElementById(id).innerText= address.formatted_address;
+        var location = address.formatted_address;
+        document.getElementById(id).innerText= location;
+        document.cookie = "location="+location;
+
+        
       }
     };
     request.send();

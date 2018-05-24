@@ -4,6 +4,7 @@ import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import {transaction} from '../water-dispense/test'
 import '../../assets/scripts/map.js'
 import { GlobalService } from '../global.service';
+import { CookieService } from 'angular2-cookie/core';
 
 declare var jquery : any;
 declare var $ : any;
@@ -19,7 +20,9 @@ export class TransactionComponent implements OnInit {
   private filename : string='transactionLog.php';
   info : any;
   data = transaction;
-  constructor(private service : FetchWaterDispenseDataService, private router : Router,private route : ActivatedRoute,private globalservice : GlobalService) { 
+  location : string = this.cookieService.get('location');
+
+  constructor(private service : FetchWaterDispenseDataService, private router : Router,private route : ActivatedRoute, private globalservice : GlobalService, private cookieService:CookieService) { 
     router.events.subscribe((val)=>{
       if(val instanceof NavigationEnd){
 

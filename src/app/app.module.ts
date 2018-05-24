@@ -16,6 +16,7 @@ import { OperatorChartsComponent } from './charts/operatorcharts.component';
 import { SupervisorChartsComponent } from './charts/supervisorcharts.component';
 import { HomeComponent } from './home/home.component';
 import { GlobalService } from './global.service';
+import { CookieService } from 'angular2-cookie/services/cookies.service';
 
 
 
@@ -41,7 +42,7 @@ import { GlobalService } from './global.service';
     ChartModule,
     FormsModule
   ],
-  providers: [FetchWaterDispenseDataService,GlobalService],
+  providers: [FetchWaterDispenseDataService,GlobalService,CookieService],
   bootstrap: [AppComponent,MachineComponent]                                                                                                                                                                                                                                                                                                                                                                                                     
 })
 

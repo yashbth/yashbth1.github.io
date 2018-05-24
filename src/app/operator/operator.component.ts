@@ -4,6 +4,7 @@ import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { operator } from '../water-dispense/test'
 import { DatePipe } from '@angular/common';
 import { GlobalService } from '../global.service';
+import { CookieService } from 'angular2-cookie/core';
 
 
 declare var jquery : any;
@@ -28,8 +29,9 @@ export class OperatorComponent implements OnInit {
   present: number;
   absent: number;
   chart:boolean=false;
+  location : string = this.cookieService.get('location');
   
-  constructor(private service : FetchWaterDispenseDataService,private router:Router,private route: ActivatedRoute,private globalservice : GlobalService) { 
+  constructor(private service : FetchWaterDispenseDataService,private router:Router,private route: ActivatedRoute,private globalservice : GlobalService, private cookieService:CookieService) { 
     router.events.subscribe((val)=>{
       if(val instanceof NavigationEnd){
         this.id[0] = route.snapshot.paramMap.get('id');

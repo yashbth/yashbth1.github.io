@@ -6,6 +6,8 @@ import {FetchWaterDispenseDataService} from '../fetch-water-dispense-data.servic
 import {waterDispenserParam} from './waterDispenserparam'
 import {WaterDispenseData,RoData,CupDispenseData} from './test'
 import { GlobalService } from '../global.service';
+import { CookieService } from 'angular2-cookie/core';
+
 declare var jquery:any;
 declare var $ :any; 
 declare var displayLocation : any;
@@ -24,9 +26,10 @@ export class WaterDispenseComponent implements OnInit{
   info =[];
   checkRouteChange=['waterPanel'] ;
   data = [];
+  location : string = this.cookieService.get('location');
 
 
-  constructor( private service : FetchWaterDispenseDataService,private router : Router,private route: ActivatedRoute,private globalservice : GlobalService){
+  constructor( private service : FetchWaterDispenseDataService,private router : Router,private route: ActivatedRoute,private globalservice : GlobalService, private cookieService:CookieService){
     router.events.subscribe((val)=>{    
       if (val instanceof NavigationEnd) {
         this.panel = route.snapshot.paramMap.get('panel');  
@@ -64,7 +67,8 @@ export class WaterDispenseComponent implements OnInit{
       if(this.info[0].Lattitude){
         this.globalservice.lat=lat;
         this.globalservice.lon =lon;
-        displayLocation(lat,lon,'place');   
+        
+        displayLocation(lat,lon,'place');
         
       }
 
