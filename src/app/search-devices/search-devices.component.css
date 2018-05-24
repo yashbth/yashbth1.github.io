@@ -1,0 +1,15 @@
+.form-inline{
+    margin-right: 2em !important;
+}  
+.search-result{
+    position: absolute;
+    color: black;
+    background-color: white;
+    width:200px;
+    padding: 0px;
+    list-style: none;
+}
+.search-result a{
+    color: black !important;
+    
+}

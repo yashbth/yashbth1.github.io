@@ -17,8 +17,9 @@ import { SupervisorComponent } from './supervisor/supervisor.component';
 import { OperatorComponent } from './operator/operator.component';
 import { OperatorChartsComponent } from './charts/operatorcharts.component';
 import { SupervisorChartsComponent } from './charts/supervisorcharts.component';
-import { HomeComponent } from './home/home.component';
+
 import { GlobalService } from './global.service';
+import { SearchDevicesComponent } from './search-devices/search-devices.component';
 
 
 
@@ -35,7 +36,8 @@ import { GlobalService } from './global.service';
     OperatorComponent,
     OperatorChartsComponent,
     SupervisorChartsComponent,
-    HomeComponent
+    SearchDevicesComponent,
+
 
   ],
   imports: [
