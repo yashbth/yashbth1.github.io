@@ -18,8 +18,8 @@ export class SupervisorComponent implements OnInit {
 
   property1:string;
   filename: string; 
-  id=[];
-  place : string = 'GuruGram , Haryana';
+  id = [];
+  place : string = 'New Delhi Cluster';
   info =[];
   checkRouteChange=['waterPanel'] ;
   data = [];

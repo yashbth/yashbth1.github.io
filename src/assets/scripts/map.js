@@ -1,5 +1,6 @@
 var devices=[]
 var marker = []
+var lat,lon;
 function initialize() {
     getLocation();
     setTimeout(()=>{
@@ -7,15 +8,15 @@ function initialize() {
       var earth = new WE.map('earth_div',{sky:true});
       WE.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(earth);
       for(var device of devices ){
-        var lat = lanAndlon(parseInt(device.Lattitude)) ;
-        var lon = lanAndlon(parseInt(device.Longitude)) ;
+        lat = lanAndlon(parseInt(device.Lattitude)) ;
+        lon = lanAndlon(parseInt(device.Longitude)) ;
         
         var id = '\"'+ device.DEVICEID+'\"';
         marker.push(WE.marker([lat, lon]).addTo(earth));
-        marker[marker.length-1].bindPopup("<b>Device Located At <span id='"+device.DEVICEID+ "'></span></b><br><br /><span style='font-size:10px;color:#999'>Device Id : "+id+"</span><button type='button' onclick='redirect("+id+")'>Analyse</button>", {maxWidth: 150, closeButton: false});
-        
+        marker[marker.length-1].bindPopup("<b>Device Located At <span id='"+lat+ "'></span></b><br><br /><span style='font-size:10px;color:#999'>Device Id : "+id+"</span><button type='button' onclick='redirect("+id+")'>Analyse</button>", {maxWidth: 150, closeButton: false});
+        displayLocation(lat,lon,lat) ;                
       }
-      var markerCustom = WE.marker([50, -9], '/img/logo-webglearth-black-100.png', 100, 24).addTo(earth);      
+      var markerCustom = WE.marker([50, -9], 100, 24).addTo(earth);      
       earth.setView([28.61, 77.6], 6);
       
     },1000)
@@ -37,17 +38,13 @@ function displayLocation(latitude,longitude,id){
       if(request.readyState == 4 && request.status == 200){
         var data = JSON.parse(request.responseText);
         var address = data.results[0];
+        console.log("called");
         document.getElementById(id).innerText= address.formatted_address;
       }
     };
     request.send();
   };
-  $(document).ready(function(){
-      for(var device of devices){
-        console.log("called")
-        displayLocation(lat,lon,device.DEVICEID) ;        
-      }
-  })
+
 
 function getLocation(){
   var xhttp = new XMLHttpRequest();

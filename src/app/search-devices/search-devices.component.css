@@ -8,8 +8,13 @@
     width:200px;
     padding: 0px;
     list-style: none;
+    overflow-y: scroll;
 }
-.search-result a{
+.search-result li{
     color: black !important;
-    
+    font-size: 1em;
+    padding: 5px;
+    border-bottom: 0.2px solid black;
+    font-family: 'Courier New', Courier, monospace;
+    background-color: aliceblue;
 }

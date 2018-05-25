@@ -35,15 +35,16 @@ export class ChartsComponent implements OnInit {
       console.log(this.router.url)
       this.chartData = this.water;
       this.ConvertIntoArray(this.chartData.info,this._property1,this.property2);
-      this.Chart('bar');
+      this.Chart('line');
     },100);
 
   }
   ngAfterContentChecked(){
     if(this.checkGraph){
       this.ConvertIntoArray(this.chartData.info,this._property1,this.property2);
-      this.Chart('bar');
-      if(this.chartData.info[0][this._property1]){
+      this.Chart('line');
+      if(this.chartData.info[0][this.property1]){
+
         this.checkGraph = false;
       }
     }
@@ -51,7 +52,7 @@ export class ChartsComponent implements OnInit {
   
   ngOnChanges(){
     this.ConvertIntoArray(this.chartData.info,this._property1,this.property2);
-    this.Chart('bar');
+    this.Chart('line');
   }
 
   Chart(type:string){
@@ -62,12 +63,7 @@ export class ChartsComponent implements OnInit {
             label: this._property1,
             data: this.Data1,
             backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
+              "rgba(255,255,255,0)"
             ],
             borderColor: [
                 'rgba(255,99,132,1)',
@@ -77,14 +73,8 @@ export class ChartsComponent implements OnInit {
                 'rgba(153, 102, 255, 1)',
                 'rgba(255, 159, 64, 1)'
             ],
-            borderWidth: 1
-        },
-        {
-          label: 'Line Dataset',
-          data: [1500,0, 600, 1250, 500,0,0,0,200,0],
-          backgroundColor: ['skyblue'],
-          // Changes this dataset to become a line
-          type: 'bar'
+            borderWidth: 1,
+            lineTension : 0
         }
       ]
       

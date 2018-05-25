@@ -18,17 +18,23 @@ declare var displayLocation : any;
 export class WaterDispenseComponent implements OnInit{
   property1:string;
   filename: string; 
+  table: string;
   panel:string;
   id=[];
   place : string = 'New Delhi Cluster';
   info =[];
+  chartData =[];
   checkRouteChange=['waterPanel'] ;
   data = [];
-
+  fromDate: any=new Date('2018-03-13');
+  toDate : any =new Date('2018-03-13');
 
   constructor( private service : FetchWaterDispenseDataService,private router : Router,private route: ActivatedRoute,private globalservice : GlobalService){
+    this.fromDate = this.changeDateFormat(this.fromDate);
+    this.toDate = this.changeDateFormat(this.toDate);
     router.events.subscribe((val)=>{    
       if (val instanceof NavigationEnd) {
+
         this.panel = route.snapshot.paramMap.get('panel');  
         this.id[0] = route.snapshot.paramMap.get('id');                                                       
         this.panelParameters();
@@ -43,14 +49,20 @@ export class WaterDispenseComponent implements OnInit{
   ngOnInit(){ 
 
   }
+
   ngAfterContentInit(){
+
+  }
+
+  changeDateFormat(date){
+    return date= date.getFullYear() + '-'+((date.getMonth()+1)/10>1 ? '':'0')+(date.getMonth()+1)+'-'+date.getDate();    
 
   }
   getWaterinfo():void{ 
     this.info=[];
     this.service.getData(this.id,this.filename).subscribe(info=>this.info=info); 
+    this.service.getChartData('chart_date.php',this.id,this.table,this.fromDate,this.toDate).subscribe(chartData=>this.chartData=chartData);
     setTimeout(()=>{
-      
       let lat = parseInt(this.info[0].Lattitude)
       let lon = parseInt(this.info[0].Longitude)
       while(Math.abs(lat)>100){
@@ -77,14 +89,17 @@ export class WaterDispenseComponent implements OnInit{
       case 'WaterDispenser' : this.data= WaterDispenseData;
                           this.filename = 'Water.php';
                           this.property1 = 'Total_Volume_Dispensed';
+                          this.table = 'Water_Dispensing_Panel';
                           break;
       case 'Ro' :  this.data = RoData;
                         this.filename = 'Ro.php';
                         this.property1 = 'Operational_Minutes';
+                        this.table = 'RO_Log_Parameter';                        
                         break;
       case 'CupDispenser' :  this.data = CupDispenseData;
                         this.filename = 'Cup.php';
                         this.property1 = 'TotalCupsDispensed';
+                        this.table = 'CupDispensing';                        
                         break;
       default  :    break;
     }

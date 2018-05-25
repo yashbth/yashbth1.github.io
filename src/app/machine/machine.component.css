@@ -23,12 +23,14 @@ nav{
     color: #00ccff;
 }
 #enlarge{
-    font-size: 2em;
+    font-size: 1.6em;
 }
 .navbar-brand{
     font-size: 1.7em;
     font-family: monospace;
-    padding-left: 3em ;
+    padding-left: 2.5em ;
+    font-family: 'Sunshiney', cursive;
+    letter-spacing: 3.5px;
     
 }
 .nav-link{

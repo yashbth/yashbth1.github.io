@@ -32,3 +32,16 @@ form{
 #deviceLoc{
     font-size: 1.17em;
 }
+.dateRange{
+    margin-top: 20px;
+}
+.from_to{
+    display: flex;
+    justify-content: space-evenly;
+}
+.pad{
+    padding-right:10px; 
+}
+.container{
+    padding-bottom: 100px;
+}

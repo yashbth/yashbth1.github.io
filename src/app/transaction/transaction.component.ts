@@ -7,7 +7,7 @@ import { GlobalService } from '../global.service';
 
 declare var jquery : any;
 declare var $ : any;
-declare var displayLocation: any;
+declare var displayLocation : any;
 @Component({
   selector: 'app-transaction',
   templateUrl: './transaction.component.html',
@@ -41,6 +41,7 @@ export class TransactionComponent implements OnInit {
 
   getInfo(){
     this.info=[];
+    console.log(this.info);
     this.service.getData(this.id,this.filename).subscribe(info=>this.info=info);
     setTimeout(()=>{
       $(document).ready(function(){
