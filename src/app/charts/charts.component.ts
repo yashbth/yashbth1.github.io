@@ -3,6 +3,9 @@ import {Chart} from 'chart.js';
 import {WaterDispenseComponent} from '../water-dispense/water-dispense.component'
 import {waterDispenserParam} from '../water-dispense/waterDispenserparam'
 import { Router, NavigationEnd } from '@angular/router';
+import { WaterDispenseData,RoData,CupDispenseData } from '../water-dispense/test';
+import { ThrowStmt } from '@angular/compiler';
+
 
 declare var jquery:any;
 declare var $ :any; 
@@ -27,6 +30,8 @@ export class ChartsComponent implements OnInit {
   type : string;
   data : any;
   options: any;
+  label : string;
+  labelString:string;
   checkGraph : boolean=true;
   constructor(private water : WaterDispenseComponent,private router : Router) { 
   }
@@ -34,24 +39,39 @@ export class ChartsComponent implements OnInit {
     setTimeout(()=>{
       console.log(this.router.url)
       this.chartData = this.water;
-      this.ConvertIntoArray(this.chartData.info,this._property1,this.property2);
+      this.ConvertIntoArray(this.chartData.chartData,this._property1,this.property2);
       this.Chart('line');
     },100);
 
   }
   ngAfterContentChecked(){
-    if(this.checkGraph){
-      this.ConvertIntoArray(this.chartData.info,this._property1,this.property2);
+    if(this.checkGraph || this.chartData.dataChange){
+      if(WaterDispenseData[0].indexOf(this._property1)>=0){
+        let index = WaterDispenseData[0].indexOf(this._property1); 
+        this.label = WaterDispenseData[1][index];  
+        this.labelString = WaterDispenseData[1][index]+(WaterDispenseData[2][index]?' (in ':'')+WaterDispenseData[2][index]+(WaterDispenseData[2][index]?')':'');
+      }
+      else if(RoData[0].indexOf(this._property1)>=0){
+        let index = RoData[0].indexOf(this._property1);
+        this.label = RoData[1][index];          
+        this.labelString =  RoData[1][index]+(RoData[2][index]?' (in ':'')+RoData[2][index]+(RoData[2][index]?')':'');
+      }
+      else if (CupDispenseData[0].indexOf(this._property1)>=0){
+        let index = CupDispenseData[0].indexOf(this._property1);
+        this.label = CupDispenseData[1][index];          
+        this.labelString =  CupDispenseData[1][index]+(CupDispenseData[2][index]?' (in ':'')+CupDispenseData[2][index]+(CupDispenseData[2][index]?')':'');
+      }
+      this.ConvertIntoArray(this.chartData.chartData,this._property1,this.property2);
       this.Chart('line');
-      if(this.chartData.info[0][this.property1]){
-
+      if(this.chartData.chartData.length){
         this.checkGraph = false;
+        this.chartData.dataChange = false;
       }
     }
   }
   
   ngOnChanges(){
-    this.ConvertIntoArray(this.chartData.info,this._property1,this.property2);
+    this.ConvertIntoArray(this.chartData.chartData,this._property1,this.property2);
     this.Chart('line');
   }
 
@@ -60,7 +80,7 @@ export class ChartsComponent implements OnInit {
     this.data= {
       labels : this.Data2,
         datasets: [{
-            label: this._property1,
+            label: this.label,
             data: this.Data1,
             backgroundColor: [
               "rgba(255,255,255,0)"
@@ -82,8 +102,12 @@ export class ChartsComponent implements OnInit {
     this.options= {
         scales: {
             yAxes: [{
-                ticks: {
-                    beginAtZero:true
+              scaleLabel:{
+                display :true,
+                labelString : this.labelString
+                },
+              ticks: {
+                  beginAtZero:true
                 }
             }]
         }

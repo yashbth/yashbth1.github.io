@@ -4,6 +4,7 @@ import {  Router,NavigationEnd, ActivationStart,ActivatedRoute} from '@angular/r
 import {FetchWaterDispenseDataService} from '../fetch-water-dispense-data.service'
 import {supervisorData} from '../water-dispense/test'
 import { GlobalService } from '../global.service'
+import { CookieService } from 'angular2-cookie/core';
  
 declare var jquery: any;
 declare var $: any;
@@ -23,8 +24,9 @@ export class SupervisorComponent implements OnInit {
   info =[];
   checkRouteChange=['waterPanel'] ;
   data = [];
+  location : string = this.cookieService.get('location');
 
-  constructor( private service : FetchWaterDispenseDataService,private router : Router,private route: ActivatedRoute,private globalservice : GlobalService){
+  constructor( private service : FetchWaterDispenseDataService,private router : Router,private route: ActivatedRoute,private globalservice : GlobalService, private cookieService:CookieService){
     router.events.subscribe((val)=>{    
       if (val instanceof NavigationEnd) { 
         displayLocation(this.globalservice.lat,this.globalservice.lon,'place');
@@ -44,6 +46,17 @@ export class SupervisorComponent implements OnInit {
   getWaterinfo():void{ 
     this.info=[];
     this.service.getData(this.id,this.filename).subscribe(info=>this.info=info); 
+    this.cookieService.put('prevDiv','supervisor');    
+    // console.log(this.id);
+    setTimeout(()=>{
+      // console.log(this.info);
+      // console.log(Object.keys(this.info).length);
+      if(Object.keys(this.info).length==0){
+        this.router.navigateByUrl('/device/'+this.id[0] +'/error')
+      }
+    },100);
+    
+
 
   }
 

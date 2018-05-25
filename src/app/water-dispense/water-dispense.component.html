@@ -2,7 +2,7 @@
     <div class="container">
         <div class="jumbotron text-center">
                 <h1> {{place}} <span> ( Machine Id : {{info[0]?.DeviceID}} )</span></h1>
-                <span id="deviceLoc"><b>Device located at :</b> <span id="place"></span></span>
+                <span id="deviceLoc"><b>Device located at :</b> <span id="place">{{location}}</span></span>
                 <h1 class="blockquote-footer ">Last Updated at {{info[0]?.TimeStamp}}{{info[0]?.Timestamp}}</h1> 
         </div>
     </div>
@@ -22,24 +22,24 @@
             <div class="form-group">
                 <label for="sel1" >Graph Select :</label>
                 <select class="form-control" [(ngModel)]="property1" name="data">
-                    <option *ngFor="let name of data[0]" [value]="name">{{name}}</option>
+                    <option *ngFor="let name of data[1];let rowIndex = index" [value]="data[0][rowIndex]" >{{name}}</option>
                 </select>
-                <div class="dateRange">
-                    <label for="sel2">Select a custom date range to analyze:</label>
-                    <br>
-                    <div class="from_to">
-                        <label for="date"><span class="pad">From:</span> <input id="date_from" type="date" name="from" [(ngModel)]="fromDate"></label>
-                        <label><span class="pad">To:</span><input id="date_to" type="date" name="to" [(ngModel)]="toDate"></label> 
-                    </div>
-                    <div class="text-center">
-                    <button type="submit" class="btn btn-secondary">Analyse</button>                        
-                    </div>
-                </div>
+               
 
             </div>
         </form>
-        <app-charts [property1]="property1" [property2]="'TimeStamp'"></app-charts>
-
+        <app-charts [property1]="property1" [property2]="property2"></app-charts>
+        <div class="dateRange text-center">
+            <label for="sel2" class="sel2"><b>Select a custom date range to analyze:</b></label>
+            <br>
+            <div class="from_to">
+                <label for="date"><span class="pad">From:</span> <input id="date_from" type="date" name="from" [(ngModel)]="fromDate" ></label>
+                <label><span class="pad"> To:</span><input id="date_to" type="date" name="to" [(ngModel)]="toDate"></label> 
+            </div>
+            <div class="pad">
+                <button type="submit" class="btn btn-secondary" (click)="generateGraph()">Analyse</button>                        
+            </div>
+        </div>
     </div>
 </div>
 

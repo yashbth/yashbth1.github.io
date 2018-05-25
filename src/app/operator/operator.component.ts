@@ -4,6 +4,7 @@ import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { operator } from '../water-dispense/test'
 import { DatePipe } from '@angular/common';
 import { GlobalService } from '../global.service';
+import { CookieService } from 'angular2-cookie/core';
 
 
 declare var jquery : any;
@@ -28,13 +29,13 @@ export class OperatorComponent implements OnInit {
   present: number;
   absent: number;
   chart:boolean=false;
+  location : string = this.cookieService.get('location');
   
-  constructor(private service : FetchWaterDispenseDataService,private router:Router,private route: ActivatedRoute,private globalservice : GlobalService) { 
+  constructor(private service : FetchWaterDispenseDataService,private router:Router,private route: ActivatedRoute,private globalservice : GlobalService, private cookieService:CookieService) { 
     router.events.subscribe((val)=>{
       if(val instanceof NavigationEnd){
         this.id[0] = route.snapshot.paramMap.get('id');
-        this.getOperators('operator.php');
-          displayLocation(this.globalservice.lat,this.globalservice.lon,'place');
+
       }
     })
   }
@@ -53,14 +54,24 @@ export class OperatorComponent implements OnInit {
  }
   ngOnInit() {
     this.date= this.date.getFullYear() + '-'+((this.date.getMonth()+1)/10>1 ? '':'0')+(this.date.getMonth()+1)+'-'+this.date.getDate();
+    setTimeout(()=>{
+      this.getOperators('operator.php');
+      displayLocation(this.globalservice.lat,this.globalservice.lon,'place');
+    },200)
   }
   getOperators(filename):void{
     this.operators=[];    
     this.service.getData(this.id,filename).subscribe(operators=>this.operators=operators)
+    this.cookieService.put('prevDiv','operator');    
+    setTimeout(()=>{
+      if(Object.keys(this.operators).length==0){
+        this.router.navigateByUrl('/device/'+this.id[0] +'/error')
+      }
+    },100);
   }
   getInfo(filename):void{
     this.info=[];   
-    this.service.getData(this.id,filename).subscribe(info=>this.info=info)
+    this.service.getData(this.id,filename).subscribe(info=>this.info=info);
   }
   generateChart(operator,index){
     this.chart = false;

@@ -1,7 +1,7 @@
 <li>
     <form class="form-inline" >
         <input class="form-control mr-sm-2 nav-search"  placeholder="Search" [(ngModel)]="selectId" name="searchId" (keyup)="search(selectId)" (focus)="largewidth()">
-        <button class="btn btn-info " type="submit" (click)="selectOther(searchId)"><i class="fas fa-search"> </i></button>
+        <button class="btn btn-info " type="submit" (click)="selectOther()"><i class="fas fa-search"> </i></button>
       </form>
       <div class="text-center"> 
           <ul class="search-result rounded">

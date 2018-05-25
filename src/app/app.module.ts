@@ -16,7 +16,10 @@ import { OperatorChartsComponent } from './charts/operatorcharts.component';
 import { SupervisorChartsComponent } from './charts/supervisorcharts.component';
 
 import { GlobalService } from './global.service';
+import { CookieService } from 'angular2-cookie/services/cookies.service';
 import { SearchDevicesComponent } from './search-devices/search-devices.component';
+import { ErrorComponent } from './error/error.component';
+
 
 
 
@@ -33,6 +36,7 @@ import { SearchDevicesComponent } from './search-devices/search-devices.componen
     OperatorChartsComponent,
     SupervisorChartsComponent,
     SearchDevicesComponent,
+    ErrorComponent,
 
 
   ],
@@ -43,7 +47,7 @@ import { SearchDevicesComponent } from './search-devices/search-devices.componen
     ChartModule,
     FormsModule
   ],
-  providers: [FetchWaterDispenseDataService,GlobalService],
+  providers: [FetchWaterDispenseDataService,GlobalService,CookieService],
   bootstrap: [AppComponent,MachineComponent]                                                                                                                                                                                                                                                                                                                                                                                                     
 })
 

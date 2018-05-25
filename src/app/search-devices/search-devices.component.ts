@@ -34,6 +34,7 @@ export class SearchDevicesComponent implements OnInit {
     this.searchTerms.next(term);
   }
   selectOther(){
+    console.log(this.selectId)
     this.router.navigateByUrl('/device/'+this.selectId+'/WaterDispenser');
     window.location.reload();
   }
@@ -43,7 +44,5 @@ export class SearchDevicesComponent implements OnInit {
       var width = $('.nav-search').outerWidth();
       $('.search-result').css({"width":width}); 
     },300)
-
-    
   }
 }

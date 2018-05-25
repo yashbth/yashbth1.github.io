@@ -1,28 +1,37 @@
 export const WaterDispenseData =
 [
     ["Total_Volume_Dispensed",
+    'Total_Recharge',    
     "Total_collection_from_card",
     "Total_collection_from_coin",
     "pH_of_water",
     "Total_Collection_Sale",
     "Total_Coin_Count1",
+    "Tank_Level",
     "TimeStamp",
-    "DeviceID"],
+    "DeviceID",
+    
+],
     ['Total Volume Dispensed',
+     'Total Recharge',
     'Total Collection From Card',
     'Total Collection From Coin',
     'pH Of Water',
     'Total Collection',
-    'Total Coin Count'],
+    'Total Coin Count',
+    'Tank Level'
+],
     [
         "ml",
         "Rs",
         "Rs",
+        "Rs",
         "",
         "Rs",
         "",
+        "%",        
         "",
-        ""
+        "",
         
     ]
 ]
@@ -88,9 +97,9 @@ export const CupDispenseData =[
         "TripState"
     ],
     [
-        "Total Cups Dispensed (Till Date)",
-        "Total Coin Collection (Till Date)",
-        "Total Card Collection (Till Date)",
+        "Total Cups Dispensed",
+        "Total Coin Collection",
+        "Total Card Collection",
         "Last Transaction State"
     ],
     [
@@ -111,8 +120,8 @@ export const transaction=[
         "Amount",
         "DispenseTime",
         "Card_Balance",
-        "Total_Recharge"
-
+        "Total_Recharge",
+        "Expiry_Date"
     ],
     [
         "Time",
@@ -124,6 +133,7 @@ export const transaction=[
         "Dispense Time",
         "Card Balance",
         "Total Recharge",
+        "Card Expiry Date"
     ],
     [
         "",
@@ -134,7 +144,8 @@ export const transaction=[
         "Rs",
         "sec",
         "Rs",
-        "Rs"
+        "Rs",
+        ""
     ]
 ]
 export const supervisorData=[
@@ -185,7 +196,6 @@ export const operator = [
         "Expected Punches" ,
         
     ],
-
     [
         "",
         "",

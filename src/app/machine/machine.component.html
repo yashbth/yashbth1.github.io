@@ -28,8 +28,8 @@
                 <h6>User : {{user}}</h6>
                 <br>
                 <ul class="navbar-nav text-center">
-                    <li class="nav-item dropdown" *ngFor="let nav of dropdownlist" (click)="toggle('#'+nav.id)" >
-                        <a class="nav-link " routerLink="/device/{{id}}/{{nav.id}}" id="navbardrop" >
+                    <li class="nav-item dropdown text-center" *ngFor="let nav of dropdownlist" (click)="toggle('#'+nav.id)" >
+                        <a class="nav-link text-center" routerLink="/device/{{id}}/{{nav.id}}"   id="navbardrop" routerLinkActiveOptions="{exact:true}" [class.active-link]="nav.id==currDiv" >
                           {{nav.division}}
                         </a>
                       </li>

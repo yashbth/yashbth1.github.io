@@ -7,6 +7,7 @@ import { WaterDispenseComponent } from './water-dispense/water-dispense.componen
 import { TransactionComponent } from './transaction/transaction.component';
 import { SupervisorComponent } from './supervisor/supervisor.component';
 import { OperatorComponent } from './operator/operator.component';
+import { ErrorComponent } from './error/error.component';
 
 const routes: Routes = [
   { path: '', component: AppComponent },
@@ -14,6 +15,7 @@ const routes: Routes = [
   {path : 'device/:id/transactionLog', component : TransactionComponent},
   {path : 'device/:id/supervisor', component : SupervisorComponent},
   {path : 'device/:id/operator',component : OperatorComponent},
+  {path : 'device/:id/error',component : ErrorComponent},
   {path : 'device/:id/:panel' , component : WaterDispenseComponent},  
 ];
 @NgModule({
