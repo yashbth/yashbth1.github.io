@@ -35,8 +35,7 @@ export class OperatorComponent implements OnInit {
     router.events.subscribe((val)=>{
       if(val instanceof NavigationEnd){
         this.id[0] = route.snapshot.paramMap.get('id');
-        this.getOperators('operator.php');
-          displayLocation(this.globalservice.lat,this.globalservice.lon,'place');
+
       }
     })
   }
@@ -55,14 +54,26 @@ export class OperatorComponent implements OnInit {
  }
   ngOnInit() {
     this.date= this.date.getFullYear() + '-'+((this.date.getMonth()+1)/10>1 ? '':'0')+(this.date.getMonth()+1)+'-'+this.date.getDate();
+    setTimeout(()=>{
+      this.getOperators('operator.php');
+      displayLocation(this.globalservice.lat,this.globalservice.lon,'place');
+    },200)
   }
   getOperators(filename):void{
     this.operators=[];    
     this.service.getData(this.id,filename).subscribe(operators=>this.operators=operators)
+    setTimeout(()=>{
+      // console.log(this.operators);
+      // console.log(Object.keys(this.operators).length);
+      // console.log('called from operator');
+      if(Object.keys(this.operators).length==0){
+        this.router.navigateByUrl('/device/'+this.id[0] +'/error')
+      }
+    },100);
   }
   getInfo(filename):void{
     this.info=[];   
-    this.service.getData(this.id,filename).subscribe(info=>this.info=info)
+    this.service.getData(this.id,filename).subscribe(info=>this.info=info);
   }
   generateChart(operator,index){
     this.chart = false;

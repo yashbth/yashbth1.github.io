@@ -191,3 +191,8 @@ export const operator = [
         ""
     ]
 ]
+
+
+export class Device{
+    id:string;
+}

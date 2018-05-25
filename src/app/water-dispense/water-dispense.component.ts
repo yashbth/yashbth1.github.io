@@ -53,7 +53,9 @@ export class WaterDispenseComponent implements OnInit{
     this.info=[];
     this.service.getData(this.id,this.filename).subscribe(info=>this.info=info); 
     setTimeout(()=>{
-      
+      if(Object.keys(this.info).length==0){
+        this.router.navigateByUrl('/device/'+this.id[0] +'/error')
+      }
       let lat = parseInt(this.info[0].Lattitude)
       let lon = parseInt(this.info[0].Longitude)
       while(Math.abs(lat)>100){

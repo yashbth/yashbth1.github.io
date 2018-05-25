@@ -47,6 +47,9 @@ export class TransactionComponent implements OnInit {
     console.log(this.info);
     this.service.getData(this.id,this.filename).subscribe(info=>this.info=info);
     setTimeout(()=>{
+      if(Object.keys(this.info).length==0){
+        this.router.navigateByUrl('/device/'+this.id[0] +'/error')
+      }
       $(document).ready(function(){
             $('#table').DataTable();
             $('.paginate_button').css({"padding":"10px"});

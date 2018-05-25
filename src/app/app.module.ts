@@ -14,9 +14,12 @@ import { SupervisorComponent } from './supervisor/supervisor.component';
 import { OperatorComponent } from './operator/operator.component';
 import { OperatorChartsComponent } from './charts/operatorcharts.component';
 import { SupervisorChartsComponent } from './charts/supervisorcharts.component';
-import { HomeComponent } from './home/home.component';
+
 import { GlobalService } from './global.service';
 import { CookieService } from 'angular2-cookie/services/cookies.service';
+import { SearchDevicesComponent } from './search-devices/search-devices.component';
+import { ErrorComponent } from './error/error.component';
+
 
 
 
@@ -32,7 +35,9 @@ import { CookieService } from 'angular2-cookie/services/cookies.service';
     OperatorComponent,
     OperatorChartsComponent,
     SupervisorChartsComponent,
-    HomeComponent
+    SearchDevicesComponent,
+    ErrorComponent,
+
 
   ],
   imports: [

@@ -46,6 +46,16 @@ export class SupervisorComponent implements OnInit {
   getWaterinfo():void{ 
     this.info=[];
     this.service.getData(this.id,this.filename).subscribe(info=>this.info=info); 
+    // console.log(this.id);
+    setTimeout(()=>{
+      // console.log(this.info);
+      // console.log(Object.keys(this.info).length);
+      if(Object.keys(this.info).length==0){
+        this.router.navigateByUrl('/device/'+this.id[0] +'/error')
+      }
+    },100);
+    
+
 
   }
 

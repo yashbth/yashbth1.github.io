@@ -11,18 +11,19 @@ declare var $ :any;
 })
 export class MachineComponent{
   user = 'Admin';
-  title = 'DashBoard';
+  title = 'Dash-Board';
   param=[];
   url:string;
   id:string;
   dropdownlist = Dropdown; 
   constructor(private router : Router) { }
   ngDoCheck(){
-    $('app-home').addClass('col-sm-10');     
+    $('app-error').addClass('col-sm-10');     
     $('app-water-dispense').addClass('col-sm-10'); 
     $('app-transaction').addClass('col-sm-10');   
     $('app-supervisor').addClass('col-sm-10');
-    $('app-operator').addClass('col-sm-10')
+    $('app-operator').addClass('col-sm-10');   
+
   }
   ngAfterContentChecked(){
     let param=this.router.url.split('/');
@@ -33,4 +34,5 @@ export class MachineComponent{
   toggle(this,id){
     $(id).slideToggle();    
   }
+
 }
