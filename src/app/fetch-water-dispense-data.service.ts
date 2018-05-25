@@ -1,10 +1,16 @@
 import { Injectable } from '@angular/core';
 import {HttpClient,HttpHeaders} from '@angular/common/http'
 import {Observable,of} from 'rxjs'
-import {waterDispenserParam} from './water-dispense/waterDispenserparam'
+import {waterDispenserParam,chartData} from './water-dispense/waterDispenserparam'
 import {Device} from './water-dispense/test'
 import { catchError, map, tap } from 'rxjs/operators';
-let headers = new HttpHeaders().set('Content-Type', 'application/json; charset=UTF-8');
+
+
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type':  'application/json'
+  })
+};
 @Injectable({
   providedIn: 'root'
 })
@@ -32,6 +38,16 @@ export class FetchWaterDispenseDataService {
     term.append('hint',id);
     return this.http.post<Device[]>(this.url+'ids.php',term).pipe(
       catchError(this.handleError('getIds',[]))
+    );
+  }
+  getChartData(filename,id,table,from,to): Observable<waterDispenserParam[]>{
+    let chartData = new FormData();
+    chartData.append('id',id);
+    chartData.append('table',table);
+    chartData.append('from',from);
+    chartData.append('to',to);
+    return this.http.post<waterDispenserParam[]>(this.url + filename,chartData,).pipe(
+      catchError(this.handleError('getChartData',[]))
     );
   }
   private handleError<T> (operation = 'operation', result?: T) {

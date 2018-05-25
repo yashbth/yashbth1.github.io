@@ -9,17 +9,16 @@ import { AppRoutingModule } from './/app-routing.module';
 import { WaterDispenseComponent } from './water-dispense/water-dispense.component';
 import { FetchWaterDispenseDataService } from './fetch-water-dispense-data.service';
 import { ChartsComponent } from './charts/charts.component';
-
 import { TransactionComponent } from './transaction/transaction.component';
-
 import { SupervisorComponent } from './supervisor/supervisor.component';
-
 import { OperatorComponent } from './operator/operator.component';
 import { OperatorChartsComponent } from './charts/operatorcharts.component';
 import { SupervisorChartsComponent } from './charts/supervisorcharts.component';
 
 import { GlobalService } from './global.service';
+import { CookieService } from 'angular2-cookie/services/cookies.service';
 import { SearchDevicesComponent } from './search-devices/search-devices.component';
+import { ErrorComponent } from './error/error.component';
 
 
 
@@ -37,6 +36,7 @@ import { SearchDevicesComponent } from './search-devices/search-devices.componen
     OperatorChartsComponent,
     SupervisorChartsComponent,
     SearchDevicesComponent,
+    ErrorComponent,
 
 
   ],
@@ -47,7 +47,7 @@ import { SearchDevicesComponent } from './search-devices/search-devices.componen
     ChartModule,
     FormsModule
   ],
-  providers: [FetchWaterDispenseDataService,GlobalService],
+  providers: [FetchWaterDispenseDataService,GlobalService,CookieService],
   bootstrap: [AppComponent,MachineComponent]                                                                                                                                                                                                                                                                                                                                                                                                     
 })
 

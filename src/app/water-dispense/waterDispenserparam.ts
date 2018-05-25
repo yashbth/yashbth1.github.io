@@ -7,4 +7,9 @@ export class waterDispenserParam{
     Total_Coin_Count1 : string
     TimeStamp: any
     DeviceID: string
+    
+}
+export class chartData{
+    Total_Volume_Dispensed : string
+    Total_collection_from_card:string
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit,AfterContentChecked ,DoCheck} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router'
 import { Dropdown } from './dropdown'
+import {CookieService} from 'angular2-cookie/core'
 declare var jquery:any;
 declare var $ :any;
 
@@ -11,24 +12,30 @@ declare var $ :any;
 })
 export class MachineComponent{
   user = 'Admin';
-  title = 'Dash-Board';
+  title = 'DASHBOARD';
   param=[];
   url:string;
   id:string;
   dropdownlist = Dropdown; 
-  constructor(private router : Router) { }
+  currDiv: string;
+  
+  constructor(private router : Router,private cookieService : CookieService) { }
+  ngOnIt(){
+    
+  }
   ngDoCheck(){
-    $('app-home').addClass('col-sm-10');     
+    $('app-error').addClass('col-sm-10');     
     $('app-water-dispense').addClass('col-sm-10'); 
     $('app-transaction').addClass('col-sm-10');   
     $('app-supervisor').addClass('col-sm-10');
-    $('app-operator').addClass('col-sm-10');   
-
+    $('app-operator').addClass('col-sm-10')
   }
   ngAfterContentChecked(){
     let param=this.router.url.split('/');
     this.url= param[param.length-1];
     this.id = param[param.length-2];
+    this.currDiv = this.cookieService.get('prevDiv');
+    
   }
   
   toggle(this,id){

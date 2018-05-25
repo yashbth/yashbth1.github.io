@@ -2,7 +2,7 @@
   <div class="container">
         <div class="jumbotron text-center">
                 <h1> {{place}} <span> ( Machine Id : {{info[0]?.DeviceID}} )</span></h1>
-                <span id="deviceLoc"><b>Device located at :</b> <span id="place"></span></span>
+                <span id="deviceLoc"><b>Device located at :</b> <span id="place">{{location}}</span></span>
                 <h1 class="blockquote-footer ">Reset Count: {{info[0]?.Trip_Total_Reset_Count}}</h1> 
         </div>
   </div>
@@ -22,8 +22,8 @@
         <td>{{rowIndex + 1}}</td>
         <td>{{row.Trip_CollectionID}}</td>
         <td>{{row.TimeStamp}}</td>
-        <td>{{row.Trip_Total_Volume_Dispensed}}</td>
-        <td>{{row.Trip_Total_Card_Recharge}}</td>
+        <td>{{row.Trip_Total_Volume_Dispensed}} ml</td>
+        <td>Rs {{row.Trip_Total_Card_Recharge}}</td>
       </tr>
     </tbody>
   </table>
@@ -47,10 +47,10 @@
       <tr *ngFor="let row of info; let rowIndex = index">
           <td>{{rowIndex + 1}}</td>
         <td>{{row.Trip_CollectionID}}</td>
-        <td>Rs. {{row.Trip_Total_CoinCollection}}</td>
-        <td>Rs. {{row.Trip_Total_Card_Recharge}}</td>
-        <td>Rs. {{row.Total_Collection_Sale}}</td>
-        <td>Rs. {{row.Trip_Actual_Amount_Collection}}</td>
+        <td>Rs {{row.Trip_Total_CoinCollection}}</td>
+        <td>Rs {{row.Trip_Total_Card_Recharge}}</td>
+        <td>Rs {{row.Total_Collection_Sale}}</td>
+        <td>Rs {{row.Trip_Actual_Amount_Collection}}</td>
       </tr>
     </tbody>
   </table>

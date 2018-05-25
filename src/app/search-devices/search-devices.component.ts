@@ -1,4 +1,4 @@
-import { Component, OnInit,HostListener, ElementRef ,DoCheck} from '@angular/core';
+import { Component, OnInit,DoCheck} from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, Subject} from 'rxjs';
 import {
@@ -18,8 +18,8 @@ export class SearchDevicesComponent implements OnInit {
   selectId:string;
   devices$ : Observable<Device[]>;
   private searchTerms = new Subject<string>();
-  constructor(private router : Router,private service : FetchWaterDispenseDataService,private el : ElementRef) { }
-  @HostListener('mouseover') onmouseover(id){
+  constructor(private router : Router,private service : FetchWaterDispenseDataService) { }
+  onmouseover(id){
     this.selectId = id;
   }
   ngOnInit() {
@@ -34,16 +34,15 @@ export class SearchDevicesComponent implements OnInit {
     this.searchTerms.next(term);
   }
   selectOther(){
+    console.log(this.selectId)
     this.router.navigateByUrl('/device/'+this.selectId+'/WaterDispenser');
     window.location.reload();
   }
   largewidth(){
-    $('input').animate({"width":"350px"});
-    var width = $('input').outerWidth();
-    $('.search-result').css({"width":width}); 
-  }
-  smallwidth(){
-    $('input').animate({"width":"191px"});
-    
+    $('.nav-search').animate({"width":"350px"},300);
+    setTimeout(()=>{
+      var width = $('.nav-search').outerWidth();
+      $('.search-result').css({"width":width}); 
+    },300)
   }
 }
