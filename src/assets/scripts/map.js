@@ -73,7 +73,7 @@ function getLocation(){
       console.log(devices);
 		}	
 	}
-	xhttp.open("GET","http://localhost/~yashbahetiiitk/swajal_dashboard/src/assets/Php/machines.php",true);
+	xhttp.open("GET","http://localhost:8080/machines.php",true);
 	xhttp.send();
 }
 

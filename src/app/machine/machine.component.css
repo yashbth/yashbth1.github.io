@@ -5,6 +5,11 @@ nav{
     z-index: 100;
     
 }
+.dropdown .active-link{
+    font-weight:800;
+    color: white !important;
+    border-bottom: 1px solid white;
+}
 .navbar-dark{
     background: #33334d;
     box-shadow: 0px 0px 20px black
@@ -47,21 +52,23 @@ a{
 .verticalNav{
     z-index: 0;
     position: fixed;
+    width:16%;
 }
 .spacing{
     padding: 20px;
 }
 
-.spacing h3{
-    text-align: center;
-}
+
 .dropdown{
-  list-style-type: circle;
-  padding: 20px 0px 0px 15px;
+  padding: 20px 0px 0px 0px;
 }
 .dropdown a{
-    font-size: 1em;
-    color: rgb(112, 196, 196) !important;
+    font-size: 0.9em;
+    color: #1cc8e3 !important;
+    font-weight: 500;
+    font-family: 'Arial';
+    text-transform: uppercase;
+    padding-right:0px; 
 }
 .active{
     list-style-type: disc;

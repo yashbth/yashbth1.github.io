@@ -32,3 +32,21 @@ form{
 #deviceLoc{
     font-size: 1.17em;
 }
+.dateRange{
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    font-size: 1.2em;
+}
+button{
+    padding: 3px 15px;
+}
+.pad{
+    padding: 0px 10px; 
+}
+.container{
+    padding-bottom: 100px;
+}
+.sel2{
+    padding-top: 4px;   
+}

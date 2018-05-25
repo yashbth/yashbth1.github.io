@@ -46,6 +46,7 @@ export class SupervisorComponent implements OnInit {
   getWaterinfo():void{ 
     this.info=[];
     this.service.getData(this.id,this.filename).subscribe(info=>this.info=info); 
+    this.cookieService.put('prevDiv','supervisor');    
     // console.log(this.id);
     setTimeout(()=>{
       // console.log(this.info);

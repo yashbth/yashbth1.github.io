@@ -62,10 +62,8 @@ export class OperatorComponent implements OnInit {
   getOperators(filename):void{
     this.operators=[];    
     this.service.getData(this.id,filename).subscribe(operators=>this.operators=operators)
+    this.cookieService.put('prevDiv','operator');    
     setTimeout(()=>{
-      // console.log(this.operators);
-      // console.log(Object.keys(this.operators).length);
-      // console.log('called from operator');
       if(Object.keys(this.operators).length==0){
         this.router.navigateByUrl('/device/'+this.id[0] +'/error')
       }

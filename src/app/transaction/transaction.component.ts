@@ -23,19 +23,13 @@ export class TransactionComponent implements OnInit {
   location : string = this.cookieService.get('location');
 
   constructor(private service : FetchWaterDispenseDataService, private router : Router,private route : ActivatedRoute, private globalservice : GlobalService, private cookieService:CookieService) { 
-    router.events.subscribe((val)=>{
-      if(val instanceof NavigationEnd){
-
-       displayLocation(this.globalservice.lat,this.globalservice.lon,'place');
-        
-      }
-    })
   }
 
   ngOnInit(){
     setTimeout(()=>{
       this.id[0] = this.route.snapshot.paramMap.get('id');
       this.getInfo();
+      displayLocation(this.globalservice.lat,this.globalservice.lon,'place');      
     })
   }
   ngAfterContentChecked(){
@@ -46,6 +40,7 @@ export class TransactionComponent implements OnInit {
     this.info=[];
     console.log(this.info);
     this.service.getData(this.id,this.filename).subscribe(info=>this.info=info);
+    this.cookieService.put('prevDiv','transactionLog');            
     setTimeout(()=>{
       if(Object.keys(this.info).length==0){
         this.router.navigateByUrl('/device/'+this.id[0] +'/error')
@@ -56,7 +51,7 @@ export class TransactionComponent implements OnInit {
            
 
           })
-    },100)
+    },1000)
   }
 
 }

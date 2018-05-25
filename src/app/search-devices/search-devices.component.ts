@@ -1,4 +1,4 @@
-import { Component, OnInit,HostListener, ElementRef ,DoCheck} from '@angular/core';
+import { Component, OnInit,DoCheck} from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, Subject} from 'rxjs';
 import {
@@ -39,7 +39,7 @@ export class SearchDevicesComponent implements OnInit {
     window.location.reload();
   }
   largewidth(){
-    $('.nav-search').animate({"width":"350px"});
+    $('.nav-search').animate({"width":"350px"},300);
     setTimeout(()=>{
       var width = $('.nav-search').outerWidth();
       $('.search-result').css({"width":width}); 
