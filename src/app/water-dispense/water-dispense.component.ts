@@ -18,6 +18,7 @@ declare var displayLocation : any;
   styleUrls: ['./water-dispense.component.css'],
 })
 export class WaterDispenseComponent implements OnInit{
+  dataAvailable : boolean=false;
   property1:string;
   property2:string;
   filename: string; 
@@ -35,32 +36,34 @@ export class WaterDispenseComponent implements OnInit{
   location : string = this.cookieService.get('location');
 
   constructor( private service : FetchWaterDispenseDataService,private router : Router,private route: ActivatedRoute,private globalservice : GlobalService, private cookieService:CookieService){
-    this.fromDate = this.changeDateFormat(this.fromDate);
-    this.toDate = this.changeDateFormat(this.toDate);
-    router.events.subscribe((val)=>{    
-      if (val instanceof NavigationEnd) {
-
-        this.panel = route.snapshot.paramMap.get('panel');  
-        this.id[0] = route.snapshot.paramMap.get('id');  
-        this.panelParameters();
-        if(this.checkRouteChange.indexOf(this.property1)<0){
-          this.getWaterinfo();
-          this.cookieService.put('prevDiv',this.panel);                                                                       
-          this.checkRouteChange.pop();
-          this.checkRouteChange.push(this.property1);
+    router.events.subscribe(()=>{
+      this.dataAvailable=false;
+      this.panelParameters();  
+      this.panel = this.route.snapshot.paramMap.get('panel');  
+      this.id[0] = this.route.snapshot.paramMap.get('id'); 
+      if(this.checkRouteChange.indexOf(this.property1)<0){
+        this.getWaterinfo();
+        this.cookieService.put('prevDiv',this.panel);                                                                       
+        this.checkRouteChange.pop();
+        this.checkRouteChange.push(this.property1);
         } 
-      }   
     })
   }
   ngOnInit(){ 
+    setTimeout(()=>{
+      this.panel = this.route.snapshot.paramMap.get('panel');  
+      this.id[0] = this.route.snapshot.paramMap.get('id');  
+      this.panelParameters();
+      if(this.checkRouteChange.indexOf(this.property1)<0){
+        this.getWaterinfo();
+        this.cookieService.put('prevDiv',this.panel);                                                                       
+        } 
+      
+    })
 
   }
 
 
-  changeDateFormat(date){
-    return date= date.getFullYear() + '-'+((date.getMonth()+1)/10>1 ? '':'0')+(date.getMonth()+1)+'-'+date.getDate();    
-
-  }
   generateGraph(){
     this.dataChange = true;
     this.chartData=[];
@@ -70,12 +73,16 @@ export class WaterDispenseComponent implements OnInit{
     this.info=[];
     this.chartData=[];
     this.service.getData(this.id,this.filename).subscribe(info=>this.info=info); 
-    this.service.getChartData('chart_date.php',this.id,this.table,this.fromDate,this.toDate).subscribe(chartData=>this.chartData=chartData);
+    
     setTimeout(()=>{
+      this.dataAvailable = true;
       if(Object.keys(this.info).length==0){
-        
         this.router.navigateByUrl('/device/'+this.id[0] +'/error')
-      }
+      }                
+      this.fromDate = this.info[0].date;
+      this.toDate = this.info[0].date;
+      this.service.getChartData('chart_date.php',this.id,this.table,this.fromDate,this.toDate).subscribe(chartData=>this.chartData=chartData); 
+
       let lat = parseInt(this.info[0].Lattitude)
       let lon = parseInt(this.info[0].Longitude)
       while(Math.abs(lat)>100){
@@ -94,7 +101,7 @@ export class WaterDispenseComponent implements OnInit{
         
       }
 
-    },500)
+    },1000)
 
   }
 

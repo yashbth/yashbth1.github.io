@@ -2,6 +2,7 @@ import { Component, OnInit,AfterContentChecked ,DoCheck} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router'
 import { Dropdown } from './dropdown'
 import {CookieService} from 'angular2-cookie/core'
+import '../../assets/scripts/collapse.js'
 declare var jquery:any;
 declare var $ :any;
 
@@ -21,14 +22,16 @@ export class MachineComponent{
   
   constructor(private router : Router,private cookieService : CookieService) { }
   ngOnIt(){
-    
+    window.location.reload();
   }
   ngDoCheck(){
     $('app-error').addClass('col-sm-10');     
     $('app-water-dispense').addClass('col-sm-10'); 
     $('app-transaction').addClass('col-sm-10');   
     $('app-supervisor').addClass('col-sm-10');
-    $('app-operator').addClass('col-sm-10')
+    $('app-operator').addClass('col-sm-10');
+    $('body ').css({'background':"whitesmoke"});  
+    
   }
   ngAfterContentChecked(){
     let param=this.router.url.split('/');
@@ -38,8 +41,9 @@ export class MachineComponent{
     
   }
   
-  toggle(this,id){
-    $(id).slideToggle();    
+  toggle(){
+    $('.verticalNav').animate({opacity:"0"},500);
+    $('#verticalCollapse').animate({maxWidth:"0%"},500);    
   }
 
 }

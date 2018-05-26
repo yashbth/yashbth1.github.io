@@ -1,4 +1,6 @@
-<div class="maxHeight">
+<app-loading *ngIf="dataAvailable==false"></app-loading>
+
+<div class="maxHeight" *ngIf="dataAvailable">
     <div class="container">
       <div class="jumbotron text-center">
         <h1> {{place}} <span> ( Machine Id : {{id[0]}} )</span></h1>

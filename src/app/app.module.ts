@@ -19,6 +19,7 @@ import { GlobalService } from './global.service';
 import { CookieService } from 'angular2-cookie/services/cookies.service';
 import { SearchDevicesComponent } from './search-devices/search-devices.component';
 import { ErrorComponent } from './error/error.component';
+import { LoadingComponent } from './loading/loading.component';
 
 
 
@@ -37,6 +38,7 @@ import { ErrorComponent } from './error/error.component';
     SupervisorChartsComponent,
     SearchDevicesComponent,
     ErrorComponent,
+    LoadingComponent,
 
 
   ],
@@ -48,7 +50,7 @@ import { ErrorComponent } from './error/error.component';
     FormsModule
   ],
   providers: [FetchWaterDispenseDataService,GlobalService,CookieService],
-  bootstrap: [AppComponent,MachineComponent]                                                                                                                                                                                                                                                                                                                                                                                                     
+  bootstrap: [AppComponent]                                                                                                                                                                                                                                                                                                                                                                                                     
 })
 
 export class AppModule { }

@@ -17,6 +17,7 @@ declare var displayLocation : any;
   styleUrls: ['./operator.component.css']
 })
 export class OperatorComponent implements OnInit {
+  dataAvailable : boolean =false;
   id=[];
   data = operator;
   date : any=new Date(Date.now());
@@ -34,6 +35,7 @@ export class OperatorComponent implements OnInit {
   constructor(private service : FetchWaterDispenseDataService,private router:Router,private route: ActivatedRoute,private globalservice : GlobalService, private cookieService:CookieService) { 
     router.events.subscribe((val)=>{
       if(val instanceof NavigationEnd){
+        this.dataAvailable=false;
         this.id[0] = route.snapshot.paramMap.get('id');
 
       }
@@ -60,14 +62,16 @@ export class OperatorComponent implements OnInit {
     },200)
   }
   getOperators(filename):void{
+    console.log("called from operator")
     this.operators=[];    
     this.service.getData(this.id,filename).subscribe(operators=>this.operators=operators)
     this.cookieService.put('prevDiv','operator');    
     setTimeout(()=>{
+      this.dataAvailable = true;
       if(Object.keys(this.operators).length==0){
         this.router.navigateByUrl('/device/'+this.id[0] +'/error')
       }
-    },100);
+    },1000);
   }
   getInfo(filename):void{
     this.info=[];   

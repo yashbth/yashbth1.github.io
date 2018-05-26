@@ -1,68 +1,82 @@
-<div>
-  <div class="container">
-        <div class="jumbotron text-center">
-                <h1> {{place}} <span> ( Machine Id : {{info[0]?.DeviceID}} )</span></h1>
-                <span id="deviceLoc"><b>Device located at :</b> <span id="place">{{location}}</span></span>
-                <h1 class="blockquote-footer ">Reset Count: {{info[0]?.Trip_Total_Reset_Count}}</h1> 
+<app-loading *ngIf="dataAvailable==false"></app-loading>
+<div *ngIf="dataAvailable">
+    <div>
+        <div class="container">
+              <div class="jumbotron text-center">
+                      <h1> {{place}} <span> ( Machine Id : {{info[0]?.DeviceID}} )</span></h1>
+                      <span id="deviceLoc"><b>Device located at :</b> <span id="place">{{location}}</span></span>
+                      <h1 class="blockquote-footer ">Reset Count: {{info[0]?.Trip_Total_Reset_Count}}</h1> 
+              </div>
         </div>
-  </div>
-</div>
-<div class="container">
-  <h2></h2>
-  <table id= "table" class="table table-striped text-center">
-    <thead class = 'bold'>
-      <td>SrNo</td>
-      <td>Collection ID</td>
-      <td>Date & Time</td>
-      <th>Total Volume Dispensed</th>
-      <th>Card Recharge</th>
-    </thead>
-    <tbody>
-      <tr *ngFor="let row of info; let rowIndex = index ">
-        <td>{{rowIndex + 1}}</td>
-        <td>{{row.Trip_CollectionID}}</td>
-        <td>{{row.TimeStamp}}</td>
-        <td>{{row.Trip_Total_Volume_Dispensed}} ml</td>
-        <td>Rs {{row.Trip_Total_Card_Recharge}}</td>
-      </tr>
-    </tbody>
-  </table>
-  <br>
-  <br>
-  
-  <h2 style="text-align: center">Sales Data</h2>
-  
-
-  <table class="table table-striped text-center">
-    <thead class="bold">
-
-      <td>SrNo</td>
-      <td>Collection ID</td>
-      <td >Collection from Coins</td>
-      <th>Collection from Card</th>
-      <th>Total Sales</th>
-      <th>Trip Actual Amount Collection</th>
-    </thead>
-    <tbody>
-      <tr *ngFor="let row of info; let rowIndex = index">
-          <td>{{rowIndex + 1}}</td>
-        <td>{{row.Trip_CollectionID}}</td>
-        <td>Rs {{row.Trip_Total_CoinCollection}}</td>
-        <td>Rs {{row.Trip_Total_Card_Recharge}}</td>
-        <td>Rs {{row.Total_Collection_Sale}}</td>
-        <td>Rs {{row.Trip_Actual_Amount_Collection}}</td>
-      </tr>
-    </tbody>
-  </table>
-  <form (ngSubmit)="test()">
-      <div class="form-group">
-          <label for="sel1" >Graph Select :</label>
-          <select class="form-control" [(ngModel)]="property1" name="data">
-          <option *ngFor="let name of data[0]" [value]="name">{{name}}</option>
-           </select>
       </div>
-  </form>
-   
-  <app-supervisor-charts [property1]="property1" [property2]="'TimeStamp'" ></app-supervisor-charts>  
+      <div class="container">
+        <h2></h2>
+        <table id= "table" class="table table-striped text-center">
+          <thead class = 'bold'>
+            <td>SrNo</td>
+            <td>Collection ID</td>
+            <td>Date & Time</td>
+            <th>Total Volume Dispensed</th>
+            <th>Card Recharge</th>
+          </thead>
+          <tbody>
+            <tr *ngFor="let row of info; let rowIndex = index ">
+              <td>{{rowIndex + 1}}</td>
+              <td>{{row.Trip_CollectionID}}</td>
+              <td>{{row.TimeStamp}}</td>
+              <td>{{row.Trip_Total_Volume_Dispensed}} ml</td>
+              <td>Rs {{row.Trip_Total_Card_Recharge}}</td>
+            </tr>
+          </tbody>
+        </table>
+        <br>
+        <br>
+        
+        <h2 style="text-align: center">Sales Data</h2>
+        
+      
+        <table class="table table-striped text-center">
+          <thead class="bold">
+      
+            <td>SrNo</td>
+            <td>Collection ID</td>
+            <td >Collection from Coins</td>
+            <th>Collection from Card</th>
+            <th>Total Sales</th>
+            <th>Trip Actual Amount Collection</th>
+          </thead>
+          <tbody>
+            <tr *ngFor="let row of info; let rowIndex = index">
+                <td>{{rowIndex + 1}}</td>
+              <td>{{row.Trip_CollectionID}}</td>
+              <td>Rs {{row.Trip_Total_CoinCollection}}</td>
+              <td>Rs {{row.Trip_Total_Card_Recharge}}</td>
+              <td>Rs {{row.Total_Collection_Sale}}</td>
+              <td>Rs {{row.Trip_Actual_Amount_Collection}}</td>
+            </tr>
+          </tbody>
+        </table>
+        <form (ngSubmit)="test()">
+            <div class="form-group">
+                <label for="sel1" >Graph Select :</label>
+                <select class="form-control" [(ngModel)]="property1" name="data">
+                <option *ngFor="let name of data[1];let rowIndex = index" [value]="data[0][rowIndex]">{{name}}</option>
+                 </select>
+            </div>
+        </form>
+         
+        <app-supervisor-charts [property1]="property1" [property2]="'TimeStamp'" ></app-supervisor-charts>  
+        <div class="dateRange text-center">
+          <label for="sel2" class="sel2"><b>Select a custom date range to analyze:</b></label>
+          <br>
+          <div class="from_to">
+              <label for="date"><span class="pad">From:</span> <input id="date_from" type="date" name="from" [(ngModel)]="fromDate" ></label>
+              <label><span class="pad"> To:</span><input id="date_to" type="date" name="to" [(ngModel)]="toDate"></label> 
+          </div>
+          <div class="pad">
+              <button type="submit" class="btn btn-secondary" (click)="generateGraph()">Analyse</button>                        
+          </div>
+      </div>
+      </div>
+        
 </div>
-  

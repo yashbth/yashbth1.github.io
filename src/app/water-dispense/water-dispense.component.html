@@ -1,4 +1,5 @@
-<div>
+<app-loading *ngIf="dataAvailable==false"></app-loading>
+<div *ngIf="dataAvailable">
     <div class="container">
         <div class="jumbotron text-center">
                 <h1> {{place}} <span> ( Machine Id : {{info[0]?.DeviceID}} )</span></h1>

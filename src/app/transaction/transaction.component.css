@@ -1,8 +1,8 @@
 span{
     font-size: .7em !important;
 }
-.spacing{
-    padding: 0px 40px;
+.maxHeight{
+    height: -webkit-fill-available;
 }
 #tabel_paginate a{
     padding: 10px;

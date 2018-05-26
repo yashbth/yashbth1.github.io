@@ -193,8 +193,7 @@ export const operator = [
     [
         "Operator Id",
         "Date",
-        "Expected Punches" ,
-        
+        "Expected Punches" ,        
     ],
     [
         "",
