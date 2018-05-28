@@ -5,6 +5,10 @@ import {CookieService} from 'angular2-cookie/core'
 import '../../assets/scripts/collapse.js'
 declare var jquery:any;
 declare var $ :any;
+declare var check : any; 
+
+
+
 
 @Component({
   selector: 'app-machine',
@@ -42,8 +46,17 @@ export class MachineComponent{
   }
   
   toggle(){
-    $('.verticalNav').animate({opacity:"0"},500);
-    $('#verticalCollapse').animate({maxWidth:"0%"},500);    
+    if(check){   
+      $('.verticalNav').animate({opacity:"0",display:"block"},300);
+      $('#verticalCollapse').animate({maxWidth:"0%"},500);
+      check = false;
+    } 
+    else {
+      $('.verticalNav').animate({opacity:"1",display:"block"},1000);
+      $('#verticalCollapse').animate({maxWidth:"16%"},500);  
+      check = true;
+    }
+         
   }
 
 }
