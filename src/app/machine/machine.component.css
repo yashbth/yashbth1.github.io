@@ -92,6 +92,7 @@ a{
 .selected{
     list-style-type: disc;
 }
+
 app-water-dispense{
     overflow-y: scroll;
 }
@@ -111,19 +112,39 @@ app-water-dispense{
     }
     #verticalCollapse{
         max-width: 0%;
-        padding-left: 0px;
+        display: flex;
+        justify-content: center
     }
     .navbar-brand{
         padding-left: 1em;
     }
+    h3 {
+        font-size: 2vw;
+    }
+    h6{
+        font-size: 1.5vw;
+    }
+    .verticalNav a{
+        font-size: 1.6vw;
+        
+    }
 }
 @media only screen and (max-width : 792px) {
-    ul{
+    .Settings{
         display: none;
     }
     .navbar-brand{
         padding:0px 20px;
         margin-right: 0px; 
     }
-
+    h3 {
+        font-size: 2.5vw;
+    }
+    h6{
+        font-size: 2vw;
+    }
+    .verticalNav a{
+        font-size: 2.2vw;
+        
+    }
 }

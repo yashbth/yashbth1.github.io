@@ -26,6 +26,7 @@ export class FetchWaterDispenseDataService {
     let data = new FormData();
     data.append('id',id[0]);
     data.append('operatorId',id[1]);
+    data.append('date',id[2]);
     return this.http.post<waterDispenserParam[]>(this.url+filename,data).pipe(
       catchError(this.handleError('getData',[]))
     );
