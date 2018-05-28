@@ -6,9 +6,9 @@ import '../../assets/scripts/collapse.js'
 declare var jquery:any;
 declare var $ :any;
 declare var check : any; 
-
-
-
+declare function class10() : any;
+declare function class12() : any;
+declare function class3_9() : any;
 
 @Component({
   selector: 'app-machine',
@@ -29,13 +29,14 @@ export class MachineComponent{
     window.location.reload();
   }
   ngDoCheck(){
-    $('app-error').addClass('col-sm-10');     
-    $('app-water-dispense').addClass('col-sm-10'); 
-    $('app-transaction').addClass('col-sm-10');   
-    $('app-supervisor').addClass('col-sm-10');
-    $('app-operator').addClass('col-sm-10');
-    $('body ').css({'background':"whitesmoke"});  
-    
+    if(window.innerWidth>1300){
+      $('app-error').addClass('col-sm-10');     
+      $('app-water-dispense').addClass('col-sm-10'); 
+      $('app-transaction').addClass('col-sm-10');   
+      $('app-supervisor').addClass('col-sm-10');
+      $('app-operator').addClass('col-sm-10');
+    }
+    $('body ').css({'background':"whitesmoke"});   
   }
   ngAfterContentChecked(){
     let param=this.router.url.split('/');
@@ -46,14 +47,18 @@ export class MachineComponent{
   }
   
   toggle(){
-    if(check){   
-      $('.verticalNav').animate({opacity:"0",display:"block"},300);
+    if(check){  
+      $('.verticalNav').animate({opacity:"0"},600);
       $('#verticalCollapse').animate({maxWidth:"0%"},500);
+      setTimeout(()=>{
+        class12();
+      },500)             
       check = false;
     } 
-    else {
-      $('.verticalNav').animate({opacity:"1",display:"block"},1000);
-      $('#verticalCollapse').animate({maxWidth:"16%"},500);  
+    else { 
+      class3_9(); 
+      $('.verticalNav').animate({opacity:"1"},1000);
+      $('#verticalCollapse').animate({maxWidth:"40%"},500);  
       check = true;
     }
          

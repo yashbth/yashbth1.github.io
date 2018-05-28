@@ -4,7 +4,7 @@
   <div class="nav">
     <nav class="navbar navbar-expand-sm  navbar-dark fixed-top">
       <span>
-          <span id="toggleButton" class="bars"></span>
+          <span id="toggleButton" class="bars" (click)="toggle()" ></span>
           <!-- Brand/logo -->
           <span class="col-sm-10">
               <a class="navbar-brand text-center" href=""><span id="enlarge">S</span>WA<span id="fontColor">JAL</span></a>
@@ -14,7 +14,7 @@
 
       
       <!-- Links -->
-      <ul class="navbar-nav">
+      <ul class="navbar-nav Settings">
         <app-search-devices></app-search-devices>
         <li class="nav-item pad">
           <a class="nav-link" href="#">Settings</a>
