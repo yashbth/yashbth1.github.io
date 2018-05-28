@@ -13,10 +13,7 @@ function initialize() {
         var id = '\"'+ device.DEVICEID+'\"';
         marker.push(WE.marker([lat, lon]).addTo(earth));  
         displayLocation(lat,lon,device.DEVICEID) ; 
-        console.log('called cookie');
         document.cookie="test=call";
-        console.log(getCookie('location'));  
-        console.log(' ');
         marker[marker.length-1].bindPopup("<b>Device Located At <span id='"+ device.DEVICEID +"'>"+getCookie('location')+"</span></b><br><br /><span style='font-size:10px;color:#999'>Device Id : "+id+"</span><button type='button' onclick='redirect("+id+")'>Analyse</button>", {maxWidth: 150, closeButton: false});
 
       }
@@ -24,7 +21,7 @@ function initialize() {
       var markerCustom = WE.marker([50, -9], '/img/logo-webglearth-black-100.png', 100, 24).addTo(earth);      
       earth.setView([28.61, 77.6], 6);
       
-    },1000)
+    },500)
 
 }
 
@@ -46,19 +43,9 @@ function displayLocation(latitude,longitude,id){
         var data = JSON.parse(request.responseText);
         var address = data.results[0];
         var location = address.formatted_address;
-
-            console.log('called device id just before assigning to innertext');
-            console.log(id);
-            var devId = String(id);
-            console.log('called devId');
-            console.log(devId);
+        var devId = String(id);
         document.getElementById(id).innerText= location;
-        console.log('called location before assigning to cookie');
-        console.log(location);
         document.cookie = "location="+location;
-        
-
-        
       }
     };
     request.send();
@@ -70,10 +57,9 @@ function getLocation(){
 	xhttp.onreadystatechange = function(){
 		if(this.readyState==4 && this.status ==200){
       devices=JSON.parse(this.responseText);
-      console.log(devices);
 		}	
 	}
-	xhttp.open("GET","http://localhost:8080/machines.php",true);
+	xhttp.open("GET","http://localhost:8000/machines.php",true);
 	xhttp.send();
 }
 

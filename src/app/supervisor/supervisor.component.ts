@@ -16,7 +16,7 @@ declare var displayLocation : any;
   styleUrls: ['./supervisor.component.css']
 })
 export class SupervisorComponent implements OnInit {
-
+  dataAvailable :boolean = false;
   property1:string;
   filename: string; 
   id = [];
@@ -25,10 +25,16 @@ export class SupervisorComponent implements OnInit {
   checkRouteChange=['waterPanel'] ;
   data = [];
   location : string = this.cookieService.get('location');
+  fromDate : any;
+  toDate : any;
+  chartData =[];
+  table : string = 'SuperVisor_Login';
+  dataChange :boolean=true;
 
   constructor( private service : FetchWaterDispenseDataService,private router : Router,private route: ActivatedRoute,private globalservice : GlobalService, private cookieService:CookieService){
     router.events.subscribe((val)=>{    
-      if (val instanceof NavigationEnd) { 
+      if (val instanceof NavigationEnd) {
+        this.dataAvailable= false;         
         displayLocation(this.globalservice.lat,this.globalservice.lon,'place');
         this.id[0] = route.snapshot.paramMap.get('id');                                                       
         this.panelParameters();
@@ -42,19 +48,27 @@ export class SupervisorComponent implements OnInit {
   }
   ngOnInit() {    
   }
+  generateGraph(){
+    this.dataChange = true;
+    this.chartData=[];
+    this.service.getChartData('chart_date.php',this.id,this.table,this.fromDate,this.toDate).subscribe(chartData=>this.chartData=chartData);    
+  }
 
   getWaterinfo():void{ 
     this.info=[];
     this.service.getData(this.id,this.filename).subscribe(info=>this.info=info); 
     this.cookieService.put('prevDiv','supervisor');    
-    // console.log(this.id);
+    console.log("called from supervisor");
     setTimeout(()=>{
-      // console.log(this.info);
-      // console.log(Object.keys(this.info).length);
+      this.dataAvailable= true;
       if(Object.keys(this.info).length==0){
         this.router.navigateByUrl('/device/'+this.id[0] +'/error')
       }
-    },100);
+      this.fromDate = this.info[0].date;
+      this.toDate = this.info[0].date
+      this.service.getChartData('chart_date.php',this.id,this.table,this.fromDate,this.toDate).subscribe(chartData=>this.chartData=chartData); 
+
+    },1000);
     
 
 

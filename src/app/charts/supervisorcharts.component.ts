@@ -2,7 +2,7 @@ import { Component, OnInit,Input, ViewChild,AfterViewInit,AfterContentChecked,On
 import {Chart} from 'chart.js';
 import { Router, NavigationEnd } from '@angular/router';
 import { SupervisorComponent } from '../supervisor/supervisor.component';
-
+import {supervisorData} from '../water-dispense/test'
 declare var jquery:any;
 declare var $ :any; 
 
@@ -27,30 +27,36 @@ export class SupervisorChartsComponent implements OnInit {
   data : any;
   options: any;
   checkGraph : boolean=true;
+  label : string;
+  labelString: string;
   constructor(private supervisor : SupervisorComponent,private router : Router) { 
   }
   ngOnInit(){
     setTimeout(()=>{
       console.log(this.router.url)
       this.chartData = this.supervisor;
-      this.ConvertIntoArray(this.chartData.info,this._property1,this.property2);
-      this.Chart('bar');
+      this.ConvertIntoArray(this.chartData.chartData,this._property1,this.property2);
+      this.Chart('line');
     },100);
 
   }
   ngAfterContentChecked(){
-    if(this.checkGraph){
-      this.ConvertIntoArray(this.chartData.info,this._property1,this.property2);
-      this.Chart('bar');
-      if(this.chartData.info[0][this._property1]){
+    if(this.checkGraph || this.chartData.dataChange){
+      let index = supervisorData[0].indexOf(this._property1); 
+      this.label = supervisorData[1][index];  
+      this.labelString = supervisorData[1][index]+(supervisorData[2][index]?' (in ':'')+supervisorData[2][index]+(supervisorData[2][index]?')':'');
+      this.ConvertIntoArray(this.chartData.chartData,this._property1,this.property2);
+      this.Chart('line');
+      if(this.chartData.chartData.length){
         this.checkGraph = false;
+        this.chartData.dataChange = false;
       }
     }
   }
   
   ngOnChanges(){
-    this.ConvertIntoArray(this.chartData.info,this._property1,this.property2);
-    this.Chart('bar');
+    this.ConvertIntoArray(this.chartData.chartData,this._property1,this.property2);
+    this.Chart('line');
   }
 
   Chart(type:string){
@@ -58,15 +64,10 @@ export class SupervisorChartsComponent implements OnInit {
     this.data= {
       labels : this.Data2,
         datasets: [{
-            label: this._property1,
+            label: this.label,
             data: this.Data1,
             backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
+                'rgba(255, 255,255,0)',
             ],
             borderColor: [
                 'rgba(255,99,132,1)',
@@ -76,21 +77,19 @@ export class SupervisorChartsComponent implements OnInit {
                 'rgba(153, 102, 255, 1)',
                 'rgba(255, 159, 64, 1)'
             ],
-            borderWidth: 1
+            borderWidth: 1,
+            lineTension : 0
         },
-        {
-          label: 'Line Dataset',
-          data: [1500,0, 600, 1250, 500,0,0,0,200,0],
-          backgroundColor: ['skyblue'],
-          // Changes this dataset to become a line
-          type: 'bar'
-        }
       ]
       
     };
     this.options= {
         scales: {
             yAxes: [{
+              scaleLabel:{
+                display :true,
+                labelString : this.labelString
+                },
                 ticks: {
                     beginAtZero:true
                 }
