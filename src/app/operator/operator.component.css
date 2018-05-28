@@ -3,7 +3,7 @@
 
 }
 .maxHeight{
-    height: -webkit-fill-available;
+    height:stretch;
 }
 h1 span{
     font-size: 0.7em;

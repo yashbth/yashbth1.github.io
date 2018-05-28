@@ -1,14 +1,17 @@
+.container-fluid{
+    background-color: whitesmoke;
+}
 nav{
     width:100%;
     color: white;
-    justify-content: space-between;;
+    justify-content: space-between;
     z-index: 100;
     
 }
 .dropdown .active-link{
     font-weight:800;
     color: white !important;
-    border-bottom: 1px solid white;
+    border: 1px solid white;
 }
 .navbar-dark{
     background: #33334d;
@@ -53,11 +56,11 @@ a{
     z-index: 0;
     position: fixed;
     width:16%;
+    display: block;
 }
 .spacing{
     padding: 20px;
 }
-
 
 .dropdown{
   padding: 20px 0px 0px 0px;
@@ -100,3 +103,27 @@ app-water-dispense{
 .pad a{ 
     padding-top: 5px;
 } 
+
+/* FOR WIDTH<1300px */
+@media only screen and (max-width : 1300px){
+    .verticalNav{
+        opacity: 0;
+    }
+    #verticalCollapse{
+        max-width: 0%;
+        padding-left: 0px;
+    }
+    .navbar-brand{
+        padding-left: 1em;
+    }
+}
+@media only screen and (max-width : 792px) {
+    ul{
+        display: none;
+    }
+    .navbar-brand{
+        padding:0px 20px;
+        margin-right: 0px; 
+    }
+
+}

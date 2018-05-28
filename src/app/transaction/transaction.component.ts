@@ -15,6 +15,7 @@ declare var displayLocation : any;
   styleUrls: ['./transaction.component.css'],
 })
 export class TransactionComponent implements OnInit {
+  dataAvailable : Boolean = false
   private id =[];
   place: string = "New Delhi Cluster"
   private filename : string='transactionLog.php';
@@ -38,10 +39,11 @@ export class TransactionComponent implements OnInit {
 
   getInfo(){
     this.info=[];
-    console.log(this.info);
+    console.log("called from transaction");
     this.service.getData(this.id,this.filename).subscribe(info=>this.info=info);
     this.cookieService.put('prevDiv','transactionLog');            
     setTimeout(()=>{
+      this.dataAvailable =true;
       if(Object.keys(this.info).length==0){
         this.router.navigateByUrl('/device/'+this.id[0] +'/error')
       }

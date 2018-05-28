@@ -1,0 +1,27 @@
+<div class="container text-center" *ngIf="router.url!='/'">
+    <div class="loading">
+        <div class="loading-1"></div>
+        <div class="loading-2"></div>
+        <div class="loading-3"></div>
+        <div class="loading-4"></div>
+        <div class="loading-5"></div>
+        <div class="loading-6"></div>
+        <div class="loading-7"></div>
+        <div class="loading-8"></div>
+        <div class="loading-9"></div>
+        <div class="loading-10"></div>
+      </div>
+</div>
+
+<div *ngIf="router.url=='/' && timeout">
+    <div class="e-loadholder">
+        <div class="m-loader">
+            <span class="e-text">Locating</span>
+        </div>
+    </div>
+    <div id="particleCanvas-Blue"></div>
+    <div id="particleCanvas-White"></div>
+</div>
+
+
+

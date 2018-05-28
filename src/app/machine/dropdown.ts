@@ -1,5 +1,5 @@
 export const Dropdown : Object[]=[{
-        division : 'Water Dispensing Panel',
+        division : 'Water Dispensing',
         id: 'WaterDispenser',
         link1 : 'link1',
         link2 : 'link2',
@@ -20,7 +20,7 @@ export const Dropdown : Object[]=[{
         link3 : 'link3',
     },
     {
-        division : 'Operator',
+        division : 'Operator ',
         id: 'operator',
         link1 : 'link1',
         link2 : 'link2',
@@ -34,7 +34,7 @@ export const Dropdown : Object[]=[{
         link3 : 'link3',
     },
     {
-        division : 'Supervisor Attendance',
+        division : 'Supervisor',
         id: 'supervisor',
         link1 : 'link1',
         link2 : 'link2',

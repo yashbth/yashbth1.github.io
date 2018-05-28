@@ -36,12 +36,11 @@ export class ChartsComponent implements OnInit {
   constructor(private water : WaterDispenseComponent,private router : Router) { 
   }
   ngOnInit(){
-    setTimeout(()=>{
-      console.log(this.router.url)
-      this.chartData = this.water;
+    this.chartData = this.water;
+    if(this.chartData.chartData.length){
       this.ConvertIntoArray(this.chartData.chartData,this._property1,this.property2);
       this.Chart('line');
-    },100);
+    }
 
   }
   ngAfterContentChecked(){
