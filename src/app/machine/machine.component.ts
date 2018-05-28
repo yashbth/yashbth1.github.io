@@ -36,6 +36,13 @@ export class MachineComponent{
       $('app-supervisor').addClass('col-sm-10');
       $('app-operator').addClass('col-sm-10');
     }
+    else if ( window.innerWidth<=1300){
+      $('app-error').addClass('col-sm-9').removeClass('col-sm-10');     
+      $('app-water-dispense').addClass('col-sm-9').removeClass('col-sm-10'); 
+      $('app-transaction').addClass('col-sm-9').removeClass('col-sm-10');   
+      $('app-supervisor').addClass('col-sm-9').removeClass('col-sm-10');
+      $('app-operator').addClass('col-sm-9').removeClass('col-sm-10');
+    }
     $('body ').css({'background':"whitesmoke"});   
   }
   ngAfterContentChecked(){
@@ -47,7 +54,8 @@ export class MachineComponent{
   }
   
   toggle(){
-    if(check){  
+    if(check){    
+      $('#verticalCollapse').removeClass('col-sm-3');
       $('.verticalNav').animate({opacity:"0"},600);
       $('#verticalCollapse').animate({maxWidth:"0%"},500);
       setTimeout(()=>{
@@ -55,7 +63,7 @@ export class MachineComponent{
       },500)             
       check = false;
     } 
-    else { 
+    else {
       class3_9(); 
       $('.verticalNav').animate({opacity:"1"},1000);
       $('#verticalCollapse').animate({maxWidth:"40%"},500);  
