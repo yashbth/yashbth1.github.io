@@ -2,8 +2,8 @@ import { Component, OnInit,Input, ViewChild,AfterViewInit,AfterContentChecked,On
 import {Chart} from 'chart.js';
 import {WaterDispenseComponent} from '../water-dispense/water-dispense.component'
 import {waterDispenserParam} from '../water-dispense/waterDispenserparam'
-import { Router, NavigationEnd } from '@angular/router';
-import { WaterDispenseData,RoData,CupDispenseData } from '../water-dispense/test';
+import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
+import { Cluster } from '../delhiCluster';
 import { ThrowStmt } from '@angular/compiler';
 
 
@@ -33,7 +33,10 @@ export class ChartsComponent implements OnInit {
   label : string;
   labelString:string;
   checkGraph : boolean=true;
-  constructor(private water : WaterDispenseComponent,private router : Router) { 
+  cluster :string
+
+  constructor(private water : WaterDispenseComponent,private Cluster : Cluster,private router : Router,private route: ActivatedRoute) { 
+    this.cluster = route.snapshot.paramMap.get('cluster');
   }
   ngOnInit(){
     this.chartData = this.water;
@@ -45,20 +48,20 @@ export class ChartsComponent implements OnInit {
   }
   ngAfterContentChecked(){
     if(this.checkGraph || this.chartData.dataChange){
-      if(WaterDispenseData[0].indexOf(this._property1)>=0){
-        let index = WaterDispenseData[0].indexOf(this._property1); 
-        this.label = WaterDispenseData[1][index];  
-        this.labelString = WaterDispenseData[1][index]+(WaterDispenseData[2][index]?' (in ':'')+WaterDispenseData[2][index]+(WaterDispenseData[2][index]?')':'');
+      if(this.Cluster[this.cluster].WaterDispenseData[0].indexOf(this._property1)>=0){
+        let index = this.Cluster[this.cluster].WaterDispenseData[0].indexOf(this._property1); 
+        this.label = this.Cluster[this.cluster].WaterDispenseData[1][index];  
+        this.labelString = this.Cluster[this.cluster].WaterDispenseData[1][index]+(this.Cluster[this.cluster].WaterDispenseData[2][index]?' (in ':'')+this.Cluster[this.cluster].WaterDispenseData[2][index]+(this.Cluster[this.cluster].WaterDispenseData[2][index]?')':'');
       }
-      else if(RoData[0].indexOf(this._property1)>=0){
-        let index = RoData[0].indexOf(this._property1);
-        this.label = RoData[1][index];          
-        this.labelString =  RoData[1][index]+(RoData[2][index]?' (in ':'')+RoData[2][index]+(RoData[2][index]?')':'');
+      else if(this.Cluster[this.cluster].RoData[0].indexOf(this._property1)>=0){
+        let index = this.Cluster[this.cluster].RoData[0].indexOf(this._property1);
+        this.label = this.Cluster[this.cluster].RoData[1][index];          
+        this.labelString =  this.Cluster[this.cluster].RoData[1][index]+(this.Cluster[this.cluster].RoData[2][index]?' (in ':'')+this.Cluster[this.cluster].RoData[2][index]+(this.Cluster[this.cluster].RoData[2][index]?')':'');
       }
-      else if (CupDispenseData[0].indexOf(this._property1)>=0){
-        let index = CupDispenseData[0].indexOf(this._property1);
-        this.label = CupDispenseData[1][index];          
-        this.labelString =  CupDispenseData[1][index]+(CupDispenseData[2][index]?' (in ':'')+CupDispenseData[2][index]+(CupDispenseData[2][index]?')':'');
+      else if (this.Cluster[this.cluster].CupDispenseData[0].indexOf(this._property1)>=0){
+        let index = this.Cluster[this.cluster].CupDispenseData[0].indexOf(this._property1);
+        this.label = this.Cluster[this.cluster].CupDispenseData[1][index];          
+        this.labelString =  this.Cluster[this.cluster].CupDispenseData[1][index]+(this.Cluster[this.cluster].CupDispenseData[2][index]?' (in ':'')+this.Cluster[this.cluster].CupDispenseData[2][index]+(this.Cluster[this.cluster].CupDispenseData[2][index]?')':'');
       }
       this.ConvertIntoArray(this.chartData.chartData,this._property1,this.property2);
       this.Chart('line');

@@ -1,8 +1,8 @@
 import { Component, OnInit,Input, ViewChild,AfterViewInit,AfterContentChecked,OnChanges,AfterViewChecked,AfterContentInit} from '@angular/core';
 import {Chart} from 'chart.js';
-import { Router, NavigationEnd } from '@angular/router';
+import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { SupervisorComponent } from '../supervisor/supervisor.component';
-import {supervisorData} from '../water-dispense/test'
+import {Cluster} from '../delhiCluster'
 declare var jquery:any;
 declare var $ :any; 
 
@@ -15,6 +15,7 @@ declare var $ :any;
 export class SupervisorChartsComponent implements OnInit {
   private _property1: string;
   private chartData : any;
+  cluster : string;
   @Input() 
   set property1(property1:string){
     this._property1=property1;
@@ -29,11 +30,11 @@ export class SupervisorChartsComponent implements OnInit {
   checkGraph : boolean=true;
   label : string;
   labelString: string;
-  constructor(private supervisor : SupervisorComponent,private router : Router) { 
+  constructor(private supervisor : SupervisorComponent,private Cluster : Cluster,private router : Router,private route : ActivatedRoute) { 
   }
   ngOnInit(){
     setTimeout(()=>{
-      console.log(this.router.url)
+      this.cluster = this.route.snapshot.paramMap.get('cluster');
       this.chartData = this.supervisor;
       this.ConvertIntoArray(this.chartData.chartData,this._property1,this.property2);
       this.Chart('line');
@@ -42,9 +43,9 @@ export class SupervisorChartsComponent implements OnInit {
   }
   ngAfterContentChecked(){
     if(this.checkGraph || this.chartData.dataChange){
-      let index = supervisorData[0].indexOf(this._property1); 
-      this.label = supervisorData[1][index];  
-      this.labelString = supervisorData[1][index]+(supervisorData[2][index]?' (in ':'')+supervisorData[2][index]+(supervisorData[2][index]?')':'');
+      let index = this.Cluster[this.cluster].supervisorData[0].indexOf(this._property1); 
+      this.label = this.Cluster[this.cluster].supervisorData[1][index];  
+      this.labelString = this.Cluster[this.cluster].supervisorData[1][index]+(this.Cluster[this.cluster].supervisorData[2][index]?' (in ':'')+this.Cluster[this.cluster].supervisorData[2][index]+(this.Cluster[this.cluster].supervisorData[2][index]?')':'');
       this.ConvertIntoArray(this.chartData.chartData,this._property1,this.property2);
       this.Chart('line');
       if(this.chartData.chartData.length){

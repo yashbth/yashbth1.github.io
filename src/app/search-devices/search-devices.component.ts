@@ -1,11 +1,12 @@
 import { Component, OnInit,DoCheck} from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Observable, Subject} from 'rxjs';
 import {
   debounce,distinctUntilChanged,switchMap, debounceTime
 } from 'rxjs/operators'
-import {Device} from '../water-dispense/test'
+import {Cluster} from '../delhiCluster'
 import {FetchWaterDispenseDataService} from '../fetch-water-dispense-data.service'
+import { CookieService } from 'angular2-cookie/core';
 
 declare var $ : any;
 
@@ -16,26 +17,29 @@ declare var $ : any;
 })
 export class SearchDevicesComponent implements OnInit {
   selectId:string;
-  devices$ : Observable<Device[]>;
+  cluster : string;
+  table : string = 'Water_Dispensing_Panel'
+  devices$ : Observable<Cluster[]>;
   private searchTerms = new Subject<string>();
-  constructor(private router : Router,private service : FetchWaterDispenseDataService) { }
+  constructor(private router : Router,private service : FetchWaterDispenseDataService,private route : ActivatedRoute,private cookieService: CookieService) { 
+  }
   onmouseover(id){
     this.selectId = id;
   }
   ngOnInit() {
     this.devices$ = this.searchTerms.pipe(debounceTime(300),distinctUntilChanged(),switchMap((term:string)=>
-      this.service.getIds(term))
+      this.service.getIds(term,this.table))
   );
+    
   }
   ngDoCheck(){
-
   }
   search(term:string){
     this.searchTerms.next(term);
   }
-  selectOther(){
-    console.log(this.selectId)
-    this.router.navigateByUrl('/device/'+this.selectId+'/WaterDispenser');
+  selectOther(){   
+     this.cluster=this.cookieService.get('cluster');    
+    this.router.navigateByUrl('/'+this.cluster+'/'+this.selectId+'/WaterDispenser');
     window.location.reload();
   }
   largewidth(){

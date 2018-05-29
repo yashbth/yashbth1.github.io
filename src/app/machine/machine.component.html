@@ -36,7 +36,7 @@
                 <br>
                 <ul class="navbar-nav text-center">
                     <li class="nav-item dropdown text-center" *ngFor="let nav of dropdownlist" >
-                        <a class="nav-link text-center" routerLink="/device/{{id}}/{{nav.id}}"   id="navbardrop" routerLinkActiveOptions="{exact:true}" [class.active-link]="nav.id==currDiv" >
+                        <a class="nav-link text-center" routerLink="/{{cluster}}/{{id}}/{{nav.id}}"   id="navbardrop" routerLinkActiveOptions="{exact:true}" [class.active-link]="nav.id==currDiv" >
                           {{nav.division}}
                         </a>
                       </li>
