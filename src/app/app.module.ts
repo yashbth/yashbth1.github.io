@@ -20,6 +20,7 @@ import { CookieService } from 'angular2-cookie/services/cookies.service';
 import { SearchDevicesComponent } from './search-devices/search-devices.component';
 import { ErrorComponent } from './error/error.component';
 import { LoadingComponent } from './loading/loading.component';
+import { Cluster } from './delhiCluster';
 
 
 
@@ -40,7 +41,6 @@ import { LoadingComponent } from './loading/loading.component';
     ErrorComponent,
     LoadingComponent,
 
-
   ],
   imports: [
     BrowserModule,
@@ -49,7 +49,7 @@ import { LoadingComponent } from './loading/loading.component';
     ChartModule,
     FormsModule
   ],
-  providers: [FetchWaterDispenseDataService,GlobalService,CookieService],
+  providers: [FetchWaterDispenseDataService,GlobalService,CookieService,Cluster],
   bootstrap: [AppComponent]                                                                                                                                                                                                                                                                                                                                                                                                     
 })
 

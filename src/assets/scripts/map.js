@@ -18,7 +18,7 @@ function initialize() {
 
       }
       
-      var markerCustom = WE.marker([50, -9], '/img/logo-webglearth-black-100.png', 100, 24).addTo(earth);      
+      // var markerCustom = WE.marker([50, -9], '/img/logo-webglearth-black-100.png', 100, 24).addTo(earth);      
       earth.setView([28.61, 77.6], 6);
       
     },500)
@@ -59,8 +59,9 @@ function getLocation(){
       devices=JSON.parse(this.responseText);
 		}	
 	}
-	xhttp.open("GET","http://localhost:8000/machines.php",true);
-	xhttp.send();
+  xhttp.open("POST","http://localhost:8000/assets/Php/machines.php",true);
+  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xhttp.send("table=Water_Dispensing_Panel");
 }
 
 function lanAndlon(param){

@@ -1,22 +1,15 @@
+<?php require_once("./db_connection.php"); ?>
 <?php
 
     header("Access-Control-Allow-Origin: *");
     header("Access-Control-Allow-Methods: GET, POST, PATCH,PUT, DELETE, OPTIONS");
     header("Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token");
     
-    $username = "root";
-    $password = "yashX8mysql";
-    $hostname = "localhost";
-    $dbname = "swajal";
 
     $id = $_POST['id'];
-    $conn = new mysqli($hostname,$username,$password,$dbname);
-
-
-    if($conn->connect_error){
-        die("Connection Failed : " . $conn->connect_error);
-    }
-    $sql = "SELECT * FROM Transaction_logging WHERE DeviceID='$id' LIMIT 100";
+        $table = $_POST['table'];
+        
+    $sql = "SELECT * FROM $table WHERE DeviceID='$id' LIMIT 100";
     $result = $conn->query($sql);
     $all_rows = array();
     if($result->num_rows>0){

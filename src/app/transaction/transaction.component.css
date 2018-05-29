@@ -26,4 +26,5 @@ th span{
 }
 .table-responsive-sm{
     padding : 2em;
+    overflow-x: scroll
 }

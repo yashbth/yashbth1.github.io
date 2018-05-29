@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient,HttpHeaders} from '@angular/common/http'
 import {Observable,of} from 'rxjs'
 import {waterDispenserParam,chartData} from './water-dispense/waterDispenserparam'
-import {Device} from './water-dispense/test'
+import {Cluster} from './delhiCluster'
 import { catchError, map, tap } from 'rxjs/operators';
 
 
@@ -16,28 +16,30 @@ const httpOptions = {
 })
 export class FetchWaterDispenseDataService {
 
-  private url = 'http://localhost:8000/';
+  private url = 'http://localhost:8000/assets/Php/';
 
   
   constructor(private http : HttpClient) {
    }
 
-  getData(id,filename) : Observable<waterDispenserParam[]>{
+  getData(id,table,filename) : Observable<waterDispenserParam[]>{
     let data = new FormData();
     data.append('id',id[0]);
+    data.append('table',table);
     data.append('operatorId',id[1]);
     data.append('date',id[2]);
     return this.http.post<waterDispenserParam[]>(this.url+filename,data).pipe(
       catchError(this.handleError('getData',[]))
     );
   }
-  getIds(id:string):Observable<Device[]>{
+  getIds(id:string,table: string):Observable<Cluster[]>{
     let term = new FormData();
     if(!id.trim()){
       return of([])
     }
     term.append('hint',id);
-    return this.http.post<Device[]>(this.url+'ids.php',term).pipe(
+    term.append('table',table);
+    return this.http.post<Cluster[]>(this.url+'ids.php',term).pipe(
       catchError(this.handleError('getIds',[]))
     );
   }

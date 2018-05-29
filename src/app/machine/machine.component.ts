@@ -1,5 +1,5 @@
 import { Component, OnInit,AfterContentChecked ,DoCheck} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router'
+import {ActivatedRoute, Router, NavigationEnd} from '@angular/router'
 import { Dropdown } from './dropdown'
 import {CookieService} from 'angular2-cookie/core'
 import '../../assets/scripts/collapse.js'
@@ -23,12 +23,16 @@ export class MachineComponent{
   id:string;
   dropdownlist = Dropdown; 
   currDiv: string;
+  cluster: string;
   
-  constructor(private router : Router,private cookieService : CookieService) { }
+  constructor(private router : Router,private cookieService : CookieService,private route : ActivatedRoute) {
+
+   }
   ngOnIt(){
     window.location.reload();
   }
   ngDoCheck(){
+    this.cluster = this.cookieService.get('cluster');    
     if(window.innerWidth>1300){
       $('app-error').addClass('col-sm-10');     
       $('app-water-dispense').addClass('col-sm-10'); 
