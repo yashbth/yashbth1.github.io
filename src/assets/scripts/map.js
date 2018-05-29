@@ -59,7 +59,7 @@ function getLocation(){
       devices=JSON.parse(this.responseText);
 		}	
 	}
-  xhttp.open("POST","http://localhost:8000/assets/Php/machines.php",true);
+  xhttp.open("POST","http://localhost/~yashbahetiiitk/yashbth.github.io/src/assets/Php/machines.php",true);
   xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
   xhttp.send("table=Water_Dispensing_Panel");
 }

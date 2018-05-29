@@ -16,7 +16,7 @@ const httpOptions = {
 })
 export class FetchWaterDispenseDataService {
 
-  private url = 'http://localhost:8000/assets/Php/';
+  private url = 'http://localhost/~yashbahetiiitk/yashbth.github.io/src/assets/Php/';
 
   
   constructor(private http : HttpClient) {
