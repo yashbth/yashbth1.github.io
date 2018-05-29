@@ -79,7 +79,9 @@ export class WaterDispenseComponent implements OnInit{
     
     setTimeout(()=>{
       this.dataAvailable = true;
+      console.log(this.info);
       if(Object.keys(this.info).length==0){
+        
         this.router.navigateByUrl('/'+this.cluster+'/'+this.id[0] +'/error')
       }                
       this.fromDate = this.info[0].date;
@@ -115,19 +117,19 @@ export class WaterDispenseComponent implements OnInit{
                           this.filename = 'Water.php';
                           this.property1 = 'Total_Volume_Dispensed';
                           this.property2 = 'date';
-                          this.table = 'Water_Dispensing_Panel';
+                          this.table =  this.Cluster[this.cluster].WaterDispenseData[3];
                           break;
       case 'Ro' :  this.data = this.Cluster[this.cluster].RoData;
                         this.filename = 'Ro.php';
                         this.property1 = 'Operational_Minutes';
                         this.property2 = 'date'
-                        this.table = 'RO_Log_Parameter';                        
+                        this.table =  this.Cluster[this.cluster].RoData[3];                        
                         break;
       case 'CupDispenser' :  this.data = this.Cluster[this.cluster].CupDispenseData;
                         this.filename = 'Cup.php';
                         this.property1 = 'TotalCupsDispensed';
                         this.property2 = 'date'
-                        this.table = 'CupDispensing';                        
+                        this.table =  this.Cluster[this.cluster].CupDispenseData[3];                        
                         break;
       default  :    break;
     }

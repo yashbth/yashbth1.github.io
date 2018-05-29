@@ -323,27 +323,27 @@ export class Cluster{
 
         ]
 ,
-        // CupDispenseData :[
-        //     [
-        //         "TotalCupsDispensed",
-        //         "TotalCoinCollection",
-        //         "TotalCardCollection",
-        //         "TripState"
-        //     ],
-        //     [
-        //         "Total Cups Dispensed",
-        //         "Total Coin Collection",
-        //         "Total Card Collection",
-        //         "Last Transaction State"
-        //     ],
-        //     [
-        //         "",
-        //         "Rs",
-        //         "Rs",
-        //         ""
-        //     ],
-        //     ['NISE_CupDispensing']
-        // ],
+        CupDispenseData :[
+            [
+                "TotalCupsDispensed",
+                "TotalCoinCollection",
+                "TotalCardCollection",
+                "TripState"
+            ],
+            [
+                "Total Cups Dispensed",
+                "Total Coin Collection",
+                "Total Card Collection",
+                "Last Transaction State"
+            ],
+            [
+                "",
+                "Rs",
+                "Rs",
+                ""
+            ],
+            ['NISE_CupDispensing']
+        ],
             transaction :[
             [
                 "Time",
