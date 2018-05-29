@@ -1,10 +1,11 @@
 import { Component, OnInit, OnChanges, AfterContentChecked,DoCheck } from '@angular/core';
 import { FetchWaterDispenseDataService } from '../fetch-water-dispense-data.service';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
-import { operator } from '../water-dispense/test'
+import { Cluster } from '../delhiCluster'
 import { DatePipe } from '@angular/common';
 import { GlobalService } from '../global.service';
 import { CookieService } from 'angular2-cookie/core';
+
 
 
 declare var jquery : any;
@@ -18,8 +19,10 @@ declare var displayLocation : any;
 })
 export class OperatorComponent implements OnInit {
   dataAvailable : boolean =false;
+  table= "Operator_Attendence"
   id=[];
-  data = operator;
+  cluster :string;
+  data: any;
   date : any=new Date(Date.now());
   place:string = "New Delhi Cluster";
   info :any; 
@@ -32,12 +35,13 @@ export class OperatorComponent implements OnInit {
   chart:boolean=false;
   location : string = this.cookieService.get('location');
   
-  constructor(private service : FetchWaterDispenseDataService,private router:Router,private route: ActivatedRoute,private globalservice : GlobalService, private cookieService:CookieService) { 
+  constructor(private service : FetchWaterDispenseDataService,private Cluster : Cluster,private router:Router,private route: ActivatedRoute,private globalservice : GlobalService, private cookieService:CookieService) { 
     router.events.subscribe((val)=>{
       if(val instanceof NavigationEnd){
         this.dataAvailable=false;
         this.id[0] = route.snapshot.paramMap.get('id');
-
+        this.cluster = route.snapshot.paramMap.get('cluster');
+        this.data= this.Cluster[this.cluster].operator;
       }
     })
   }
@@ -64,18 +68,18 @@ export class OperatorComponent implements OnInit {
   getOperators(filename):void{
     console.log("called from operator")
     this.operators=[];    
-    this.service.getData(this.id,filename).subscribe(operators=>this.operators=operators)
+    this.service.getData(this.id,this.table,filename).subscribe(operators=>this.operators=operators)
     this.cookieService.put('prevDiv','operator');    
     setTimeout(()=>{
       this.dataAvailable = true;
       if(Object.keys(this.operators).length==0){
-        this.router.navigateByUrl('/device/'+this.id[0] +'/error')
+        this.router.navigateByUrl('/'+this.cluster+'/'+this.id[0] +'/error')
       }
     },1000);
   }
   getInfo(filename):void{
     this.info=[];   
-    this.service.getData(this.id,filename).subscribe(info=>this.info=info);
+    this.service.getData(this.id,this.table,filename).subscribe(info=>this.info=info);
   }
   generateChart(operator,index){
     this.chart = false;
@@ -84,12 +88,12 @@ export class OperatorComponent implements OnInit {
     let dateString = dateArray[2] + '/'+dateArray[1]+'/'+dateArray[0];
     this.id[2] = dateString;
     this.id[1]= operator;
-    this.service.getData(this.id,'operatorPunch.php').subscribe(presents=>this.presents=presents);
+    this.service.getData(this.id,this.table,'operatorPunch.php').subscribe(presents=>this.presents=presents);
     setTimeout(()=>{
       if(!this.presents.length){
         dateString = dateArray[2] + '-'+dateArray[1]+'-'+dateArray[0];
         this.id[2] = dateString;
-        this.service.getData(this.id,'operatorPunch.php').subscribe(presents=>this.presents=presents);
+        this.service.getData(this.id,this.table,'operatorPunch.php').subscribe(presents=>this.presents=presents);
       }
       setTimeout(()=>{
         this.present = this.presents.length;

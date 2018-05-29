@@ -11,17 +11,17 @@ import { ErrorComponent } from './error/error.component';
 
 const routes: Routes = [
   { path: '', component: AppComponent },
-  {path : 'device/:id' , component: MachineComponent},  
-  {path : 'device/:id/transactionLog', component : TransactionComponent},
-  {path : 'device/:id/supervisor', component : SupervisorComponent},
-  {path : 'device/:id/operator',component : OperatorComponent},
-  {path : 'device/:id/error',component : ErrorComponent},
-  {path : 'device/:id/:panel' , component : WaterDispenseComponent},  
+  {path : ':cluster/:id' , component: MachineComponent},  
+  {path : ':cluster/:id/transactionLog', component : TransactionComponent},
+  {path : ':cluster/:id/supervisor', component : SupervisorComponent},
+  {path : ':cluster/:id/operator',component : OperatorComponent},
+  {path : ':cluster/:id/error',component : ErrorComponent},
+  {path : ':cluster/:id/:panel' , component : WaterDispenseComponent},  
 ];
 @NgModule({
   imports: [
     CommonModule,
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes,{ useHash: true })
   ],
   exports:[
     RouterModule

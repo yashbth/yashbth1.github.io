@@ -4,7 +4,7 @@ import  '../../assets/scripts/map.js'
 
 import {FetchWaterDispenseDataService} from '../fetch-water-dispense-data.service'
 import {waterDispenserParam} from './waterDispenserparam'
-import {WaterDispenseData,RoData,CupDispenseData} from './test'
+import {Cluster} from '../delhiCluster'
 import { GlobalService } from '../global.service';
 import { CookieService } from 'angular2-cookie/core';
 
@@ -23,6 +23,7 @@ export class WaterDispenseComponent implements OnInit{
   property2:string;
   filename: string; 
   table: string;
+  cluster : string;
   panel:string;
   id=[];
   place : string = 'New Delhi Cluster';
@@ -35,12 +36,14 @@ export class WaterDispenseComponent implements OnInit{
   toDate : any =new Date('2018-03-13');
   location : string = this.cookieService.get('location');
 
-  constructor( private service : FetchWaterDispenseDataService,private router : Router,private route: ActivatedRoute,private globalservice : GlobalService, private cookieService:CookieService){
+  constructor( private service : FetchWaterDispenseDataService,private router : Router,private route: ActivatedRoute,private globalservice : GlobalService, private cookieService:CookieService,private Cluster : Cluster){
     router.events.subscribe(()=>{
       this.dataAvailable=false;
       this.panelParameters();  
       this.panel = this.route.snapshot.paramMap.get('panel');  
+      this.cluster = this.route.snapshot.paramMap.get('cluster');
       this.id[0] = this.route.snapshot.paramMap.get('id'); 
+      this.cookieService.put('cluster',this.cluster);
       if(this.checkRouteChange.indexOf(this.property1)<0){
         this.getWaterinfo();
         this.cookieService.put('prevDiv',this.panel);                                                                       
@@ -53,6 +56,8 @@ export class WaterDispenseComponent implements OnInit{
     setTimeout(()=>{
       this.panel = this.route.snapshot.paramMap.get('panel');  
       this.id[0] = this.route.snapshot.paramMap.get('id');  
+      this.cluster = this.route.snapshot.paramMap.get('cluster');
+      this.cookieService.put('cluster',this.cluster);      
       this.panelParameters();
       if(this.checkRouteChange.indexOf(this.property1)<0){
         this.getWaterinfo();
@@ -72,12 +77,12 @@ export class WaterDispenseComponent implements OnInit{
   getWaterinfo():void{ 
     this.info=[];
     this.chartData=[];
-    this.service.getData(this.id,this.filename).subscribe(info=>this.info=info); 
+    this.service.getData(this.id,this.table,this.filename).subscribe(info=>this.info=info); 
     
     setTimeout(()=>{
       this.dataAvailable = true;
       if(Object.keys(this.info).length==0){
-        this.router.navigateByUrl('/device/'+this.id[0] +'/error')
+        this.router.navigateByUrl('/'+this.cluster+'/'+this.id[0] +'/error')
       }                
       this.fromDate = this.info[0].date;
       this.toDate = this.info[0].date;
@@ -106,20 +111,21 @@ export class WaterDispenseComponent implements OnInit{
   }
 
   panelParameters(){
+    console.log(this.Cluster[this.cluster]);
     switch (this.panel){
-      case 'WaterDispenser' : this.data= WaterDispenseData;
+      case 'WaterDispenser' : this.data= this.Cluster[this.cluster].WaterDispenseData;
                           this.filename = 'Water.php';
                           this.property1 = 'Total_Volume_Dispensed';
                           this.property2 = 'date';
                           this.table = 'Water_Dispensing_Panel';
                           break;
-      case 'Ro' :  this.data = RoData;
+      case 'Ro' :  this.data = this.Cluster[this.cluster].RoData;
                         this.filename = 'Ro.php';
                         this.property1 = 'Operational_Minutes';
                         this.property2 = 'date'
                         this.table = 'RO_Log_Parameter';                        
                         break;
-      case 'CupDispenser' :  this.data = CupDispenseData;
+      case 'CupDispenser' :  this.data = this.Cluster[this.cluster].CupDispenseData;
                         this.filename = 'Cup.php';
                         this.property1 = 'TotalCupsDispensed';
                         this.property2 = 'date'
