@@ -37,6 +37,7 @@ export class FetchWaterDispenseDataService {
     if(!id.trim()){
       return of([])
     }
+    console.log(table);
     term.append('hint',id);
     term.append('table',table);
     return this.http.post<Cluster[]>(this.url+'ids.php',term).pipe(

@@ -18,7 +18,6 @@ export class TransactionComponent implements OnInit {
   dataAvailable : Boolean = false;
   table = 'Transaction_logging';
   private id =[];
-  place: string = "New Delhi Cluster"
   private filename : string='transactionLog.php';
   info : any;
   cluster : string;

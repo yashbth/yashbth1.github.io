@@ -1,6 +1,9 @@
 export class Cluster{
     id:string;
-    DelhiClusters={
+    clusters=[
+        'Delhi','NISE'
+    ]
+    Delhi={
         WaterDispenseData :
         [
             ["Total_Volume_Dispensed",
@@ -36,7 +39,8 @@ export class Cluster{
                 "",
                 "",
                 
-            ]
+            ],
+            ['Water_Dispensing_Panel']
         ],
 
         RoData : [

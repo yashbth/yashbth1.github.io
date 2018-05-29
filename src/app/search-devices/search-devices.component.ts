@@ -18,27 +18,30 @@ declare var $ : any;
 export class SearchDevicesComponent implements OnInit {
   selectId:string;
   cluster : string;
-  table : string = 'Water_Dispensing_Panel'
+  table : string ;
   devices$ : Observable<Cluster[]>;
   private searchTerms = new Subject<string>();
-  constructor(private router : Router,private service : FetchWaterDispenseDataService,private route : ActivatedRoute,private cookieService: CookieService) { 
+  constructor(private router : Router,private service : FetchWaterDispenseDataService,private route : ActivatedRoute,private cookieService: CookieService,private Cluster : Cluster) { 
+    this.cluster=this.cookieService.get('cluster'); 
   }
   onmouseover(id){
     this.selectId = id;
   }
   ngOnInit() {
+    this.table = this.Cluster[this.cluster].WaterDispenseData[3];   
     this.devices$ = this.searchTerms.pipe(debounceTime(300),distinctUntilChanged(),switchMap((term:string)=>
-      this.service.getIds(term,this.table))
+      this.service.getIds(term,this.table[0]))
   );
     
   }
   ngDoCheck(){
   }
   search(term:string){
+    console.log(this.cluster);
+    this.table= this.Cluster[this.cluster].WaterDispenseData[3];
     this.searchTerms.next(term);
   }
-  selectOther(){   
-     this.cluster=this.cookieService.get('cluster');    
+  selectOther(){       
     this.router.navigateByUrl('/'+this.cluster+'/'+this.selectId+'/WaterDispenser');
     window.location.reload();
   }
@@ -46,7 +49,9 @@ export class SearchDevicesComponent implements OnInit {
     $('.nav-search').animate({"width":"350px"},300);
     setTimeout(()=>{
       var width = $('.nav-search').outerWidth();
+      var padding =$('.dropdown').outerWidth();
       $('.search-result').css({"width":width}); 
+      $('.tab').css({"padding-left":padding});
     },300)
   }
 }

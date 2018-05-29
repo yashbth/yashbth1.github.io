@@ -26,7 +26,6 @@ export class WaterDispenseComponent implements OnInit{
   cluster : string;
   panel:string;
   id=[];
-  place : string = 'New Delhi Cluster';
   info =[];
   chartData =[];
   dataChange : boolean = true;
@@ -63,7 +62,6 @@ export class WaterDispenseComponent implements OnInit{
         this.getWaterinfo();
         this.cookieService.put('prevDiv',this.panel);                                                                       
         } 
-      
     })
 
   }
