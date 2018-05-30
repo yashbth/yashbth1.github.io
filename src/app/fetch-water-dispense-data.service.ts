@@ -3,7 +3,9 @@ import {HttpClient,HttpHeaders} from '@angular/common/http'
 import {Observable,of} from 'rxjs'
 import {waterDispenserParam,chartData} from './water-dispense/waterDispenserparam'
 import {Cluster} from './delhiCluster'
-import { catchError, map, tap } from 'rxjs/operators';
+import {catchError, map, tap } from 'rxjs/operators';
+import { ActivatedRoute, Router } from '@angular/router';
+import { CookieService } from 'angular2-cookie/core';
 
 
 const httpOptions = {
@@ -16,10 +18,12 @@ const httpOptions = {
 })
 export class FetchWaterDispenseDataService {
 
-  private url = 'http://localhost:8000/assets/Php/';
-
+  private url = '/iiot/assets/Php/';
+  cluster: string;
+  id : string;
   
-  constructor(private http : HttpClient) {
+  constructor(private http : HttpClient,private cookieService : CookieService,private router : Router) {
+
    }
 
   getData(id,table,filename) : Observable<waterDispenserParam[]>{
@@ -40,9 +44,7 @@ export class FetchWaterDispenseDataService {
     console.log(table);
     term.append('hint',id);
     term.append('table',table);
-    return this.http.post<Cluster[]>(this.url+'ids.php',term).pipe(
-      catchError(this.handleError('getIds',[]))
-    );
+    return this.http.post<Cluster[]>(this.url+'ids.php',term)
   }
   getChartData(filename,id,table,from,to): Observable<waterDispenserParam[]>{
     let chartData = new FormData();
@@ -50,8 +52,9 @@ export class FetchWaterDispenseDataService {
     chartData.append('table',table);
     chartData.append('from',from);
     chartData.append('to',to);
-    return this.http.post<waterDispenserParam[]>(this.url + filename,chartData,).pipe(
-      catchError(this.handleError('getChartData',[]))
+    return this.http.post<waterDispenserParam[]>(this.url + filename,chartData).pipe(
+      catchError(this.handleError('getIds',[]))
+      
     );
   }
   private handleError<T> (operation = 'operation', result?: T) {
@@ -64,6 +67,11 @@ export class FetchWaterDispenseDataService {
       console.log(`${operation} failed: ${error.message}`);
    
       // Let the app keep running by returning an empty result.
+    setTimeout(()=>{
+      this.id = this.cookieService.get('id');  
+      this.cluster = this.cookieService.get('cluster');
+      this.router.navigateByUrl('/'+this.cluster+'/'+this.id +'/error')      
+      },850)
       return of(result as T);
     };
   }

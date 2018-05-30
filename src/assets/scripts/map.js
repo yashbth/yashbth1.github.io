@@ -5,7 +5,7 @@ function initialize() {
     setTimeout(()=>{
       
       var earth = new WE.map('earth_div',{sky:true});
-      WE.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(earth);
+      WE.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(earth);
       for(var device of devices ){
         var lat = lanAndlon(parseInt(device.Lattitude));
         var lon = lanAndlon(parseInt(device.Longitude));
@@ -21,19 +21,19 @@ function initialize() {
       // var markerCustom = WE.marker([50, -9], '/img/logo-webglearth-black-100.png', 100, 24).addTo(earth);      
       earth.setView([28.61, 77.6], 6);
       
-    },500)
+    },3000)
 
 }
 
 function redirect(id){
-    window.location.href = window.location.href + '/device/'+id+'/WaterDispenser';
+    window.location.href = window.location.href + 'Delhi/'+id+'/WaterDispenser';
 }
 
 function displayLocation(latitude,longitude,id){
     var request = new XMLHttpRequest();
 
     var method = 'GET';
-    var url = 'http://maps.googleapis.com/maps/api/geocode/json?latlng='+latitude+','+longitude+'&sensor=true';
+    var url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng='+latitude+','+longitude+'&sensor=true';
     var async = true;
 
     request.open(method, url, false);
@@ -59,7 +59,7 @@ function getLocation(){
       devices=JSON.parse(this.responseText);
 		}	
 	}
-  xhttp.open("POST","http://localhost:8000/assets/Php/machines.php",true);
+  xhttp.open("POST","/iiot/assets/Php/machines.php",true);
   xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
   xhttp.send("table=Water_Dispensing_Panel");
 }

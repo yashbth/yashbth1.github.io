@@ -43,19 +43,15 @@ export class TransactionComponent implements OnInit {
   getInfo(){
     this.info=[];
     console.log("called from transaction");
-    this.service.getData(this.id,this.table,this.filename).subscribe(info=>this.info=info);
+    this.service.getData(this.id,this.table,this.filename).subscribe(info=>this.info=info,(err)=>console.error(err),()=>{
+      $(document).ready(function(){
+        $('#table').DataTable();
+        $('.paginate_button').css({"padding":"10px"});
+      })
+    });
     this.cookieService.put('prevDiv','transactionLog');            
     setTimeout(()=>{
       this.dataAvailable =true;
-      if(Object.keys(this.info).length==0){
-        this.router.navigateByUrl('/'+this.cluster+'/'+this.id[0] +'/error')
-      }
-      $(document).ready(function(){
-            $('#table').DataTable();
-            $('.paginate_button').css({"padding":"10px"});
-           
-
-          })
     },1000)
   }
 

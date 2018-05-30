@@ -38,11 +38,12 @@ export class WaterDispenseComponent implements OnInit{
   constructor( private service : FetchWaterDispenseDataService,private router : Router,private route: ActivatedRoute,private globalservice : GlobalService, private cookieService:CookieService,private Cluster : Cluster){
     router.events.subscribe(()=>{
       this.dataAvailable=false;
-      this.panelParameters();  
       this.panel = this.route.snapshot.paramMap.get('panel');  
       this.cluster = this.route.snapshot.paramMap.get('cluster');
       this.id[0] = this.route.snapshot.paramMap.get('id'); 
       this.cookieService.put('cluster',this.cluster);
+      this.cookieService.put('id',this.id[0]);
+      this.panelParameters();        
       if(this.checkRouteChange.indexOf(this.property1)<0){
         this.getWaterinfo();
         this.cookieService.put('prevDiv',this.panel);                                                                       
@@ -56,7 +57,8 @@ export class WaterDispenseComponent implements OnInit{
       this.panel = this.route.snapshot.paramMap.get('panel');  
       this.id[0] = this.route.snapshot.paramMap.get('id');  
       this.cluster = this.route.snapshot.paramMap.get('cluster');
-      this.cookieService.put('cluster',this.cluster);      
+      this.cookieService.put('cluster',this.cluster);
+      this.cookieService.put('id',this.id[0]);     
       this.panelParameters();
       if(this.checkRouteChange.indexOf(this.property1)<0){
         this.getWaterinfo();
@@ -75,15 +77,7 @@ export class WaterDispenseComponent implements OnInit{
   getWaterinfo():void{ 
     this.info=[];
     this.chartData=[];
-    this.service.getData(this.id,this.table,this.filename).subscribe(info=>this.info=info); 
-    
-    setTimeout(()=>{
-      this.dataAvailable = true;
-      console.log(this.info);
-      if(Object.keys(this.info).length==0){
-        
-        this.router.navigateByUrl('/'+this.cluster+'/'+this.id[0] +'/error')
-      }                
+    this.service.getData(this.id,this.table,this.filename).subscribe(info=>this.info=info,(err)=>console.error(err),()=>{
       this.fromDate = this.info[0].date;
       this.toDate = this.info[0].date;
       this.service.getChartData('chart_date.php',this.id,this.table,this.fromDate,this.toDate).subscribe(chartData=>this.chartData=chartData); 
@@ -105,13 +99,14 @@ export class WaterDispenseComponent implements OnInit{
         displayLocation(lat,lon,'place');
         
       }
-
-    },1000)
+    }); 
+    setTimeout(()=>{
+      this.dataAvailable = true;                    
+    },1000);
 
   }
 
   panelParameters(){
-    console.log(this.Cluster[this.cluster]);
     switch (this.panel){
       case 'WaterDispenser' : this.data= this.Cluster[this.cluster].WaterDispenseData;
                           this.filename = 'Water.php';

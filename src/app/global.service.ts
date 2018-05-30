@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 export class GlobalService {
   lat: number;
   lon:number;
-
+  showSearchResult : boolean =false;
   constructor() { }
   setVar(lat,lon):void{
     this.lat=lat;

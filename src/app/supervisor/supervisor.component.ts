@@ -58,18 +58,14 @@ export class SupervisorComponent implements OnInit {
 
   getWaterinfo():void{ 
     this.info=[];
-    this.service.getData(this.id,this.table,this.filename).subscribe(info=>this.info=info); 
-    this.cookieService.put('prevDiv','supervisor');    
-    console.log("called from supervisor");
-    setTimeout(()=>{
-      this.dataAvailable= true;
-      if(Object.keys(this.info).length==0){
-        this.router.navigateByUrl('/'+this.cluster+'/'+this.id[0] +'/error')
-      }
+    this.service.getData(this.id,this.table,this.filename).subscribe(info=>this.info=info,(err)=>console.error(err),()=>{
       this.fromDate = this.info[0].date;
       this.toDate = this.info[0].date
       this.service.getChartData('chart_date.php',this.id,this.table,this.fromDate,this.toDate).subscribe(chartData=>this.chartData=chartData); 
-
+    }); 
+    this.cookieService.put('prevDiv','supervisor');    
+    setTimeout(()=>{
+      this.dataAvailable= true;
     },1000);
     
 

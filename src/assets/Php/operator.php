@@ -10,7 +10,7 @@
     $sql = "SELECT DISTINCT OperatorID FROM $table WHERE DeviceID='$id'";
     $result = $conn->query($sql);
 	if($result->num_rows>0){
-		$all_rows=[];
+		$all_rows=array();
 		while($row = $result->fetch_assoc()){
 			$all_rows[]= $row;
 }	

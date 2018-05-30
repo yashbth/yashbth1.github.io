@@ -1,8 +1,9 @@
-import { Component, OnInit,AfterContentChecked ,DoCheck} from '@angular/core';
+import { Component, OnInit,AfterContentChecked ,DoCheck,HostListener} from '@angular/core';
 import {ActivatedRoute, Router, NavigationEnd} from '@angular/router'
 import { Dropdown } from './dropdown'
 import {CookieService} from 'angular2-cookie/core'
 import '../../assets/scripts/collapse.js'
+import { GlobalService } from '../global.service';
 declare var jquery:any;
 declare var $ :any;
 declare var check : any; 
@@ -25,9 +26,10 @@ export class MachineComponent{
   currDiv: string;
   cluster: string;
   
-  constructor(private router : Router,private cookieService : CookieService,private route : ActivatedRoute) {
+  constructor(private router : Router,private cookieService : CookieService,private route : ActivatedRoute,private global : GlobalService) {
 
    }
+
   ngOnIt(){
     window.location.reload();
   }

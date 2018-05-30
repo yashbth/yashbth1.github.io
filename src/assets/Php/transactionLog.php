@@ -11,8 +11,8 @@
         
     $sql = "SELECT * FROM $table WHERE DeviceID='$id' LIMIT 100";
     $result = $conn->query($sql);
-    $all_rows = array();
     if($result->num_rows>0){
+        $all_rows = array();    
         while($row = $result->fetch_assoc()){
             $all_rows[]=$row;
 }   

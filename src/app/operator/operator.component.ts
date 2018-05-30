@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, AfterContentChecked,DoCheck } from '@angular/core';
+import { Component, OnInit, OnChanges, AfterContentChecked,DoCheck,AfterContentInit } from '@angular/core';
 import { FetchWaterDispenseDataService } from '../fetch-water-dispense-data.service';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { Cluster } from '../delhiCluster'
@@ -46,16 +46,7 @@ export class OperatorComponent implements OnInit {
     })
   }
   ngDoCheck(){
-    if( this.checkOperators){     
-      if(this.operators.length){
-        for(let oper of this.operators){
-          this.id[1]=oper.OperatorID.trim();
-          this.id[2]='';
-          this.getInfo('operatorPunch.php')              
-        }
-        this.checkOperators=false; 
-      }
-    }
+
     
  }
   ngOnInit() {
@@ -65,16 +56,25 @@ export class OperatorComponent implements OnInit {
       displayLocation(this.globalservice.lat,this.globalservice.lon,'place');
     },200)
   }
+
+
   getOperators(filename):void{
-    console.log("called from operator")
     this.operators=[];    
-    this.service.getData(this.id,this.table,filename).subscribe(operators=>this.operators=operators)
+    this.service.getData(this.id,this.table,filename).subscribe(operators=>this.operators=operators,(err)=>console.error(err),()=>{
+      if( this.checkOperators){     
+        if(this.operators.length){
+          for(let oper of this.operators){
+            this.id[1]=oper.OperatorID.trim();
+            this.id[2]='';
+            this.getInfo('operatorPunch.php')              
+          }
+          this.checkOperators=false; 
+        }
+      }
+    })
     this.cookieService.put('prevDiv','operator');    
     setTimeout(()=>{
       this.dataAvailable = true;
-      if(Object.keys(this.operators).length==0){
-        this.router.navigateByUrl('/'+this.cluster+'/'+this.id[0] +'/error')
-      }
     },1000);
   }
   getInfo(filename):void{
@@ -99,8 +99,8 @@ export class OperatorComponent implements OnInit {
         this.present = this.presents.length;
         this.absent = this.expected_attendance[index]-this.present;
         this.chart = true;
-      },100);
-    },100);
+      },400);
+    },500);
 
   }
 }

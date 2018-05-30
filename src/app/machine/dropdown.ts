@@ -20,7 +20,7 @@ export const Dropdown : Object[]=[{
         link3 : 'link3',
     },
     {
-        division : 'Operator ',
+        division : 'Operator Attendance',
         id: 'operator',
         link1 : 'link1',
         link2 : 'link2',

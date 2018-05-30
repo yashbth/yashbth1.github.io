@@ -21,6 +21,7 @@ import { SearchDevicesComponent } from './search-devices/search-devices.componen
 import { ErrorComponent } from './error/error.component';
 import { LoadingComponent } from './loading/loading.component';
 import { Cluster } from './delhiCluster';
+import { ClickDetectionDirective } from './click-detection.directive';
 
 
 
@@ -40,6 +41,7 @@ import { Cluster } from './delhiCluster';
     SearchDevicesComponent,
     ErrorComponent,
     LoadingComponent,
+    ClickDetectionDirective,
 
   ],
   imports: [
