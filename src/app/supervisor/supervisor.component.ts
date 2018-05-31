@@ -36,7 +36,7 @@ export class SupervisorComponent implements OnInit {
     router.events.subscribe((val)=>{    
       if (val instanceof NavigationEnd) {
         this.dataAvailable= false;         
-        displayLocation(this.globalservice.lat,this.globalservice.lon,'place');
+        // displayLocation(this.globalservice.lat,this.globalservice.lon,'place');
         this.id[0] = route.snapshot.paramMap.get('id');   
         this.cluster = route.snapshot.paramMap.get('cluster');                                                    
         this.panelParameters();
@@ -59,6 +59,11 @@ export class SupervisorComponent implements OnInit {
   getWaterinfo():void{ 
     this.info=[];
     this.service.getData(this.id,this.table,this.filename).subscribe(info=>this.info=info,(err)=>console.error(err),()=>{
+      console.log(this.info);
+      console.log(!this.info || Object.keys(this.info).length==0 );        
+      if( !this.info || Object.keys(this.info).length==0 ){
+        this.router.navigateByUrl('/'+this.cluster+'/'+this.id +'/error')              
+      }
       this.fromDate = this.info[0].date;
       this.toDate = this.info[0].date
       this.service.getChartData('chart_date.php',this.id,this.table,this.fromDate,this.toDate).subscribe(chartData=>this.chartData=chartData); 

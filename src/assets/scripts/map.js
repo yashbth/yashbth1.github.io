@@ -12,7 +12,7 @@ function initialize() {
         
         var id = '\"'+ device.DEVICEID+'\"';
         marker.push(WE.marker([lat, lon]).addTo(earth));  
-        displayLocation(lat,lon,device.DEVICEID) ; 
+        // displayLocation(lat,lon,device.DEVICEID) ; 
         document.cookie="test=call";
         marker[marker.length-1].bindPopup("<b>Device Located At <span id='"+ device.DEVICEID +"'>"+getCookie('location')+"</span></b><br><br /><span style='font-size:10px;color:#999'>Device Id : "+id+"</span><button type='button' onclick='redirect("+id+")'>Analyse</button>", {maxWidth: 150, closeButton: false});
 
@@ -59,7 +59,8 @@ function getLocation(){
       devices=JSON.parse(this.responseText);
 		}	
 	}
-  xhttp.open("POST","/iiot/assets/Php/machines.php",true);
+  // xhttp.open("POST","http://localhost:8000/assets/Php/machines.php",true);
+  xhttp.open("POST","/iiot/assets/Php/machines.php",true);  
   xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
   xhttp.send("table=Water_Dispensing_Panel");
 }

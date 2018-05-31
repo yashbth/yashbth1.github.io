@@ -2,7 +2,6 @@ import { Component, OnInit , AfterContentChecked,DoCheck,AfterContentInit,OnChan
 import {FetchWaterDispenseDataService} from '../fetch-water-dispense-data.service';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import {Cluster} from '../delhiCluster'
-import '../../assets/scripts/map.js'
 import { GlobalService } from '../global.service';
 import { CookieService } from 'angular2-cookie/core';
 
@@ -33,7 +32,7 @@ export class TransactionComponent implements OnInit {
       this.cluster = this.route.snapshot.paramMap.get('cluster');
       this.data= this.Cluster[this.cluster].transaction;
       this.getInfo();
-      displayLocation(this.globalservice.lat,this.globalservice.lon,'place');      
+      // displayLocation(this.globalservice.lat,this.globalservice.lon,'place');      
     })
   }
   ngAfterContentChecked(){
@@ -42,8 +41,12 @@ export class TransactionComponent implements OnInit {
 
   getInfo(){
     this.info=[];
-    console.log("called from transaction");
     this.service.getData(this.id,this.table,this.filename).subscribe(info=>this.info=info,(err)=>console.error(err),()=>{
+      console.log(this.info);      
+      console.log(!this.info || Object.keys(this.info).length==0 );        
+      if( !this.info || Object.keys(this.info).length==0 ){
+        this.router.navigateByUrl('/'+this.cluster+'/'+this.id +'/error')              
+      }
       $(document).ready(function(){
         $('#table').DataTable();
         $('.paginate_button').css({"padding":"10px"});

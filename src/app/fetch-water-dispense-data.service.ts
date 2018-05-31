@@ -18,7 +18,9 @@ const httpOptions = {
 })
 export class FetchWaterDispenseDataService {
 
+  // private url = 'http://localhost:8000/assets/Php/';
   private url = '/iiot/assets/Php/';
+  
   cluster: string;
   id : string;
   
@@ -67,11 +69,7 @@ export class FetchWaterDispenseDataService {
       console.log(`${operation} failed: ${error.message}`);
    
       // Let the app keep running by returning an empty result.
-    setTimeout(()=>{
-      this.id = this.cookieService.get('id');  
-      this.cluster = this.cookieService.get('cluster');
-      this.router.navigateByUrl('/'+this.cluster+'/'+this.id +'/error')      
-      },850)
+
       return of(result as T);
     };
   }

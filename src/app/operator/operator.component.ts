@@ -53,7 +53,7 @@ export class OperatorComponent implements OnInit {
     this.date= this.date.getFullYear() + '-'+((this.date.getMonth()+1)/10>1 ? '':'0')+(this.date.getMonth()+1)+'-'+this.date.getDate();
     setTimeout(()=>{
       this.getOperators('operator.php');
-      displayLocation(this.globalservice.lat,this.globalservice.lon,'place');
+      // displayLocation(this.globalservice.lat,this.globalservice.lon,'place');
     },200)
   }
 
@@ -61,6 +61,11 @@ export class OperatorComponent implements OnInit {
   getOperators(filename):void{
     this.operators=[];    
     this.service.getData(this.id,this.table,filename).subscribe(operators=>this.operators=operators,(err)=>console.error(err),()=>{
+      console.log(this.operators);
+      console.log(!this.operators || Object.keys(this.operators).length==0 );        
+      if( !this.operators || Object.keys(this.operators).length==0 ){
+        this.router.navigateByUrl('/'+this.cluster+'/'+this.id +'/error')              
+      }
       if( this.checkOperators){     
         if(this.operators.length){
           for(let oper of this.operators){
