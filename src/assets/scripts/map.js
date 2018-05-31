@@ -58,7 +58,9 @@ function getLocation(){
 		if(this.readyState==4 && this.status ==200){
       devices=JSON.parse(this.responseText);
 		}	
-	}
+  }
+  
+  // xhttp.open("POST","http://localhost/~yashbahetiiitk/swajal_dashboard/src/assets/Php/machines.php",true);
   // xhttp.open("POST","http://localhost:8000/assets/Php/machines.php",true);
   xhttp.open("POST","/iiot/assets/Php/machines.php",true);  
   xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");

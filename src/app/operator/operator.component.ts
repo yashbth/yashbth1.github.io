@@ -39,9 +39,6 @@ export class OperatorComponent implements OnInit {
     router.events.subscribe((val)=>{
       if(val instanceof NavigationEnd){
         this.dataAvailable=false;
-        this.id[0] = route.snapshot.paramMap.get('id');
-        this.cluster = route.snapshot.paramMap.get('cluster');
-        this.data= this.Cluster[this.cluster].operator;
       }
     })
   }
@@ -52,14 +49,19 @@ export class OperatorComponent implements OnInit {
   ngOnInit() {
     this.date= this.date.getFullYear() + '-'+((this.date.getMonth()+1)/10>1 ? '':'0')+(this.date.getMonth()+1)+'-'+this.date.getDate();
     setTimeout(()=>{
+      this.id[0] = this.route.snapshot.paramMap.get('id');
+      this.cluster = this.route.snapshot.paramMap.get('cluster');
+      this.data= this.Cluster[this.cluster].operator;
       this.getOperators('operator.php');
       // displayLocation(this.globalservice.lat,this.globalservice.lon,'place');
-    },200)
+    },500)
   }
 
 
   getOperators(filename):void{
     this.operators=[];    
+    console.log("check here");
+    console.log(this.id,this.table,filename);
     this.service.getData(this.id,this.table,filename).subscribe(operators=>this.operators=operators,(err)=>console.error(err),()=>{
       console.log(this.operators);
       console.log(!this.operators || Object.keys(this.operators).length==0 );        
@@ -71,7 +73,7 @@ export class OperatorComponent implements OnInit {
           for(let oper of this.operators){
             this.id[1]=oper.OperatorID.trim();
             this.id[2]='';
-            this.getInfo('operatorPunch.php')              
+            this.getInfo('operatorPunch.php');
           }
           this.checkOperators=false; 
         }
@@ -85,6 +87,7 @@ export class OperatorComponent implements OnInit {
   getInfo(filename):void{
     this.info=[];   
     this.service.getData(this.id,this.table,filename).subscribe(info=>this.info=info);
+
   }
   generateChart(operator,index){
     this.chart = false;
@@ -102,6 +105,7 @@ export class OperatorComponent implements OnInit {
       }
       setTimeout(()=>{
         this.present = this.presents.length;
+        console.log(this.presents); 
         this.absent = this.expected_attendance[index]-this.present;
         this.chart = true;
       },400);
