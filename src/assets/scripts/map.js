@@ -7,14 +7,15 @@ function initialize() {
       var earth = new WE.map('earth_div',{sky:true});
       WE.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(earth);
       for(var device of devices ){
-        var lat = lanAndlon(parseInt(device.Lattitude));
+        var lat = lanAndlon(parseInt(device.Latitude));
         var lon = lanAndlon(parseInt(device.Longitude));
-        
-        var id = '\"'+ device.DEVICEID+'\"';
+        var address = '\"'+device.Location+'\"';
+        var id = '\"'+ device.DeviceID+'\"';
+        var cluster = '\"'+ device.Cluster_Name+'\"';
         marker.push(WE.marker([lat, lon]).addTo(earth));  
         // displayLocation(lat,lon,device.DEVICEID) ; 
         document.cookie="test=call";
-        marker[marker.length-1].bindPopup("<b>Device Located At <span id='"+ device.DEVICEID +"'>"+getCookie('location')+"</span></b><br><br /><span style='font-size:10px;color:#999'>Device Id : "+id+"</span><button type='button' onclick='redirect("+id+")'>Analyse</button>", {maxWidth: 150, closeButton: false});
+        marker[marker.length-1].bindPopup("<b>Device Located At <span><br>"+address+"</span></b><br><br /><span style='font-size:10px;color:#999'>Device Id : "+id+"</span><button type='button' onclick='redirect("+id+","+address+","+cluster+")'>Analyse</button>", {maxWidth: 150, closeButton: false});
 
       }
       
@@ -25,31 +26,12 @@ function initialize() {
 
 }
 
-function redirect(id){
-    window.location.href = window.location.href + 'Delhi/'+id+'/WaterDispenser';
+function redirect(id,address,cluster){
+    document.cookie="location1="+address+"; path=/";
+    document.cookie="cluster1="+cluster+"; path=/";
+    window.location.href = window.location.href + cluster+'/'+id+'/WaterDispenser';
 }
 
-function displayLocation(latitude,longitude,id){
-    var request = new XMLHttpRequest();
-
-    var method = 'GET';
-    var url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng='+latitude+','+longitude+'&sensor=true';
-    var async = true;
-
-    request.open(method, url, false);
-
-    request.onreadystatechange = function(){
-      if(request.readyState == 4 && request.status == 200){
-        var data = JSON.parse(request.responseText);
-        var address = data.results[0];
-        var location = address.formatted_address;
-        var devId = String(id);
-        document.getElementById(id).innerText= location;
-        document.cookie = "location="+location;
-      }
-    };
-    request.send();
-  };
 
 
 function getLocation(){
@@ -60,11 +42,11 @@ function getLocation(){
 		}	
   }
   
-  // xhttp.open("POST","http://localhost/~yashbahetiiitk/swajal_dashboard/src/assets/Php/machines.php",true);
+  xhttp.open("POST","http://localhost/~yashbahetiiitk/swajal_dashboard/src/assets/Php/machines.php",true);
   // xhttp.open("POST","http://localhost:8000/assets/Php/machines.php",true);
-  xhttp.open("POST","/iiot/assets/Php/machines.php",true);  
+  // xhttp.open("POST","/iiot/assets/Php/machines.php",true);  
   xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-  xhttp.send("table=Water_Dispensing_Panel");
+  xhttp.send("table=Device_Data");
 }
 
 function lanAndlon(param){

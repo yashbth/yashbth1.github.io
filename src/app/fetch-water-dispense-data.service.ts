@@ -18,9 +18,9 @@ const httpOptions = {
 })
 export class FetchWaterDispenseDataService {
 
-  // private url = 'http://localhost/~yashbahetiiitk/swajal_dashboard/src/assets/Php/';
+  private url = 'http://localhost/~yashbahetiiitk/swajal_dashboard/src/assets/Php/';
   // private url = 'http://localhost:8000/assets/Php/';
-  private url = '/iiot/assets/Php/';
+  // private url = '/iiot/assets/Php/';
   
   cluster: string;
   id : string;
@@ -36,6 +36,15 @@ export class FetchWaterDispenseDataService {
     data.append('operatorId',id[1]);
     data.append('date',id[2]);
     return this.http.post<waterDispenserParam[]>(this.url+filename,data).pipe(
+      catchError(this.handleError('getData',[]))
+    );
+  }
+  getLocation(id,clusterName) : Observable<waterDispenserParam[]>{
+    let data = new FormData();
+    data.append('id',id);
+    data.append('cluster',clusterName);
+    data.append('table','Device_Data');
+    return this.http.post<waterDispenserParam[]>(this.url+'location.php',data).pipe(
       catchError(this.handleError('getData',[]))
     );
   }

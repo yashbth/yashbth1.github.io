@@ -4,6 +4,7 @@ import { Dropdown } from './dropdown'
 import {CookieService} from 'angular2-cookie/core'
 import '../../assets/scripts/collapse.js'
 import { GlobalService } from '../global.service';
+
 declare var jquery:any;
 declare var $ :any;
 declare var check : any; 
@@ -25,13 +26,13 @@ export class MachineComponent{
   dropdownlist = Dropdown; 
   currDiv: string;
   cluster: string;
-  
   constructor(private router : Router,private cookieService : CookieService,private route : ActivatedRoute,private global : GlobalService) {
 
    }
 
   ngOnIt(){
-    window.location.reload();
+
+
   }
   ngDoCheck(){
     this.cluster = this.cookieService.get('cluster');    
@@ -56,7 +57,7 @@ export class MachineComponent{
     this.url= param[param.length-1];
     this.id = param[param.length-2];
     this.currDiv = this.cookieService.get('prevDiv');
-    
+
   }
   
   toggle(){

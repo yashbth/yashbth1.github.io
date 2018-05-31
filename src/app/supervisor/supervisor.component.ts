@@ -35,20 +35,20 @@ export class SupervisorComponent implements OnInit {
   constructor( private service : FetchWaterDispenseDataService,private Cluster : Cluster,private router : Router,private route: ActivatedRoute,private globalservice : GlobalService, private cookieService:CookieService){
     router.events.subscribe((val)=>{    
       if (val instanceof NavigationEnd) {
-        this.dataAvailable= false;         
-        // displayLocation(this.globalservice.lat,this.globalservice.lon,'place');
-        this.id[0] = route.snapshot.paramMap.get('id');   
-        this.cluster = route.snapshot.paramMap.get('cluster');                                                    
-        this.panelParameters();
-        if(this.checkRouteChange.indexOf(this.property1)<0){
-          this.getWaterinfo();
-          this.checkRouteChange.pop();
-          this.checkRouteChange.push(this.property1);
-        } 
+      this.dataAvailable= false;         
+        
       }   
     })
   }
-  ngOnInit() {    
+  ngOnInit() { 
+    this.id[0] = this.route.snapshot.paramMap.get('id');   
+    this.cluster = this.route.snapshot.paramMap.get('cluster');                                                    
+    this.panelParameters();
+    if(this.checkRouteChange.indexOf(this.property1)<0){
+      this.getWaterinfo();
+      this.checkRouteChange.pop();
+      this.checkRouteChange.push(this.property1);
+    }    
   }
   generateGraph(){
     this.dataChange = true;
@@ -58,9 +58,7 @@ export class SupervisorComponent implements OnInit {
 
   getWaterinfo():void{ 
     this.info=[];
-    this.service.getData(this.id,this.table,this.filename).subscribe(info=>this.info=info,(err)=>console.error(err),()=>{
-      console.log(this.info);
-      console.log(!this.info || Object.keys(this.info).length==0 );        
+    this.service.getData(this.id,this.table,this.filename).subscribe(info=>this.info=info,(err)=>console.error(err),()=>{       
       if( !this.info || Object.keys(this.info).length==0 ){
         this.router.navigateByUrl('/'+this.cluster+'/'+this.id +'/error')              
       }

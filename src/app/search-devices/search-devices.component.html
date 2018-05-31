@@ -8,7 +8,7 @@
                 <a class="dropdown-item" *ngFor = "let clusterName of Cluster.clusters" (click)="cluster=clusterName">{{clusterName}} Cluster</a>
             </div>
             </div>
-        <input class="form-control mr-sm-2 nav-search"  placeholder="Search" appClickDetection [(ngModel)]="selectId" name="searchId" (keyup)="search(selectId)" autocomplete="off" (focus)="largewidth();global.showSearchResult=true" >
+        <input class="form-control mr-sm-2 nav-search"  placeholder="Search" appClickDetection [(ngModel)]="selectId" name="searchId" (keyup)="search(selectId)" autocomplete="off" (focus)="largewidth();" >
         <button class="btn btn-info " type="submit" (click)="selectOther()"><i class="fas fa-search"> </i></button>
       </form>
       <div class="text-center tab" *ngIf="global.showSearchResult"> 

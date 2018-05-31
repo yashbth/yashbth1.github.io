@@ -53,18 +53,13 @@ export class OperatorComponent implements OnInit {
       this.cluster = this.route.snapshot.paramMap.get('cluster');
       this.data= this.Cluster[this.cluster].operator;
       this.getOperators('operator.php');
-      // displayLocation(this.globalservice.lat,this.globalservice.lon,'place');
     },500)
   }
 
 
   getOperators(filename):void{
     this.operators=[];    
-    console.log("check here");
-    console.log(this.id,this.table,filename);
-    this.service.getData(this.id,this.table,filename).subscribe(operators=>this.operators=operators,(err)=>console.error(err),()=>{
-      console.log(this.operators);
-      console.log(!this.operators || Object.keys(this.operators).length==0 );        
+    this.service.getData(this.id,this.table,filename).subscribe(operators=>this.operators=operators,(err)=>console.error(err),()=>{       
       if( !this.operators || Object.keys(this.operators).length==0 ){
         this.router.navigateByUrl('/'+this.cluster+'/'+this.id +'/error')              
       }

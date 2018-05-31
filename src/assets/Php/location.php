@@ -3,10 +3,12 @@
     header('Access-Control-Allow-Origin: *');
     header('Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE, OPTIONS');
     header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token');
-    
-    $table = $_POST['table'];
 
-    $sql = "SELECT DISTINCT * FROM $table";
+    $id = $_POST['id'];
+    $table = $_POST['table'];
+    $cluster = $_POST['cluster'];
+
+    $sql = "SELECT * FROM Device_Data WHERE DeviceID='$id' AND Cluster_Name='$cluster'";
     $result = $conn->query($sql);
 	if($result->num_rows>0){
         $all_rows=array();
