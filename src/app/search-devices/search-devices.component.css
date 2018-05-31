@@ -9,6 +9,8 @@
     padding: 0px;
     list-style: none;
     overflow-y: scroll;
+    height:200px;
+    visibility: hidden;
 }
 .search-result li{
     color: black !important;
@@ -20,4 +22,7 @@
 }
 .dropdown{
     padding-right: 1vw;
+}
+.tab{
+
 }

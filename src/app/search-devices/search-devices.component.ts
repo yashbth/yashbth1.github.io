@@ -37,9 +37,10 @@ export class SearchDevicesComponent implements OnInit {
   );
     
   }
-  ngDoCheck(){                
+  ngDoCheck(){  
+                                                          
   }
-  search(term:string){  
+  search(term:string){ 
     this.table= this.Cluster[this.cluster].WaterDispenseData[3];
     this.searchTerms.next(term);
   }
@@ -50,12 +51,12 @@ export class SearchDevicesComponent implements OnInit {
     window.location.reload();
   }
   largewidth(){  
-    this.global.showSearchResult= true;                 
+    this.global.showSearchResult= true;                                       
     $('.nav-search').animate({"width":"350px"},300);
     setTimeout(()=>{
       var width = $('.nav-search').outerWidth();
       var padding =$('.dropdown').outerWidth();
-      $('.search-result').css({"width":width}); 
+      $('.search-result').css({"width":width,"visibility":"visible"}); 
       $('.tab').css({"padding-left":padding});
     },300)
   }

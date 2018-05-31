@@ -38,6 +38,15 @@ export class FetchWaterDispenseDataService {
       catchError(this.handleError('getData',[]))
     );
   }
+  getLocation(id,clusterName) : Observable<waterDispenserParam[]>{
+    let data = new FormData();
+    data.append('id',id);
+    data.append('cluster',clusterName);
+    data.append('table','Device_Data');
+    return this.http.post<waterDispenserParam[]>(this.url+'location.php',data).pipe(
+      catchError(this.handleError('getData',[]))
+    );
+  }
   getIds(id:string,table: string):Observable<Cluster[]>{
     let term = new FormData();
     if(!id.trim()){
