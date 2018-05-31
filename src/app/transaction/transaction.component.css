@@ -24,7 +24,7 @@ th span{
 #place{
     font-size:1em !important;    
 }
-.table-responsive-sm{
+.table-responsive-xs{
     padding : 2em;
-    overflow-x: scroll
+    overflow-x: scroll;
 }

@@ -17,7 +17,7 @@ export class AppComponent implements OnInit{
   ngOnInit(){
     setTimeout(() => {
       this.timeout = false;
-      $('#earth_div').css({"visibility":"visible"}); 
+      $('#map').css({"visibility":"visible"}); 
     }, 5000);
     
   }

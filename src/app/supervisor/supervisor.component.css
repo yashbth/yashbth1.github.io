@@ -34,3 +34,6 @@ button{
 .container{
     padding-bottom: 60px;
 }
+h1 span{
+    font-size: 0.7em;
+}

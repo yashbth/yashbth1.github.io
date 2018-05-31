@@ -1,34 +1,45 @@
 var devices=[];
-var marker = [];
-function initialize() {
-    getLocation();
-    setTimeout(()=>{
-      
-      var earth = new WE.map('earth_div',{sky:true});
-      WE.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(earth);
-      for(var device of devices ){
-        var lat = lanAndlon(parseInt(device.Latitude));
-        var lon = lanAndlon(parseInt(device.Longitude));
-        var address = '\"'+device.Location+'\"';
-        var id = '\"'+ device.DeviceID+'\"';
-        var cluster = '\"'+ device.Cluster_Name+'\"';
-        marker.push(WE.marker([lat, lon]).addTo(earth));  
-        // displayLocation(lat,lon,device.DEVICEID) ; 
-        document.cookie="test=call";
-        marker[marker.length-1].bindPopup("<b>Device Located At <span><br>"+address+"</span></b><br><br /><span style='font-size:10px;color:#999'>Device Id : "+id+"</span><button type='button' onclick='redirect("+id+","+address+","+cluster+")'>Analyse</button>", {maxWidth: 150, closeButton: false});
+var markers = [];
+var infowindow = [];
 
-      }
-      
-      // var markerCustom = WE.marker([50, -9], '/img/logo-webglearth-black-100.png', 100, 24).addTo(earth);      
-      earth.setView([28.61, 77.6], 6);
-      
-    },3000)
+function myMap() {
+
+  getLocation();
+  var myCenter = new google.maps.LatLng(28.7041,77.1025);
+  var mapCanvas = document.getElementById("map");
+  var mapOptions = {center: myCenter, zoom: 5};
+  var map = new google.maps.Map(mapCanvas, mapOptions);
+  setTimeout(()=>{
+    var i=0
+    for( var device of devices){
+      var lat = lanAndlon(parseInt(device.Latitude));
+      var lon = lanAndlon(parseInt(device.Longitude));
+      var address = '\"'+device.Location+'\"';
+      var id = '\"'+ device.DeviceID+'\"';
+      var cluster = '\"'+ device.Cluster_Name+'\"';
+      var deviceLoc = new google.maps.LatLng(lat,lon);
+      markers.push(new google.maps.Marker({position:deviceLoc,id:i}));
+      markers[markers.length-1].setMap(map);
+      infowindow.push(new google.maps.InfoWindow({
+            content: "<b>Device Located At <span><br>"+address+"</span></b><br><br /><span style='font-size:10px;color:#999'>Device Id : "+id+"</span><button type='button' onclick='redirect("+id+","+address+","+cluster+")'>Analyse</button>"
+      }));
+      google.maps.event.addListener(markers[markers.length-1],'click',function() {
+        for(var marker of markers){
+          infowindow[marker.id].close(map,markers[marker.id]);
+        }
+        infowindow[this.id].open(map,markers[this.id]);
+      });
+
+      i=i+1;
+    }
+
+  },2500)
 
 }
 
 function redirect(id,address,cluster){
-    document.cookie="location="+address;
-    document.cookie="cluster="+cluster;
+    document.cookie="location="+address+"; path=/";
+    document.cookie="cluster="+cluster+"; path=/";
     window.location.href = window.location.href + cluster+'/'+id+'/WaterDispenser';
 }
 
@@ -40,9 +51,11 @@ function getLocation(){
 		if(this.readyState==4 && this.status ==200){
       devices=JSON.parse(this.responseText);
 		}	
-	}
-  // xhttp.open("POST","http://localhost:8000/assets/Php/machines.php",true);
-  xhttp.open("POST","/iiot/assets/Php/machines.php",true);  
+  }
+  
+  // xhttp.open("POST","http://localhost/~yashbahetiiitk/swajal_dashboard/src/assets/Php/machines.php",true);
+  xhttp.open("POST","http://localhost:8000/assets/Php/machines.php",true);
+  // xhttp.open("POST","/iiot/assets/Php/machines.php",true);  
   xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
   xhttp.send("table=Device_Data");
 }
