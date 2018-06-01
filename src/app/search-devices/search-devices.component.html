@@ -15,7 +15,7 @@
           <ul class="search-result rounded">
               <li *ngFor="let device of devices$ | async" >
                 <a (click)="selectOther()" (mouseenter)="onmouseover(device.DeviceID)">
-                  {{device.DeviceID}}
+                  {{device.Location}} : ({{device.DeviceID}})
                 </a>
                </li>
           </ul>

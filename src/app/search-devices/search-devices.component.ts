@@ -33,7 +33,7 @@ export class SearchDevicesComponent implements OnInit {
     this.cluster=this.cookieService.get('cluster');                 
     this.table = this.Cluster[this.cluster].WaterDispenseData[3];   
     this.devices$ = this.searchTerms.pipe(debounceTime(300),distinctUntilChanged(),switchMap((term:string)=>
-      this.service.getIds(term,this.table[0]))
+      this.service.getIds(term,this.cluster,this.table[0]))
   );
     
   }

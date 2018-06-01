@@ -6,7 +6,7 @@
     
     $table = $_POST['table'];
 
-    $sql = "SELECT DISTINCT * FROM $table";
+    $sql = "SELECT DISTINCT * FROM $table ORDER BY Cluster_Name ASC";
     $result = $conn->query($sql);
 	if($result->num_rows>0){
         $all_rows=array();
