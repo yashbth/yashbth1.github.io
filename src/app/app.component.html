@@ -1,6 +1,6 @@
 <div id="map" *ngIf="router.url=='/'" style="visibility:hidden;width:100%;height:-webkit-fill-available" class="container-fluid">
 </div>
-<input id="searchInput" class="form-control form-control-lg" type="text" placeholder="Search Box" *ngIf="router.url=='/'" >
+<input id="searchInput" class="form-control" type="text" placeholder="Search Box" *ngIf="router.url=='/'" >
 <app-loading [timeout]="timeout" *ngIf="router.url=='/'"></app-loading>
 <app-machine *ngIf="router.url!='/'" ></app-machine>
 

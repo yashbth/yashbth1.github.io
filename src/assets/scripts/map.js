@@ -32,9 +32,9 @@ function myMap() {
       markers.push(new google.maps.Marker({position:deviceLoc,id:i,cluster:device.Cluster_Name,icon:'https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=•|'+iconSrc[temp%10]}));
       markers[markers.length-1].setMap(map);
       infowindow.push(new google.maps.InfoWindow({
-            content: "<b><span style = \"display: flex; justify-content: center;\">"+device.Location+" ("+device.Cluster_Name+
-            ")</span><br><span style = \"display: flex; justify-content: center; font-size:15px; color:#999\">"+device.DeviceID+
-            "</span></b><br><br><span style = \"display: flex; justify-content: center;\"><button type='button' onclick='redirect("+id+","+address+","+cluster+
+            content: "Decive Location: <b><span style = \"display: flex; justify-content: center; font-size:15px;\">"+device.Location+" ("+device.Cluster_Name+
+            ")</span><br></b>DeviceID: <b><span style = \"display: flex; justify-content: center; font-size:15px; color:#999\">  "+device.DeviceID+
+            "</span></b><br><span style = \"display: flex; justify-content: center; font-size:15px;\"><button type='button' onclick='redirect("+id+","+address+","+cluster+
             ")'>Analyse</button></span>"
       }));
       google.maps.event.addListener(markers[markers.length-1],'click',function() {
