@@ -57,11 +57,14 @@ function myMap() {
 }
 
 function redirect(id,address,cluster){
-    document.cookie="location="+address+"; path=/";
-    document.cookie="cluster="+cluster+"; path=/";
-    window.location.href = window.location.href + cluster+'/'+id+'/WaterDispenser';
-}
+  // Get the modal
 
+  document.cookie="location="+address+"; path=/";
+  document.cookie="cluster="+cluster+"; path=/";
+  document.cookie="id="+id+"; path=/"; 
+  var modal = document.getElementById('id01');
+  modal.style.display = "block";
+}
 
 
 function getLocation(){
@@ -73,8 +76,8 @@ function getLocation(){
   }
   
   // xhttp.open("POST","http://localhost/~yashbahetiiitk/swajal_dashboard/src/assets/Php/machines.php",true);
-  // xhttp.open("POST","http://localhost:8000/assets/Php/machines.php",true);
-  xhttp.open("POST","/iiot/assets/Php/machines.php",true);  
+  xhttp.open("POST","http://localhost:8000/assets/Php/machines.php",true);
+  // xhttp.open("POST","/iiot/assets/Php/machines.php",true);  
   xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
   xhttp.send("table=Device_Data");
 }

@@ -6,7 +6,7 @@ import {Cluster} from './delhiCluster'
 import {catchError, map, tap } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CookieService } from 'angular2-cookie/core';
-
+import {Users} from './users';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -19,12 +19,11 @@ const httpOptions = {
 export class FetchWaterDispenseDataService {
 
   // private url = 'http://localhost/~yashbahetiiitk/swajal_dashboard/src/assets/Php/';
-  // private url = 'http://localhost:8000/assets/Php/';
-  private url = '/iiot/assets/Php/';
+  private url = 'http://localhost:8000/assets/Php/';
+  // private url = '/iiot/assets/Php/';
   
   cluster: string;
   id : string;
-  
   constructor(private http : HttpClient,private cookieService : CookieService,private router : Router) {
 
    }
@@ -67,6 +66,12 @@ export class FetchWaterDispenseDataService {
     chartData.append('to',to);
     return this.http.post<waterDispenserParam[]>(this.url + filename,chartData).pipe(
       catchError(this.handleError('getIds',[]))
+      
+    );
+  }
+  userAuthentication(form,filename):Observable<Users[]>{
+    return this.http.post<Users[]>(this.url+filename,form).pipe(
+      catchError(this.handleError('userAuthentication',[]))
       
     );
   }
