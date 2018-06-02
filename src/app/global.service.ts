@@ -7,6 +7,7 @@ export class GlobalService {
   lat: number;
   lon:number;
   showSearchResult : boolean =false;
+  user: any;
   constructor() { }
   setVar(lat,lon):void{
     this.lat=lat;

@@ -8,7 +8,10 @@ function myMap() {
   getLocation();
   var myCenter = new google.maps.LatLng(28.7041,77.1025);
   var mapCanvas = document.getElementById("map");
-  var mapOptions = {center: myCenter, zoom: 5};
+  var mapOptions = {center: myCenter, zoom: 5,
+    mapTypeControl: true,
+    mapTypeControlOptions: {style: google.maps.MapTypeControlStyle.DROPDOWN_MENU}
+};
   map = new google.maps.Map(mapCanvas, mapOptions);
   setTimeout(()=>{
     var i=0
@@ -50,7 +53,7 @@ function myMap() {
     var centerControl = new CenterControl(centerControlDiv, map,html);
   
     centerControlDiv.index = 1;
-    map.controls[google.maps.ControlPosition.TOP_CENTER].push(centerControlDiv);
+    map.controls[google.maps.ControlPosition.TOP_RIGHT].push(centerControlDiv);
     searchBar();
   },2500)
 
@@ -62,8 +65,15 @@ function redirect(id,address,cluster){
   document.cookie="location="+address+"; path=/";
   document.cookie="cluster="+cluster+"; path=/";
   document.cookie="id="+id+"; path=/"; 
-  var modal = document.getElementById('id01');
-  modal.style.display = "block";
+  var token =getCookie('token');
+  if(token){
+    window.location.href = window.location.href + cluster+'/'+id+'/WaterDispenser';
+  }
+  else{
+    var modal = document.getElementById('id01');
+    modal.style.display = "block";
+  }
+
 }
 
 
@@ -109,9 +119,14 @@ function getCookie(cname) {
 function searchBar(){
   var input = document.getElementById('searchInput');
         var searchBox = new google.maps.places.SearchBox(input);
-        map.controls[google.maps.ControlPosition.TOP_CENTER].push(input);
-               map.addListener('bounds_changed', function() {
-          searchBox.setBounds(map.getBounds());
+        if(window.innerWidth<550){
+          map.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(input);
+        }
+        else{
+          map.controls[google.maps.ControlPosition.TOP_CENTER].push(input);          
+        }
+        map.addListener('bounds_changed', function() {
+        searchBox.setBounds(map.getBounds());
         });
 
         var markers1 = [];
@@ -161,6 +176,8 @@ function CenterControl(controlDiv, map,html) {
   controlUI.style.cursor = 'pointer';
   controlUI.style.marginBottom = '22px';
   controlUI.style.textAlign = 'center';
+  controlUI.style.marginTop = '8px';
+  controlUI.style.marginRight = '16px';
   controlDiv.appendChild(controlUI);
 
   // Set CSS for the control interior.
@@ -170,7 +187,6 @@ function CenterControl(controlDiv, map,html) {
   controlText.style.fontSize = '16px';
   controlText.style.lineHeight = '38px';
   // controlText.style.paddingLeft = '5px';
-  // controlText.style.paddingRight = '5px';
   controlText.innerHTML = '<div class="dropdown"><button class="dropdown-toggle" type="button" data-toggle="dropdown" style="background:none;border:none">Filter by Cluster<span class="caret"></span></button><ul class="dropdown-menu">'+html+'</ul></div>';
   controlUI.appendChild(controlText);
   $('.dropdown-menu show').css({"display":"contents"})

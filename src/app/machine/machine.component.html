@@ -23,7 +23,7 @@
           <a class="nav-link" href="#">Settings</a>
         </li>
         <li class="nav-item pad">
-          <a class="nav-link" (click)="toggle()" >Logout</a>
+          <a class="nav-link" (click)="logout()" >Logout</a>
         </li>
       </ul>
     </nav>  
@@ -35,11 +35,11 @@
         <nav class="navbar verticalNav text-center" >
             <div class="text-center">
                 <h3 id="h3">{{title}}</h3>
-                <h6>User : {{user}}</h6>
+                <h6>User : {{user.Username}}</h6>
                 <br>
                 <ul class="navbar-nav text-center">
                     <li class="nav-item dropdown text-center" *ngFor="let nav of dropdownlist" >
-                        <a class="nav-link text-center" routerLink="/{{cluster}}/{{id}}/{{nav.id}}"   id="navbardrop" routerLinkActiveOptions="{exact:true}" [class.active-link]="nav.id==currDiv" >
+                        <a class="nav-link text-center" *ngIf= "user[nav.division]" routerLink="/{{cluster}}/{{id}}/{{nav.id}}"   id="navbardrop" routerLinkActiveOptions="{exact:true}" [class.active-link]="nav.id==currDiv" >
                           {{nav.division}}
                         </a>
                       </li>

@@ -12,6 +12,8 @@
         $all_rows=array();
 		while($row = $result->fetch_assoc()){
             if ($username==$row['Username'] && $password == $row['Password']) {
+                $token = bin2hex(random_bytes(64));
+                $row['token']=$token;
                 echo json_encode($row);
             }
         }	

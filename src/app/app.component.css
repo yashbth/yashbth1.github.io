@@ -7,12 +7,18 @@
     padding: 0 11px 0 13px;
     text-overflow: ellipsis;
     width: 400px;
+    margin-top:8px;; 
+    height:35px;
   }
 
   #searchInput:focus {
     border-color: #4d90fe;
   }
-
+ @media screen and (max-width:800px){
+     #searchInput{
+         width:200px;
+     }
+ }
 
   input[type=text], input[type=password] {
     width: 100%;

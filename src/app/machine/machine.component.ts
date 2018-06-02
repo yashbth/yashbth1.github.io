@@ -1,9 +1,9 @@
-import { Component, OnInit,AfterContentChecked ,DoCheck,HostListener} from '@angular/core';
+import { Component, OnInit,AfterContentChecked ,DoCheck,HostListener,Inject} from '@angular/core';
 import {ActivatedRoute, Router, NavigationEnd} from '@angular/router'
 import { Dropdown } from './dropdown'
 import {CookieService} from 'angular2-cookie/core'
 import '../../assets/scripts/collapse.js'
-import { GlobalService } from '../global.service';
+import { StorageService, SESSION_STORAGE } from 'angular-webstorage-service';
 
 declare var jquery:any;
 declare var $ :any;
@@ -17,8 +17,8 @@ declare function class3_9() : any;
   templateUrl: './machine.component.html',
   styleUrls: ['./machine.component.css']
 })
-export class MachineComponent{
-  user = 'Admin';
+export class MachineComponent implements OnInit{
+  user : string;
   title = 'DASHBOARD';
   param=[];
   url:string;
@@ -26,13 +26,12 @@ export class MachineComponent{
   dropdownlist = Dropdown; 
   currDiv: string;
   cluster: string;
-  constructor(private router : Router,private cookieService : CookieService,private route : ActivatedRoute,private global : GlobalService) {
+  constructor(private router : Router,private cookieService : CookieService,private route : ActivatedRoute,@Inject (SESSION_STORAGE) private storage :StorageService) {
 
    }
 
-  ngOnIt(){
-
-
+  ngOnInit(){
+    this.user = this.storage.get('user') ;
   }
   ngDoCheck(){
     this.cluster = this.cookieService.get('cluster');    
@@ -59,7 +58,12 @@ export class MachineComponent{
     this.currDiv = this.cookieService.get('prevDiv');
 
   }
-  
+  logout(){
+    this.storage.remove('user');
+    this.cookieService.removeAll();
+    window.location.href= '/';
+
+  }
   toggle(){
     if(check){    
       $('#verticalCollapse').removeClass('col-sm-3');
