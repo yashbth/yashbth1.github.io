@@ -5,6 +5,7 @@ import { Cluster } from '../delhiCluster'
 import { DatePipe } from '@angular/common';
 import { GlobalService } from '../global.service';
 import { CookieService } from 'angular2-cookie/core';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 
 
@@ -34,7 +35,7 @@ export class OperatorComponent implements OnInit {
   absent: number;
   chart:boolean=false;
   location : string = this.cookieService.get('location');
-  
+  jwtHelper = new JwtHelperService();
   constructor(private service : FetchWaterDispenseDataService,private Cluster : Cluster,private router:Router,private route: ActivatedRoute,private globalservice : GlobalService, private cookieService:CookieService) { 
     router.events.subscribe((val)=>{
       if(val instanceof NavigationEnd){
@@ -42,11 +43,11 @@ export class OperatorComponent implements OnInit {
       }
     })
   }
-  ngDoCheck(){
 
-    
- }
   ngOnInit() {
+    if(this.jwtHelper.isTokenExpired(this.globalservice.token)){
+      window.location.href= '/';
+    }
     this.date= this.date.getFullYear() + '-'+((this.date.getMonth()+1)/10>1 ? '':'0')+(this.date.getMonth()+1)+'-'+this.date.getDate();
     setTimeout(()=>{
       this.id[0] = this.route.snapshot.paramMap.get('id');

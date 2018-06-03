@@ -6,7 +6,7 @@ import {Cluster} from './delhiCluster'
 import {catchError, map, tap } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CookieService } from 'angular2-cookie/core';
-import {Users} from './users';
+import {Users,Token} from './users';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -70,11 +70,18 @@ export class FetchWaterDispenseDataService {
     );
   }
   userAuthentication(form,filename):Observable<Users[]>{
-    return this.http.post<Users[]>(this.url+filename,form).pipe(
+    return this.http.post<Users[]>(this.url+filename,form,{withCredentials:true}).pipe(
       catchError(this.handleError('userAuthentication',[]))
       
     );
   }
+  getSessionVariables(filename):Observable<Token[]>{
+    return this.http.get<Token[]>(this.url+filename,{withCredentials:true}).pipe(
+      catchError(this.handleError('getSessionVariables',[])) 
+    );
+  }
+
+
   private handleError<T> (operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
    

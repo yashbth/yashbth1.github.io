@@ -61,18 +61,18 @@ function myMap() {
 
 function redirect(id,address,cluster){
   // Get the modal
-
   document.cookie="location="+address+"; path=/";
   document.cookie="cluster="+cluster+"; path=/";
   document.cookie="id="+id+"; path=/"; 
-  var token =getCookie('token');
-  if(token){
-    window.location.href = window.location.href + cluster+'/'+id+'/WaterDispenser';
+  if(getCookie("PHPSESSID")){
+    window.location.href = window.location.href + cluster+'/'+id+'/WaterDispenser';     
   }
   else{
     var modal = document.getElementById('id01');
     modal.style.display = "block";
   }
+
+
 
 }
 

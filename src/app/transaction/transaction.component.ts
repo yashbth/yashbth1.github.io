@@ -4,6 +4,7 @@ import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import {Cluster} from '../delhiCluster'
 import { GlobalService } from '../global.service';
 import { CookieService } from 'angular2-cookie/core';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 declare var jquery : any;
 declare var $ : any;
@@ -22,12 +23,15 @@ export class TransactionComponent implements OnInit {
   cluster : string;
   data : any;
   location : string = this.cookieService.get('location');
-
+  jwtHelper = new JwtHelperService();
   constructor(private service : FetchWaterDispenseDataService,private Cluster : Cluster, private router : Router,private route : ActivatedRoute, private globalservice : GlobalService, private cookieService:CookieService) { 
   }
 
   ngOnInit(){
     setTimeout(()=>{
+      if(this.jwtHelper.isTokenExpired(this.globalservice.token)){
+        window.location.href= '/';
+      }
       this.id[0] = this.route.snapshot.paramMap.get('id');
       this.cluster = this.route.snapshot.paramMap.get('cluster');
       this.data= this.Cluster[this.cluster].transaction;

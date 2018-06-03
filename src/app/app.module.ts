@@ -24,6 +24,8 @@ import { LoadingComponent } from './loading/loading.component';
 import { Cluster } from './delhiCluster';
 import { ClickDetectionDirective } from './click-detection.directive';
 import {StorageServiceModule} from 'angular-webstorage-service'
+import { AuthService } from './auth.service';
+
 
 
 
@@ -51,9 +53,10 @@ import {StorageServiceModule} from 'angular-webstorage-service'
     HttpClientModule,
     ChartModule,
     FormsModule,
-    StorageServiceModule
+    StorageServiceModule,
+    
   ],
-  providers: [FetchWaterDispenseDataService,GlobalService,CookieService,Cluster],
+  providers: [AuthService,FetchWaterDispenseDataService,GlobalService,CookieService,Cluster],
   bootstrap: [AppComponent]                                                                                                                                                                                                                                                                                                                                                                                                     
 })
 

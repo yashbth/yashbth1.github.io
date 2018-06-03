@@ -3,7 +3,9 @@ import {ActivatedRoute, Router, NavigationEnd} from '@angular/router'
 import { Dropdown } from './dropdown'
 import {CookieService} from 'angular2-cookie/core'
 import '../../assets/scripts/collapse.js'
-import { StorageService, SESSION_STORAGE } from 'angular-webstorage-service';
+import { GlobalService } from '../global.service';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { FetchWaterDispenseDataService } from '../fetch-water-dispense-data.service';
 
 declare var jquery:any;
 declare var $ :any;
@@ -18,7 +20,7 @@ declare function class3_9() : any;
   styleUrls: ['./machine.component.css']
 })
 export class MachineComponent implements OnInit{
-  user : string;
+  user : any;
   title = 'DASHBOARD';
   param=[];
   url:string;
@@ -26,12 +28,18 @@ export class MachineComponent implements OnInit{
   dropdownlist = Dropdown; 
   currDiv: string;
   cluster: string;
-  constructor(private router : Router,private cookieService : CookieService,private route : ActivatedRoute,@Inject (SESSION_STORAGE) private storage :StorageService) {
+  jwtHelper = new JwtHelperService();
+  session_variable  : any;
+  constructor(private router : Router,private cookieService : CookieService,private route : ActivatedRoute, private global :GlobalService,private service : FetchWaterDispenseDataService) {
 
    }
 
-  ngOnInit(){
-    this.user = this.storage.get('user') ;
+  ngOnInit(){   
+    setTimeout(()=>{
+      if(!this.user){
+        window.location.href='/';
+      }
+    },5000);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
   }
   ngDoCheck(){
     this.cluster = this.cookieService.get('cluster');    
@@ -52,6 +60,7 @@ export class MachineComponent implements OnInit{
     $('body ').css({'background':"whitesmoke"});   
   }
   ngAfterContentChecked(){
+    this.user = this.global.user["0"];   
     let param=this.router.url.split('/');
     this.url= param[param.length-1];
     this.id = param[param.length-2];
@@ -59,7 +68,6 @@ export class MachineComponent implements OnInit{
 
   }
   logout(){
-    this.storage.remove('user');
     this.cookieService.removeAll();
     window.location.href= '/';
 
