@@ -22,6 +22,7 @@ export class TransactionComponent implements OnInit {
   info : any;
   cluster : string;
   data : any;
+  panel : string;
   location : string = this.cookieService.get('location');
   jwtHelper = new JwtHelperService();
   constructor(private service : FetchWaterDispenseDataService,private Cluster : Cluster, private router : Router,private route : ActivatedRoute, private globalservice : GlobalService, private cookieService:CookieService) { 
@@ -33,6 +34,7 @@ export class TransactionComponent implements OnInit {
         window.location.href= '/';
       }
       this.id[0] = this.route.snapshot.paramMap.get('id');
+      this.panel = this.route.snapshot.paramMap.get('panel')
       this.cluster = this.route.snapshot.paramMap.get('cluster');
       this.data= this.Cluster[this.cluster].transaction;
       this.getInfo();      

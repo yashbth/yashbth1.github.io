@@ -81,7 +81,6 @@ export class WaterDispenseComponent implements OnInit{
       if(this.checkRouteChange.indexOf(this.property1)<0){   
           this.service.getLocation(this.id[0],this.cluster).subscribe(location=>this.location_info=location,(err)=>console.log(err),()=>{
           this.cookieService.put('location',this.location_info[0].Location);
-          // this.cookieService.put('cluster',this.location_info[0].Cluster_Name);
           this.location = this.cookieService.get('location');
         });
         this.getWaterinfo();
@@ -98,7 +97,6 @@ export class WaterDispenseComponent implements OnInit{
     this.service.getChartData('chart_date.php',this.id,this.table,this.fromDate,this.toDate).subscribe(chartData=>this.chartData=chartData);    
   }
   getWaterinfo():void{
-
     this.info=[];
     this.chartData=[];
     this.service.getData(this.id,this.table,this.filename).subscribe(info=>this.info=info,(err)=>console.error(err),()=>{      
