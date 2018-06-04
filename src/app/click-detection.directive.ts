@@ -13,13 +13,16 @@ export class ClickDetectionDirective {
       const clickedInside = this.el.nativeElement.contains(targetElement);
       if (!clickedInside) {
           this.global.showSearchResult=false;
-          $('.nav-search').animate({"width":"190px"},300);
-          setTimeout(()=>{
-            var width = $('.nav-search').outerWidth();
-            var padding =$('.dropdown').outerWidth();
-            $('.search-result').css({"width":width,"visibility":"hidden"}); 
-            $('.tab').css({"padding-left":padding});
-          },300)
+          if(window.innerWidth>600){
+            $('.nav-search').animate({"width":"190px"},300);
+            setTimeout(()=>{
+              var width = $('.nav-search').outerWidth();
+              var padding =$('.dropdown').outerWidth();
+              $('.search-result').css({"width":width,"visibility":"hidden"}); 
+              $('.tab').css({"padding-left":padding});
+            },300)
+          }
+
       }
     }
 

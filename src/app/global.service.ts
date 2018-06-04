@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import {Dropdown} from './machine/dropdown'
 
 @Injectable({
   providedIn: 'root'
@@ -10,14 +11,20 @@ export class GlobalService {
   showSearchResult : boolean =false;
   user: any;
   token: any;
+  DropDown = Dropdown;
   constructor(private router : Router) { }
   setVar(lat,lon):void{
     this.lat=lat;
     this.lon=lon;
   }
   isAllowed(cluster,panel,id){
-    if(!this.user["0"][cluster] || !this.user["0"][panel]){
-      this.router.navigateByUrl('/'+cluster+'/'+id +'/error')
+    for ( var dropdown of this.DropDown ){
+      if(dropdown['id']==panel){
+        if(this.user["0"][cluster]=='0' || this.user["0"][dropdown['division']]=='0'){
+          this.router.navigateByUrl('/'+cluster+'/'+id +'/error')
+        }
+      }
     }
+
   }
 }

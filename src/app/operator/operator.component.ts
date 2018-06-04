@@ -22,6 +22,7 @@ export class OperatorComponent implements OnInit {
   dataAvailable : boolean =false;
   table= "Operator_Attendence"
   id=[];
+  panel : string;
   cluster :string;
   data: any;
   date : any=new Date(Date.now());
@@ -51,8 +52,10 @@ export class OperatorComponent implements OnInit {
     this.date= this.date.getFullYear() + '-'+((this.date.getMonth()+1)/10>1 ? '':'0')+(this.date.getMonth()+1)+'-'+this.date.getDate();
     setTimeout(()=>{
       this.id[0] = this.route.snapshot.paramMap.get('id');
+      this.panel = this.route.snapshot.paramMap.get('panel');
       this.cluster = this.route.snapshot.paramMap.get('cluster');
       this.data= this.Cluster[this.cluster].operator;
+      this.globalservice.isAllowed(this.cluster,this.panel,this.id);                       
       this.getOperators('operator.php');
     },500)
   }

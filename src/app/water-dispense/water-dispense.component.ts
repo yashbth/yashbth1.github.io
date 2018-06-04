@@ -70,13 +70,13 @@ export class WaterDispenseComponent implements OnInit{
         this.service.getSessionVariables('session.php/?action=destroy').subscribe(data=>this.data=data,(err)=>console.log(err),()=>{
           window.location.href= '/';
         }); 
-       
       }
       this.panel = this.route.snapshot.paramMap.get('panel');  
       this.id[0] = this.route.snapshot.paramMap.get('id');  
       this.cluster = this.route.snapshot.paramMap.get('cluster');
       this.cookieService.put('cluster',this.cluster);
       this.cookieService.put('id',this.id[0]);     
+      this.globalservice.isAllowed(this.cluster,this.panel,this.id);                 
       this.panelParameters();
       if(this.checkRouteChange.indexOf(this.property1)<0){   
           this.service.getLocation(this.id[0],this.cluster).subscribe(location=>this.location_info=location,(err)=>console.log(err),()=>{

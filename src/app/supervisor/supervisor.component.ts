@@ -21,6 +21,7 @@ export class SupervisorComponent implements OnInit {
   property1:string;
   filename: string; 
   id = [];
+  panel : string;
   cluster : string;
   place : string = 'New Delhi Cluster';
   info =[];
@@ -45,8 +46,10 @@ export class SupervisorComponent implements OnInit {
     if(this.jwtHelper.isTokenExpired(this.globalservice.token)){
       window.location.href= '/';
     }
-    this.id[0] = this.route.snapshot.paramMap.get('id');   
-    this.cluster = this.route.snapshot.paramMap.get('cluster');                                                    
+    this.id[0] = this.route.snapshot.paramMap.get('id');
+    this.panel = this.route.snapshot.paramMap.get('panel');       
+    this.cluster = this.route.snapshot.paramMap.get('cluster');     
+    this.globalservice.isAllowed(this.cluster,this.panel,this.id);                                                                    
     this.panelParameters();
     if(this.checkRouteChange.indexOf(this.property1)<0){
       this.getWaterinfo();

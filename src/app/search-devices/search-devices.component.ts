@@ -54,13 +54,25 @@ export class SearchDevicesComponent implements OnInit {
     window.location.reload();
   }
   largewidth(){  
-    this.global.showSearchResult= true;                                       
-    $('.nav-search').animate({"width":"350px"},300);
-    setTimeout(()=>{
-      var width = $('.nav-search').outerWidth();
-      var padding =$('.dropdown').outerWidth();
-      $('.search-result').css({"width":width,"visibility":"visible"}); 
-      $('.tab').css({"padding-left":padding});
-    },300)
+    this.global.showSearchResult= true;    
+    if(window.innerWidth>600){
+      $('.nav-search').animate({"width":"350px"},300);
+      setTimeout(()=>{
+        var width = $('.nav-search').outerWidth();
+        var padding =$('.dropdown').outerWidth();
+        $('.search-result').css({"width":width,"visibility":"visible"}); 
+        $('.tab').css({"padding-left":padding});
+      },300)   
+    }
+     else{
+      // $('.nav-search').animate({"width":"350px"},300);
+      setTimeout(()=>{
+        var width = $('.nav-search').outerWidth();
+        // var padding =$('.dropdown').outerWidth();
+        $('.search-result').css({"width":width,"visibility":"visible"}); 
+        // $('.tab').css({"padding-left":padding});
+      },300) 
+     }                           
+
   }
 }

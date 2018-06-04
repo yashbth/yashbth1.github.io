@@ -3,7 +3,7 @@
   <!-- Main Navbar  -->
   <div class="nav">
     <nav class="navbar navbar-expand-sm  navbar-dark fixed-top">
-      <span>
+      <span id="collective" class="text-center">
           <span id="toggleButton" class="bars" (click)="toggle()" ></span>
           <!-- Brand/logo -->
           <span class="col-sm-10">
@@ -12,7 +12,7 @@
                 <img src="/assets/images/swajal.png" width="135px">
               </a>
           </span>
-          
+          <span id="settings" class="user" (click)="settingToggle()"></span>
       </span>
 
       
@@ -33,13 +33,13 @@
   <div class="row">
     <div class="col-sm-2" id="verticalCollapse">
         <nav class="navbar verticalNav text-center" >
-            <div class="text-center">
+            <div class="text-center" >
                 <h3 id="h3">{{title}}</h3>
                 <h6>User : {{user.Username}}</h6>
                 <br>
                 <ul class="navbar-nav text-center">
                     <li class="nav-item dropdown text-center" *ngFor="let nav of dropdownlist" >
-                        <a class="nav-link text-center" *ngIf="user[nav.division]==1" routerLink="/{{cluster}}/{{id}}/{{nav.id}}"   id="navbardrop" routerLinkActiveOptions="{exact:true}" [class.active-link]="nav.id==currDiv" >
+                        <a class="nav-link text-center" (click)="hide()" *ngIf="user[nav.division]==1" routerLink="/{{cluster}}/{{id}}/{{nav.id}}"   id="navbardrop" routerLinkActiveOptions="{exact:true}" [class.active-link]="nav.id==currDiv" >
                           {{nav.division}}
                         </a>
                       </li>

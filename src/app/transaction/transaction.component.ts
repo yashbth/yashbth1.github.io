@@ -37,6 +37,7 @@ export class TransactionComponent implements OnInit {
       this.panel = this.route.snapshot.paramMap.get('panel')
       this.cluster = this.route.snapshot.paramMap.get('cluster');
       this.data= this.Cluster[this.cluster].transaction;
+      this.globalservice.isAllowed(this.cluster,this.panel,this.id);                       
       this.getInfo();      
     })
   }

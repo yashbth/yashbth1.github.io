@@ -1,4 +1,4 @@
-import { Component, OnInit,Inject} from '@angular/core';
+import { Component, OnInit,DoCheck,Inject} from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import {HttpClient,HttpHeaders} from '@angular/common/http'
 import { FetchWaterDispenseDataService } from './fetch-water-dispense-data.service';
@@ -18,6 +18,7 @@ declare var  $ : any;
 export class AppComponent implements OnInit{
   title = 'app';
   timeout : boolean = true;
+  
   router : any;
   username : string;
   password: string;
@@ -32,7 +33,10 @@ export class AppComponent implements OnInit{
     if(this.cookieService.get('PHPSESSID')){
       this.service.getSessionVariables('session.php/?action=start').subscribe(session_var=>this.session_variable=session_var,(err)=>console.log(err),()=>{
         this.global.token= this.session_variable.JWTtoken;
-        this.global.user = this.jwtHelper.decodeToken(this.global.token);       
+        if(this.jwtHelper.isTokenExpired(this.global.token)){
+          this.cookieService.put('PHPSESSID','');
+        }
+        this.global.user = this.jwtHelper.decodeToken(this.global.token);
       });
     }
     setTimeout(() => {
@@ -41,6 +45,9 @@ export class AppComponent implements OnInit{
     }, 5000);
  
     
+  }
+  ngDoCheck(){
+
   }
   requestAuth(){    
     let form = new FormData();
@@ -52,6 +59,7 @@ export class AppComponent implements OnInit{
           this.service.getSessionVariables('session.php/?action=start').subscribe(session_var=>this.session_variable=session_var,(err)=>console.log(err),()=>{
             this.global.token= this.session_variable.JWTtoken;
             this.global.user = this.jwtHelper.decodeToken(this.global.token);
+
             setTimeout(()=>{
               $('#id01').css({"display":"none"});                 
               window.location.href = window.location.href + this.cookieService.get('cluster')+'/'+this.cookieService.get('id')+'/WaterDispenser';     
@@ -59,9 +67,12 @@ export class AppComponent implements OnInit{
           });
         }
         else{
-          this.cookieService.put('message','Authentication Failure',{expires:this.date});
+          this.cookieService.put('message','Authentication Failure');
         }
       
     });
+  }
+  deleteCookie(){
+    this.cookieService.removeAll();
   }
 }

@@ -65,7 +65,9 @@ function redirect(id,address,cluster){
   document.cookie="cluster="+cluster+"; path=/";
   document.cookie="id="+id+"; path=/"; 
   if(getCookie("PHPSESSID")){
-    window.location.href = window.location.href + cluster+'/'+id+'/WaterDispenser';     
+    setTimeout(()=>{
+      window.location.href = window.location.href + cluster+'/'+id+'/WaterDispenser';
+    },1000)
   }
   else{
     var modal = document.getElementById('id01');
