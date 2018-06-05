@@ -1,7 +1,7 @@
 export class Cluster{
     id:string;
     clusters=[
-        'Delhi','NISE'
+        'Delhi','IRCTC','NISE'
     ]
     Delhi={
         WaterDispenseData :

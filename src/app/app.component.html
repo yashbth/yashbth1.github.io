@@ -1,4 +1,4 @@
-<div id="earth_div" *ngIf="router.url=='/'" style="visibility:hidden "></div>
+<div id="map" *ngIf="router.url=='/'" style="visibility:hidden;width:100%;height:-webkit-fill-available" class="container-fluid" ></div>
 <app-loading [timeout]="timeout" *ngIf="router.url=='/'"></app-loading>
 <app-machine *ngIf="router.url!='/'" ></app-machine>
 

@@ -1,0 +1,24 @@
+.checkbox{
+    padding-left: 1em;
+}
+.maxHeight{
+    height: -webkit-fill-available;
+    margin-top: 30px;
+}
+.pad{
+    padding-left: 0px;
+}
+.page-header h2{
+    font-size: 2vw;
+}
+.text-left{
+    display: inline-flex;
+    padding-bottom: 3px;
+}
+.text-justify{
+    padding: 0 23.5% 3px;
+}
+h6{
+font-weight: 600;
+}
+

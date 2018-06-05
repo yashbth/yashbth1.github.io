@@ -7,7 +7,10 @@
           <span id="toggleButton" class="bars" (click)="toggle()" ></span>
           <!-- Brand/logo -->
           <span class="col-sm-10">
-              <a class="navbar-brand text-center" href=""><span id="enlarge">S</span>WA<span id="fontColor">JAL</span></a>
+              <a class="navbar-brand text-center" href="">
+                <!-- <span id="enlarge">S</span>WA<span id="fontColor">JAL</span> -->
+                <img src="/assets/images/swajal.png" width="135px">
+              </a>
           </span>
           
       </span>
@@ -17,7 +20,7 @@
       <ul class="navbar-nav Settings">
         <app-search-devices></app-search-devices>
         <li class="nav-item pad">
-          <a class="nav-link" href="#">Settings</a>
+          <a class="nav-link" routerLink="/{{cluster}}/{{id}}/settings">Settings</a>
         </li>
         <li class="nav-item pad">
           <a class="nav-link" (click)="toggle()" >Logout</a>

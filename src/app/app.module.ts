@@ -22,6 +22,7 @@ import { ErrorComponent } from './error/error.component';
 import { LoadingComponent } from './loading/loading.component';
 import { Cluster } from './delhiCluster';
 import { ClickDetectionDirective } from './click-detection.directive';
+import { SettingsComponent } from './settings/settings.component';
 
 
 
@@ -42,6 +43,7 @@ import { ClickDetectionDirective } from './click-detection.directive';
     ErrorComponent,
     LoadingComponent,
     ClickDetectionDirective,
+    SettingsComponent,
 
   ],
   imports: [

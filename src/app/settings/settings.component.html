@@ -1,0 +1,103 @@
+<div *ngIf = "message_success" class="alert alert-success" style="justify-content: center; text-align: center;"><span style="justify-content: center "><b>Success! </b>{{message_success}}</span></div>
+<div *ngIf = "message_failure" class="alert alert-danger" style="justify-content: center; text-align: center;"><span style="justify-content: center"><b>Warning! </b>{{message_failure}}</span></div>
+<div class="container maxHeight" style="padding-top: 26px">
+   <div class="row">
+    <div class= "col text-center ">
+      <div class="page-header">
+          <h2>Change Password</h2>
+      </div>
+      <div class="pad">
+          <form ngNoForm action="http://localhost/~yashbahetiiitk/swajal_dashboard/src/assets/Php/pass_change.php/?user=a" id="change_pass_form"  onsubmit="this.submit()" method="POST">
+            <h6>Current Password:</h6>
+            <input type="password" name="curr_pass"><br><br>
+            <h6>New Password:</h6>
+            <input type="password" name="new_pass"><br>
+            <h6 style="padding-top: 10px">Confirm Password:</h6>
+            <input type="password" name="new_pass_check"><br><br>
+  
+            <input type="submit" class="rounded btn-secondary" value="Change Password">
+        </form>
+      </div>
+      <!-- <button id="change_pass_btn" (click)="show('CP')">Change Password</button> -->
+
+    </div><br><br>
+  
+    <div class = "col text-center">
+        <div class="page-header">
+          <h2>Create New User</h2>            
+        </div>
+        <div class="pad">
+            <form ngNoForm action="http://localhost/~yashbahetiiitk/swajal_dashboard/src/assets/Php/create_user.php" id="create_user_form" onsubmit="this.submit()" method="POST">
+              <h6>Username:</h6>
+              <input type="text"   name="username"><br><br>
+              <h6>Password:</h6>
+              <input type="password" name="password"><br><br>
+              <h6>Clusters:</h6>
+              <div class="text-left">
+                  <div *ngFor = "let cluster of clusters;" class = 'checkbox'>
+                      <input type="checkbox" name="cluster[]" value='{{cluster}}'>{{cluster}}<br>
+                    </div>
+                  </div><br><br>
+              <!-- <span><input type="checkbox" (click)="toggle(this,'cluster[]')" />Select all</span><br/><br> -->
+              <div >
+                  <h6>Privileges:</h6>
+                  <div class="checkbox text-justify">
+                  <input type="checkbox" name="panel[]" value="Water_Dispensing_Panel">Water Dispensing Panel<br>
+                  <input type="checkbox" name="panel[]" value="RO_Parameters">RO Parameters<br>
+                  <input type="checkbox" name="panel[]" value="Transaction_Log">Transaction Log<br>
+                  <input type="checkbox" name="panel[]" value="Operator_Attendance">Operator Attendance<br>
+                  <input type="checkbox" name="panel[]" value="Cup_Dispensing_Panel">Cup Dispensing Panel<br>
+                  <input type="checkbox" name="panel[]" value="Supervisor_Data">Supervisor Data<br>
+                  </div>    
+                  <h6><span><input type="checkbox" (click)="toggle(this,'panel[]')" />Select all</span><br/><br></h6>                
+              </div>
+              
+      
+        
+              <!-- <input id="destination" type="hidden" name="destination" value="r"> -->
+              <input type="submit" class="rounded btn-secondary" value="Create User">
+          </form>
+        </div>
+      <!-- <button id="create_user_btn" (click)="show('CU')">+ Create New User</button> -->
+
+    </div><br><br>
+    <div class = "col text-center">
+        <div class="page-header">
+            <h2>Edit Users' Privileges</h2>            
+          </div>
+      
+      <!-- <button id="edit_user_btn" (click)="show('EU')">Edit User privileges</button> -->
+      <form ngNoForm id="get_user_form" onsubmit="this.submit()" method="POST">
+        <div class="pad">
+            <h6>Please enter username:</h6>
+            <input type="text"   name="username" value="{{userName}}">
+            <input type="submit" class="rounded btn-secondary" value="Check Privileges" formaction="http://localhost/~yashbahetiiitk/swajal_dashboard/src/assets/Php/get_user.php"><br><br>
+            <div id="priv" style="visibility: hidden;">
+              <h6>Clusters:</h6>
+              <div class="text-left">
+                <div *ngFor = "let cluster of clusters;" class = 'checkbox'>
+                    <input id ="{{cluster}}" type="checkbox" name="clusterP[]" value='{{cluster}}'>{{cluster}}<br>
+                  </div>
+              </div><br><br>
+
+              <!-- <input type="checkbox" (click)="toggle(this,'clusterP[]')" />Select all<br/><br> -->
+              
+              <h6>Privileges:</h6>
+              <div class="checkbox text-justify">
+              <input type="checkbox" name="panelP[]" value="Water_Dispensing_Panel">Water Dispensing Panel<br>
+              <input type="checkbox" name="panelP[]" value="RO_Parameters">RO Parameters<br>
+              <input type="checkbox" name="panelP[]" value="Transaction_Log">Transaction Log<br>
+              <input type="checkbox" name="panelP[]" value="Operator_Attendance">Operator Attendance<br>
+              <input type="checkbox" name="panelP[]" value="Cup_Dispensing_Panel">Cup Dispensing Panel<br>
+              <input type="checkbox" name="panelP[]" value="Supervisor_Data">Supervisor Data<br>
+              </div>    
+              <h6><input type="checkbox" (click)="toggle(this,'panelP[]')">Select all<br><br></h6>
+              <input type="submit" class="rounded btn-secondary" value="Save changes" formaction="http://localhost/~yashbahetiiitk/swajal_dashboard/src/assets/Php/edit_user.php">
+            </div>
+        </div>
+
+      </form> 
+    </div>
+  </div>
+  
+</div>
