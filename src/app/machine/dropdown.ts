@@ -24,6 +24,10 @@ export const Dropdown : Object[]=[{
         id: 'supervisor',
   
     },
+    {
+        division : 'Analysis',
+        id: 'analysis'  
+    }
 ]
     
 

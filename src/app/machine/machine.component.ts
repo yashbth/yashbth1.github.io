@@ -52,7 +52,7 @@ export class MachineComponent implements OnInit{
   toggle(){
       if(check){    
         $('#verticalCollapse').removeClass('col-sm-3');
-        $('.verticalNav').animate({opacity:"0"},600);
+        $('.verticalNav').animate({zIndex:0,opacity:"0"},600);
         $('#verticalCollapse').animate({maxWidth:"0%"},500);
         setTimeout(()=>{
           class12();
@@ -96,6 +96,7 @@ export class MachineComponent implements OnInit{
       $('app-transaction').addClass('col-sm-10');   
       $('app-supervisor').addClass('col-sm-10');
       $('app-operator').addClass('col-sm-10');
+      $('app-analysis').addClass('col-sm-10');
     }
     else if ( window.innerWidth<=1300){
       $('app-error').addClass('col-sm-9').removeClass('col-sm-10');     
@@ -103,6 +104,7 @@ export class MachineComponent implements OnInit{
       $('app-transaction').addClass('col-sm-9').removeClass('col-sm-10');   
       $('app-supervisor').addClass('col-sm-9').removeClass('col-sm-10');
       $('app-operator').addClass('col-sm-9').removeClass('col-sm-10');
+      $('app-analysis').addClass('col-sm-9').removeClass('col-sm-10');
     }
 
     $('body ').css({'background':"whitesmoke"});   

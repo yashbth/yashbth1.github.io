@@ -5,3 +5,6 @@ export class Users {
 export class Token{
     token: string;
 }
+export class Property{
+    property : string;
+}

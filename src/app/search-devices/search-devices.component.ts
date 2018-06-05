@@ -1,4 +1,4 @@
-import { Component, OnInit,DoCheck,HostListener, Inject} from '@angular/core';
+import { Component, OnInit,DoCheck,HostListener, Inject,Input} from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Observable, Subject} from 'rxjs';
 import {
@@ -18,6 +18,7 @@ declare var $ : any;
   styleUrls: ['./search-devices.component.css']
 })
 export class SearchDevicesComponent implements OnInit {
+
   selectId:string;
   cluster : string;
   table : string ;
@@ -53,26 +54,28 @@ export class SearchDevicesComponent implements OnInit {
     this.router.navigateByUrl('/'+this.cluster+'/'+this.selectId+'/WaterDispenser');
     window.location.reload();
   }
-  largewidth(){  
-    this.global.showSearchResult= true;    
-    if(window.innerWidth>600){
-      $('.nav-search').animate({"width":"350px"},300);
-      setTimeout(()=>{
-        var width = $('.nav-search').outerWidth();
-        var padding =$('.dropdown').outerWidth();
-        $('.search-result').css({"width":width,"visibility":"visible"}); 
-        $('.tab').css({"padding-left":padding});
-      },300)   
-    }
-     else{
-      // $('.nav-search').animate({"width":"350px"},300);
-      setTimeout(()=>{
-        var width = $('.nav-search').outerWidth();
-        // var padding =$('.dropdown').outerWidth();
-        $('.search-result').css({"width":width,"visibility":"visible"}); 
-        // $('.tab').css({"padding-left":padding});
-      },300) 
-     }                           
+  largewidth(){
+      this.global.showSearchResult= true;    
+      if(window.innerWidth>600){
+        $('.nav-search').animate({"width":"350px"},300);
+        setTimeout(()=>{
+          var width = $('.nav-search').outerWidth();
+          var padding =$('.dropdown').outerWidth();
+          $('.search-result').css({"width":width,"visibility":"visible"}); 
+          $('.tab').css({"padding-left":padding});
+        },300)   
+      }
+       else{
+        // $('.nav-search').animate({"width":"350px"},300);
+        setTimeout(()=>{
+          var width = $('.nav-search').outerWidth();
+          // var padding =$('.dropdown').outerWidth();
+          $('.search-result').css({"width":width,"visibility":"visible"}); 
+          // $('.tab').css({"padding-left":padding});
+        },300) 
+       }  
+      
+                         
 
   }
 }

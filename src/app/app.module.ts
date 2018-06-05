@@ -15,6 +15,7 @@ import { SupervisorComponent } from './supervisor/supervisor.component';
 import { OperatorComponent } from './operator/operator.component';
 import { OperatorChartsComponent } from './charts/operatorcharts.component';
 import { SupervisorChartsComponent } from './charts/supervisorcharts.component';
+import {AnalysisChartsComponent} from './charts/analysischarts.component';
 
 import { GlobalService } from './global.service';
 import { CookieService } from 'angular2-cookie/services/cookies.service';
@@ -25,6 +26,7 @@ import { Cluster } from './delhiCluster';
 import { ClickDetectionDirective } from './click-detection.directive';
 import {StorageServiceModule} from 'angular-webstorage-service'
 import { AuthService } from './auth.service';
+import { AnalysisComponent } from './analysis/analysis.component';
 
 
 
@@ -45,6 +47,8 @@ import { AuthService } from './auth.service';
     ErrorComponent,
     LoadingComponent,
     ClickDetectionDirective,
+    AnalysisComponent,
+    AnalysisChartsComponent
     
   ],
   imports: [
