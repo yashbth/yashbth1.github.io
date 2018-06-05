@@ -27,6 +27,7 @@ import { ClickDetectionDirective } from './click-detection.directive';
 import {StorageServiceModule} from 'angular-webstorage-service'
 import { AuthService } from './auth.service';
 import { AnalysisComponent } from './analysis/analysis.component';
+import { SettingsComponent } from './settings/settings.component';
 
 
 
@@ -48,8 +49,9 @@ import { AnalysisComponent } from './analysis/analysis.component';
     LoadingComponent,
     ClickDetectionDirective,
     AnalysisComponent,
-    AnalysisChartsComponent
-    
+    AnalysisChartsComponent,
+    SettingsComponent,
+
   ],
   imports: [
     BrowserModule,

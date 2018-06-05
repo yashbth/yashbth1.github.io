@@ -20,7 +20,7 @@
       <ul class="navbar-nav Settings">
         <app-search-devices appClickDetection></app-search-devices>
         <li class="nav-item pad">
-          <a class="nav-link" href="#">Settings</a>
+          <a class="nav-link" routerLink="/{{cluster}}/{{id}}/settings">Settings</a>
         </li>
         <li class="nav-item pad">
           <a class="nav-link" (click)="logout()" >Logout</a>

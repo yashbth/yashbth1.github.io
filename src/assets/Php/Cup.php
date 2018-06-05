@@ -14,7 +14,7 @@
         $all_rows = array();    
         while($row = $result->fetch_assoc()){
             $all_rows[]=$row;
-}   
+        }   
 } 
         
     echo  json_encode($all_rows);

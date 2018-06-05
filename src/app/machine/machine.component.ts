@@ -97,6 +97,9 @@ export class MachineComponent implements OnInit{
       $('app-supervisor').addClass('col-sm-10');
       $('app-operator').addClass('col-sm-10');
       $('app-analysis').addClass('col-sm-10');
+      $('app-settings').addClass('col-sm-10');
+      
+      
     }
     else if ( window.innerWidth<=1300){
       $('app-error').addClass('col-sm-9').removeClass('col-sm-10');     
@@ -105,6 +108,8 @@ export class MachineComponent implements OnInit{
       $('app-supervisor').addClass('col-sm-9').removeClass('col-sm-10');
       $('app-operator').addClass('col-sm-9').removeClass('col-sm-10');
       $('app-analysis').addClass('col-sm-9').removeClass('col-sm-10');
+      $('app-settings').addClass('col-sm-9').removeClass('col-sm-10');
+      
     }
 
     $('body ').css({'background':"whitesmoke"});   
