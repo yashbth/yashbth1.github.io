@@ -87,8 +87,8 @@ function getLocation(){
 		}	
   }
   
-  xhttp.open("POST","http://localhost/~yashbahetiiitk/swajal_dashboard/src/assets/Php/machines.php",true);
-  // xhttp.open("POST","http://localhost:8000/assets/Php/machines.php",true);
+  // xhttp.open("POST","http://localhost/~yashbahetiiitk/swajal_dashboard/src/assets/Php/machines.php",true);
+  xhttp.open("POST","http://localhost:8000/assets/Php/machines.php",true);
   // xhttp.open("POST","/iiot/assets/Php/machines.php",true);  
   xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
   xhttp.send("table=Device_Data");

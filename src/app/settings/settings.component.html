@@ -1,13 +1,13 @@
 <div *ngIf = "message_success" class="alert alert-success" style="justify-content: center; text-align: center;"><span style="justify-content: center "><b>Success! </b>{{message_success}}</span></div>
 <div *ngIf = "message_failure" class="alert alert-danger" style="justify-content: center; text-align: center;"><span style="justify-content: center"><b>Warning! </b>{{message_failure}}</span></div>
-<div class="container maxHeight" style="padding-top: 26px">
+<div class="container-fluid maxHeight" style="padding-top: 26px">
    <div class="row">
     <div class= "col text-center ">
       <div class="page-header">
           <h2>Change Password</h2>
       </div>
       <div class="pad">
-          <form ngNoForm action="http://localhost/~yashbahetiiitk/swajal_dashboard/src/assets/Php/pass_change.php/?user=a" id="change_pass_form"  onsubmit="this.submit()" method="POST">
+          <form ngNoForm action="http://localhost:8000/assets/Php/pass_change.php/?user={{userName}}" id="change_pass_form"  onsubmit="this.submit()" method="POST">
             <h6>Current Password:</h6>
             <input type="password" name="curr_pass"><br><br>
             <h6>New Password:</h6>
@@ -27,7 +27,7 @@
           <h2>Create New User</h2>            
         </div>
         <div class="pad">
-            <form ngNoForm action="http://localhost/~yashbahetiiitk/swajal_dashboard/src/assets/Php/create_user.php" id="create_user_form" onsubmit="this.submit()" method="POST">
+            <form ngNoForm action="http://localhost:8000/assets/Php/create_user.php" id="create_user_form" onsubmit="this.submit()" method="POST">
               <h6>Username:</h6>
               <input type="text"   name="username"><br><br>
               <h6>Password:</h6>
@@ -71,7 +71,7 @@
         <div class="pad">
             <h6>Please enter username:</h6>
             <input type="text"   name="username" value="{{userName}}">
-            <input type="submit" class="rounded btn-secondary" value="Check Privileges" formaction="http://localhost/~yashbahetiiitk/swajal_dashboard/src/assets/Php/get_user.php"><br><br>
+            <input type="submit" class=" btn-secondary" value="Check Privileges" formaction="http://localhost:8000/assets/Php/get_user.php"><br><br>
             <div id="priv" style="visibility: hidden;">
               <h6>Clusters:</h6>
               <div class="text-left">
@@ -92,7 +92,7 @@
               <input type="checkbox" name="panelP[]" value="Supervisor_Data">Supervisor Data<br>
               </div>    
               <h6><input type="checkbox" (click)="toggle(this,'panelP[]')">Select all<br><br></h6>
-              <input type="submit" class="rounded btn-secondary" value="Save changes" formaction="http://localhost/~yashbahetiiitk/swajal_dashboard/src/assets/Php/edit_user.php">
+              <input type="submit" class="rounded btn-secondary" value="Save changes" formaction="http://localhost:8000/assets/Php/edit_user.php">
             </div>
         </div>
 

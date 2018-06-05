@@ -115,7 +115,8 @@ export class MachineComponent implements OnInit{
     $('body ').css({'background':"whitesmoke"});   
   }
   ngAfterContentChecked(){
-    this.user = this.global.user["0"];   
+    this.user = this.global.user["0"]; 
+    console.log(this.user.Username);  
     if( this.user[this.cluster]=="0" && this.privledges){
       setTimeout(()=>{
          alert("You do not have access to this cluster \n Please Select another Cluster");
