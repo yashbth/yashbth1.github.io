@@ -18,8 +18,10 @@ export class SettingsComponent implements OnInit {
   message_failure : string = this.cookieService.get('message_failure');
   priv_boolean :boolean = false;
   userName : string=this.global.user["0"].Username;
+  UserName : string;
   flag : boolean = true;
   dropdown = Dropdown;
+  url = "http://localhost:8000/assets/Php";
   constructor(private Cluster: Cluster, private cookieService:CookieService,private global : GlobalService) { }
 
   ngOnInit() {

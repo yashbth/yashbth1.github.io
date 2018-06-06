@@ -3,16 +3,19 @@ var markers = [];
 var infowindow = [];
 
 var map;
+
 function myMap() {
 
   getLocation();
+
   var myCenter = new google.maps.LatLng(28.7041,77.1025);
   var mapCanvas = document.getElementById("map");
   var mapOptions = {center: myCenter, zoom: 5,
     mapTypeControl: true,
     mapTypeControlOptions: {style: google.maps.MapTypeControlStyle.DROPDOWN_MENU}
-};
+  };
   map = new google.maps.Map(mapCanvas, mapOptions);
+  
   setTimeout(()=>{
     var i=0
     var previousCluster='';
@@ -46,21 +49,21 @@ function myMap() {
         }
         infowindow[this.id].open(map,markers[this.id]);
       });
-
       i=i+1;
     }
+
+
     var centerControlDiv = document.createElement('div');
     var centerControl = new CenterControl(centerControlDiv, map,html);
-  
     centerControlDiv.index = 1;
     map.controls[google.maps.ControlPosition.TOP_RIGHT].push(centerControlDiv);
     searchBar();
+
   },2500)
 
 }
 
 function redirect(id,address,cluster){
-  // Get the modal
   document.cookie="location="+address+"; path=/";
   document.cookie="cluster="+cluster+"; path=/";
   document.cookie="id="+id+"; path=/"; 
@@ -80,25 +83,31 @@ function redirect(id,address,cluster){
     var modal = document.getElementById('id01');
     modal.style.display = "block";
   }
-
-
-
 }
 
+function opacity(cluster,temp){
+  for(var marker of markers){
+    if(cluster!=marker.cluster){   
+      marker.setMap(null);
+    }
+    else{
+      marker.setMap(map);
+    }
+  }
+}
 
 function getLocation(){
-  var xhttp = new XMLHttpRequest();
-	xhttp.onreadystatechange = function(){
-		if(this.readyState==4 && this.status ==200){
-      devices=JSON.parse(this.responseText);
-		}	
-  }
-  
-  // xhttp.open("POST","http://localhost/~yashbahetiiitk/swajal_dashboard/src/assets/Php/machines.php",true);
-  xhttp.open("POST","http://localhost:8000/assets/Php/machines.php",true);
-  // xhttp.open("POST","/iiot/assets/Php/machines.php",true);  
-  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-  xhttp.send("table=Device_Data");
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function(){
+      if(this.readyState==4 && this.status ==200){
+        devices=JSON.parse(this.responseText);
+      }	
+    } 
+    // xhttp.open("POST","http://localhost/~yashbahetiiitk/swajal_dashboard/src/assets/Php/machines.php",true);
+    xhttp.open("POST","http://localhost:8000/assets/Php/machines.php",true);
+    // xhttp.open("POST","/iiot/assets/Php/machines.php",true);  
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send("table=Device_Data");
 }
 
 function lanAndlon(param){
@@ -109,71 +118,55 @@ function lanAndlon(param){
   return param;
 }
 
-function getCookie(cname) {
-  var name = cname + "=";
-  var decodedCookie = decodeURIComponent(document.cookie);
-  var ca = decodedCookie.split(';');
-  for(var i = 0; i <ca.length; i++) {
-      var c = ca[i];
-      while (c.charAt(0) == ' ') {
-          c = c.substring(1);
-      }
-      if (c.indexOf(name) == 0) {
-          return c.substring(name.length, c.length);
-      }
-  }
-  return "";
-}
 
 function searchBar(){
-  var input = document.getElementById('searchInput');
-        var searchBox = new google.maps.places.SearchBox(input);
-        if(window.innerWidth<550){
-          map.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(input);
-        }
-        else{
-          map.controls[google.maps.ControlPosition.TOP_CENTER].push(input);          
-        }
-        map.addListener('bounds_changed', function() {
-        searchBox.setBounds(map.getBounds());
-        });
+    var input = document.getElementById('searchInput');
+    var searchBox = new google.maps.places.SearchBox(input);
+    if(window.innerWidth<550){
+      map.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(input);
+    }
+    else{
+      map.controls[google.maps.ControlPosition.TOP_CENTER].push(input);          
+    }
+    map.addListener('bounds_changed', function() {
+      searchBox.setBounds(map.getBounds());
+    });
 
-        var markers1 = [];
-        // Listen for the event fired when the user selects a prediction and retrieve
-        // more details for that place.
-        searchBox.addListener('places_changed', function() {
-          var places = searchBox.getPlaces();
+    var markers1 = [];
 
-          if (places.length == 0) {
+    // Listen for the event fired when the user selects a prediction and retrieve
+    // more details for that place.
+    searchBox.addListener('places_changed', function() {
+      var places = searchBox.getPlaces();
+      if (places.length == 0) {
+        return;
+      }
+      // Clear out the old markers.
+      markers1 = [];
+      // For each place, get the icon, name and location.
+      var bounds = new google.maps.LatLngBounds();
+      places.forEach(function(place) {
+          if (!place.geometry) {
+            console.log("Returned place contains no geometry");
             return;
           }
+          // Create a marker for each place.
+          markers1.push(new google.maps.Marker({
+            position: place.geometry.location
+          }));
 
-          // Clear out the old markers.
-          markers1 = [];
-
-          // For each place, get the icon, name and location.
-          var bounds = new google.maps.LatLngBounds();
-          places.forEach(function(place) {
-            if (!place.geometry) {
-              console.log("Returned place contains no geometry");
-              return;
-            }
-
-            // Create a marker for each place.
-            markers1.push(new google.maps.Marker({
-              position: place.geometry.location
-            }));
-
-            if (place.geometry.viewport) {
-              // Only geocodes have viewport.
-              bounds.union(place.geometry.viewport);
-            } else {
-              bounds.extend(place.geometry.location);
-            }
-          });
-          map.fitBounds(bounds);
-        });
+          if (place.geometry.viewport) {
+            // Only geocodes have viewport.
+            bounds.union(place.geometry.viewport);
+          } else {
+            bounds.extend(place.geometry.location);
+          }
+      });
+      map.fitBounds(bounds);
+    });
 }
+
+
 function CenterControl(controlDiv, map,html) {
 
   // Set CSS for the control border.
@@ -200,16 +193,8 @@ function CenterControl(controlDiv, map,html) {
   controlUI.appendChild(controlText);
   $('.dropdown-menu show').css({"display":"contents"})
 }
-function opacity(cluster,temp){
-  for(var marker of markers){
-    if(cluster!=marker.cluster){   
-      marker.setMap(null);
-    }
-    else{
-      marker.setMap(map);
-    }
-  }
-}
+
+
 var iconSrc=[
     "ff0000",
     "0033cc",
@@ -221,4 +206,21 @@ var iconSrc=[
     "663300",
     "00e6e6",
     "9999ff"
-]
+] // marker Colors
+
+
+function getCookie(cname) {
+  var name = cname + "=";
+  var decodedCookie = decodeURIComponent(document.cookie);
+  var ca = decodedCookie.split(';');
+  for(var i = 0; i <ca.length; i++) {
+      var c = ca[i];
+      while (c.charAt(0) == ' ') {
+          c = c.substring(1);
+      }
+      if (c.indexOf(name) == 0) {
+          return c.substring(name.length, c.length);
+      }
+  }
+  return "";
+} // retrieving Cookie
