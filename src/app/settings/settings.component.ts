@@ -18,8 +18,8 @@ export class SettingsComponent implements OnInit {
   message_failure : string = this.cookieService.get('message_failure');
   priv_boolean :boolean = false;
   userName : string=this.global.user["0"].Username;
-  UserName : string;
-  flag : boolean = true;
+  User : string;
+  flag : boolean = false;
   dropdown = Dropdown;
   constructor(private Cluster: Cluster, private cookieService:CookieService,private global : GlobalService) { }
 
@@ -27,10 +27,15 @@ export class SettingsComponent implements OnInit {
     if(this.cookieService.get('priv-vis')=='1'){
       (document.getElementById('priv') as HTMLDivElement).style.visibility = 'visible';
       this.cookieService.put('priv-vis','0');
+
     }
+    this.userName = this.global.user["0"].Username;
+    console.log(this.userName,'here');
   }
   ngAfterContentChecked(){
-
+    if(this.global.admin){
+      this.flag = true;
+    }
     if(this.flag){
       this.check(this,'panelP[]');
     }
@@ -52,8 +57,8 @@ check(source,panel_name){
 
 
   if(this.cookieService.get('UN')){
-    this.UserName = this.cookieService.get('UN');
-    this.cookieService.put('UN', '');
+    this.User = this.cookieService.get('UN');
+    // this.cookieService.put('UN', '');
   }
   if(this.cookieService.get('Water_Dispensing_Panel')=='1'){
     console.log((checkboxes[0] as HTMLInputElement).checked = true);
