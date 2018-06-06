@@ -65,8 +65,15 @@ function redirect(id,address,cluster){
   document.cookie="cluster="+cluster+"; path=/";
   document.cookie="id="+id+"; path=/"; 
   if(getCookie("PHPSESSID")){
+    console.log(JSON.parse(sessionStorage.user)[getCookie('cluster')]);
     setTimeout(()=>{
-      window.location.href = window.location.href + cluster+'/'+id+'/WaterDispenser';
+      if(JSON.parse(sessionStorage.user)[getCookie('cluster')]==1){
+        $('#message_failure').html('');        
+        window.location.href = window.location.href + cluster+'/'+id+'/WaterDispenser';      
+      }
+      else{
+        $('#message_failure').html('<div class="alert alert-danger" style="justify-content: center; text-align: center;margin-bottom:0px"><span style="justify-content: center">Access Denied!</span></div>');
+      }
     },1000)
   }
   else{

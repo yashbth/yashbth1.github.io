@@ -47,30 +47,14 @@ $(window).on('load resize scroll',function(){
 
 
 class12=function (){
-    $('app-error').addClass('col-sm-12');     
-    $('app-water-dispense').addClass('col-sm-12'); 
-    $('app-transaction').addClass('col-sm-12');   
-    $('app-supervisor').addClass('col-sm-12');
-    $('app-operator').addClass('col-sm-12');
-    $('app-analysis').addClass('col-sm-12');
+    $('.components').addClass('col-sm-12');     
 }
 class10=function (){
-    $('app-error').removeClass('col-sm-12').addClass('col-sm-10');     
-    $('app-water-dispense').removeClass('col-sm-12').addClass('col-sm-10'); 
-    $('app-transaction').removeClass('col-sm-12').addClass('col-sm-10');   
-    $('app-supervisor').removeClass('col-sm-12').addClass('col-sm-10');
-    $('app-operator').removeClass('col-sm-12').addClass('col-sm-10');
-    $('app-analysis').removeClass('col-sm-12').addClass('col-sm-10');
-    $('#verticalCollapse').removeClass('col-sm-3');
-    
+    $('.components').removeClass('col-sm-12').addClass('col-sm-10');     
+    $('#verticalCollapse').removeClass('col-sm-3');   
 }
 class3_9=function (){
-    $('app-error').removeClass('col-sm-12').removeClass('col-sm-10').addClass('col-sm-9');     
-    $('app-water-dispense').removeClass('col-sm-12').removeClass('col-sm-10').addClass('col-sm-9'); 
-    $('app-transaction').removeClass('col-sm-12').removeClass('col-sm-10').addClass('col-sm-9');   
-    $('app-supervisor').removeClass('col-sm-12').removeClass('col-sm-10').addClass('col-sm-9');
-    $('app-operator').removeClass('col-sm-12').removeClass('col-sm-10').addClass('col-sm-9');
-    $('app-analysis').removeClass('col-sm-12').removeClass('col-sm-10').addClass('col-sm-9');
+    $('.components').removeClass('col-sm-12').removeClass('col-sm-10').addClass('col-sm-9');     
     $('#verticalCollapse').addClass('col-sm-3');
 
 }

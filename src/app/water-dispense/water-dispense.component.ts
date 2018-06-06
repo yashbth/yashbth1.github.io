@@ -76,7 +76,6 @@ export class WaterDispenseComponent implements OnInit{
       this.cluster = this.route.snapshot.paramMap.get('cluster');
       this.cookieService.put('cluster',this.cluster);
       this.cookieService.put('id',this.id[0]);     
-      this.globalservice.isAllowed(this.cluster,this.panel,this.id);                 
       this.panelParameters();
       if(this.checkRouteChange.indexOf(this.property1)<0){   
           this.service.getLocation(this.id[0],this.cluster).subscribe(location=>this.location_info=location,(err)=>console.log(err),()=>{

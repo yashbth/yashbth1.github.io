@@ -42,31 +42,18 @@
               <div >
                   <h6>Privileges:</h6>
                   <div class="checkbox text-justify">
-                  <input type="checkbox" name="panel[]" value="Water_Dispensing_Panel">Water Dispensing Panel<br>
-                  <input type="checkbox" name="panel[]" value="RO_Parameters">RO Parameters<br>
-                  <input type="checkbox" name="panel[]" value="Transaction_Log">Transaction Log<br>
-                  <input type="checkbox" name="panel[]" value="Operator_Attendance">Operator Attendance<br>
-                  <input type="checkbox" name="panel[]" value="Cup_Dispensing_Panel">Cup Dispensing Panel<br>
-                  <input type="checkbox" name="panel[]" value="Supervisor_Data">Supervisor Data<br>
+                  <span *ngFor="let panel of dropdown"><input type="checkbox" name="panel[]" value="{{panel.columnName}}" *ngIf="panel.division!='Analysis'">{{panel.panelName}}<br></span>
                   </div>    
                   <h6><span><input type="checkbox" (click)="toggle(this,'panel[]')" />Select all</span><br/><br></h6>                
               </div>
-              
-      
-        
-              <!-- <input id="destination" type="hidden" name="destination" value="r"> -->
               <input type="submit" class="rounded btn-secondary" value="Create User">
           </form>
         </div>
-      <!-- <button id="create_user_btn" (click)="show('CU')">+ Create New User</button> -->
-
     </div><br><br>
     <div class = "col text-center">
         <div class="page-header">
             <h2>Edit Users' Privileges</h2>            
           </div>
-      
-      <!-- <button id="edit_user_btn" (click)="show('EU')">Edit User privileges</button> -->
       <form ngNoForm id="get_user_form" onsubmit="this.submit()" method="POST">
         <div class="pad">
             <h6>Please enter username:</h6>
@@ -78,10 +65,7 @@
                 <div *ngFor = "let cluster of clusters;" class = 'checkbox'>
                     <input id ="{{cluster}}" type="checkbox" name="clusterP[]" value='{{cluster}}'>{{cluster}}<br>
                   </div>
-              </div><br><br>
-
-              <!-- <input type="checkbox" (click)="toggle(this,'clusterP[]')" />Select all<br/><br> -->
-              
+              </div><br><br>              
               <h6>Privileges:</h6>
               <div class="checkbox text-justify">
               <input type="checkbox" name="panelP[]" value="Water_Dispensing_Panel">Water Dispensing Panel<br>
