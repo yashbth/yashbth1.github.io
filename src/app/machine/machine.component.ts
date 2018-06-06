@@ -107,22 +107,22 @@ export class MachineComponent implements OnInit{
 
 
   ngAfterContentChecked(){
-      this.user = this.global.user["0"]; 
-      if( this.user[this.cluster]=="0" && this.privledges){
-        this.location.back();
-        var time = new Date();
-        time.setSeconds(time.getSeconds() + 5);
-        let opts: CookieOptionsArgs = {
-          expires: time
-        };
-        this.cookieService.put("message_failure","Access Denied!",opts);
-        this.privledges = false
-      }
-      this.message_failure=this.cookieService.get('message_failure');
-      let param=this.router.url.split('/');
-      this.url= param[param.length-1];
-      this.id = param[param.length-2];
-      this.currDiv = this.cookieService.get('prevDiv');
+    this.user = this.global.user["0"]; 
+    if( this.user[this.cluster]=="0" && this.privledges){
+      this.location.back();
+      var time = new Date();
+      time.setSeconds(time.getSeconds() + 5);
+      let opts: CookieOptionsArgs = {
+        expires: time
+      };
+      this.cookieService.put("access_denied","Access Denied!",opts);
+      this.privledges = false
+    }
+    this.message_failure=this.cookieService.get('access_denied');
+    let param=this.router.url.split('/');
+    this.url= param[param.length-1];
+    this.id = param[param.length-2];
+    this.currDiv = this.cookieService.get('prevDiv');
   }
   
 }

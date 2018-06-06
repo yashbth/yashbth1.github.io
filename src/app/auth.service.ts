@@ -12,7 +12,10 @@ import { variable } from '@angular/compiler/src/output/output_ast';
 export class AuthService {
   jwtHelper = new JwtHelperService()
   session_variables:any;  
-  private url: 'http://localhost:8000/assets/Php/session.php'
+  private url: 'http://localhost/~yashbahetiiitk/swajal_dashboard/src/assets/Php/session.php';
+  // private url: 'http://localhost:8000/assets/Php/session.php'
+  
+ 
   constructor(private http : HttpClient,private global : GlobalService) { }
 
   getSessionVariables():Observable<Token[]>{

@@ -8,7 +8,6 @@ import {Cluster} from '../delhiCluster'
 import {FetchWaterDispenseDataService} from '../fetch-water-dispense-data.service'
 import { CookieService } from 'angular2-cookie/core';
 import { GlobalService } from '../global.service';
-import { SESSION_STORAGE, StorageService } from 'angular-webstorage-service';
 
 declare var $ : any;
 
@@ -25,7 +24,7 @@ export class SearchDevicesComponent implements OnInit {
   devices$ : Observable<Cluster[]>;
   user : any;
   private searchTerms = new Subject<string>();
-  constructor(private router : Router,private service : FetchWaterDispenseDataService,private global:GlobalService,private route : ActivatedRoute,private cookieService: CookieService,private Cluster : Cluster,@Inject(SESSION_STORAGE) private storage : StorageService) { 
+  constructor(private router : Router,private service : FetchWaterDispenseDataService,private global:GlobalService,private route : ActivatedRoute,private cookieService: CookieService,private Cluster : Cluster) { 
   }
 
  

@@ -12,6 +12,7 @@ export class GlobalService {
   user: any;
   token: any;
   DropDown = Dropdown;
+  admin : boolean;
   constructor(private router : Router) { }
   setVar(lat,lon):void{
     this.lat=lat;

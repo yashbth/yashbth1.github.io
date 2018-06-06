@@ -5,6 +5,7 @@ import '../../assets/scripts/settings_functions.js';
 import { CookieService } from 'angular2-cookie/core';
 import { GlobalService } from '../global.service';
 
+declare var $ : any;
 
 @Component({
   selector: 'app-settings',
@@ -19,22 +20,34 @@ export class SettingsComponent implements OnInit {
   priv_boolean :boolean = false;
   userName : string=this.global.user["0"].Username;
   UserName : string;
-  flag : boolean = true;
+  flag : boolean ;
   dropdown = Dropdown;
   url = "http://localhost:8000/assets/Php";
   constructor(private Cluster: Cluster, private cookieService:CookieService,private global : GlobalService) { }
 
   ngOnInit() {
-    if(this.cookieService.get('priv-vis')=='1'){
-      (document.getElementById('priv') as HTMLDivElement).style.visibility = 'visible';
-      this.cookieService.put('priv-vis','0');
-    }
+    console.log("ngonit")
+
   }
   ngAfterContentChecked(){
+    setTimeout(()=>{
+      if(this.cookieService.get('priv-vis')=='1' && $('#get_user_form').length){
+        (document.getElementById('priv') as HTMLDivElement).style.visibility = 'visible';
+        console.log("after")
+        this.cookieService.put('priv-vis','0');      
+      }
+              
+        if($('#get_user_form').length){
+          this.flag = true;
+        }
+        if(this.flag){
+          this.check(this,'panelP[]');
+        }
+    },3000)
 
-    if(this.flag){
-      this.check(this,'panelP[]');
-    }
+  
+
+
 
   }
 
@@ -53,7 +66,7 @@ check(source,panel_name){
 
 
   if(this.cookieService.get('UN')){
-    this.userName = this.cookieService.get('UN');
+    this.UserName = this.cookieService.get('UN');
     this.cookieService.put('UN', '');
   }
   if(this.cookieService.get('Water_Dispensing_Panel')=='1'){

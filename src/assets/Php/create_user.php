@@ -1,17 +1,31 @@
 <?php require_once("./db_connection.php"); ?>
+<?php require_once("./functions.php"); ?>
+
 <?php
 
+                                                // fields' verification
 if($_POST["username"]==''){
-    setrawcookie('message_failure',rawurlencode("Please enter a valid username."),time() + (3), "/" );
-    header("Location: "."http://localhost:4200/#/".$_COOKIE['cluster']."/".$_COOKIE['id']."/settings");
-    exit;
+    redirect_with_message('message_failure',"Please enter a valid username.");
+}
+
+$username = "'".$_POST["username"]."'";
+
+$check_no_duplicate = "SELECT * FROM Dashboard_Users WHERE Username =" . $username;
+$result_check = $conn->query($check_no_duplicate);
+if($result_check->num_rows>0){ 
+    redirect_with_message('message_failure',"Username '".$_POST["username"]. "' already exists. Please try again.");
+}
+if(!$_POST['cluster']){
+    redirect_with_message('message_failure',"Please select atleast one cluster.");
+}
+if(!$_POST['panel']){
+    redirect_with_message('message_failure',"Please select atleast one privilege.");
 }
 if($_POST["password"]==''){
-    setrawcookie('message_failure',rawurlencode("Please enter a valid password."),time() + (3), "/" );
-    header("Location: "."http://localhost:4200/#/".$_COOKIE['cluster']."/".$_COOKIE['id']."/settings");
-    exit;
+    redirect_with_message('message_failure',"Please enter a valid password.");
 }
-$username = "'".$_POST["username"]."'";
+                                                // fields' verification
+
 $password = "'".$_POST["password"]."'";
 
 $booleans = '';
@@ -66,8 +80,5 @@ echo($sql);
 $result = $conn->query($sql);
 $conn->close();
 
-setrawcookie('message_success',rawurlencode("New user (".$_POST["username"]. ") successfully created."),time() + (10), "/" );
-
-header("Location: "."http://localhost:4200/#/".$_COOKIE['cluster']."/".$_COOKIE['id']."/settings");
-exit;
+redirect_with_message('message_success',"New user (".$_POST["username"]. ") successfully created.");
 ?>

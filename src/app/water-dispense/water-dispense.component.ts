@@ -7,7 +7,6 @@ import {Cluster} from '../delhiCluster'
 import { GlobalService } from '../global.service';
 import { CookieService } from 'angular2-cookie/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { SESSION_STORAGE, StorageService } from 'angular-webstorage-service';
 
 declare var jquery:any;
 declare var $ :any; 
@@ -38,7 +37,7 @@ export class WaterDispenseComponent implements OnInit{
   location_info : any;
   jwtHelper = new JwtHelperService();
   token : string;
-  constructor( private service : FetchWaterDispenseDataService,private router : Router,private route: ActivatedRoute,private globalservice : GlobalService, private cookieService:CookieService,private Cluster : Cluster,@Inject(SESSION_STORAGE) private storage : StorageService){
+  constructor( private service : FetchWaterDispenseDataService,private router : Router,private route: ActivatedRoute,private globalservice : GlobalService, private cookieService:CookieService,private Cluster : Cluster){
     router.events.subscribe(()=>{
       if(this.jwtHelper.isTokenExpired(this.globalservice.token)){
         this.service.getSessionVariables('session.php/?action=destroy').subscribe(data=>this.data=data,(err)=>console.log(err),()=>{

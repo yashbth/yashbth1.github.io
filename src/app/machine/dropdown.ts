@@ -42,7 +42,8 @@ export const Dropdown : Object[]=[{
     },
     {
         division : 'Analysis',
-        id: 'analysis'  
+        id: 'analysis'  ,
+        columnName : ''
     }
 ]
     

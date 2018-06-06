@@ -59,7 +59,7 @@ import { SettingsComponent } from './settings/settings.component';
     HttpClientModule,
     ChartModule,
     FormsModule,
-    StorageServiceModule,
+    StorageServiceModule
     
   ],
   providers: [AuthService,FetchWaterDispenseDataService,GlobalService,CookieService,Cluster],

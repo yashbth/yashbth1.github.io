@@ -1,10 +1,10 @@
 <?php require_once("./db_connection.php"); ?>
+<?php require_once("./functions.php"); ?>
+
 <?php
 
 if($_POST["username"]==''){
-    setrawcookie('message_failure',rawurlencode("Please enter a valid username."),time() + (3), "/" );
-    header("Location: "."http://localhost:4200/#/".$_COOKIE['cluster']."/".$_COOKIE['id']."/settings");
-    exit;
+    redirect_with_message('message_failure',"Please enter a valid username.");
 }
 $username = "'".$_POST['username']."'";
 
@@ -25,6 +25,10 @@ if($result->num_rows>0){
         }
         $all_rows[]=$row;
     }   
+}
+else{
+    redirect_with_message('message_failure',"Username ".$username." does not exist.");
+    
 }
 
 $conn->close();
