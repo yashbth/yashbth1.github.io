@@ -24,9 +24,10 @@ import { ErrorComponent } from './error/error.component';
 import { LoadingComponent } from './loading/loading.component';
 import { Cluster } from './delhiCluster';
 import { ClickDetectionDirective } from './click-detection.directive';
-import { SettingsComponent } from './settings/settings.component';
+import {StorageServiceModule} from 'angular-webstorage-service'
 import { AuthService } from './auth.service';
 import { AnalysisComponent } from './analysis/analysis.component';
+import { SettingsComponent } from './settings/settings.component';
 
 
 
@@ -47,17 +48,18 @@ import { AnalysisComponent } from './analysis/analysis.component';
     ErrorComponent,
     LoadingComponent,
     ClickDetectionDirective,
-    SettingsComponent,
     AnalysisComponent,
-    AnalysisChartsComponent
-    
+    AnalysisChartsComponent,
+    SettingsComponent,
+
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     ChartModule,
-    FormsModule
+    FormsModule,
+    StorageServiceModule
     
   ],
   providers: [AuthService,FetchWaterDispenseDataService,GlobalService,CookieService,Cluster],

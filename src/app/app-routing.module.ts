@@ -8,14 +8,14 @@ import { TransactionComponent } from './transaction/transaction.component';
 import { SupervisorComponent } from './supervisor/supervisor.component';
 import { OperatorComponent } from './operator/operator.component';
 import { ErrorComponent } from './error/error.component';
-import {SettingsComponent} from './settings/settings.component'
 import { AnalysisComponent } from './analysis/analysis.component';
+import {SettingsComponent} from './settings/settings.component'
 
 const routes: Routes = [
   { path: '', component: AppComponent },
+  {path : ':cluster/:id' , component: MachineComponent},  
+  {path : ':cluster/:id/analysis', component : AnalysisComponent},     
   {path : ':cluster/:id/settings' , component : SettingsComponent},    
-  {path : ':cluster/:id' , component: MachineComponent}, 
-  {path : ':cluster/:id/analysis', component : AnalysisComponent},   
   {path : ':cluster/:id/transactionLog', component : TransactionComponent},
   {path : ':cluster/:id/supervisor', component : SupervisorComponent},
   {path : ':cluster/:id/operator',component : OperatorComponent},

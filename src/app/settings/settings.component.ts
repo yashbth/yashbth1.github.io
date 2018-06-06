@@ -1,7 +1,9 @@
 import { Component, OnInit, AfterViewInit,AfterContentChecked} from '@angular/core';
 import {Cluster} from '../delhiCluster';
+import { Dropdown} from '../machine/dropdown'
 import '../../assets/scripts/settings_functions.js';
 import { CookieService } from 'angular2-cookie/core';
+import { GlobalService } from '../global.service';
 
 
 @Component({
@@ -15,10 +17,11 @@ export class SettingsComponent implements OnInit {
   message_success : string = this.cookieService.get('message_success');
   message_failure : string = this.cookieService.get('message_failure');
   priv_boolean :boolean = false;
-  userName : string = '';
+  userName : string=this.global.user["0"].Username;
+  UserName : string;
   flag : boolean = true;
-
-  constructor(private Cluster: Cluster, private cookieService:CookieService) { }
+  dropdown = Dropdown;
+  constructor(private Cluster: Cluster, private cookieService:CookieService,private global : GlobalService) { }
 
   ngOnInit() {
     if(this.cookieService.get('priv-vis')=='1'){
@@ -49,7 +52,7 @@ check(source,panel_name){
 
 
   if(this.cookieService.get('UN')){
-    this.userName = this.cookieService.get('UN');
+    this.UserName = this.cookieService.get('UN');
     this.cookieService.put('UN', '');
   }
   if(this.cookieService.get('Water_Dispensing_Panel')=='1'){

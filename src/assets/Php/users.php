@@ -37,6 +37,7 @@ session_start();
                     $jwt = $base64UrlHeader . "." . $base64UrlPayload . "." . $base64UrlSignature;
                 
                 $row['jwttoken']=$jwt;
+                $row['Password']='';
                 $_SESSION['JWTtoken']=$jwt;
                 echo json_encode($row);
             }

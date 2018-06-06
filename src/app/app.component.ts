@@ -5,6 +5,7 @@ import { FetchWaterDispenseDataService } from './fetch-water-dispense-data.servi
 import { CookieService } from 'angular2-cookie/core';
 import { GlobalService } from './global.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { StorageService, SESSION_STORAGE } from 'angular-webstorage-service';
 
 
 declare var  $ : any;
@@ -17,7 +18,7 @@ declare var  $ : any;
 export class AppComponent implements OnInit{
   title = 'app';
   timeout : boolean = true;
-  
+  message_failure :string;
   router : any;
   username : string;
   password: string;
@@ -25,7 +26,7 @@ export class AppComponent implements OnInit{
   users : any;
   date = new Date();
   session_variable:any;
-  constructor(private _router : Router,private service: FetchWaterDispenseDataService,private global : GlobalService,private cookieService: CookieService){
+  constructor(private _router : Router,private service: FetchWaterDispenseDataService,private global : GlobalService,private cookieService: CookieService,@Inject(SESSION_STORAGE) private storage : StorageService){
     this.router = _router;
   }
   ngOnInit(){
@@ -45,9 +46,7 @@ export class AppComponent implements OnInit{
  
     
   }
-  ngDoCheck(){
 
-  }
   requestAuth(){    
     let form = new FormData();
     form.append('uname',this.username);
@@ -58,10 +57,16 @@ export class AppComponent implements OnInit{
           this.service.getSessionVariables('session.php/?action=start').subscribe(session_var=>this.session_variable=session_var,(err)=>console.log(err),()=>{
             this.global.token= this.session_variable.JWTtoken;
             this.global.user = this.jwtHelper.decodeToken(this.global.token);
-
+            this.storage.set("user",this.global.user["0"]);
             setTimeout(()=>{
-              $('#id01').css({"display":"none"});                 
-              window.location.href = window.location.href + this.cookieService.get('cluster')+'/'+this.cookieService.get('id')+'/WaterDispenser';     
+              $('#id01').css({"display":"none"});     
+              if(this.global.user["0"][this.cookieService.get('cluster')]==0){
+                $('#message_failure').html('<div class="alert alert-danger" style="justify-content: center; text-align: center;margin-bottom:0px"><span style="justify-content: center">Access Denied!</span></div>');           
+              } 
+              else{
+                $('#message_failure').html('');
+                window.location.href = window.location.href + this.cookieService.get('cluster')+'/'+this.cookieService.get('id')+'/WaterDispenser';                     
+              }           
             },1000);
           });
         }

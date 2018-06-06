@@ -26,6 +26,10 @@ if($result->num_rows>0){
         $all_rows[]=$row;
     }   
 }
+else{
+    redirect_with_message('message_failure',"Username ".$username." does not exist.");
+    
+}
 
 $conn->close();
 
