@@ -147,6 +147,14 @@ app-water-dispense{
         font-size: 2.2vw;
         
     }
+    #collective{
+        width: 100% !important;
+        display: flex;
+        justify-content: space-between
+    }
+    .bars,.user{
+        margin-top: 10px;
+    }
 }
 .pad{
     padding-top: 26px;

@@ -8,14 +8,14 @@
     $id = $_POST['id'];
     $table = $_POST['table'];
 
-    $sql = "SELECT * FROM $table WHERE DeviceID='$id' ORDER BY date LIMIT 10";
+    $sql = "SELECT * FROM $table WHERE DeviceID='$id' ORDER BY date DESC LIMIT 10";
     $result = $conn->query($sql);
     if($result->num_rows>0){
         $all_rows = array();    
         while($row = $result->fetch_assoc()){
             $all_rows[]=$row;
         }   
-} 
+    } 
         
     echo  json_encode($all_rows);
     $conn->close();

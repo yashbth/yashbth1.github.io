@@ -10,7 +10,7 @@
     $table = $_POST['table'];
 
     if($date!=''){
-	$sql = "SELECT * FROM $table WHERE OperatorID='$operatorId' AND DeviceID='$id' AND PunchTime LIKE '$date%'";
+	$sql = "SELECT * FROM $table WHERE OperatorID LIKE '$operatorId%' AND DeviceID='$id' AND PunchTime LIKE '$date%'";
     }
     else{
 	$sql = "SELECT * FROM $table WHERE OperatorID='$operatorId' AND DeviceID='$id'";

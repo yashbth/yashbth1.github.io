@@ -1,5 +1,39 @@
-<div id="map" *ngIf="router.url=='/'" style="visibility:hidden;width:100%;height:-webkit-fill-available" class="container-fluid" ></div>
+
+<div id="map" *ngIf="router.url=='/'" style="visibility:hidden;width:100%;height:-webkit-fill-available" class="container-fluid">
+</div>
+<input id="searchInput" class="form-control" type="text" placeholder="Search Box" *ngIf="router.url=='/'" >
 <app-loading [timeout]="timeout" *ngIf="router.url=='/'"></app-loading>
 <app-machine *ngIf="router.url!='/'" ></app-machine>
 
+
+<div id="id01" class="modal">
+
+        <form class="modal-content animate" >
+          
+          <div class="container">
+            <div class="row">
+              <div class="page-header">
+                <h2>User Authentication</h2 >
+              </div>
+            </div>
+            <p>{{cookieService.get('message')}}</p>
+            <label for="uname"><b>Username</b></label>
+            <input type="text" placeholder="Enter Username" name="uname" [(ngModel)]="username" required>
+      
+            <label for="psw"><b>Password</b></label>
+            <input type="password" placeholder="Enter Password" name="psw" [(ngModel)]="password" required>
+              
+            <button type="submit" (click)="requestAuth()">Login</button>
+            <label>
+              <input type="checkbox" checked="checked" name="remember"> Remember me
+            </label>
+          </div>
+      
+          <div class="container">
+            <button type="button" onclick="document.getElementById('id01').style.display='none'" (click)="deleteCookie()" class="cancelbtn">Close</button>
+            <span class="psw">Forgot <a href="#">password?</a></span>
+          </div>
+        </form>
+      </div>
+      
 

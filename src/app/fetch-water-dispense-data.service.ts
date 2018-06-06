@@ -6,7 +6,7 @@ import {Cluster} from './delhiCluster'
 import {catchError, map, tap } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CookieService } from 'angular2-cookie/core';
-
+import {Users,Token} from './users';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -24,7 +24,6 @@ export class FetchWaterDispenseDataService {
   
   cluster: string;
   id : string;
-  
   constructor(private http : HttpClient,private cookieService : CookieService,private router : Router) {
 
    }
@@ -48,13 +47,14 @@ export class FetchWaterDispenseDataService {
       catchError(this.handleError('getData',[]))
     );
   }
-  getIds(id:string,table: string):Observable<Cluster[]>{
+  getIds(id:string,cluster: string,table: string):Observable<Cluster[]>{
     let term = new FormData();
     if(!id.trim()){
       return of([])
     }
     console.log(table);
     term.append('hint',id);
+    term.append('cluster',cluster);
     term.append('table',table);
     return this.http.post<Cluster[]>(this.url+'ids.php',term)
   }
@@ -69,6 +69,19 @@ export class FetchWaterDispenseDataService {
       
     );
   }
+  userAuthentication(form,filename):Observable<Users[]>{
+    return this.http.post<Users[]>(this.url+filename,form,{withCredentials:true}).pipe(
+      catchError(this.handleError('userAuthentication',[]))
+      
+    );
+  }
+  getSessionVariables(filename):Observable<Token[]>{
+    return this.http.get<Token[]>(this.url+filename,{withCredentials:true}).pipe(
+      catchError(this.handleError('getSessionVariables',[])) 
+    );
+  }
+
+
   private handleError<T> (operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
    

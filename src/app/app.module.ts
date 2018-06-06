@@ -3,9 +3,10 @@ import { NgModule } from '@angular/core';
 import {FormsModule} from '@angular/forms'
 import {HttpClientModule} from '@angular/common/http';
 import {ChartModule} from 'angular2-chartjs'
+import { AppRoutingModule } from './/app-routing.module';
+
 import { AppComponent } from './app.component';
 import { MachineComponent } from './machine/machine.component';
-import { AppRoutingModule } from './/app-routing.module';
 import { WaterDispenseComponent } from './water-dispense/water-dispense.component';
 import { FetchWaterDispenseDataService } from './fetch-water-dispense-data.service';
 import { ChartsComponent } from './charts/charts.component';
@@ -14,6 +15,7 @@ import { SupervisorComponent } from './supervisor/supervisor.component';
 import { OperatorComponent } from './operator/operator.component';
 import { OperatorChartsComponent } from './charts/operatorcharts.component';
 import { SupervisorChartsComponent } from './charts/supervisorcharts.component';
+import {AnalysisChartsComponent} from './charts/analysischarts.component';
 
 import { GlobalService } from './global.service';
 import { CookieService } from 'angular2-cookie/services/cookies.service';
@@ -23,6 +25,8 @@ import { LoadingComponent } from './loading/loading.component';
 import { Cluster } from './delhiCluster';
 import { ClickDetectionDirective } from './click-detection.directive';
 import { SettingsComponent } from './settings/settings.component';
+import { AuthService } from './auth.service';
+import { AnalysisComponent } from './analysis/analysis.component';
 
 
 
@@ -44,7 +48,9 @@ import { SettingsComponent } from './settings/settings.component';
     LoadingComponent,
     ClickDetectionDirective,
     SettingsComponent,
-
+    AnalysisComponent,
+    AnalysisChartsComponent
+    
   ],
   imports: [
     BrowserModule,
@@ -52,8 +58,9 @@ import { SettingsComponent } from './settings/settings.component';
     HttpClientModule,
     ChartModule,
     FormsModule
+    
   ],
-  providers: [FetchWaterDispenseDataService,GlobalService,CookieService,Cluster],
+  providers: [AuthService,FetchWaterDispenseDataService,GlobalService,CookieService,Cluster],
   bootstrap: [AppComponent]                                                                                                                                                                                                                                                                                                                                                                                                     
 })
 

@@ -5,6 +5,7 @@ import {FetchWaterDispenseDataService} from '../fetch-water-dispense-data.servic
 import {Cluster} from '../delhiCluster'
 import { GlobalService } from '../global.service'
 import { CookieService } from 'angular2-cookie/core';
+import { JwtHelperService } from '@auth0/angular-jwt';
  
 declare var jquery: any;
 declare var $: any;
@@ -20,6 +21,7 @@ export class SupervisorComponent implements OnInit {
   property1:string;
   filename: string; 
   id = [];
+  panel : string;
   cluster : string;
   place : string = 'New Delhi Cluster';
   info =[];
@@ -31,7 +33,7 @@ export class SupervisorComponent implements OnInit {
   chartData =[];
   table : string = 'SuperVisor_Login';
   dataChange :boolean=true;
-
+  jwtHelper = new JwtHelperService()
   constructor( private service : FetchWaterDispenseDataService,private Cluster : Cluster,private router : Router,private route: ActivatedRoute,private globalservice : GlobalService, private cookieService:CookieService){
     router.events.subscribe((val)=>{    
       if (val instanceof NavigationEnd) {
@@ -41,8 +43,13 @@ export class SupervisorComponent implements OnInit {
     })
   }
   ngOnInit() { 
-    this.id[0] = this.route.snapshot.paramMap.get('id');   
-    this.cluster = this.route.snapshot.paramMap.get('cluster');                                                    
+    if(this.jwtHelper.isTokenExpired(this.globalservice.token)){
+      window.location.href= '/';
+    }
+    this.id[0] = this.route.snapshot.paramMap.get('id');
+    this.panel = this.route.snapshot.paramMap.get('panel');       
+    this.cluster = this.route.snapshot.paramMap.get('cluster');     
+    this.globalservice.isAllowed(this.cluster,this.panel,this.id);                                                                    
     this.panelParameters();
     if(this.checkRouteChange.indexOf(this.property1)<0){
       this.getWaterinfo();

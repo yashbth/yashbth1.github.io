@@ -1,45 +1,39 @@
 export const Dropdown : Object[]=[{
         division : 'Water Dispensing',
         id: 'WaterDispenser',
-        link1 : 'link1',
-        link2 : 'link2',
-        link3 : 'link3',
+        columnName : 'Water_Dispensing_Panel'
     },
     {
         division : 'RO Parameters',
         id: 'Ro',
-        link1 : 'link1',
-        link2 : 'link2',
-        link3 : 'link3',
+        columnName : 'RO_Parameters'
     },
     {
         division : 'Transaction Log',
         id: 'transactionLog',
-        link1 : 'link1',
-        link2 : 'link2',
-        link3 : 'link3',
+        columnName : 'Transaction_Log'
     },
     {
         division : 'Operator Attendance',
-        id: 'operator',
-        link1 : 'link1',
-        link2 : 'link2',
-        link3 : 'link3',
+        id: 'operator', 
+        columnName : 'Operator_Attendance'
     },
     {
         division : 'Cup Dispensing',
         id: 'CupDispenser',
-        link1 : 'link1',
-        link2 : 'link2',
-        link3 : 'link3',
+        columnName : 'Cup_Dispensing_Panel'
     },
     {
         division : 'Supervisor',
         id: 'supervisor',
-        link1 : 'link1',
-        link2 : 'link2',
-        link3 : 'link3',
+        columnName : 'Supervisor_Data'
+  
     },
+    {
+        division : 'Analysis',
+        id: 'analysis'  ,
+        columnName : ''
+    }
 ]
     
 

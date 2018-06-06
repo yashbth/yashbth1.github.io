@@ -1,4 +1,4 @@
-import { Component, Input, OnInit,OnChanges, AfterContentChecked,DoCheck, AfterContentInit} from '@angular/core';
+import { Component, Input, OnInit,OnChanges, AfterContentChecked,DoCheck, AfterContentInit, Inject} from '@angular/core';
 import {  Router,NavigationEnd, ActivationStart,ActivatedRoute} from '@angular/router'
 
 import {FetchWaterDispenseDataService} from '../fetch-water-dispense-data.service'
@@ -6,6 +6,7 @@ import {waterDispenserParam} from './waterDispenserparam'
 import {Cluster} from '../delhiCluster'
 import { GlobalService } from '../global.service';
 import { CookieService } from 'angular2-cookie/core';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 declare var jquery:any;
 declare var $ :any; 
@@ -34,9 +35,15 @@ export class WaterDispenseComponent implements OnInit{
   toDate : any =new Date('2018-03-13');
   location : string ;
   location_info : any;
-
+  jwtHelper = new JwtHelperService();
+  token : string;
   constructor( private service : FetchWaterDispenseDataService,private router : Router,private route: ActivatedRoute,private globalservice : GlobalService, private cookieService:CookieService,private Cluster : Cluster){
     router.events.subscribe(()=>{
+      if(this.jwtHelper.isTokenExpired(this.globalservice.token)){
+        this.service.getSessionVariables('session.php/?action=destroy').subscribe(data=>this.data=data,(err)=>console.log(err),()=>{
+          window.location.href= '/';
+        }); 
+      }
       this.dataAvailable=false;
       this.panel = this.route.snapshot.paramMap.get('panel');  
       this.cluster = this.route.snapshot.paramMap.get('cluster');
@@ -58,16 +65,21 @@ export class WaterDispenseComponent implements OnInit{
   }
   ngOnInit(){ 
     setTimeout(()=>{
+      if(this.jwtHelper.isTokenExpired(this.globalservice.token)){      
+        this.service.getSessionVariables('session.php/?action=destroy').subscribe(data=>this.data=data,(err)=>console.log(err),()=>{
+          window.location.href= '/';
+        }); 
+      }
       this.panel = this.route.snapshot.paramMap.get('panel');  
       this.id[0] = this.route.snapshot.paramMap.get('id');  
       this.cluster = this.route.snapshot.paramMap.get('cluster');
       this.cookieService.put('cluster',this.cluster);
       this.cookieService.put('id',this.id[0]);     
+      this.globalservice.isAllowed(this.cluster,this.panel,this.id);                 
       this.panelParameters();
       if(this.checkRouteChange.indexOf(this.property1)<0){   
           this.service.getLocation(this.id[0],this.cluster).subscribe(location=>this.location_info=location,(err)=>console.log(err),()=>{
           this.cookieService.put('location',this.location_info[0].Location);
-          // this.cookieService.put('cluster',this.location_info[0].Cluster_Name);
           this.location = this.cookieService.get('location');
         });
         this.getWaterinfo();
@@ -83,15 +95,13 @@ export class WaterDispenseComponent implements OnInit{
     this.chartData=[];
     this.service.getChartData('chart_date.php',this.id,this.table,this.fromDate,this.toDate).subscribe(chartData=>this.chartData=chartData);    
   }
-  getWaterinfo():void{ 
+  getWaterinfo():void{
     this.info=[];
     this.chartData=[];
     this.service.getData(this.id,this.table,this.filename).subscribe(info=>this.info=info,(err)=>console.error(err),()=>{      
       if( !this.info || Object.keys(this.info).length==0 ){
         this.router.navigateByUrl('/'+this.cluster+'/'+this.id +'/error')              
       }
-        
-
       this.fromDate = this.info[0].date;
       this.toDate = this.info[0].date;
       this.service.getChartData('chart_date.php',this.id,this.table,this.fromDate,this.toDate).subscribe(chartData=>this.chartData=chartData); 

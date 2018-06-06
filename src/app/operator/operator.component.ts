@@ -5,6 +5,7 @@ import { Cluster } from '../delhiCluster'
 import { DatePipe } from '@angular/common';
 import { GlobalService } from '../global.service';
 import { CookieService } from 'angular2-cookie/core';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 
 
@@ -21,6 +22,7 @@ export class OperatorComponent implements OnInit {
   dataAvailable : boolean =false;
   table= "Operator_Attendence"
   id=[];
+  panel : string;
   cluster :string;
   data: any;
   date : any=new Date(Date.now());
@@ -34,7 +36,7 @@ export class OperatorComponent implements OnInit {
   absent: number;
   chart:boolean=false;
   location : string = this.cookieService.get('location');
-  
+  jwtHelper = new JwtHelperService();
   constructor(private service : FetchWaterDispenseDataService,private Cluster : Cluster,private router:Router,private route: ActivatedRoute,private globalservice : GlobalService, private cookieService:CookieService) { 
     router.events.subscribe((val)=>{
       if(val instanceof NavigationEnd){
@@ -42,16 +44,18 @@ export class OperatorComponent implements OnInit {
       }
     })
   }
-  ngDoCheck(){
 
-    
- }
   ngOnInit() {
+    if(this.jwtHelper.isTokenExpired(this.globalservice.token)){
+      window.location.href= '/';
+    }
     this.date= this.date.getFullYear() + '-'+((this.date.getMonth()+1)/10>1 ? '':'0')+(this.date.getMonth()+1)+'-'+this.date.getDate();
     setTimeout(()=>{
       this.id[0] = this.route.snapshot.paramMap.get('id');
+      this.panel = this.route.snapshot.paramMap.get('panel');
       this.cluster = this.route.snapshot.paramMap.get('cluster');
       this.data= this.Cluster[this.cluster].operator;
+      this.globalservice.isAllowed(this.cluster,this.panel,this.id);                       
       this.getOperators('operator.php');
     },500)
   }
@@ -65,8 +69,10 @@ export class OperatorComponent implements OnInit {
       }
       if( this.checkOperators){     
         if(this.operators.length){
+          this.operators.map(operator=>operator.OperatorID.trim());
+          this.operators = this.operators.filter((x, i, a) => a.indexOf(x) == i)
           for(let oper of this.operators){
-            this.id[1]=oper.OperatorID.trim();
+            this.id[1]=oper.OperatorID;
             this.id[2]='';
             this.getInfo('operatorPunch.php');
           }
@@ -91,20 +97,19 @@ export class OperatorComponent implements OnInit {
     let dateString = dateArray[2] + '/'+dateArray[1]+'/'+dateArray[0];
     this.id[2] = dateString;
     this.id[1]= operator;
-    this.service.getData(this.id,this.table,'operatorPunch.php').subscribe(presents=>this.presents=presents);
-    setTimeout(()=>{
-      if(!this.presents.length){
+    this.service.getData(this.id,this.table,'operatorPunch.php').subscribe(presents=>this.presents=presents,(err)=>console.log(err),()=>{
+      if(!this.presents){
         dateString = dateArray[2] + '-'+dateArray[1]+'-'+dateArray[0];
         this.id[2] = dateString;
         this.service.getData(this.id,this.table,'operatorPunch.php').subscribe(presents=>this.presents=presents);
       }
       setTimeout(()=>{
-        this.present = this.presents.length;
+        this.present = 0 || this.presents.length;
         console.log(this.presents); 
         this.absent = this.expected_attendance[index]-this.present;
         this.chart = true;
       },400);
-    },500);
+    });
 
   }
 }

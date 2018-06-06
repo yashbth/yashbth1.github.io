@@ -9,11 +9,11 @@
       <div class="pad">
           <form ngNoForm action="http://localhost/~yashbahetiiitk/swajal_dashboard/src/assets/Php/pass_change.php/?user=a" id="change_pass_form"  onsubmit="this.submit()" method="POST">
             <h6>Current Password:</h6>
-            <input type="password" name="curr_pass"><br><br>
+            <input type="password" name="curr_pass" required><br><br>
             <h6>New Password:</h6>
-            <input type="password" name="new_pass"><br>
+            <input type="password" name="new_pass" required><br>
             <h6 style="padding-top: 10px">Confirm Password:</h6>
-            <input type="password" name="new_pass_check"><br><br>
+            <input type="password" name="new_pass_check" required><br><br>
   
             <input type="submit" class="rounded btn-secondary" value="Change Password">
         </form>
@@ -29,9 +29,9 @@
         <div class="pad">
             <form ngNoForm action="http://localhost/~yashbahetiiitk/swajal_dashboard/src/assets/Php/create_user.php" id="create_user_form" onsubmit="this.submit()" method="POST">
               <h6>Username:</h6>
-              <input type="text"   name="username"><br><br>
+              <input type="text"   name="username" required><br><br>
               <h6>Password:</h6>
-              <input type="password" name="password"><br><br>
+              <input type="password" name="password" required><br><br>
               <h6>Clusters:</h6>
               <div class="text-left">
                   <div *ngFor = "let cluster of clusters;" class = 'checkbox'>
@@ -70,7 +70,7 @@
       <form ngNoForm id="get_user_form" onsubmit="this.submit()" method="POST">
         <div class="pad">
             <h6>Please enter username:</h6>
-            <input type="text"   name="username" value="{{userName}}">
+            <input type="text"   name="username" value="{{userName}}" required>
             <input type="submit" class="rounded btn-secondary" value="Check Privileges" formaction="http://localhost/~yashbahetiiitk/swajal_dashboard/src/assets/Php/get_user.php"><br><br>
             <div id="priv" style="visibility: hidden;">
               <h6>Clusters:</h6>

@@ -5,17 +5,19 @@
                 {{cluster}} Cluster
             </button>
             <div class="dropdown-menu">
-                <a class="dropdown-item" *ngFor = "let clusterName of Cluster.clusters" (click)="cluster=clusterName">{{clusterName}} Cluster</a>
+                <span *ngFor = "let clusterName of Cluster.clusters" >
+                    <a class="dropdown-item" *ngIf="user[clusterName]==1" (click)="cluster=clusterName">{{clusterName}} Cluster</a>
+                </span>
             </div>
             </div>
-        <input class="form-control mr-sm-2 nav-search"  placeholder="Search" appClickDetection [(ngModel)]="selectId" name="searchId" (keyup)="search(selectId)" autocomplete="off" (focus)="largewidth();" >
+        <input class="form-control mr-sm-2 nav-search"   placeholder="Search" [(ngModel)]="selectId" name="searchId" (keyup)="search(selectId)" autocomplete="off" (focus)="largewidth();" >
         <button class="btn btn-info " type="submit" (click)="selectOther()"><i class="fas fa-search"> </i></button>
       </form>
       <div class="text-center tab" *ngIf="global.showSearchResult"> 
           <ul class="search-result rounded">
               <li *ngFor="let device of devices$ | async" >
                 <a (click)="selectOther()" (mouseenter)="onmouseover(device.DeviceID)">
-                  {{device.DeviceID}}
+                  {{device.Location}} : ({{device.DeviceID}})
                 </a>
                </li>
           </ul>
