@@ -20,7 +20,7 @@ if($result->num_rows>0){
         foreach($keys as $key){
             if($row[$key]=='1'){
                 $cookie_index = "'".$key."'";
-                setcookie($key,'1',time() + (60*5), "/");
+                setcookie($key,'11',time() + (60*5), "/");
             }
         }
         $all_rows[]=$row;

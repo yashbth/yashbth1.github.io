@@ -25,3 +25,17 @@ font-size: 1.1em;
 .checkbox{
     font-size:1em;
 }
+@media screen and (max-width:800px){
+    h6{
+        font-weight: 600;
+        font-size: 1.1em;
+        }
+        .checkbox{
+            font-size:1.2em;
+    }
+    .page-header h2{
+        font-weight: bolder;
+        margin-top: 20px;
+        font-size: 20px;
+    }
+}

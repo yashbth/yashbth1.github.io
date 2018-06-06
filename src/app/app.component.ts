@@ -37,6 +37,9 @@ export class AppComponent implements OnInit{
           this.cookieService.put('PHPSESSID','');
         }
         this.global.user = this.jwtHelper.decodeToken(this.global.token);
+        if(this.global.user["0"].Username=='Admin'){
+          this.global.admin= true;
+        }
       });
     }
     setTimeout(() => {
@@ -57,6 +60,9 @@ export class AppComponent implements OnInit{
           this.service.getSessionVariables('session.php/?action=start').subscribe(session_var=>this.session_variable=session_var,(err)=>console.log(err),()=>{
             this.global.token= this.session_variable.JWTtoken;
             this.global.user = this.jwtHelper.decodeToken(this.global.token);
+            if(this.global.user["0"].Username=='Admin'){
+              this.global.admin= true;
+            }
             this.storage.set("user",this.global.user["0"]);
             setTimeout(()=>{
               $('#id01').css({"display":"none"});     
