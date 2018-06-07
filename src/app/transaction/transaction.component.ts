@@ -9,6 +9,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 declare var jquery : any;
 declare var $ : any;
 declare var displayLocation : any;
+
 @Component({
   selector: 'app-transaction',
   templateUrl: './transaction.component.html',
@@ -16,6 +17,8 @@ declare var displayLocation : any;
 })
 export class TransactionComponent implements OnInit {
   dataAvailable : Boolean = false;
+  dataAvailable1 : Boolean = false;
+  
   table = 'Transaction_logging';
   private id =[];
   private filename : string='transactionLog.php';
@@ -23,9 +26,21 @@ export class TransactionComponent implements OnInit {
   cluster : string;
   data : any;
   panel : string;
+
   location : string = this.cookieService.get('location');
+  dev : string = this.cookieService.get('id');
+
   jwtHelper = new JwtHelperService();
-  constructor(private service : FetchWaterDispenseDataService,private Cluster : Cluster, private router : Router,private route : ActivatedRoute, private globalservice : GlobalService, private cookieService:CookieService) { 
+  trans_params : any = this.Cluster.trans_params;
+  property1 : string = null;
+
+  fromDate: any=new Date('2018-03-13');
+  toDate : any =new Date('2018-03-13');
+  
+  param_count: number;
+  param_name: string;
+
+  constructor(private service : FetchWaterDispenseDataService,private Cluster : Cluster, private router : Router,private route : ActivatedRoute, private globalservice : GlobalService, private cookieService:CookieService ) { 
   }
 
   ngOnInit(){
@@ -38,24 +53,37 @@ export class TransactionComponent implements OnInit {
       this.cluster = this.route.snapshot.paramMap.get('cluster');
       this.data= this.Cluster[this.cluster].transaction;
       this.globalservice.isAllowed(this.cluster,this.panel,this.id);                       
-      this.getInfo();      
+      this.cookieService.put('prevDiv','transactionLog');            
+      
+      // this.getInfo();      
     })
+    setTimeout(()=>{
+      this.dataAvailable =true;
+    },1000)
   }
   ngAfterContentChecked(){
-    $('.paginate_button').css({"padding":"10px"})
+    $('.paginate_button').css({"padding":"10px"});
+    $('#table_filter').css({"display":"inline-block","float":"right"});
+    $('#table_length').css({"display":"inline-block"});
+    $('.dataTables_info').css({"visibility":"hidden"});
+
   }
 
   getInfo(){
     this.info=[];
-    this.service.getData(this.id,this.table,this.filename).subscribe(info=>this.info=info,(err)=>console.error(err),()=>{      
-      if( !this.info || Object.keys(this.info).length==0 ){
-        this.router.navigateByUrl('/'+this.cluster+'/'+this.id +'/error')              
-      }
+    console.log(this.id[0], this.table,this.filename,this.property1,this.fromDate,this.toDate,'see here');
+    this.service.getData_trans_params(this.id,this.table,this.filename,this.property1,this.fromDate,this.toDate).subscribe(info=>this.info=info,(err)=>console.error(err),()=>{      
+      // if( !this.info || Object.keys(this.info).length==0 ){
+      //   this.router.navigateByUrl('/'+this.cluster+'/'+this.id +'/error')              
+        $('#table').DataTable();
+        // }
+    this.dataAvailable1 = false;
+    this.param_count = this.info.length;
 
     });
-    this.cookieService.put('prevDiv','transactionLog');            
     setTimeout(()=>{
-      this.dataAvailable =true;
+      this.param_name = this.trans_params[0][this.property1]
+      this.dataAvailable1 =true;
       $(document).ready(function(){
         $('#table').DataTable();
         $('.paginate_button').css({"padding":"10px"});

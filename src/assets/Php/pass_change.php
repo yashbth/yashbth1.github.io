@@ -16,6 +16,7 @@ if($result->num_rows>0){
         $all_rows[]=$row;
     }   
 }
+
 if($all_rows[0]['Password']==$curr_pass){
     if($new_pass==$new_pass_confirm){
         $update_pass_query = "UPDATE Dashboard_Users SET Password = '" .$new_pass. "' WHERE Username = ". $username;

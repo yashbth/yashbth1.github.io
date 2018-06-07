@@ -150,4 +150,7 @@ check(source,panel_name){
   }
 
 }
+confirm() {
+  confirm("The user will be permanently deleted from the database!");
+}
 }
