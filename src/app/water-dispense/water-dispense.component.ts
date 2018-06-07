@@ -98,6 +98,7 @@ export class WaterDispenseComponent implements OnInit{
     this.info=[];
     this.chartData=[];
     this.service.getData(this.id,this.table,this.filename).subscribe(info=>this.info=info,(err)=>console.error(err),()=>{      
+      this.formatParamters();
       if( !this.info || Object.keys(this.info).length==0 ){
         this.router.navigateByUrl('/'+this.cluster+'/'+this.id +'/error')              
       }
@@ -135,5 +136,38 @@ export class WaterDispenseComponent implements OnInit{
     }
   }
 
-  
+  formatParamters(){
+    if(this.info[0]["Operational_Minutes"]){
+      this.info[0]["Operational_Minutes"]=Math.floor(this.info[0]["Operational_Minutes"]/60)+' hrs '+ this.info[0]["Operational_Minutes"]%60;
+      if(this.info[0]["UV_State"]==0) {
+         this.info[0]["UV_State"] = "Off";
+      }
+      else{
+        this.info[0]["UV_State"] = "On";          
+      }                 
+    }
+    switch (this.info[0]["Trip_state"]){
+      case 0 : this.info[0]["Trip_state"]="RO ON";break;
+      case 1 : this.info[0]["Trip_state"]="TW Tank Full";break;
+      case 2 : this.info[0]["Trip_state"]="RW Tank Empty";this.blink();break;
+      case 3 : this.info[0]["Trip_state"]="High Pressure Trip";this.blink();break;
+      case 5 : this.info[0]["Trip_state"]="RWP Dry Run";this.blink();break;
+      case 6 : this.info[0]["Trip_state"]="RWP Overload";this.blink();break;
+      case 7 : this.info[0]["Trip_state"]="HPP Dry Run";this.blink();break;
+      case 8 : this.info[0]["Trip_state"]="HPP Overload";this.blink();break;
+      case 9 : this.info[0]["Trip_state"]="LOW Pressure";this.blink();break;
+      case 10 : 
+      case 11 : 
+      case 12 : 
+      case 13 : this.info[0]["Trip_state"]="Backwash ON";this.blink();break;
+      default : this.info[0]["Trip_state"]="Out of Range";this.blink();break;
+    }
+  }
+  blink(){
+    setInterval(()=>{
+      $('#Trip_state').fadeToggle(1000);
+      $('#Trip_state').css({"color":"red"})
+    },1000)
+  }
 }
+

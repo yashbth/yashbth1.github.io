@@ -13,7 +13,7 @@ export class Cluster{
             "pH_of_water",
             "Total_Collection_Sale",
             "Total_Coin_Count1",
-            "Tank_Level",
+            // "Tank_Level",
             "TimeStamp",
             "DeviceID",
             
@@ -25,17 +25,17 @@ export class Cluster{
             'pH Of Water',
             'Total Collection',
             'Total Coin Count',
-            'Tank Level'
+            // 'Tank Level'
         ],
             [
-                "ml",
+                "L",
                 "Rs",
                 "Rs",
                 "Rs",
                 "",
                 "Rs",
                 "",
-                "%",        
+                // "%",        
                 "",
                 "",
                 
@@ -62,7 +62,7 @@ export class Cluster{
 
             ],
             [
-                "Operational Minutes",
+                "Operational Time",
                 "Backwash Cycle Count",
                 "Temperature",
                 "Tds Inlet",
@@ -78,20 +78,20 @@ export class Cluster{
                 "Tank Level"
             ],
             [
-                "minutes",
+                "mins",
                 "",
                 "ºC",
                 "ppm",
                 "ppm",
+                "lph",
+                "lph",
+                "A",
+                "A",
+                "L",
+                "L",
                 "",
                 "",
-                "Amp",
-                "Amp",
-                "ml",
-                "ml",
-                "",
-                "",
-                ""
+                "%"
             ],
             ['RO_Log_Parameter']
 
@@ -185,7 +185,7 @@ export class Cluster{
                 "",
                 "",
                 "",
-                "ml",
+                "L",
                 "Rs",
                 "Rs",
                 "Rs",
@@ -224,7 +224,7 @@ export class Cluster{
             "pH_of_water",
             "Total_Collection_Sale",
             "Total_Coin_Count1",
-            "Tank_Level",
+            // "Tank_Level",
             "TimeStamp",
             "DeviceID",
             
@@ -236,17 +236,17 @@ export class Cluster{
             'pH Of Water',
             'Total Collection',
             'Total Coin Count',
-            'Tank Level'
+            // 'Tank Level'
         ],
             [
-                "ml",
+                "L",
                 "Rs",
                 "Rs",
                 "Rs",
                 "",
                 "Rs",
                 "",
-                "%",        
+                // "%",        
                 "",
                 "",
                 
@@ -273,7 +273,7 @@ export class Cluster{
 
             ],
             [
-                "Operational Minutes",
+                "Operational Time",
                 "Backwash Cycle Count",
                 "Temperature",
                 "Tds Inlet",
@@ -289,20 +289,20 @@ export class Cluster{
                 "Tank Level"
             ],
             [
-                "minutes",
+                "mins",
                 "",
                 "ºC",
                 "ppm",
                 "ppm",
+                "lph",
+                "lph",
+                "A",
+                "A",
+                "L",
+                "L",
                 "",
                 "",
-                "Amp",
-                "Amp",
-                "ml",
-                "ml",
-                "",
-                "",
-                ""
+                "%"
             ],
             ['RO_Log_Parameter']
 
@@ -396,7 +396,7 @@ export class Cluster{
                 "",
                 "",
                 "",
-                "ml",
+                "L",
                 "Rs",
                 "Rs",
                 "Rs",
@@ -460,7 +460,7 @@ export class Cluster{
             "Load Current",
         ],
             [
-                "ml",
+                "L",
                 "Rs",
                 "Rs",
                 "Rs",
@@ -468,11 +468,11 @@ export class Cluster{
                 "Rs",
                 "",
                 "Volts",
-                "Amp",
+                "A",
                 "Volts",
-                "Amp",
+                "A",
                 "Volts",
-                "Amp",
+                "A",
                 "",
                 "",
                 
@@ -499,7 +499,7 @@ export class Cluster{
 
             ],
             [
-                "Operational Minutes",
+                "Operational Time",
                 "Backwash Cycle Count",
                 "Temperature",
                 "Tds Inlet",
@@ -515,20 +515,20 @@ export class Cluster{
                 "Tank Level"
             ],
             [
-                "minutes",
+                "mins",
                 "",
                 "ºC",
                 "ppm",
                 "ppm",
+                "lph",
+                "lph",
+                "A",
+                "A",
+                "L",
+                "L",
                 "",
                 "",
-                "Amp",
-                "Amp",
-                "ml",
-                "ml",
-                "",
-                "",
-                ""
+                "%"
             ],
             ['NISE_RO_Log_Parameter']
 
@@ -622,7 +622,7 @@ export class Cluster{
                 "",
                 "",
                 "",
-                "ml",
+                "L",
                 "Rs",
                 "Rs",
                 "Rs",

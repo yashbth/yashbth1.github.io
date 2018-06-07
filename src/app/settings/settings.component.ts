@@ -23,8 +23,8 @@ export class SettingsComponent implements OnInit {
   flag : boolean = true;
   flag1 : boolean;
   dropdown = Dropdown;
-  url = "http://localhost/~yashbahetiiitk/swajal_dashboard/src/assets/Php";
-  // url = "http://localhost:8000/assets/Php";
+  // url = "http://localhost/~yashbahetiiitk/swajal_dashboard/src/assets/Php";
+  url = "http://localhost:8000/assets/Php";
   
   
   constructor(private Cluster: Cluster, private cookieService:CookieService,private global : GlobalService) { }

@@ -13,6 +13,7 @@
     if($result->num_rows>0){
         $all_rows = array();        
         while($row = $result->fetch_assoc()){
+            $row['Total_Volume_Dispensed']=$row['Total_Volume_Dispensed']/1000;
             $all_rows[]=$row;
 }   
 } 

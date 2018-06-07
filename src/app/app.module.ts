@@ -28,6 +28,7 @@ import {StorageServiceModule} from 'angular-webstorage-service'
 import { AuthService } from './auth.service';
 import { AnalysisComponent } from './analysis/analysis.component';
 import { SettingsComponent } from './settings/settings.component';
+import { ReportComponent } from './report/report.component';
 
 
 
@@ -51,6 +52,7 @@ import { SettingsComponent } from './settings/settings.component';
     AnalysisComponent,
     AnalysisChartsComponent,
     SettingsComponent,
+    ReportComponent,
 
   ],
   imports: [

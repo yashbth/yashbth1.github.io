@@ -18,8 +18,8 @@ const httpOptions = {
 })
 export class FetchWaterDispenseDataService {
 
-  private url = 'http://localhost/~yashbahetiiitk/swajal_dashboard/src/assets/Php/';
-  // private url = 'http://localhost:8000/assets/Php/';
+  // private url = 'http://localhost/~yashbahetiiitk/swajal_dashboard/src/assets/Php/';
+  private url = 'http://localhost:8000/assets/Php/';
   // private url = '/iiot/assets/Php/';
   
   cluster: string;
@@ -49,7 +49,7 @@ export class FetchWaterDispenseDataService {
   }
   getIds(id:string,cluster: string,table: string):Observable<Cluster[]>{
     let term = new FormData();
-    if(!id.trim()){
+    if(!id.trim()&&table=='Device_Data'){
       return of([])
     }
     console.log(table);
