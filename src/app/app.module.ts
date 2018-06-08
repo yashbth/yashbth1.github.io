@@ -61,7 +61,7 @@ import { ReportComponent } from './report/report.component';
     HttpClientModule,
     ChartModule,
     FormsModule,
-    StorageServiceModule
+    StorageServiceModule,
     
   ],
   providers: [AuthService,FetchWaterDispenseDataService,GlobalService,CookieService,Cluster],

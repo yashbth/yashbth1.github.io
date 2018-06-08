@@ -32,6 +32,7 @@
     "jquery": "^3.3.1",
     "js-datepicker": "^3.1.0",
     "jsonwebtoken": "^8.2.2",
+    "jspdf-autotable": "^2.3.4",
     "ng2-charts": "^1.6.0",
     "rxjs": "^6.0.0",
     "zone.js": "^0.8.26"

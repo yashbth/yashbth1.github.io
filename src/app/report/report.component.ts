@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FetchWaterDispenseDataService } from '../fetch-water-dispense-data.service';
 import { Cluster } from '../delhiCluster';
 import {Sales} from './report';
-import { Angular5Csv } from 'angular5-csv/Angular5-csv';
+
 
 declare var $:any;
+declare var tableExport : any;
 @Component({
   selector: 'app-report',
   templateUrl: './report.component.html',
@@ -47,6 +48,13 @@ export class ReportComponent implements OnInit {
         
       }  
       this.tableActive=true;
+      $(document).ready(function() {
+        $('#'+this.selectedIds[0]).DataTable( {
+            buttons: [
+                'copy', 'csv', 'excel', 'pdf', 'print'
+            ]
+        } );
+    } );
     });
   }
   getIds(){
@@ -78,12 +86,34 @@ export class ReportComponent implements OnInit {
     return dates;
   }
 
-  download(data,filename){
-    var options ={showLabels : true,
-      headers: ["Date",'Total Collection','Total Recharge','Total Collection From Card','Total Collection From Coin','Total Coin Count1','Total Coin Count2'] 
-    }
-     new Angular5Csv(data, filename,options); 
-  }
+  print(id): void {
+    let printContents, popupWin;
+    printContents = document.getElementById(id).innerHTML;
+    popupWin = window.open('', '_blank', 'top=0,left=0,height=100%,width=auto');
+    popupWin.document.open();
+    popupWin.document.write(`
+      <html>
+        <head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">    
+          <title>Report:`+id+`</title>
+          <style>
+            title{
+              font-weight : bolder;
+              font-size:30px;
+            }
+            @media print {
+              body {-webkit-print-color-adjust: black !important;}
+              th{
+                color: black !important;
+              }
+              }
+          </style>
+        </head>
+    <body onload="window.print();">${printContents}</body>
+      </html>`
+    );
+    popupWin.document.close();
+}
 }
 
 

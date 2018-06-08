@@ -57,8 +57,8 @@ export class TransactionComponent implements OnInit {
     setTimeout(()=>{
       this.dataAvailable =true;
       $(document).ready(function(){
-        $('#table').DataTable();
-        $('.paginate_button').css({"padding":"10px"});
+        $('#table').DataTable()
+        $('.paginate_button').css({"padding":"10px","border":"none"});
       })
     },1000)
   }

@@ -54,23 +54,25 @@
           <span class="heading">
               <h3>
                   Id : {{id}}
-                  <i class="fas fa-download" (click)="download(parsedInfo[id],'report')"></i>
+                  <i class="fas fa-download" (click)="print(id)"></i>
                 </h3>
               </span>
-          <table class="table table-striped text-center">
-              <thead class="thead-dark">
-                <tr>
-                  <th>Date</th>
-                  <th *ngFor="let data of sales[1]">{{data}}</th>
-                </tr>
-              </thead>
-              <tbody >
-                <tr *ngFor="let info of parsedInfo[id];let rowIndex=index">
-                  <td>{{info["date"]}}</td>
-                  <td *ngFor="let data of sales[0]">{{info[data]}}</td>
-                </tr>
-              </tbody>
-            </table>
+              <div id="{{id}}">
+                <table class="table table-striped text-center" >
+                  <thead class="thead-dark">
+                    <tr>
+                      <th>Date</th>
+                      <th *ngFor="let data of sales[1]">{{data}}</th>
+                    </tr>
+                  </thead>
+                  <tbody >
+                    <tr *ngFor="let info of parsedInfo[id];let rowIndex=index">
+                      <td>{{info["date"]}}</td>
+                      <td *ngFor="let data of sales[0]">{{info[data]}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
         </div>
         
       </div>
