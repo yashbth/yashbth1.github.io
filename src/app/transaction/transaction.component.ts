@@ -82,7 +82,12 @@ export class TransactionComponent implements OnInit {
 
     });
     setTimeout(()=>{
-      this.param_name = this.trans_params[0][this.property1]
+      if(this.property1 !== '00'){
+        this.param_name = this.trans_params[0][this.property1];
+      }
+      else{
+      this.param_name = "Machine Restart";
+      }
       this.dataAvailable1 =true;
       $(document).ready(function(){
         $('#table').DataTable();
@@ -90,5 +95,7 @@ export class TransactionComponent implements OnInit {
       })
     },1000)
   }
+
+
 
 }
