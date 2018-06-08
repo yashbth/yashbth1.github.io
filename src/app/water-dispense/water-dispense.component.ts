@@ -98,10 +98,10 @@ export class WaterDispenseComponent implements OnInit{
     this.info=[];
     this.chartData=[];
     this.service.getData(this.id,this.table,this.filename).subscribe(info=>this.info=info,(err)=>console.error(err),()=>{      
-      this.formatParamters();
       if( !this.info || Object.keys(this.info).length==0 ){
         this.router.navigateByUrl('/'+this.cluster+'/'+this.id +'/error')              
       }
+      this.formatParamters();      
       this.fromDate = this.info[0].date;
       this.toDate = this.info[0].date;
       this.service.getChartData('chart_date.php',this.id,this.table,this.fromDate,this.toDate).subscribe(chartData=>this.chartData=chartData); 

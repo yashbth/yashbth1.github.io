@@ -25,7 +25,7 @@
         <div class="col-sm-2" *ngIf="isActive">
           <label for="sel2"><h6>Select IDs</h6></label>
           <select multiple class="form-control" id="sel2" name="sellist2" >
-            <option *ngFor="let id of ids">{{id.DeviceID}}</option>
+            <option *ngFor="let id of ids" type="checkbox">{{id.DeviceID}}</option><i class="fas fa-check-circle"></i>
           </select>
         </div>
     </div>

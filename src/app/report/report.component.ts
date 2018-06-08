@@ -95,12 +95,8 @@ export class ReportComponent implements OnInit {
       <html>
         <head>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">    
-          <title>Report:`+id+`</title>
           <style>
-            title{
-              font-weight : bolder;
-              font-size:30px;
-            }
+
             @media print {
               body {-webkit-print-color-adjust: black !important;}
               th{
