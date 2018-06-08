@@ -48,20 +48,32 @@
       </div>
     </form>
 </div>
-<div class="row" *ngIf="tableActive">
-  <table class="table table-striped text-center">
-    <thead class="thead-dark">
-      <tr>
-        <th>Date</th>
-        <th *ngFor="let data of sales[1]">{{data}}</th>
-      </tr>
-    </thead>
-    <tbody >
-      <tr *ngFor="let date of dates;let rowIndex=index">
-        <td>{{date["date"]}}</td>
-        <td *ngFor="let data of sales[0]">{{date[data]}}</td>
-      </tr>
-    </tbody>
-  </table>
+<div class="col-sm-12 table">
+    <div class="row" >
+        <div class="page-header" *ngFor="let id of selectedIds">
+          <span class="heading">
+              <h3>
+                  Id : {{id}}
+                  <i class="fas fa-download" (click)="download(parsedInfo[id],'report')"></i>
+                </h3>
+              </span>
+          <table class="table table-striped text-center">
+              <thead class="thead-dark">
+                <tr>
+                  <th>Date</th>
+                  <th *ngFor="let data of sales[1]">{{data}}</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr *ngFor="let info of parsedInfo[id];let rowIndex=index">
+                  <td>{{info["date"]}}</td>
+                  <td *ngFor="let data of sales[0]">{{info[data]}}</td>
+                </tr>
+              </tbody>
+            </table>
+        </div>
+        
+      </div>
 </div>
+
 </div>

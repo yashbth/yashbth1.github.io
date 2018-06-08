@@ -32,13 +32,18 @@ export class AppComponent implements OnInit{
   ngOnInit(){
     if(this.cookieService.get('PHPSESSID')){
       this.service.getSessionVariables('session.php/?action=start').subscribe(session_var=>this.session_variable=session_var,(err)=>console.log(err),()=>{
-        this.global.token= this.session_variable.JWTtoken;
-        if(this.jwtHelper.isTokenExpired(this.global.token)){
-          this.cookieService.put('PHPSESSID','');
+        if(this.session_variable.JWTtoken){
+          this.global.token= this.session_variable.JWTtoken;
+          if(this.jwtHelper.isTokenExpired(this.global.token)){
+            this.cookieService.put('PHPSESSID','');
+          }
+          this.global.user = this.jwtHelper.decodeToken(this.global.token);
+          if(this.global.user["0"].Username=='Admin'){
+            this.global.admin= true;
+          }
         }
-        this.global.user = this.jwtHelper.decodeToken(this.global.token);
-        if(this.global.user["0"].Username=='Admin'){
-          this.global.admin= true;
+        else{
+          this.cookieService.removeAll();
         }
       });
     }

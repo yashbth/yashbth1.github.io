@@ -43,3 +43,20 @@ input{
 .row{
     margin-right:0px; 
 }
+.page-header{
+    width:100%;
+}
+.container-fluid{
+    overflow-y: auto;
+}
+.table{
+    margin-bottom: 50px;
+}
+.heading{
+    padding-left: 20px;
+}
+.fas{
+    font-size: 20px;
+    color: #164b83;
+    cursor: pointer;
+}

@@ -9,6 +9,8 @@
     $table = $_POST['table'];
     $from= $_POST['from'];
     $to = $_POST['to'];
+    $id= str_replace(",","','",$id);
+    // echo "('$id')";
     $sql = "SELECT * FROM $table WHERE DeviceID in ('$id') AND date BETWEEN '$from' AND '$to' ORDER BY SrNo ASC";
     $result = $conn->query($sql);
     if($result->num_rows>0){
