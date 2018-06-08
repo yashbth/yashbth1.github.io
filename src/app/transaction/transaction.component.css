@@ -28,3 +28,76 @@ th span{
     padding : 2em;
     overflow-x: scroll;
 }
+.btn-secondary {
+    color: #fff;
+    background-color: #6c757d;
+    border-color: #6c757d;
+}
+
+.form_group{
+    height: 33px !important;
+}
+
+.jumbotron{
+    padding-bottom: 5px;   
+    margin-bottom:5px; 
+}
+h1 span{
+    font-size:.7em !important;
+}
+.innerContainer{
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    padding: 2.5em 0; 
+}
+dd{
+    padding-left: 2em;
+}
+
+.tabs{
+    display: inline-block;
+    background:  #e9ecef;
+    padding: 20px;
+    margin: 10px;
+    justify-content: center
+}
+form{
+    margin-top:50px; 
+}
+.blockquote-footer{
+    font-size: 1em;
+    margin-top: 20px; 
+}
+#deviceLoc{
+    font-size: 1.17em;
+}
+.dateRange{
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    font-size: 1.2em;
+}
+button{
+    padding: 3px 15px;
+    background: #33334d
+}
+.pad{
+    padding: 0px 10px; 
+}
+.container{
+    padding-bottom: 100px;
+}
+.sel2{
+    padding-top: 4px;   
+}
+
+@media only screen and (max-width:792px){
+    .dateRange{
+        font-size: 3vw;
+    }
+}
+.selected{
+    height: -webkit-fill-available;
+    
+}

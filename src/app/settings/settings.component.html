@@ -76,7 +76,14 @@
               <input type="checkbox" name="panelP[]" value="Supervisor_Data">Supervisor Data<br>
               </div>    
               <h6><input type="checkbox" (click)="toggle(this,'panelP[]')">Select all<br><br></h6>
+
               <input type="submit" class="rounded btn-secondary" value="Save changes" formaction="{{url}}/edit_user.php">
+              <input type="submit" class="rounded btn-secondary" style="margin-left: 1px;" value="Delete User" onclick="return confirm('Warning! The user will be permanently deleted from the database!')" formaction="{{url}}/delete_user.php"><br><br>
+
+              <h6>Change Password:</h6>              
+              <input type="password"   name="admin_pass">
+              <input type="submit" class="btn-secondary" value="Save" formaction="{{url}}/admin_pass_change.php">
+              
             </div>
         </div>
 

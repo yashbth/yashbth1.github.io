@@ -1,28 +1,56 @@
 <app-loading *ngIf="dataAvailable==false"></app-loading>
-<div class="container" *ngIf="dataAvailable">
-    <div class="jumbotron text-center">
-        <h1> {{cluster}} Cluster <span> ( Machine Id : {{info[0]?.DeviceID}} )</span></h1>
-        <span id="deviceLoc"><b>Device located at :</b> <span id="place">{{location}}</span></span>
-        <h1 class="blockquote-footer ">Transaction Division</h1> 
+<div [class.selected]="!dataAvailable1" >
+    <div class="container" *ngIf="dataAvailable">
+        <div class="jumbotron text-center">
+            <h1> {{cluster}} Cluster <span> ( Machine Id : {{dev}} )</span></h1>
+            <span id="deviceLoc"><b>Device located at :</b> <span id="place">{{location}}</span></span>
+            <h1 class="blockquote-footer ">Transaction Division</h1> 
+        </div>
+    
+    </div>
+    
+    <div class="row">
+        <div class="form-group text-right col-sm-3">
+            <select  [(ngModel)]="property1" name="data" style="text-align: center">
+                <option *ngFor="let name of trans_params[0];let rowIndex = index" [value]="trans_params[1][rowIndex]" >{{name}}</option>
+            </select>
+        </div>
+        
+        
+        <div class="dateRange text-center col-sm-7">
+            <div class="from_to">
+                <label for="date"><span class="pad">From:</span> <input id="date_from" type="date" name="from" [(ngModel)]="fromDate" ></label>
+                <label><span class="pad"> To:</span><input id="date_to" type="date" name="to" [(ngModel)]="toDate"></label> 
+            </div>
+            <div class="pad">
+                <button type="submit" class="btn btn-secondary" (click)="getInfo()">Analyse</button>                        
+            </div>
+        </div>
+    </div>
+    
+ 
+    <div [class.selected]="dataAvailable1" class="container-fluid  table-responsive-xs" *ngIf="dataAvailable1">
+        <h2 class="text-center">{{param_name}}: {{param_count}}</h2>
+
+            <table id="table" class="table table-hover " style="width:100%">
+                <thead class="thead-dark">
+                    <tr>
+                        <th *ngFor="let thead of data[1];let rowIndex = index">{{thead}} <span *ngIf = "data[2][rowIndex] != ''">(in {{data[2][rowIndex]}})</span></th>
+                    </tr>
+                </thead>
+                <tbody class="text-center">
+                    <tr *ngFor="let row of info">
+                    <td *ngFor= "let td of data[0]">
+                        {{row[td]}}
+                    </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
 
+
+    
 </div>
-<div class="container-fluid maxHeight table-responsive-xs" *ngIf="dataAvailable">
-        <table id="table" class="table table-hover display nowrap" style="width:100%">
-            <thead class="thead-dark">
-                <tr>
-                    <th *ngFor="let thead of data[1];let rowIndex = index">{{thead}} <span *ngIf = "data[2][rowIndex] != ''">(in {{data[2][rowIndex]}})</span></th>
-                </tr>
-            </thead>
-            <tbody class="text-center">
-                <tr *ngFor="let row of info">
-                <td *ngFor= "let td of data[0]">
-                    {{row[td]}}
-                </td>
-                </tr>
-            </tbody>
-        </table>
-        </div>
 
 
 

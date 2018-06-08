@@ -1,5 +1,25 @@
 export class Cluster{
     id:string;
+    trans_params=[
+        ['Failed Transactions',
+        'Successful Tansactions',
+        'Supervisor Attendance',
+        'Admin Attendance',
+        'User Card Recharge',
+        'Operator Card Recharge',
+        'Machine Restart'
+        ],
+        [
+            '0',
+            '1',
+            '2',
+            '3',
+            '4',
+            '5',
+            '00'
+        ]
+        
+    ]
     clusters=[
         'Delhi','IRCTC','NISE'
     ]
@@ -120,6 +140,7 @@ export class Cluster{
         ],
             transaction :[
             [
+                "date",
                 "Time",
                 "TapNo",
                 "Type_of_Request",
@@ -132,6 +153,7 @@ export class Cluster{
                 "Expiry_Date"
             ],
             [
+                "Date",
                 "Time",
                 "Tap No.",
                 "Type Of Request",
@@ -143,7 +165,8 @@ export class Cluster{
                 "Total Recharge",
                 "Card Expiry Date"
             ],
-            [
+            [   
+                "",
                 "",
                 "",
                 "",

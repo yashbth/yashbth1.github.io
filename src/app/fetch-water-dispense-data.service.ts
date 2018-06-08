@@ -38,6 +38,19 @@ export class FetchWaterDispenseDataService {
       catchError(this.handleError('getData',[]))
     );
   }
+  getData_trans_params(id,table,filename,tor,fromDate,toDate) : Observable<waterDispenserParam[]>{
+    let data = new FormData();
+    data.append('id',id[0]);
+    data.append('table',table);
+    data.append('operatorId',id[1]);
+    data.append('date',id[2]);
+    data.append('tor',tor);
+    data.append('fromDate',fromDate);
+    data.append('toDate',toDate);
+    return this.http.post<waterDispenserParam[]>(this.url+filename,data).pipe(
+      catchError(this.handleError('getData',[]))
+    );
+  }
   getLocation(id,clusterName) : Observable<waterDispenserParam[]>{
     let data = new FormData();
     data.append('id',id);
