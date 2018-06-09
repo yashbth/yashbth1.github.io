@@ -37,7 +37,12 @@ th span{
 .form_group{
     height: 33px !important;
 }
-
+.col-sm-5{
+    margin-bottom: 0px;
+}
+select{
+    height:25px;
+}
 .jumbotron{
     padding-bottom: 5px;   
     margin-bottom:5px; 
@@ -73,9 +78,7 @@ form{
     font-size: 1.17em;
 }
 .dateRange{
-    margin-top: 30px;
     display: flex;
-    justify-content: center;
     font-size: 1.2em;
 }
 button{

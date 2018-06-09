@@ -10,14 +10,14 @@
     </div>
     
     <div class="row">
-        <div class="form-group text-right col-sm-3">
-            <select  [(ngModel)]="property1" name="data" style="text-align: center">
+        <div class="form-group text-right col-sm-5">
+            <select  [(ngModel)]="property1" name="data" style="text-align: center" id="options">
                 <option *ngFor="let name of trans_params[0];let rowIndex = index" [value]="trans_params[1][rowIndex]" >{{name}}</option>
             </select>
         </div>
         
         
-        <div class="dateRange text-center col-sm-7">
+        <div class="dateRange text-center col-sm-7" [class.selected]="!dataAvailable1">
             <div class="from_to">
                 <label for="date"><span class="pad">From:</span> <input id="date_from" type="date" name="from" [(ngModel)]="fromDate" ></label>
                 <label><span class="pad"> To:</span><input id="date_to" type="date" name="to" [(ngModel)]="toDate"></label> 

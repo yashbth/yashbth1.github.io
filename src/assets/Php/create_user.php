@@ -8,7 +8,7 @@ if($_POST["username"]==''){
     redirect_with_message('message_failure',"Please enter a valid username.");
 }
 
-$username = "'".password_hash($_POST["username"],PASSWORD_DEFAULT)."'";
+$username = "'".$_POST["username"]."'";
 
 $check_no_duplicate = "SELECT * FROM Dashboard_Users WHERE Username =" . $username;
 $result_check = $conn->query($check_no_duplicate);
@@ -26,7 +26,7 @@ if($_POST["password"]==''){
 }
                                                 // fields' verification
 
-$password = "'".$_POST["password"]."'";
+$password = "'".password_hash($_POST["password"],PASSWORD_DEFAULT)."'";
 
 $booleans = '';
 $boolean_flag = 0;

@@ -23,10 +23,16 @@
             </div>
         </div>
         <div class="col-sm-2" *ngIf="isActive">
-          <label for="sel2"><h6>Select IDs</h6></label>
-          <select multiple class="form-control" id="sel2" name="sellist2" >
-            <option *ngFor="let id of ids" type="checkbox">{{id.DeviceID}}</option><i class="fas fa-check-circle"></i>
-          </select>
+          <ng-multiselect-dropdown
+              [placeholder]="'Select Ids'"
+              [data]="ids"
+              [(ngModel)]="id"
+              [settings]="dropdownSettings"
+              (onSelect)="onItemSelect($event)"
+              (onSelectAll)="onSelectAll($event)"
+              (onDeSelectAll)="onDeSelectAll($event)"
+              (onDeSelect)="onDeSelect($event)">
+          </ng-multiselect-dropdown>
         </div>
     </div>
 
@@ -48,7 +54,7 @@
       </div>
     </form>
 </div>
-<div class="col-sm-12 table">
+<div class="col-sm-12 table" *ngIf="tableActive">
     <div class="row" >
         <div class="page-header" *ngFor="let id of selectedIds">
           <span class="heading">

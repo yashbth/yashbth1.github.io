@@ -34,8 +34,8 @@ export class TransactionComponent implements OnInit {
   trans_params : any = this.Cluster.trans_params;
   property1 : string = null;
 
-  fromDate: any=new Date('2018-03-13');
-  toDate : any =new Date('2018-03-13');
+  fromDate: any=new Date().toISOString().slice(0,10);
+  toDate : any =new Date().toISOString().slice(0,10);
   
   param_count: number;
   param_name: string;
@@ -59,6 +59,7 @@ export class TransactionComponent implements OnInit {
     })
     setTimeout(()=>{
       this.dataAvailable =true;
+      document.getElementById('options')["options"][0].selected = true;
     },1000)
   }
   ngAfterContentChecked(){

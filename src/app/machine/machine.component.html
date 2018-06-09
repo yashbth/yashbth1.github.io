@@ -23,7 +23,10 @@
           <a class="nav-link" routerLink="/{{cluster}}/{{id}}/settings">Settings</a>
         </li>
         <li class="nav-item padTop">
-          <a class="nav-link" (click)="logout()" >Logout</a>
+          <a class="nav-link" routerLink="/{{cluster}}/{{id}}/report" >Analysis</a>
+        </li>
+        <li class="nav-item padTop">
+          <a class="nav-link" (click)="logout()" ><i class="fas fa-sign-out-alt"></i></a>
         </li>
       </ul>
     </nav>  
@@ -39,7 +42,7 @@
                 <br>
                 <ul class="navbar-nav text-center">
                     <li class="nav-item dropdown text-center" *ngFor="let nav of dropdownlist" [class.hide]="user[nav.columnName]==0">
-                        <a class="nav-link text-center" (click)="hide()" *ngIf="user[nav.columnName]==1 || nav.division=='Report'" routerLink="/{{cluster}}/{{id}}/{{nav.id}}"   id="navbardrop" routerLinkActiveOptions="{exact:true}" [class.active-link]="nav.id==currDiv" >
+                        <a class="nav-link text-center" (click)="hide()" *ngIf="user[nav.columnName]==1 || nav.division=='Report' || nav.division=='Analysis'" routerLink="/{{cluster}}/{{id}}/{{nav.id}}"   id="navbardrop" routerLinkActiveOptions="{exact:true}" [class.active-link]="nav.id==currDiv" >
                           {{nav.division}}
                         </a>
                       </li>

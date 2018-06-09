@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FetchWaterDispenseDataService } from '../fetch-water-dispense-data.service';
 import { Cluster } from '../delhiCluster';
 import {Sales} from './report';
+import { filter } from 'rxjs/operators';
 
 
 declare var $:any;
@@ -19,14 +20,16 @@ export class ReportComponent implements OnInit {
   to : Date;
   cluster : string="Select Cluster";
   ids: any;
+  id: any;
   isActive:boolean;
   tableActive:boolean;
-  selectedIds:any;
+  selectedIds=[];
   info : any;
   dataAvailable : boolean;
   dates =[];
   parsedInfo=[];
   sales=Sales;
+  dropdownSettings={};
   constructor(private service : FetchWaterDispenseDataService,private Cluster : Cluster) { }
 
   ngOnInit() {
@@ -36,7 +39,7 @@ export class ReportComponent implements OnInit {
     let table = this.Cluster[this.cluster]["WaterDispenseData"][3];
     let date= new Date(this.from);
     date.setDate(date.getDate()-1);
-    this.selectedIds=$('#sel2').val();  
+ 
     this.service.getChartData('report.php',this.selectedIds,table,date.toISOString().slice(0,10),this.to).subscribe(info=>this.info=info,(err)=>console.log(err),()=>{
       this.dataAvailable= true;  
       for( var id of this.selectedIds){
@@ -59,8 +62,37 @@ export class ReportComponent implements OnInit {
   }
   getIds(){
     this.service.getIds('',this.cluster,'').subscribe(ids=>this.ids=ids,(err)=>this.ids=[],()=>{
-      this.isActive=true;                  
+      this.dropdownSettings = {
+        idField: 'SrNo',
+        textField: 'DeviceID',
+        selectAllText: 'Select All',
+        unSelectAllText: 'UnSelect All',
+        itemsShowLimit: 3,
+    }; 
+    this.isActive=true;                     
     });
+  }
+  onItemSelect(item:any){
+    this.selectedIds.push(item.DeviceID);
+    console.log(this.selectedIds)
+    this.tableActive=false;
+  }
+  onDeSelect(item:any){
+    this.selectedIds = this.selectedIds.filter(function(element) { 
+      return element !== item.DeviceID
+  })
+
+  this.tableActive=false;
+    console.log(this.selectedIds);
+  }
+  onSelectAll(item:any){
+    this.selectedIds=[];
+    item.forEach(element => {
+        return this.selectedIds.push(element.DeviceID);
+    });;
+  }
+  onDeSelectAll(item:any){
+    this.selectedIds=[];
   }
 
   dataRise(inputArray){
@@ -85,6 +117,7 @@ export class ReportComponent implements OnInit {
     dates.shift()
     return dates;
   }
+
 
   print(id): void {
     let printContents, popupWin;
