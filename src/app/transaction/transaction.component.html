@@ -10,9 +10,9 @@
     </div>
     
     <div class="row">
-        <div class="form-group text-right col-sm-3">
-            <select  [(ngModel)]="property1" name="data" style="text-align: center">
-                <option *ngFor="let name of trans_params[0];let rowIndex = index" [value]="trans_params[1][rowIndex]" >{{name}}</option>
+        <div class="dropdown  text-right col-sm-3">
+            <select  [(ngModel)]="property1" name="data" style="text-align: center" id="options">
+                <option *ngFor="let name of trans_params[0];let rowIndex = index" [value]="trans_params[1][rowIndex]">{{name}}</option>
             </select>
         </div>
         
@@ -32,26 +32,22 @@
     <div [class.selected]="dataAvailable1" class="container-fluid  table-responsive-xs" *ngIf="dataAvailable1">
         <h2 class="text-center">{{param_name}}: {{param_count}}</h2>
 
-            <table id="table" class="table table-hover " style="width:100%">
-                <thead class="thead-dark">
-                    <tr>
-                        <th *ngFor="let thead of data[1];let rowIndex = index">{{thead}} <span *ngIf = "data[2][rowIndex] != ''">(in {{data[2][rowIndex]}})</span></th>
-                    </tr>
-                </thead>
-                <tbody class="text-center">
-                    <tr *ngFor="let row of info">
-                    <td *ngFor= "let td of data[0]">
-                        {{row[td]}}
-                    </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+        <table id="table" class="table table-hover " style="width:100%">
+            <thead class="thead-dark">
+                <tr>
+                    <th *ngFor="let thead of data[1];let rowIndex = index">{{thead}} <span *ngIf = "data[2][rowIndex] != ''">(in {{data[2][rowIndex]}})</span></th>
+                </tr>
+            </thead>
+            <tbody class="text-center">
+                <tr *ngFor="let row of info">
+                <td *ngFor= "let td of data[0]">
+                    {{row[td]}}
+                </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
 
     
 </div>
-
-
-
-

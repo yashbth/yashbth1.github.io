@@ -1,0 +1,81 @@
+<div id="report" class="container-fluid">
+  <div class="container">
+    <div class="jumbotron text-center">
+      <div class="page-header">
+        <h2>{{title}}</h2>
+      </div>
+      <div class="addInfo">
+          {{addInfo}}<br>
+          <h4>
+            <b>Sales Report</b>
+          </h4>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="selectMachines">
+        <div class="dropdown col-sm-2 text-center">
+            <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+              {{cluster}}
+            </button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" (click)="cluster = clusterName; getIds()" *ngFor="let clusterName of Cluster.clusters">{{clusterName}}</a>
+            </div>
+        </div>
+        <div class="col-sm-2" *ngIf="isActive">
+          <label for="sel2"><h6>Select IDs</h6></label>
+          <select multiple class="form-control" id="sel2" name="sellist2" >
+            <option *ngFor="let id of ids">{{id.DeviceID}}</option>
+          </select>
+        </div>
+    </div>
+
+
+  </div>
+  <div class="dateRange text-center">
+    <form >
+      <div class="form-group">
+          <label class="sel"><h5>Select a Date Range</h5> </label>
+          <span class="dateInput">
+              <label class="pad">From: </label>
+              <input type="date" placeholder="mm/dd/yyyy" class="form-control form-control-sm" name="from" [(ngModel)]="from" >
+              <label class="pad">To: </label>
+              <input type="date" placeholder="mm/dd/yyyy" class="form-control form-control-sm" name="to" [(ngModel)]="to">
+          </span>
+          <span class="button">
+            <button type="submit" class="btn btn-info" (click)="generateReport()">Generate Report</button>
+          </span>
+      </div>
+    </form>
+</div>
+<div class="col-sm-12 table">
+    <div class="row" >
+        <div class="page-header" *ngFor="let id of selectedIds">
+          <span class="heading">
+              <h3>
+                  Id : {{id}}
+                  <i class="fas fa-download" (click)="print(id)"></i>
+                </h3>
+              </span>
+              <div id="{{id}}">
+                <table class="table table-striped text-center" >
+                  <thead class="thead-dark">
+                    <tr>
+                      <th>Date</th>
+                      <th *ngFor="let data of sales[1]">{{data}}</th>
+                    </tr>
+                  </thead>
+                  <tbody >
+                    <tr *ngFor="let info of parsedInfo[id];let rowIndex=index">
+                      <td>{{info["date"]}}</td>
+                      <td *ngFor="let data of sales[0]">{{info[data]}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+        </div>
+        
+      </div>
+</div>
+
+</div>

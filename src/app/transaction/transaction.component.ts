@@ -59,6 +59,7 @@ export class TransactionComponent implements OnInit {
     })
     setTimeout(()=>{
       this.dataAvailable =true;
+      document.getElementById('options')['option'][2].selected=true;
     },1000)
   }
   ngAfterContentChecked(){
@@ -90,8 +91,8 @@ export class TransactionComponent implements OnInit {
       }
       this.dataAvailable1 =true;
       $(document).ready(function(){
-        $('#table').DataTable();
-        $('.paginate_button').css({"padding":"10px"});
+        $('#table').DataTable()
+        $('.paginate_button').css({"padding":"10px","border":"none"});
       })
     },1000)
   }

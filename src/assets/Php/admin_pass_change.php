@@ -8,8 +8,8 @@ if($_POST["username"]==''){
 }
 $username = "'".$_POST["username"]."'";
 $pass = $_POST['admin_pass'];
-
-$update_pass_query = "UPDATE Dashboard_Users SET Password = '" .$pass. "' WHERE Username = ". $username;
+$hashed_pass = password_hash($pass,PASSWORD_DEFAULT);
+$update_pass_query = "UPDATE Dashboard_Users SET Password = '" .$hashed_pass. "' WHERE Username = ". $username;
 echo($update_pass_query);
 $conn->query($update_pass_query);
 $conn->close();

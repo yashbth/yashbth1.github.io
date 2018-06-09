@@ -10,11 +10,13 @@ import { OperatorComponent } from './operator/operator.component';
 import { ErrorComponent } from './error/error.component';
 import { AnalysisComponent } from './analysis/analysis.component';
 import {SettingsComponent} from './settings/settings.component'
+import {ReportComponent} from './report/report.component'
 
 const routes: Routes = [
   { path: '', component: AppComponent },
   {path : ':cluster/:id' , component: MachineComponent},  
-  {path : ':cluster/:id/analysis', component : AnalysisComponent},     
+  {path : ':cluster/:id/analysis', component : AnalysisComponent},
+  {path : ':cluster/:id/report', component : ReportComponent},            
   {path : ':cluster/:id/settings' , component : SettingsComponent},    
   {path : ':cluster/:id/transactionLog', component : TransactionComponent},
   {path : ':cluster/:id/supervisor', component : SupervisorComponent},

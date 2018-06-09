@@ -13,6 +13,8 @@
 	if($result->num_rows>0){
 	    $all_rows = array();    
 		while($row = $result->fetch_assoc()){
+            $row['total_treated_volume']=$row['total_treated_volume']/1000;
+            $row['total_reject_volume']=$row['total_reject_volume']/1000;                                   
 			$all_rows[]=$row;
 }	
 } 

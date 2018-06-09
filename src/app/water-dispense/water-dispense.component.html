@@ -13,8 +13,9 @@
             <div class="col-sm-3 text-center tabs" *ngFor="let name of data[1];let rowIndex = index;">
                     <dl>
                         <dt>{{name}}</dt>
-                        <dd *ngIf = "data[2][rowIndex] != 'Rs'" >{{info[0][data[0][rowIndex]]}} {{data[2][rowIndex]}}</dd>
+                        <dd *ngIf = "data[2][rowIndex] != 'Rs'" id="{{data[0][rowIndex]}}">{{info[0][data[0][rowIndex]]}} {{data[2][rowIndex]}}</dd>
                         <dd *ngIf = "data[2][rowIndex] == 'Rs'" >{{data[2][rowIndex]}} {{info[0][data[0][rowIndex]]}}</dd>
+                        
                     </dl>
             </div>
         </div>

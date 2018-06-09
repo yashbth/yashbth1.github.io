@@ -26,11 +26,13 @@
     "angular2-chartjs": "^0.5.1",
     "angular2-cookie": "^1.2.6",
     "angular2-jwt": "^0.2.3",
+    "angular5-csv": "^0.2.10",
     "chart.js": "^2.7.2",
     "core-js": "^2.5.4",
     "jquery": "^3.3.1",
     "js-datepicker": "^3.1.0",
     "jsonwebtoken": "^8.2.2",
+    "jspdf-autotable": "^2.3.4",
     "ng2-charts": "^1.6.0",
     "rxjs": "^6.0.0",
     "zone.js": "^0.8.26"

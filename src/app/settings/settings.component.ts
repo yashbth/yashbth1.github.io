@@ -30,6 +30,7 @@ export class SettingsComponent implements OnInit {
   constructor(private Cluster: Cluster, private cookieService:CookieService,private global : GlobalService) { }
 
   ngOnInit() {
+    this.cookieService.put('prevDiv','Settings');
     console.log("ngonit")
 
   }

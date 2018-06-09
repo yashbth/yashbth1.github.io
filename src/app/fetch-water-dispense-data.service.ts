@@ -62,7 +62,7 @@ export class FetchWaterDispenseDataService {
   }
   getIds(id:string,cluster: string,table: string):Observable<Cluster[]>{
     let term = new FormData();
-    if(!id.trim()){
+    if(!id.trim()&&table=='Device_Data'){
       return of([])
     }
     console.log(table);

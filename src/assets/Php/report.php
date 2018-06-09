@@ -4,16 +4,19 @@
     header("Access-Control-Allow-Origin: *");
     header("Access-Control-Allow-Methods: GET, POST, PATCH,PUT, DELETE, OPTIONS");
     header("Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token");
-    
+
     $id = $_POST['id'];
     $table = $_POST['table'];
-    
-    $sql = "SELECT * FROM $table WHERE DeviceID='$id' ORDER BY date DESC LIMIT 10 ";
+    $from= $_POST['from'];
+    $to = $_POST['to'];
+    $id= str_replace(",","','",$id);
+    // echo "('$id')";
+    $sql = "SELECT * FROM $table WHERE DeviceID in ('$id') AND date BETWEEN '$from' AND '$to' ORDER BY SrNo ASC";
     $result = $conn->query($sql);
     if($result->num_rows>0){
-        $all_rows = array();    
+        $all_rows = array();        
         while($row = $result->fetch_assoc()){
-            $row['Trip_Total_Volume_Dispensed']=$row['Trip_Total_Volume_Dispensed']/1000;                        
+            $row['Total_Volume_Dispensed']=$row['Total_Volume_Dispensed']/1000;
             $all_rows[]=$row;
 }   
 } 

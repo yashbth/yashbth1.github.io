@@ -11,6 +11,12 @@ nav{
 .dropdown .active-link{
     font-weight:800;
     color: white !important;
+    /* border: 1px solid white; */
+}
+
+.active_setting-link{
+    /* font-weight:800; */
+    color: white !important;
     border: 1px solid white;
 }
 .navbar-dark{
@@ -108,7 +114,9 @@ app-water-dispense{
 .pad a{ 
     padding-top: 5px;
 } 
-
+.logout{
+    cursor: pointer;
+}
 /* FOR WIDTH<1300px */
 @media only screen and (max-width : 1300px){
     .verticalNav{

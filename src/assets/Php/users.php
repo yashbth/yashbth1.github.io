@@ -16,7 +16,7 @@ session_start();
 	if($result->num_rows>0){
         $all_rows=array();
 		while($row = $result->fetch_assoc()){
-            if ($username==$row['Username'] && $password == $row['Password']) {
+            if ($username==$row['Username'] && password_verify($password,$row['Password'])) {
                 $header = json_encode(['typ' => 'JWT', 'alg' => 'HS256']);
                 // Create token payload as a JSON string
                     $payload = json_encode([$row,'exp'=>time()+3600]);
