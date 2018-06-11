@@ -13,12 +13,13 @@ declare var $ :any;
   templateUrl: './charts.component.html',
   styleUrls: ['./charts.component.css']
 })
-export class AnalysisChartsComponent implements OnInit {
+export class AnalysisChartsComponent{
   cluster : string; 
   _property : string;
   _ids :string;s
   @Input () set property(property : string){
     this._property = property;
+    console.log(this._property)    
     this.checkGraph = true;
   } ;
   @Input () chartData : any;
@@ -35,13 +36,106 @@ export class AnalysisChartsComponent implements OnInit {
   checkGraph : boolean=true;
   label : string;
   labelString: string;
+  flag=true;
+  datasets=[];
   constructor(private Cluster : Cluster,private router : Router,private route : ActivatedRoute) { 
   }
   ngOnInit(){
+    if(this.ty=='bubble'){
+    for( let property of this._property){
+      this.datasets.push(
+        { 
+          label:'',
+          data:this.chartData.splice(0,this._property.length),
+          backgroundColor: [
+            "#0033cc",
+            "#00cc00",
+            "#ffff33",
+            "#6600cc",
+            "#ff9900",
+            "#cc00cc",
+            "#663300",
+            "#00e6e6",
+            "#9999ff"
+          ]
+      }
+      )
+    }
+    console.log(this.datasets)
+    let property = this._property;
+    let ids =this._ids;
+
+      this.options= {
+        scales: {
+          xAxes: [{
+            scaleLabel:{
+              display :true,
+              labelString : ''
+              },
+              ticks: {
+                min:1,
+                stepSize: 1,
+                callback: function(value, index, values) {
+                  return  ids[ids.length-1-index] ;
+                 }
+              }
+          }]
+      ,
+            yAxes: [{
+              scaleLabel:{
+                display :true,
+                labelString : ''
+                },
+                ticks: {
+                  min:1,
+                  stepSize: 1,
+                  callback: function(value, index, values) {
+                    return  property[property.length-1-index] ;
+                   }
+                }
+            }]
+        }
+    }
+    }
       this.Chart(this.ty);
   }
-  ngAfterContentChecked(){
+  ngAfterContentChecked(){  
     if(this.checkGraph){
+      let property = this._property;
+      let ids =this._ids;
+      if(this.ty=='bubble'){
+        this.options= {
+          scales: {
+            xAxes: [{
+              scaleLabel:{
+                display :true,
+                labelString : ''
+                },
+                ticks: {
+                  min:1,
+                  stepSize: 1,
+                  callback: function(value, index, values) {
+                    return  ids[ids.length-1-index] ;
+                   }
+                }
+            }]
+        ,
+              yAxes: [{
+                scaleLabel:{
+                  display :true,
+                  labelString : ''
+                  },
+                  ticks: {
+                    min:1,
+                    stepSize: 1,
+                    callback: function(value, index, values) {
+                      return  property[property.length-1-index] ;
+                     }
+                  }
+              }]
+          }
+      }
+      }
       this.Chart(this.ty);
       this.checkGraph=false;
     }
@@ -49,47 +143,20 @@ export class AnalysisChartsComponent implements OnInit {
 
 
   Chart(type:string){
+
     this.type= type;
     this.data= {
       labels : this._property,
-        datasets: [{
-            label: this._ids,
-            data:this.chartData,
-            backgroundColor: [
-              'rgba(255,99,132,1)',
-              'rgba(54, 162, 235, 1)',
-              'rgba(255, 206, 86, 1)',
-              'rgba(75, 192, 192, 1)',
-              'rgba(153, 102, 255, 1)',
-              'rgba(255, 159, 64, 1)'
-            ]
-        }
-      ],
-
-      
+        datasets:this.datasets,  
     };
-    this.options= {
-        // scales: {
-        //     yAxes: [{
-        //       scaleLabel:{
-        //         display :true,
-        //         labelString : this.labelString
-        //         },
-        //         ticks: {
-        //             beginAtZero:true
-        //         }
-        //     }]
-        // }
-    }
+    this.options=this.options
+
   }
 
-  ConvertIntoArray(data,property1:string,property2:string):void{  
-    this.Data1=[];
-    this.Data2=[];
-    for(let obj of data){
-      this.Data1.push(parseInt(obj[property1]));
-      this.Data2.push(obj[property2]);
-    }
   }
+
+
+
+
+
   
-}

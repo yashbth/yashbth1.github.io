@@ -34,7 +34,6 @@ import { ReportComponent } from './report/report.component';
 
 
 
-
 @NgModule({
   declarations: [
     AppComponent,

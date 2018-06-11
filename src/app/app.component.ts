@@ -91,4 +91,7 @@ export class AppComponent implements OnInit{
   deleteCookie(){
     this.cookieService.removeAll();
   }
+
 }
+
+
