@@ -1,8 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit ,AfterContentChecked} from '@angular/core';
 import { FetchWaterDispenseDataService } from '../fetch-water-dispense-data.service';
 import { Cluster } from '../delhiCluster';
 import {Sales} from './report';
-import { filter } from 'rxjs/operators';
+import { filter, mergeMap } from 'rxjs/operators';
+import {Property,dropdowntableSettings, charts, dropdownpolarSettings} from '../users'
+import { Observable } from 'rxjs';
+import { forkJoin } from 'rxjs'
 
 
 declare var $:any;
@@ -12,65 +15,103 @@ declare var tableExport : any;
   templateUrl: './report.component.html',
   styleUrls: ['./report.component.css']
 })
-export class ReportComponent implements OnInit {
+export class ReportComponent {
 
   title: string= "Welcome To Dashboard";
-  addInfo = Date();
-  from : any;
-  to : Date;
+  addInfo = new Date().toUTCString();
+  from ='2018-06-01';
+  to ='2018-06-07';
   cluster : string="Select Cluster";
   ids: any;
   id: any;
   isActive:boolean;
   tableActive:boolean;
+  chartsActive: boolean;
   selectedIds=[];
-  info : any;
+  info =[];
   dataAvailable : boolean;
   dates =[];
   parsedInfo=[];
+  tableData=[];
   sales=Sales;
-  dropdownSettings={};
+  dropdowntableSettings=dropdowntableSettings;
+  charts =charts
+  tables=['WaterDispenseData','RoData','CupDispenseData','supervisorData','operator']  
+  dropdown1=[];
+  dropdown2=[];
+  parameters=[this.dropdown1,this.dropdown2];
+  selDrop1=[];
+  selDrop2=[];
+  selectedparameter =[this.selDrop1,this.selDrop2];
+
+  bubblechartData=[];
+  polarchartData=[];
+  request =[];
   constructor(private service : FetchWaterDispenseDataService,private Cluster : Cluster) { }
 
-  ngOnInit() {
+  ngOnInit() {                   
+    for (var table of this.tables){
+      let i=0;
+      for(var property of this.Cluster['NISE'][table][1]){
+        if(this.parameters[0].indexOf(property)==-1){
+          let obj = {
+            name : this.Cluster['NISE'][table][0][i],
+            title : property
+          }
+          this.parameters[0].push(obj);
+        }
+        i=i+1;
+      }
+    }
   }
 
   generateReport(){
-    let table = this.Cluster[this.cluster]["WaterDispenseData"][3];
     let date= new Date(this.from);
     date.setDate(date.getDate()-1);
- 
-    this.service.getChartData('report.php',this.selectedIds,table,date.toISOString().slice(0,10),this.to).subscribe(info=>this.info=info,(err)=>console.log(err),()=>{
-      this.dataAvailable= true;  
-      for( var id of this.selectedIds){
-        this.parsedInfo[id]=this.info.filter(function(element){
-          return (element["DeviceID"]==id);
-        })
-        this.parsedInfo[id]=this.dataRise(this.parsedInfo[id]);
+    for(var t of this.tables){
+    let table = this.Cluster[this.cluster][t][3]; 
+      this.request.push(this.service.getChartData('report.php',this.selectedIds,table,date.toISOString().slice(0,10),this.to));
+    }
+    forkJoin(this.request).subscribe(info=>this.info=info,(err)=>console.log(err),()=>{
+        for( var id of this.selectedIds){
+          this.parsedInfo[id]=[];          
+          for(let i=0;i<5;i++){ 
+            this.parsedInfo[id][i]=this.info[i].filter(function(element){
+              return (element["DeviceID"]==id);
+          })
+        } 
+      }
+        this.dataAvailable= true;           
+      this.chartsActive=true;
+    })
 
-        
-      }  
-      this.tableActive=true;
-      $(document).ready(function() {
-        $('#'+this.selectedIds[0]).DataTable( {
-            buttons: [
-                'copy', 'csv', 'excel', 'pdf', 'print'
-            ]
-        } );
-    } );
-    });
   }
   getIds(){
     this.service.getIds('',this.cluster,'').subscribe(ids=>this.ids=ids,(err)=>this.ids=[],()=>{
-      this.dropdownSettings = {
-        idField: 'SrNo',
-        textField: 'DeviceID',
-        selectAllText: 'Select All',
-        unSelectAllText: 'UnSelect All',
-        itemsShowLimit: 3,
-    }; 
     this.isActive=true;                     
     });
+  }
+  ngAfterContentChecked(){
+    this.parameters[1]=this.selectedparameter[0];        
+  }
+  setChartData(item:any){  
+    this.polarchartData=[];
+    for (var id of this.selectedIds){
+      let temp=[];
+      let extend=[];      
+      for(let table of this.tables){
+        temp[table]=this.selectedparameter[0].filter((element,index,option)=>{
+          return ((this.Cluster[this.cluster][table][0].indexOf(element.name))>=0)
+      })
+        temp[table]=this.dataRise(this.parsedInfo[id][0],temp[table]);
+        extend=this.mergeResult(extend,temp[table]); 
+      }
+      this.polarchartData.push(extend.reduce((sum,element)=>sum +element[item.name],0));       
+      this.tableData[id]=extend;
+      // this.chartData.push(this.parsedInfo[id].reduce((sum,element)=>sum +element[item.name],0));
+    }
+    this.parameters[1]=this.selectedparameter[0];  
+    this.tableActive=true;          
   }
   onItemSelect(item:any){
     this.selectedIds.push(item.DeviceID);
@@ -95,19 +136,20 @@ export class ReportComponent implements OnInit {
     this.selectedIds=[];
   }
 
-  dataRise(inputArray){
+  dataRise(inputArray,properties){
     let dates=[]
     let prevRowData=inputArray[0];
+    // console.log(prevRowData,properties);
     let i=0;
     let lastDay_rowIndex=0;
     for( var row of inputArray){
       i=i+1;
       if(prevRowData['date']!=row['date'] || inputArray.length==i){
         var temp={}
-        for( var data of Sales[0]){
-          var prevData=dates.length?inputArray[lastDay_rowIndex][data]:0
+        for( var data of properties){
+          var prevData=dates.length?inputArray[lastDay_rowIndex][data.name]:0
           temp["date"]= prevRowData["date"];
-          temp[data]=prevRowData[data]-prevData;
+          temp[data.name]=prevRowData[data.name]-prevData;
         }
         dates.push(temp);       
         lastDay_rowIndex=i-2;                    
@@ -118,6 +160,16 @@ export class ReportComponent implements OnInit {
     return dates;
   }
 
+  mergeResult(array1,array2){
+    let mergedArray=[];
+    let i=0;
+    for(let row of array2){
+      mergedArray.push($.extend( array1[i], array2[i] ));
+      i=i+1;              
+    }    
+    // console.log(mergedArray)
+    return mergedArray;
+  }
 
   print(id): void {
     let printContents, popupWin;

@@ -3,6 +3,7 @@ import {Chart} from 'chart.js';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import {Cluster} from '../delhiCluster'
 import { chartData } from '../water-dispense/waterDispenserparam';
+import { Property } from '../users';
 declare var jquery:any;
 declare var $ :any; 
 
@@ -13,19 +14,18 @@ declare var $ :any;
   styleUrls: ['./charts.component.css']
 })
 export class AnalysisChartsComponent implements OnInit {
-  private _property1: string;
-  cluster : string;
-  @Input() 
-  set y1(y1:string){
-    this._property1=y1;
+  cluster : string; 
+  _property : string;
+  @Input () set property(property : string){
+    this._property = property;
     this.checkGraph = true;
-  };
-  @Input() y2:string;
-  @Input () x : string;
-  @Input () type : string;
+  } ;
   @Input () chartData : any;
+  @Input () ids ;
+  @Input () ty;
   Data1=[];
   Data2=[];
+  type: string;
   data : any;
   options: any;
   checkGraph : boolean=true;
@@ -34,54 +34,34 @@ export class AnalysisChartsComponent implements OnInit {
   constructor(private Cluster : Cluster,private router : Router,private route : ActivatedRoute) { 
   }
   ngOnInit(){
-    // setTimeout(()=>{
-    //   this.cluster = this.route.snapshot.paramMap.get('cluster');
-    //   this.ConvertIntoArray(this.chartData.chartData,this._property1,this.property2);
-      this.Chart('line');
-    // },100);
-
+      this.Chart(this.ty);
   }
   ngAfterContentChecked(){
-    // if(this.checkGraph || this.chartData.dataChange){
-    //   let index = this.Cluster[this.cluster].supervisorData[0].indexOf(this._property1); 
-    //   this.label = this.Cluster[this.cluster].supervisorData[1][index];  
-    //   this.labelString = this.Cluster[this.cluster].supervisorData[1][index]+(this.Cluster[this.cluster].supervisorData[2][index]?' (in ':'')+this.Cluster[this.cluster].supervisorData[2][index]+(this.Cluster[this.cluster].supervisorData[2][index]?')':'');
-    //   this.ConvertIntoArray(this.chartData.chartData,this._property1,this.property2);
-    //   this.Chart('line');
-    //   if(this.chartData.chartData.length){
-    //     this.checkGraph = false;
-    //     this.chartData.dataChange = false;
-    //   }
-    // }
+    if(this.checkGraph){
+      this.Chart(this.ty);
+      this.checkGraph=false;
+    }
   }
-  
-  ngOnChanges(){
-    // this.ConvertIntoArray(this.chartData.chartData,this._property1,this.property2);
-    // this.Chart('line');
-  }
+
 
   Chart(type:string){
     this.type= type;
     this.data= {
-      labels : [1,2,3,4,5,6,7,8],
+      labels : this.ids,
         datasets: [{
-            label: 'test',
-            data:[10,22,34,55,70,38,78,16],
+            label: this.property,
+            data:this.chartData,
             backgroundColor: [
-                'rgba(255, 255,255,0)',
-            ],
-            borderColor: [
-                'rgba(255,99,132,1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
-            ],
-            borderWidth: 1,
-            lineTension : 0
-        },
-      ]
+              'rgba(255,99,132,1)',
+              'rgba(54, 162, 235, 1)',
+              'rgba(255, 206, 86, 1)',
+              'rgba(75, 192, 192, 1)',
+              'rgba(153, 102, 255, 1)',
+              'rgba(255, 159, 64, 1)'
+            ]
+        }
+      ],
+
       
     };
     this.options= {

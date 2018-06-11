@@ -1,6 +1,7 @@
 <?php require_once("./db_connection.php"); ?>
+<?php require_once("./functions.php"); ?>
 <?php
-
+    error_reporting(0);
     header("Access-Control-Allow-Origin: *");
     header("Access-Control-Allow-Methods: GET, POST, PATCH,PUT, DELETE, OPTIONS");
     header("Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token");
@@ -13,10 +14,11 @@
     // echo "('$id')";
     $sql = "SELECT * FROM $table WHERE DeviceID in ('$id') AND date BETWEEN '$from' AND '$to' ORDER BY SrNo ASC";
     $result = $conn->query($sql);
+    $all_rows = array();            
     if($result->num_rows>0){
         $all_rows = array();        
         while($row = $result->fetch_assoc()){
-            $row['Total_Volume_Dispensed']=$row['Total_Volume_Dispensed']/1000;
+            array_walk($row,"unitConv") ;                      
             $all_rows[]=$row;
 }   
 } 
