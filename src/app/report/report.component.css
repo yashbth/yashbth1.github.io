@@ -66,7 +66,12 @@ input{
     position: relative;
     top:50%;
 }
-
+.reportbtn{
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    width:100%;
+}
 
 
     

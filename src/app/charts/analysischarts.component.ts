@@ -16,12 +16,16 @@ declare var $ :any;
 export class AnalysisChartsComponent implements OnInit {
   cluster : string; 
   _property : string;
+  _ids :string;s
   @Input () set property(property : string){
     this._property = property;
     this.checkGraph = true;
   } ;
   @Input () chartData : any;
-  @Input () ids ;
+  @Input () set ids(ids : string){
+    this._ids = ids;
+    this.checkGraph = true;
+  } ;
   @Input () ty;
   Data1=[];
   Data2=[];
@@ -47,9 +51,9 @@ export class AnalysisChartsComponent implements OnInit {
   Chart(type:string){
     this.type= type;
     this.data= {
-      labels : this.ids,
+      labels : this._property,
         datasets: [{
-            label: this.property,
+            label: this._ids,
             data:this.chartData,
             backgroundColor: [
               'rgba(255,99,132,1)',

@@ -48,9 +48,7 @@
               <label class="pad">To: </label>
               <input type="date" placeholder="mm/dd/yyyy" class="form-control form-control-sm" name="to" [(ngModel)]="to">
           </span>
-          <span class="button">
-            <button type="submit" class="btn btn-info" (click)="generateReport()">Generate Report</button>
-          </span>
+
       </div>
     </form>
 </div>
@@ -58,20 +56,34 @@
   <div class="row polar" *ngIf="parameters[rowIndex].length!=0">
     <div class="select col-sm-3">
       <ng-multiselect-dropdown 
-        [placeholder]="'Select Parameter'"
+        [placeholder]="'Select Parameters'"
         [data]="parameters[rowIndex]"
         [(ngModel)]="selectedparameter[rowIndex]"
         [settings]="chart"
-        (onSelect)="setChartData($event)">
+        (onSelect)="setChartData($event,rowIndex)"
+        (onSelectAll)="setChartData($event,rowIndex)"
+        (onDeSelect)="setChartData($event,rowIndex)"
+        (onDeSelectAll)="emptyChartData()"
+
+        >
       </ng-multiselect-dropdown>
     </div>
+    <span class="button">
+      <button type="submit" class="btn btn-info" (click)="generateReport()" *ngIf="rowIndex==0">Generate Report</button>
+    </span>
     </div>
     <div class="row">
       <div class="chart col-sm-9" *ngIf="selectedparameter[rowIndex].length!=0">
-        <app-analysis-charts [property]="selectedparameter[rowIndex]" [chartData]="polarchartData" [ids]="selectedIds" [ty]="'polarArea'"></app-analysis-charts>
+        <app-analysis-charts [property]="chartData[rowIndex][0]" [chartData]="chartData[rowIndex][1]" [ids]="chartData[rowIndex][2]" [ty]="chartData[rowIndex][3]"></app-analysis-charts>
       </div>
   </div>
 </div>
+<div class="row">
+  <span class="button reportbtn">
+    <button type="submit" class="btn btn-info" (click)="tableActive=true;" *ngIf="chartsActive">Generate Report</button>
+  </span>
+</div>
+
 <div class="col-sm-12 table" *ngIf="tableActive">
     <div class="row" >
         <div class="page-header" *ngFor="let id of selectedIds">

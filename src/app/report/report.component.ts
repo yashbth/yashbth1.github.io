@@ -44,9 +44,22 @@ export class ReportComponent {
   selDrop2=[];
   selectedparameter =[this.selDrop1,this.selDrop2];
 
+  data = [];  
   bubblechartData=[];
   polarchartData=[];
+  chartData=[];  
   request =[];
+  x_bubble =  [];
+  y_bubble = [];
+  r_bubble = [];
+  r_bubble_row = [];
+  x_index : number;
+  y_index: number;
+
+  x_data : number;
+  y_data: number;
+  r_data: number;
+
   constructor(private service : FetchWaterDispenseDataService,private Cluster : Cluster) { }
 
   ngOnInit() {                   
@@ -66,6 +79,7 @@ export class ReportComponent {
   }
 
   generateReport(){
+
     let date= new Date(this.from);
     date.setDate(date.getDate()-1);
     for(var t of this.tables){
@@ -74,14 +88,16 @@ export class ReportComponent {
     }
     forkJoin(this.request).subscribe(info=>this.info=info,(err)=>console.log(err),()=>{
         for( var id of this.selectedIds){
-          this.parsedInfo[id]=[];          
+          this.parsedInfo[id]=[];        
+          this.bubblechartData[id]=[];  
           for(let i=0;i<5;i++){ 
             this.parsedInfo[id][i]=this.info[i].filter(function(element){
               return (element["DeviceID"]==id);
           })
         } 
       }
-        this.dataAvailable= true;           
+      this.setChartData(this.selectedparameter[0],0);
+      this.dataAvailable= true;           
       this.chartsActive=true;
     })
 
@@ -94,7 +110,8 @@ export class ReportComponent {
   ngAfterContentChecked(){
     this.parameters[1]=this.selectedparameter[0];        
   }
-  setChartData(item:any){  
+  setChartData(item : any,chart){
+    console.log(this.selectedparameter[0]);  
     this.polarchartData=[];
     for (var id of this.selectedIds){
       let temp=[];
@@ -106,35 +123,126 @@ export class ReportComponent {
         temp[table]=this.dataRise(this.parsedInfo[id][0],temp[table]);
         extend=this.mergeResult(extend,temp[table]); 
       }
-      this.polarchartData.push(extend.reduce((sum,element)=>sum +element[item.name],0));       
+      if(chart==1){
+        this.polarchartData.push(extend.reduce((sum,element)=>sum +element[item.name],0));
+        this.chartData[1]=[this.selectedIds,this.polarchartData,this.selectedparameter[1],'polarArea'];
+      }
+      for(let parameter of this.selectedparameter[0]){
+        this.bubblechartData[id][parameter.name]=(extend.reduce((sum,element)=>sum +element[parameter.name],0));
+      }
       this.tableData[id]=extend;
       // this.chartData.push(this.parsedInfo[id].reduce((sum,element)=>sum +element[item.name],0));
     }
     this.parameters[1]=this.selectedparameter[0];  
-    this.tableActive=true;          
+    this.generate_data();             
+  }
+  emptyChartData(){
+    this.selectedparameter[0]=[];
+    this.parameters[1]=[];this.selectedparameter[1]=[];
+    this.tableActive=false;
   }
   onItemSelect(item:any){
     this.selectedIds.push(item.DeviceID);
-    console.log(this.selectedIds)
+    this.selectedparameter[0]=[];
     this.tableActive=false;
   }
   onDeSelect(item:any){
+    this.selectedparameter[0]=[];    
     this.selectedIds = this.selectedIds.filter(function(element) { 
       return element !== item.DeviceID
   })
 
   this.tableActive=false;
-    console.log(this.selectedIds);
   }
   onSelectAll(item:any){
     this.selectedIds=[];
+    this.selectedparameter[0]=[];    
     item.forEach(element => {
         return this.selectedIds.push(element.DeviceID);
     });;
   }
   onDeSelectAll(item:any){
+    this.selectedparameter[0]=[];    
     this.selectedIds=[];
   }
+
+
+
+
+
+
+  generate_data(){
+    this.x_bubble =  [];
+    this.y_bubble = [];
+    this.r_bubble = [];
+    this.r_bubble_row = [];
+    this.data = [];
+    console.log(this.bubblechartData,"1");
+    this.x_bubble = this.selectedIds;
+    for(let parameter of this.selectedparameter[0]){
+      this.y_bubble.push(parameter.title);
+      for(let divID of this.selectedIds){
+       console.log(this.bubblechartData,"2");
+
+        this.r_bubble_row.push(this.bubblechartData[divID][parameter.name]);
+        console.log(this.x_bubble,this.y_bubble,this.r_bubble_row,'3');
+        //TODO: define get_r (outputs the total in the given data range)
+      }
+      this.r_bubble_row=this.normalise(this.r_bubble_row);
+      console.log(this.r_bubble_row,'6');
+      this.r_bubble.push(this.r_bubble_row);
+      this.r_bubble_row = [];
+      
+    }
+    console.log(this.r_bubble,'5');
+  
+    this.x_index = 0;
+    for(let x_element of this.x_bubble){
+      this.y_index = 0;
+      for(let y_element of this.y_bubble){
+        this.x_data = this.x_index+1;
+        this.y_data = this.y_index+1;
+        this.r_data = this.r_bubble[this.y_index][this.x_index];
+        console.log(this.r_data,'4');
+        this.y_index += 1;
+        this.data.push({x:this.x_data,y: this.y_data,r :this.r_data});
+        
+        //TODO: add labels as in x_bubble[y-index], y_bubble[y_index]
+      }
+      this.x_index += 1;
+    }
+    this.chartData[0]=[this.y_bubble,this.data,this.selectedIds,'bubble'];  
+  }
+  
+  normalise(r_bubble_row){
+    var k=r_bubble_row[0];
+    for(let temp of r_bubble_row){
+      if(temp>k){
+        k = temp;
+      }
+    }
+    if(k==0){
+      var normalisation_index = 1;
+    }
+    else{
+      var normalisation_index = k/25;    
+
+    }
+    console.log(normalisation_index,'index');
+    var normalised_array = [];
+    r_bubble_row.filter(element => {return normalised_array.push(Math.abs(element/normalisation_index))});
+    return normalised_array;
+  
+  }
+
+
+
+
+
+
+
+
+
 
   dataRise(inputArray,properties){
     let dates=[]
