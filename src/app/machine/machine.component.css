@@ -1,5 +1,6 @@
 .container-fluid{
     background-color: whitesmoke;
+    height: 100%;
 }
 nav{
     width:100%;
@@ -26,6 +27,7 @@ nav{
 .row{
     top:80px;
     position: relative;
+    height: 100%;
 }
 .container-fluid{
     padding: 0%;

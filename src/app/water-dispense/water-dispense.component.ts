@@ -146,7 +146,7 @@ export class WaterDispenseComponent implements OnInit{
         this.info[0]["UV_State"] = "On";          
       }                 
     }
-    switch (this.info[0]["Trip_state"]){
+    switch (parseInt(this.info[0]["Trip_state"])){
       case 0 : this.info[0]["Trip_state"]="RO ON";break;
       case 1 : this.info[0]["Trip_state"]="TW Tank Full";break;
       case 2 : this.info[0]["Trip_state"]="RW Tank Empty";this.blink();break;
@@ -161,6 +161,14 @@ export class WaterDispenseComponent implements OnInit{
       case 12 : 
       case 13 : this.info[0]["Trip_state"]="Backwash ON";this.blink();break;
       default : this.info[0]["Trip_state"]="Out of Range";this.blink();break;
+    }
+
+    switch (parseInt(this.info[0]["Tank_Level"])){
+      
+      case 0 : this.info[0]["Tank_Level"]="100";break;
+      case 1 : this.info[0]["Tank_Level"]="<100";break;
+      case 2 : this.info[0]["Tank_Level"]="0";this.blink();break;
+      default : this.info[0]["Tank_Level"]="Out of Range";this.blink();break;
     }
   }
   blink(){

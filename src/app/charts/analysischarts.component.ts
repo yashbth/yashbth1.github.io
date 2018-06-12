@@ -3,6 +3,7 @@ import {Chart} from 'chart.js';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import {Cluster} from '../delhiCluster'
 import { chartData } from '../water-dispense/waterDispenserparam';
+import { Property } from '../users';
 declare var jquery:any;
 declare var $ :any; 
 
@@ -12,100 +13,225 @@ declare var $ :any;
   templateUrl: './charts.component.html',
   styleUrls: ['./charts.component.css']
 })
-export class AnalysisChartsComponent implements OnInit {
-  private _property1: string;
-  cluster : string;
-  @Input() 
-  set y1(y1:string){
-    this._property1=y1;
+export class AnalysisChartsComponent{
+  cluster : string; 
+  _property : string;
+  _ids :string;
+  @Input () set property(property : string){
+    this._property = property;
+    console.log(this._property)    
     this.checkGraph = true;
-  };
-  @Input() y2:string;
-  @Input () x : string;
-  @Input () type : string;
+  } ;
   @Input () chartData : any;
+  @Input () set ids(ids : string){
+    this._ids = ids;
+    this.checkGraph = true;
+  } ;
+  @Input () ty;
   Data1=[];
   Data2=[];
+  type: string;
   data : any;
   options: any;
   checkGraph : boolean=true;
   label : string;
   labelString: string;
+  flag=true;
+  datasets=[];
   constructor(private Cluster : Cluster,private router : Router,private route : ActivatedRoute) { 
   }
   ngOnInit(){
-    // setTimeout(()=>{
-    //   this.cluster = this.route.snapshot.paramMap.get('cluster');
-    //   this.ConvertIntoArray(this.chartData.chartData,this._property1,this.property2);
-      this.Chart('line');
-    // },100);
+    if(this.ty=='bubble'){
+    Chart.defaults.global.legend.display = false;
+    for( let property of this._property){
+      this.datasets.push(
+        { 
+          label:'',
+          data:this.chartData.splice(0,this._property.length),
+          backgroundColor: [
 
+            "#A93226",
+            "#E74C3C",
+            "#9B59B6",
+            "#8E44AD",
+            "#2980B9",
+            "#3498DB",
+            "#1ABC9C",
+            "#16A085",
+            "#27AE60",
+            "#2ECC71",
+            "#F1C40F",
+            "#F39C12",
+            "#E67E22",
+            "#D35400",
+            "#ECF0F1",
+            "#BDC3C7",
+            "#95A5A6",
+            "#7F8C8D",
+            "#34495E",
+            "#2C3E50",
+
+            "#0033cc",
+            "#00cc00",
+            "#ffff33",
+            "#6600cc",
+            "#ff9900",
+            "#cc00cc",
+            "#663300",
+            "#00e6e6",
+            "#9999ff"
+
+          ]
+      }
+      )
+    }
+    this.Options();
+    }
+    else{
+      Chart.defaults.global.legend.display = true;
+
+      console.log(this.chartData);
+      this.datasets.push(
+        { 
+          label:this._ids,
+          data:this.chartData,
+          backgroundColor: [
+
+            "#A93226",
+            "#E74C3C",
+            "#9B59B6",
+            "#8E44AD",
+            "#2980B9",
+            "#3498DB",
+            "#1ABC9C",
+            "#16A085",
+            "#27AE60",
+            "#2ECC71",
+            "#F1C40F",
+            "#F39C12",
+            "#E67E22",
+            "#D35400",
+            "#ECF0F1",
+            "#BDC3C7",
+            "#95A5A6",
+            "#7F8C8D",
+            "#34495E",
+            "#2C3E50",
+
+            "#0033cc",
+            "#00cc00",
+            "#ffff33",
+            "#6600cc",
+            "#ff9900",
+            "#cc00cc",
+            "#663300",
+            "#00e6e6",
+            "#9999ff"
+          ]
+      }
+      );
+    }
+      this.Chart(this.ty);
   }
+
   ngAfterContentChecked(){
-    // if(this.checkGraph || this.chartData.dataChange){
-    //   let index = this.Cluster[this.cluster].supervisorData[0].indexOf(this._property1); 
-    //   this.label = this.Cluster[this.cluster].supervisorData[1][index];  
-    //   this.labelString = this.Cluster[this.cluster].supervisorData[1][index]+(this.Cluster[this.cluster].supervisorData[2][index]?' (in ':'')+this.Cluster[this.cluster].supervisorData[2][index]+(this.Cluster[this.cluster].supervisorData[2][index]?')':'');
-    //   this.ConvertIntoArray(this.chartData.chartData,this._property1,this.property2);
-    //   this.Chart('line');
-    //   if(this.chartData.chartData.length){
-    //     this.checkGraph = false;
-    //     this.chartData.dataChange = false;
-    //   }
-    // }
-  }
-  
-  ngOnChanges(){
-    // this.ConvertIntoArray(this.chartData.chartData,this._property1,this.property2);
-    // this.Chart('line');
+    if(this.checkGraph&&this.ty=='polarArea'){
+      this.datasets=[];      
+      this.datasets.push(
+        { 
+          label:this._ids,
+          data:this.chartData,
+          backgroundColor: [
+
+            "#A93226",
+            "#E74C3C",
+            "#9B59B6",
+            "#8E44AD",
+            "#2980B9",
+            "#3498DB",
+            "#1ABC9C",
+            "#16A085",
+            "#27AE60",
+            "#2ECC71",
+            "#F1C40F",
+            "#F39C12",
+            "#E67E22",
+            "#D35400",
+            "#ECF0F1",
+            "#BDC3C7",
+            "#95A5A6",
+            "#7F8C8D",
+            "#34495E",
+            "#2C3E50",
+
+            "#0033cc",
+            "#00cc00",
+            "#ffff33",
+            "#6600cc",
+            "#ff9900",
+            "#cc00cc",
+            "#663300",
+            "#00e6e6",
+            "#9999ff"
+          ]
+      }
+      )
+      this.Chart(this.ty);
+      this.checkGraph=false;
+    }
   }
 
   Chart(type:string){
+
     this.type= type;
     this.data= {
-      labels : [1,2,3,4,5,6,7,8],
-        datasets: [{
-            label: 'test',
-            data:[10,22,34,55,70,38,78,16],
-            backgroundColor: [
-                'rgba(255, 255,255,0)',
-            ],
-            borderColor: [
-                'rgba(255,99,132,1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
-            ],
-            borderWidth: 1,
-            lineTension : 0
-        },
-      ]
-      
+      labels : this._property,
+        datasets:this.datasets,  
     };
-    this.options= {
-        // scales: {
-        //     yAxes: [{
-        //       scaleLabel:{
-        //         display :true,
-        //         labelString : this.labelString
-        //         },
-        //         ticks: {
-        //             beginAtZero:true
-        //         }
-        //     }]
-        // }
-    }
+    this.options=this.options
+
   }
 
-  ConvertIntoArray(data,property1:string,property2:string):void{  
-    this.Data1=[];
-    this.Data2=[];
-    for(let obj of data){
-      this.Data1.push(parseInt(obj[property1]));
-      this.Data2.push(obj[property2]);
-    }
+  Options(){
+    let property = this._property;
+    let ids =this._ids;
+    this.options= {
+      scales: {
+        xAxes: [{
+          scaleLabel:{
+            display :true,
+            labelString : ''
+            },
+            ticks: {
+              min:1,
+              stepSize: 1,
+              callback: function(value, index, values) {
+                return  ids[ids.length-1-index] ;
+               }
+            }
+        }]
+    ,
+          yAxes: [{
+            scaleLabel:{
+              display :true,
+              labelString : ''
+              },
+              ticks: {
+                min:1,
+                stepSize: 1,
+                callback: function(value, index, values) {
+                  return  property[property.length-1-index] ;
+                 }
+              }
+          }]
+      }
   }
+  }
+
+  }
+
+
+
+
+
   
-}

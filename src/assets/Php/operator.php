@@ -8,11 +8,15 @@
     $table = $_POST['table'];
 
     $sql = "SELECT DISTINCT OperatorID FROM $table WHERE DeviceID='$id'";
+    // echo($sql);
     $result = $conn->query($sql);
 	if($result->num_rows>0){
 		$all_rows=array();
 		while($row = $result->fetch_assoc()){
-			$all_rows[]= $row;
+            // print_r($row);
+            // echo('space');
+            $all_rows[]= $row;
+            // print_r($all_rows);
 }	
 } 
  echo json_encode($all_rows);	

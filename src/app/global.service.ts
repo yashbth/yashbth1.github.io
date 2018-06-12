@@ -13,6 +13,7 @@ export class GlobalService {
   token: any;
   DropDown = Dropdown;
   admin : boolean;
+  clusters : any;
   constructor(private router : Router) { }
   setVar(lat,lon):void{
     this.lat=lat;

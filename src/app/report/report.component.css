@@ -1,8 +1,8 @@
-#report{
-    height: stretch;
-}
+
 .row{
-    margin-top: 50px;
+    margin: 50px 0px;
+    display: flex;
+    justify-content: center;
 }
 h4{
     padding-top: 10px;
@@ -47,7 +47,7 @@ input{
     width:100%;
 }
 .container-fluid{
-    overflow-y: auto;
+    /* overflow-y: auto; */
 }
 .table{
     margin-bottom: 50px;
@@ -60,7 +60,16 @@ input{
     color: #164b83;
     cursor: pointer;
 }
-
+.select{
+    position: relative;
+    top:50%;
+}
+.reportbtn{
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    width:100%;
+}
 
 
     

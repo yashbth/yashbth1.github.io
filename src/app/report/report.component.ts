@@ -26,7 +26,7 @@ export class ReportComponent {
   id: any;
   isActive:boolean;
   tableActive:boolean;
-  chartsActive: boolean;
+  chartsActive=[false,false];
   selectedIds=[];
   info =[];
   dataAvailable : boolean;
@@ -79,7 +79,8 @@ export class ReportComponent {
   }
 
   generateReport(){
-
+  console.log(this.selectedIds);
+  this.request=[];    
     let date= new Date(this.from);
     date.setDate(date.getDate()-1);
     for(var t of this.tables){
@@ -96,9 +97,9 @@ export class ReportComponent {
           })
         } 
       }
-      this.setChartData(this.selectedparameter[0],0);
+      this.setChartData(this.selectedparameter[0],2);
       this.dataAvailable= true;           
-      this.chartsActive=true;
+      this.chartsActive[0]=true;
     })
 
   }
@@ -108,61 +109,74 @@ export class ReportComponent {
     });
   }
   ngAfterContentChecked(){
-    this.parameters[1]=this.selectedparameter[0];        
+    this.parameters[1]=this.selectedparameter[0];  
+
   }
   setChartData(item : any,chart){
-    console.log(this.selectedparameter[0]);  
-    this.polarchartData=[];
-    for (var id of this.selectedIds){
-      let temp=[];
-      let extend=[];      
-      for(let table of this.tables){
-        temp[table]=this.selectedparameter[0].filter((element,index,option)=>{
-          return ((this.Cluster[this.cluster][table][0].indexOf(element.name))>=0)
-      })
-        temp[table]=this.dataRise(this.parsedInfo[id][0],temp[table]);
-        extend=this.mergeResult(extend,temp[table]); 
+    if(chart==1||chart==2){
+      this.polarchartData=[];
+      for (var id of this.selectedIds){
+        let temp=[];
+        let extend=[];      
+        for(let table of this.tables){
+          temp[table]=this.selectedparameter[0].filter((element,index,option)=>{
+            return ((this.Cluster[this.cluster][table][0].indexOf(element.name))>=0)
+        })
+          temp[table]=this.dataRise(this.parsedInfo[id][0],temp[table]);
+          extend=this.mergeResult(extend,temp[table]); 
+        }
+        if(chart==1){
+          this.polarchartData.push(extend.reduce((sum,element)=>sum +element[item.name],0));
+          this.chartData[1]=[this.selectedIds,this.polarchartData,this.selectedparameter[1],'polarArea'];
+          this.chartsActive[1]=true;
+        }
+        for(let parameter of this.selectedparameter[0]){
+          this.bubblechartData[id][parameter.name]=(extend.reduce((sum,element)=>sum +element[parameter.name],0));
+        }
+        this.tableData[id]=extend;
+        // this.chartData.push(this.parsedInfo[id].reduce((sum,element)=>sum +element[item.name],0));
       }
-      if(chart==1){
-        this.polarchartData.push(extend.reduce((sum,element)=>sum +element[item.name],0));
-        this.chartData[1]=[this.selectedIds,this.polarchartData,this.selectedparameter[1],'polarArea'];
-      }
-      for(let parameter of this.selectedparameter[0]){
-        this.bubblechartData[id][parameter.name]=(extend.reduce((sum,element)=>sum +element[parameter.name],0));
-      }
-      this.tableData[id]=extend;
-      // this.chartData.push(this.parsedInfo[id].reduce((sum,element)=>sum +element[item.name],0));
+      this.parameters[1]=this.selectedparameter[0];  
+      this.generate_data();  
     }
-    this.parameters[1]=this.selectedparameter[0];  
-    this.generate_data();             
+    else{
+      this.chartsActive=[false,false];
+      this.selectedparameter[1]=[];
+    }
+           
   }
   emptyChartData(){
     this.selectedparameter[0]=[];
-    this.parameters[1]=[];this.selectedparameter[1]=[];
+    this.parameters[1]=[];
+    this.selectedparameter[1]=[];
     this.tableActive=false;
   }
   onItemSelect(item:any){
     this.selectedIds.push(item.DeviceID);
     this.selectedparameter[0]=[];
     this.tableActive=false;
+    this.chartsActive=[false,false];
   }
   onDeSelect(item:any){
-    this.selectedparameter[0]=[];    
+    this.selectedparameter[0]=[];   
+    this.chartsActive=[false,false];     
     this.selectedIds = this.selectedIds.filter(function(element) { 
       return element !== item.DeviceID
   })
-
+  console.log(this.selectedIds);
   this.tableActive=false;
   }
   onSelectAll(item:any){
     this.selectedIds=[];
-    this.selectedparameter[0]=[];    
+    this.selectedparameter[0]=[]; 
+    this.chartsActive=[false,false];       
     item.forEach(element => {
         return this.selectedIds.push(element.DeviceID);
     });;
   }
   onDeSelectAll(item:any){
-    this.selectedparameter[0]=[];    
+    this.selectedparameter[0]=[];
+    this.chartsActive=[false,false];        
     this.selectedIds=[];
   }
 
@@ -190,8 +204,8 @@ export class ReportComponent {
       }
       this.r_bubble_row=this.normalise(this.r_bubble_row);
       console.log(this.r_bubble_row,'6');
-      
       this.r_bubble.push(this.r_bubble_row);
+      console.log(this.r_bubble_row);
       this.r_bubble_row = [];
       
     }
@@ -299,7 +313,7 @@ export class ReportComponent {
               }
           </style>
         </head>
-    <body onload="window.print();">${printContents}</body>
+    <body onload="window.print() , window.close();">${printContents}</body>
       </html>`
     );
     popupWin.document.close();

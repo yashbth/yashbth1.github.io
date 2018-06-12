@@ -7,12 +7,12 @@
       <div class="addInfo">
           {{addInfo}}<br>
           <h4>
-            <b>Sales Report</b>
+            <b>Analysis and Reports Division</b>
           </h4>
       </div>
     </div>
   </div>
-  <div class="row">
+  <div class="row ">
     <div class="selectMachines">
         <div class="dropdown col-sm-2 text-center">
             <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
@@ -27,7 +27,7 @@
               [placeholder]="'Select Ids'"
               [data]="ids"
               [(ngModel)]="id"
-              [settings]="dropdownSettings"
+              [settings]="dropdowntableSettings"
               (onSelect)="onItemSelect($event)"
               (onSelectAll)="onSelectAll($event)"
               (onDeSelectAll)="onDeSelectAll($event)"
@@ -48,12 +48,42 @@
               <label class="pad">To: </label>
               <input type="date" placeholder="mm/dd/yyyy" class="form-control form-control-sm" name="to" [(ngModel)]="to">
           </span>
-          <span class="button">
-            <button type="submit" class="btn btn-info" (click)="generateReport()">Generate Report</button>
-          </span>
+
       </div>
     </form>
 </div>
+<div class="col-sm-12 charts" *ngFor="let chart of charts;let rowIndex =index">
+  <div class="row polar" *ngIf="parameters[rowIndex].length!=0">
+    <div class="select col-sm-3">
+      <ng-multiselect-dropdown 
+        [placeholder]="'Select Parameters'"
+        [data]="parameters[rowIndex]"
+        [(ngModel)]="selectedparameter[rowIndex]"
+        [settings]="chart"
+        (onSelect)="setChartData($event,rowIndex)"
+        (onSelectAll)="setChartData($event,rowIndex)"
+        (onDeSelect)="setChartData($event,rowIndex)"
+        (onDeSelectAll)="emptyChartData()"
+
+        >
+      </ng-multiselect-dropdown>
+    </div>
+    <span class="button">
+      <button type="submit" class="btn btn-info" (click)="generateReport()" *ngIf="rowIndex==0">Visualise Data</button>
+    </span>
+    </div>
+    <div class="row">
+      <div class="chart col-sm-9" *ngIf="chartsActive[rowIndex]">
+        <app-analysis-charts [property]="chartData[rowIndex][0]" [chartData]="chartData[rowIndex][1]" [ids]="chartData[rowIndex][2]" [ty]="chartData[rowIndex][3]" ></app-analysis-charts>
+      </div>
+  </div>
+</div>
+<div class="row">
+  <span class="button reportbtn">
+    <button type="submit" class="btn btn-info" (click)="tableActive=true;" *ngIf="chartsActive[0]">Generate Report</button>
+  </span>
+</div>
+
 <div class="col-sm-12 table" *ngIf="tableActive">
     <div class="row" >
         <div class="page-header" *ngFor="let id of selectedIds">
@@ -68,19 +98,18 @@
                   <thead class="thead-dark">
                     <tr>
                       <th>Date</th>
-                      <th *ngFor="let data of sales[1]">{{data}}</th>
+                      <th *ngFor="let data of selectedparameter[0]">{{data.title}}</th>
                     </tr>
                   </thead>
                   <tbody >
-                    <tr *ngFor="let info of parsedInfo[id];let rowIndex=index">
+                    <tr *ngFor="let info of tableData[id];let rowIndex=index">
                       <td>{{info["date"]}}</td>
-                      <td *ngFor="let data of sales[0]">{{info[data]}}</td>
+                      <td *ngFor="let data of selectedparameter[0]">{{info[data.name]}}</td>
                     </tr>
                   </tbody>
                 </table>
               </div>
-        </div>
-        
+        </div>      
       </div>
 </div>
 

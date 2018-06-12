@@ -11,7 +11,7 @@ function redirect_to($location){
 }
 function unitConv(&$value,$key){
     if(substr_count($key,"olume")!=0){
-        $value=$value/1000;
+        $value=number_format($value/1000,2);
     }; // To dodge case senstivity;
 
 }
