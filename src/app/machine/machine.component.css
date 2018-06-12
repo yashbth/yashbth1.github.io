@@ -114,7 +114,8 @@ app-water-dispense{
 .pad a{ 
     padding-top: 5px;
 } 
-.logout{
+.fa-sign-out-alt{
+    font-size:20px;
     cursor: pointer;
 }
 /* FOR WIDTH<1300px */

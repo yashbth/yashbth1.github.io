@@ -23,7 +23,7 @@ export class SupervisorComponent implements OnInit {
   id = [];
   panel : string;
   cluster : string;
-  place : string = 'New Delhi Cluster';
+  place : string;
   info =[];
   checkRouteChange=['waterPanel'] ;
   data = [];

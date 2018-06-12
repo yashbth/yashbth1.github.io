@@ -34,9 +34,19 @@
               <input type="password" name="password" required><br><br>
               <h6>Clusters:</h6>
               <div class="text-left">
-                  <div *ngFor = "let cluster of clusters;" class = 'checkbox'>
-                      <input type="checkbox" name="cluster[]" value='{{cluster}}'>{{cluster}}<br>
+                  <div *ngFor = "let cluster of clusters;" class = 'checkbox'  style="display: none;">
+                      <input type="checkbox" name="cluster[]" value='{{cluster}}' id="{{cluster}}_create">{{cluster}}<br>
                     </div>
+                    <ng-multiselect-dropdown
+                      [placeholder]="'Select Clusters'"
+                      [data]="Cluster.clusters"
+                      [(ngModel)]="selectedItems"
+                      [settings]="dropdownSettings"
+                      (onSelect)="onItemSelect($event,'_create')"
+                      (onDeSelect)="onDeSelect($event,'_create')"
+                      (onDeSelectAll)="onDeSelectAll($event,'cluster[]')"
+                      (onSelectAll)="onSelectAll($event,'cluster[]')">
+                    </ng-multiselect-dropdown>
                   </div><br><br>
               <!-- <span><input type="checkbox" (click)="toggle(this,'cluster[]')" />Select all</span><br/><br> -->
               <div >
@@ -62,9 +72,19 @@
             <div id="priv" style="visibility: hidden;">
               <h6>Clusters:</h6>
               <div class="text-left">
-                <div *ngFor = "let cluster of clusters;" class = 'checkbox'>
+                <div *ngFor = "let cluster of clusters;" class = 'checkbox' style="display: none">
                     <input id ="{{cluster}}" type="checkbox" name="clusterP[]" value='{{cluster}}'>{{cluster}}<br>
                   </div>
+                  <ng-multiselect-dropdown *ngIf="!flag"
+                  [placeholder]="'Select Clusters'"
+                  [data]="Cluster.clusters"
+                  [(ngModel)]="prevClusters"
+                  [settings]="dropdownSettings"
+                  (onSelect)="onItemSelect($event,'')"
+                  (onDeSelect)="onDeSelect($event,'')"
+                  (onDeSelectAll)="onDeSelectAll($event,'clusterP[]')"
+                  (onSelectAll)="onSelectAll($event,'clusterP[]')">
+              </ng-multiselect-dropdown>
               </div><br><br>              
               <h6>Privileges:</h6>
               <div class="checkbox text-justify">

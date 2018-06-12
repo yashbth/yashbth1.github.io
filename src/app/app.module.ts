@@ -4,6 +4,7 @@ import {FormsModule} from '@angular/forms'
 import {HttpClientModule} from '@angular/common/http';
 import {ChartModule} from 'angular2-chartjs'
 import { AppRoutingModule } from './/app-routing.module';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
 import { AppComponent } from './app.component';
 import { MachineComponent } from './machine/machine.component';
@@ -62,6 +63,7 @@ import { ReportComponent } from './report/report.component';
     ChartModule,
     FormsModule,
     StorageServiceModule,
+    NgMultiSelectDropDownModule
     
   ],
   providers: [AuthService,FetchWaterDispenseDataService,GlobalService,CookieService,Cluster],

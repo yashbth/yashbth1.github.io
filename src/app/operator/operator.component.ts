@@ -26,7 +26,7 @@ export class OperatorComponent implements OnInit {
   cluster :string;
   data: any;
   date : any=new Date(Date.now());
-  place:string = "New Delhi Cluster";
+  place:string;
   info :any; 
   operators = [];
   expected_attendance=[];

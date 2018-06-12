@@ -41,6 +41,7 @@ export class AppComponent implements OnInit{
           if(this.global.user["0"].Username=='Admin'){
             this.global.admin= true;
           }
+          this.storage.set("user",this.global.user["0"]);          
         }
         else{
           this.cookieService.removeAll();

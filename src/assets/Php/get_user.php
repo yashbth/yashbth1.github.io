@@ -6,6 +6,9 @@
 if($_POST["username"]==''){
     redirect_with_message('message_failure',"Please enter a valid username.");
 }
+if($_POST["username"]=='Admin'){
+    redirect_with_message('message_failure',"Admin's privileges cannot be altered!");
+}
 $username = "'".$_POST['username']."'";
 
 setcookie('UN',$_POST['username'],time() + (60*5), "/");

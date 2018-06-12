@@ -23,6 +23,8 @@ export class SettingsComponent implements OnInit {
   flag : boolean = true;
   flag1 : boolean;
   dropdown = Dropdown;
+  dropdownSettings = {};
+  prevClusters = [];
   url = "http://localhost/~yashbahetiiitk/swajal_dashboard/src/assets/Php";
   // url = "http://localhost:8000/assets/Php";
   
@@ -32,7 +34,13 @@ export class SettingsComponent implements OnInit {
   ngOnInit() {
     this.cookieService.put('prevDiv','Settings');
     console.log("ngonit")
-
+    this.dropdownSettings = {
+      singleSelection: false,
+      selectAllText: 'Select All',
+      unSelectAllText: 'UnSelect All',
+      itemsShowLimit: 3,
+      allowSearchFilter: true
+  };
   }
   ngAfterContentChecked(){
     if(this.cookieService.get('priv-vis')=='1' && $('#get_user_form').length){
@@ -47,12 +55,28 @@ export class SettingsComponent implements OnInit {
         this.check(this,'panelP[]');
       }
 
-  
-
 
 
   }
 
+  onItemSelect(item:any,id){
+    document.getElementById(item+id)["checked"] = true;
+  }
+  onDeSelect(item:any,id){
+    document.getElementById(item+id)["checked"] = false;
+  }
+  onSelectAll(item:any,name){
+    var checkboxes = document.getElementsByName(name);
+    for(var i=0, n=checkboxes.length;i<n;i++) {
+      (checkboxes[i] as HTMLInputElement).checked = true;
+    }
+  }
+  onDeSelectAll(item:any,name){
+    var checkboxes = document.getElementsByName(name);
+    for(var i=0, n=checkboxes.length;i<n;i++) {
+      (checkboxes[i] as HTMLInputElement).checked = false;
+    }
+  }
 toggle(source,name) {
   var checkboxes = document.getElementsByName(name);
   for(var i=0, n=checkboxes.length;i<n;i++) {
@@ -141,6 +165,7 @@ check(source,panel_name){
       var cluster_box = document.getElementById(cluster);
       if(this.cookieService.get(cluster)=='01'){
         console.log((cluster_box as HTMLInputElement).checked = true);
+        this.prevClusters.push(cluster);
         this.cookieService.put(cluster, '00');
       }
       this.flag= false;
@@ -149,6 +174,5 @@ check(source,panel_name){
       
     }
   }
-
 }
 }

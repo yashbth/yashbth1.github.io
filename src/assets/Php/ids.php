@@ -8,7 +8,7 @@
     $table = $_POST['table'];
     $cluster = $_POST['cluster'];
 
-    $sql = "SELECT DeviceID, Location FROM Device_Data WHERE Cluster_Name='$cluster' AND (DeviceID LIKE '%$id%' OR Location LIKE '%$id%')";
+    $sql = "SELECT SrNo, DeviceID, Location FROM Device_Data WHERE Cluster_Name='$cluster' AND (DeviceID LIKE '%$id%' OR Location LIKE '%$id%')";
 
     $result = $conn->query($sql);
 	if($result->num_rows>0){
