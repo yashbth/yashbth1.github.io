@@ -19,12 +19,16 @@ export class AnalysisChartsComponent{
   cluster : string; 
   _property : string;
   _ids :string;
+  _chartData : any;
   @Input () set property(property : string){
     this._property = property;
     console.log(this._property)    
     this.checkGraph = true;
   } ;
-  @Input () chartData : any;
+  @Input () set chartData(chartData :any){
+    this._chartData=chartData
+    this.checkGraph=true;
+  }
   @Input () set ids(ids : string){
     this._ids = ids;
     this.checkGraph = true;
@@ -49,7 +53,7 @@ export class AnalysisChartsComponent{
       this.datasets.push(
         { 
           label:'',
-          data:this.chartData.splice(0,this._property.length),
+          data:this._chartData.splice(0,this._property.length),
           backgroundColor: [
             "#0033cc",
             "#00cc00",
@@ -63,16 +67,15 @@ export class AnalysisChartsComponent{
           ]
       }
       )
-      console.log(this.chartData);
     }
-    console.log(this.datasets);
+
     this.Options();
     }
     else{
       this.datasets.push(
         { 
           label:this._ids,
-          data:this.chartData,
+          data:this._chartData,
           backgroundColor: [
             "#0033cc",
             "#00cc00",
@@ -92,14 +95,14 @@ export class AnalysisChartsComponent{
 
   ngAfterContentChecked(){
     if(this.checkGraph&&this.ty=='polarArea'){
-      console.log(this._property,this.chartData)
+      console.log(this._property,this._chartData)
       this.datasets=[]; 
       let ids=this._ids ; 
-      let chartData = this.chartData;   
+      let chartData = this._chartData;   
       this.datasets.push(
         { 
           label:this._ids,
-          data:this.chartData,
+          data:this._chartData,
           backgroundColor: [
             "#0033cc",
             "#00cc00",

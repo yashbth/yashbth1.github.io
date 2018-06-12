@@ -19,7 +19,9 @@
               {{cluster}}
             </button>
             <div class="dropdown-menu">
-              <a class="dropdown-item" (click)="cluster = clusterName;selectedIds=[];id=[]; getIds()" *ngFor="let clusterName of Cluster.clusters">{{clusterName}}</a>
+              <span *ngFor="let clusterName of Cluster.clusters">
+              <a class="dropdown-item" (click)="cluster = clusterName;selectedIds=[];id=[]; getIds()" *ngIf="global.user['0'][clusterName]==1" >{{clusterName}}</a>
+              </span>
             </div>
         </div>
         <div class="col-sm-2" *ngIf="isActive">

@@ -6,6 +6,7 @@ import { filter, mergeMap } from 'rxjs/operators';
 import {Property,dropdowntableSettings, charts, dropdownpolarSettings} from '../users'
 import { Observable } from 'rxjs';
 import { forkJoin } from 'rxjs'
+import { GlobalService } from '../global.service';
 
 
 declare var $:any;
@@ -60,7 +61,7 @@ export class ReportComponent {
   y_data: number;
   r_data: number;
 
-  constructor(private service : FetchWaterDispenseDataService,private Cluster : Cluster) { }
+  constructor(private service : FetchWaterDispenseDataService,private Cluster : Cluster,private global : GlobalService ) { }
 
   ngOnInit() {  
     this.from.setDate(this.from.getDate()-7);
@@ -176,7 +177,6 @@ export class ReportComponent {
     this.selectedIds = this.selectedIds.filter(function(element) { 
       return element !== item.DeviceID
   })
-  console.log(this.selectedIds);
   this.tableActive=false;
   }
   onSelectAll(item:any){
@@ -206,25 +206,19 @@ export class ReportComponent {
     this.r_bubble = [];
     this.r_bubble_row = [];
     this.data = [];
-    console.log(this.bubblechartData,"1");
     this.x_bubble = this.selectedIds;
     for(let parameter of this.selectedparameter[0]){
       this.y_bubble.push(parameter.title);
       for(let divID of this.selectedIds){
-       console.log(this.bubblechartData,"2");
 
         this.r_bubble_row.push(this.bubblechartData[divID][parameter.name]);
-        console.log(this.x_bubble,this.y_bubble,this.r_bubble_row,'3');
         //TODO: define get_r (outputs the total in the given data range)
       }
       this.r_bubble_row=this.normalise(this.r_bubble_row);
-      console.log(this.r_bubble_row,'6');
       this.r_bubble.push(this.r_bubble_row);
-      console.log(this.r_bubble_row);
       this.r_bubble_row = [];
       
     }
-    console.log(this.r_bubble,'5');
   
     this.x_index = 0;
     for(let x_element of this.x_bubble){
@@ -233,7 +227,6 @@ export class ReportComponent {
         this.x_data = this.x_index+1;
         this.y_data = this.y_index+1;
         this.r_data = this.r_bubble[this.y_index][this.x_index];
-        console.log(this.r_data,'4');
         this.y_index += 1;
         this.data.push({x:this.x_data,y: this.y_data,r :this.r_data});
         
@@ -242,9 +235,6 @@ export class ReportComponent {
       this.x_index += 1;
     }
     this.chartData[0]=[this.y_bubble,this.data,this.selectedIds,'bubble'];  
-    console.log(this.chartData[0][1][0]);
-    console.log(this.chartData[0][1][1]);
-
   }
   
   normalise(r_bubble_row){
@@ -261,7 +251,6 @@ export class ReportComponent {
       var normalisation_index = k/25;    
 
     }
-    console.log(normalisation_index,'index');
     var normalised_array = [];
     r_bubble_row.filter(element => {return normalised_array.push(Math.abs(element/normalisation_index))});
     return normalised_array;
