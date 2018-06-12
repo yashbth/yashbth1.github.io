@@ -4,6 +4,8 @@ import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import {Cluster} from '../delhiCluster'
 import { chartData } from '../water-dispense/waterDispenserparam';
 import { Property } from '../users';
+import { callbackify } from 'util';
+import { DEFAULT_VALUE_ACCESSOR } from '@angular/forms/src/directives/default_value_accessor';
 declare var jquery:any;
 declare var $ :any; 
 
@@ -26,6 +28,7 @@ export class AnalysisChartsComponent{
   @Input () set ids(ids : string){
     this._ids = ids;
     this.checkGraph = true;
+    console.log(this._ids)
   } ;
   @Input () ty;
   Data1=[];
@@ -42,7 +45,7 @@ export class AnalysisChartsComponent{
   }
   ngOnInit(){
     if(this.ty=='bubble'){
-    for( let property of this._property){
+    for( let id of this._ids){
       this.datasets.push(
         { 
           label:'',
@@ -60,11 +63,12 @@ export class AnalysisChartsComponent{
           ]
       }
       )
+      console.log(this.chartData);
     }
+    console.log(this.datasets);
     this.Options();
     }
     else{
-      console.log(this.chartData);
       this.datasets.push(
         { 
           label:this._ids,
@@ -88,7 +92,10 @@ export class AnalysisChartsComponent{
 
   ngAfterContentChecked(){
     if(this.checkGraph&&this.ty=='polarArea'){
-      this.datasets=[];      
+      console.log(this._property,this.chartData)
+      this.datasets=[]; 
+      let ids=this._ids ; 
+      let chartData = this.chartData;   
       this.datasets.push(
         { 
           label:this._ids,
@@ -106,17 +113,34 @@ export class AnalysisChartsComponent{
           ]
       }
       )
+      this.options= {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    suggestedMin:-Math.max.apply(null, chartData),
+                    suggestedMax:Math.max.apply(null, chartData),
+                    callback : function(value,index,values){
+                      if(value<0){
+                        return -value+ids
+                      }
+                      else{
+                        return value + ids;
+                      }
+                   }
+                }
+            }]
+        }
+    }
       this.Chart(this.ty);
       this.checkGraph=false;
     }
   }
 
   Chart(type:string){
-
     this.type= type;
     this.data= {
       labels : this._property,
-        datasets:this.datasets,  
+      datasets:this.datasets,  
     };
     this.options=this.options
 
@@ -150,7 +174,7 @@ export class AnalysisChartsComponent{
                 min:1,
                 stepSize: 1,
                 callback: function(value, index, values) {
-                  return  property[property.length-1-index] ;
+                  return  property[value-1] ;
                  }
               }
           }]

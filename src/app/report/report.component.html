@@ -19,7 +19,7 @@
               {{cluster}}
             </button>
             <div class="dropdown-menu">
-              <a class="dropdown-item" (click)="cluster = clusterName; getIds()" *ngFor="let clusterName of Cluster.clusters">{{clusterName}}</a>
+              <a class="dropdown-item" (click)="cluster = clusterName;selectedIds=[];id=[]; getIds()" *ngFor="let clusterName of Cluster.clusters">{{clusterName}}</a>
             </div>
         </div>
         <div class="col-sm-2" *ngIf="isActive">
@@ -44,19 +44,22 @@
           <label class="sel"><h5>Select a Date Range</h5> </label>
           <span class="dateInput">
               <label class="pad">From: </label>
-              <input type="date" placeholder="mm/dd/yyyy" class="form-control form-control-sm" name="from" [(ngModel)]="from" >
+              <input type="date" placeholder="mm/dd/yyyy" class="form-control form-control-sm" name="from" [(ngModel)]="from"(click)="this.selectedparameter[0]=[];chartsActive=[false,false];tableActive=false">
               <label class="pad">To: </label>
-              <input type="date" placeholder="mm/dd/yyyy" class="form-control form-control-sm" name="to" [(ngModel)]="to">
+              <input type="date" placeholder="mm/dd/yyyy" class="form-control form-control-sm" name="to" [(ngModel)]="to" (click)="this.selectedparameter[0]=[];chartsActive=[false,false];tableActive=false">
           </span>
 
       </div>
     </form>
 </div>
-<div class="col-sm-12 charts" *ngFor="let chart of charts;let rowIndex =index">
-  <div class="row polar" *ngIf="parameters[rowIndex].length!=0">
+<div class="col-sm-12 charts" *ngFor="let chart of charts;let rowIndex =index;">
+  <div class="row polar" *ngIf="chartsActive[0]||rowIndex==0">
+    <div class="header" *ngIf="rowIndex==1">
+      <h5>Compare Single Parameter</h5>
+    </div>
     <div class="select col-sm-3">
-      <ng-multiselect-dropdown 
-        [placeholder]="'Select Parameters'"
+      <ng-multiselect-dropdown (click)="tableActive=false"
+        [placeholder]="rowIndex?'Select Parameter':'Select Parameters'"
         [data]="parameters[rowIndex]"
         [(ngModel)]="selectedparameter[rowIndex]"
         [settings]="chart"
@@ -69,7 +72,7 @@
       </ng-multiselect-dropdown>
     </div>
     <span class="button">
-      <button type="submit" class="btn btn-info" (click)="generateReport()" *ngIf="rowIndex==0">Generate Report</button>
+      <button type="submit" class="btn btn-info" (click)="generateReport()" *ngIf="rowIndex==0">Visualize Data  </button>
     </span>
     </div>
     <div class="row">

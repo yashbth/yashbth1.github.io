@@ -13,6 +13,7 @@ export const dropdowntableSettings={
     textField: 'DeviceID',
     allowSearchFilter : true,
     itemsShowLimit: 3,
+    clearSearchFilter :true
 }
 export const  dropdownpolarSettings={
     idField: 'name',
@@ -22,8 +23,7 @@ export const  dropdownpolarSettings={
     itemsShowLimit: 3,
     closeDropDownOnSelection : true
 }
-export const dropdownbubbleSettings ={
-    
+export const dropdownbubbleSettings ={  
     idField: 'name',
     textField: 'title',
     singleSelection:false,

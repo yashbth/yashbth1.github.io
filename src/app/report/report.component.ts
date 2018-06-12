@@ -18,9 +18,9 @@ declare var tableExport : any;
 export class ReportComponent {
 
   title: string= "Welcome To Dashboard";
-  addInfo = new Date().toUTCString();
-  from ='2018-06-01';
-  to ='2018-06-07';
+  addInfo = new Date().toUTCString().slice(0,17);
+  from:any=new Date();
+  to =new Date().toISOString().slice(0,10);
   cluster : string="Select Cluster";
   ids: any;
   id: any;
@@ -62,14 +62,17 @@ export class ReportComponent {
 
   constructor(private service : FetchWaterDispenseDataService,private Cluster : Cluster) { }
 
-  ngOnInit() {                   
+  ngOnInit() {  
+    this.from.setDate(this.from.getDate()-7);
+    this.from=this.from.toISOString().slice(0,10);
     for (var table of this.tables){
       let i=0;
       for(var property of this.Cluster['NISE'][table][1]){
         if(this.parameters[0].indexOf(property)==-1){
           let obj = {
             name : this.Cluster['NISE'][table][0][i],
-            title : property
+            title : property,
+            unit : this.Cluster['NISE'][table][2][i]
           }
           this.parameters[0].push(obj);
         }
@@ -79,7 +82,7 @@ export class ReportComponent {
   }
 
   generateReport(){
-  console.log(this.selectedIds);
+
   this.request=[];    
     let date= new Date(this.from);
     date.setDate(date.getDate()-1);
@@ -109,8 +112,13 @@ export class ReportComponent {
     });
   }
   ngAfterContentChecked(){
-    this.parameters[1]=this.selectedparameter[0];  
-
+    this.parameters[1]=this.selectedparameter[0];
+    if(!this.chartsActive[0]){
+     $('html').css({"height":"100%"});      
+    } 
+    else{
+      $('html').css({"height":"auto"});
+    } 
   }
   setChartData(item : any,chart){
     if(chart==1||chart==2){
@@ -126,12 +134,17 @@ export class ReportComponent {
           extend=this.mergeResult(extend,temp[table]); 
         }
         if(chart==1){
+          let element=this.parameters[0].filter(function(element){
+            return (element.name==item.name)
+          })
           this.polarchartData.push(extend.reduce((sum,element)=>sum +element[item.name],0));
-          this.chartData[1]=[this.selectedIds,this.polarchartData,this.selectedparameter[1],'polarArea'];
+
+          this.chartData[1]=[this.selectedIds,this.polarchartData,element[0].unit,'polarArea'];
           this.chartsActive[1]=true;
         }
         for(let parameter of this.selectedparameter[0]){
           this.bubblechartData[id][parameter.name]=(extend.reduce((sum,element)=>sum +element[parameter.name],0));
+          console.log(this.bubblechartData)
         }
         this.tableData[id]=extend;
         // this.chartData.push(this.parsedInfo[id].reduce((sum,element)=>sum +element[item.name],0));
@@ -169,7 +182,8 @@ export class ReportComponent {
   onSelectAll(item:any){
     this.selectedIds=[];
     this.selectedparameter[0]=[]; 
-    this.chartsActive=[false,false];       
+    this.chartsActive=[false,false];   
+    this.tableActive=false;   
     item.forEach(element => {
         return this.selectedIds.push(element.DeviceID);
     });;
@@ -178,6 +192,7 @@ export class ReportComponent {
     this.selectedparameter[0]=[];
     this.chartsActive=[false,false];        
     this.selectedIds=[];
+    this.tableActive=false; 
   }
 
 
@@ -227,6 +242,9 @@ export class ReportComponent {
       this.x_index += 1;
     }
     this.chartData[0]=[this.y_bubble,this.data,this.selectedIds,'bubble'];  
+    console.log(this.chartData[0][1][0]);
+    console.log(this.chartData[0][1][1]);
+
   }
   
   normalise(r_bubble_row){

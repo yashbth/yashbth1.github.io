@@ -7,6 +7,10 @@ span{
 #tabel_paginate a{
     padding: 10px;
 }
+.option{
+    display: flex;
+    justify-content: center;
+}
 th span{
     font-size: 1em !important;
 }
@@ -26,7 +30,7 @@ th span{
 }
 .table-responsive-xs{
     padding : 2em;
-    overflow-x: scroll;
+    overflow: auto;
 }
 .btn-secondary {
     color: #fff;
@@ -100,7 +104,4 @@ button{
         font-size: 3vw;
     }
 }
-.selected{
-    height: -webkit-fill-available;
-    
-}
+

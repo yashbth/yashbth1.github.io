@@ -67,6 +67,10 @@ export class TransactionComponent implements OnInit {
     $('#table_filter').css({"display":"inline-block","float":"right"});
     $('#table_length').css({"display":"inline-block"});
     $('.dataTables_info').css({"visibility":"hidden"});
+    $('html').css({"height":"100%"});   
+    if(this.param_count>5){
+      $('html').css({"height":"auto"});      
+     } 
 
   }
 

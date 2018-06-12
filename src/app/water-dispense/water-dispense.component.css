@@ -11,9 +11,6 @@ h1 span{
     flex-wrap: wrap;
     padding: 2.5em 0; 
 }
-dd{
-    padding-left: 2em;
-}
 
 .tabs{
     display: inline-block;

@@ -20,10 +20,10 @@
       <ul class="navbar-nav Settings">
         <app-search-devices appClickDetection></app-search-devices>
         <li class="nav-item padTop">
-          <a class="nav-link" routerLink="/{{cluster}}/{{id}}/settings">Settings</a>
+          <a class="nav-link" routerLink="/{{cluster}}/{{id}}/settings" [class.active-options]="currDiv=='settings'" (click)="cookieService.put('prevDiv','settings')">Settings</a>
         </li>
         <li class="nav-item padTop">
-          <a class="nav-link" routerLink="/{{cluster}}/{{id}}/report" >Analysis</a>
+          <a class="nav-link" routerLink="/{{cluster}}/{{id}}/report" [class.active-options]="currDiv=='report'" (click)="cookieService.put('prevDiv','report')">Analysis</a>
         </li>
         <li class="nav-item padTop">
           <a class="nav-link" (click)="logout()" ><i class="fas fa-sign-out-alt"></i></a>

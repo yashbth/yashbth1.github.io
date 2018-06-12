@@ -9,10 +9,13 @@ nav{
     z-index: 100;
     
 }
+.active-options{
+    border-bottom: 2px solid white !important;
+}
 .dropdown .active-link{
     font-weight:800;
     color: white !important;
-    border: 1px solid white;
+    /* border: 1px solid white; */
 }
 .navbar-dark{
     background: #33334d;
