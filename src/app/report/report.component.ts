@@ -79,7 +79,8 @@ export class ReportComponent {
   }
 
   generateReport(){
-
+  console.log(this.selectedIds);
+  this.request=[];    
     let date= new Date(this.from);
     date.setDate(date.getDate()-1);
     for(var t of this.tables){
@@ -108,7 +109,8 @@ export class ReportComponent {
     });
   }
   ngAfterContentChecked(){
-    this.parameters[1]=this.selectedparameter[0];        
+    this.parameters[1]=this.selectedparameter[0];  
+
   }
   setChartData(item : any,chart){
     if(chart==1||chart==2){
@@ -127,7 +129,6 @@ export class ReportComponent {
           this.polarchartData.push(extend.reduce((sum,element)=>sum +element[item.name],0));
           this.chartData[1]=[this.selectedIds,this.polarchartData,this.selectedparameter[1],'polarArea'];
           this.chartsActive[1]=true;
-          console.log(this.chartsActive)
         }
         for(let parameter of this.selectedparameter[0]){
           this.bubblechartData[id][parameter.name]=(extend.reduce((sum,element)=>sum +element[parameter.name],0));
@@ -138,36 +139,44 @@ export class ReportComponent {
       this.parameters[1]=this.selectedparameter[0];  
       this.generate_data();  
     }
-    console.log(this.selectedparameter[0]);  
+    else{
+      this.chartsActive=[false,false];
+      this.selectedparameter[1]=[];
+    }
            
   }
   emptyChartData(){
     this.selectedparameter[0]=[];
-    this.parameters[1]=[];this.selectedparameter[1]=[];
+    this.parameters[1]=[];
+    this.selectedparameter[1]=[];
     this.tableActive=false;
   }
   onItemSelect(item:any){
     this.selectedIds.push(item.DeviceID);
     this.selectedparameter[0]=[];
     this.tableActive=false;
+    this.chartsActive=[false,false];
   }
   onDeSelect(item:any){
-    this.selectedparameter[0]=[];    
+    this.selectedparameter[0]=[];   
+    this.chartsActive=[false,false];     
     this.selectedIds = this.selectedIds.filter(function(element) { 
       return element !== item.DeviceID
   })
-
+  console.log(this.selectedIds);
   this.tableActive=false;
   }
   onSelectAll(item:any){
     this.selectedIds=[];
-    this.selectedparameter[0]=[];    
+    this.selectedparameter[0]=[]; 
+    this.chartsActive=[false,false];       
     item.forEach(element => {
         return this.selectedIds.push(element.DeviceID);
     });;
   }
   onDeSelectAll(item:any){
-    this.selectedparameter[0]=[];    
+    this.selectedparameter[0]=[];
+    this.chartsActive=[false,false];        
     this.selectedIds=[];
   }
 

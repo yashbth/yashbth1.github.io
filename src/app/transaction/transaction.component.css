@@ -1,9 +1,9 @@
 span{
     font-size: .7em !important;
 }
-.maxHeight{
+/* .maxHeight{
     height: -webkit-fill-available;
-}
+} */
 #tabel_paginate a{
     padding: 10px;
 }

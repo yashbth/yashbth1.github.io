@@ -1,6 +1,4 @@
-#report{
-    height: stretch;
-}
+
 .row{
     margin: 50px 0px;
     display: flex;
@@ -49,7 +47,7 @@ input{
     width:100%;
 }
 .container-fluid{
-    overflow-y: auto;
+    /* overflow-y: auto; */
 }
 .table{
     margin-bottom: 50px;

@@ -16,7 +16,7 @@ declare var $ :any;
 export class AnalysisChartsComponent{
   cluster : string; 
   _property : string;
-  _ids :string;s
+  _ids :string;
   @Input () set property(property : string){
     this._property = property;
     console.log(this._property)    
@@ -61,86 +61,55 @@ export class AnalysisChartsComponent{
       }
       )
     }
-    console.log(this.datasets)
-    let property = this._property;
-    let ids =this._ids;
-
-      this.options= {
-        scales: {
-          xAxes: [{
-            scaleLabel:{
-              display :true,
-              labelString : ''
-              },
-              ticks: {
-                min:1,
-                stepSize: 1,
-                callback: function(value, index, values) {
-                  return  ids[ids.length-1-index] ;
-                 }
-              }
-          }]
-      ,
-            yAxes: [{
-              scaleLabel:{
-                display :true,
-                labelString : ''
-                },
-                ticks: {
-                  min:1,
-                  stepSize: 1,
-                  callback: function(value, index, values) {
-                    return  property[property.length-1-index] ;
-                   }
-                }
-            }]
-        }
+    this.Options();
     }
+    else{
+      console.log(this.chartData);
+      this.datasets.push(
+        { 
+          label:this._ids,
+          data:this.chartData,
+          backgroundColor: [
+            "#0033cc",
+            "#00cc00",
+            "#ffff33",
+            "#6600cc",
+            "#ff9900",
+            "#cc00cc",
+            "#663300",
+            "#00e6e6",
+            "#9999ff"
+          ]
+      }
+      );
     }
       this.Chart(this.ty);
   }
-  ngAfterContentChecked(){  
-    if(this.checkGraph){
-      let property = this._property;
-      let ids =this._ids;
-      if(this.ty=='bubble'){
-        this.options= {
-          scales: {
-            xAxes: [{
-              scaleLabel:{
-                display :true,
-                labelString : ''
-                },
-                ticks: {
-                  min:1,
-                  stepSize: 1,
-                  callback: function(value, index, values) {
-                    return  ids[ids.length-1-index] ;
-                   }
-                }
-            }]
-        ,
-              yAxes: [{
-                scaleLabel:{
-                  display :true,
-                  labelString : ''
-                  },
-                  ticks: {
-                    min:1,
-                    stepSize: 1,
-                    callback: function(value, index, values) {
-                      return  property[property.length-1-index] ;
-                     }
-                  }
-              }]
-          }
+
+  ngAfterContentChecked(){
+    if(this.checkGraph&&this.ty=='polarArea'){
+      this.datasets=[];      
+      this.datasets.push(
+        { 
+          label:this._ids,
+          data:this.chartData,
+          backgroundColor: [
+            "#0033cc",
+            "#00cc00",
+            "#ffff33",
+            "#6600cc",
+            "#ff9900",
+            "#cc00cc",
+            "#663300",
+            "#00e6e6",
+            "#9999ff"
+          ]
       }
-      }
+      )
       this.Chart(this.ty);
       this.checkGraph=false;
     }
   }
-
 
   Chart(type:string){
 
@@ -151,6 +120,42 @@ export class AnalysisChartsComponent{
     };
     this.options=this.options
 
+  }
+
+  Options(){
+    let property = this._property;
+    let ids =this._ids;
+    this.options= {
+      scales: {
+        xAxes: [{
+          scaleLabel:{
+            display :true,
+            labelString : ''
+            },
+            ticks: {
+              min:1,
+              stepSize: 1,
+              callback: function(value, index, values) {
+                return  ids[ids.length-1-index] ;
+               }
+            }
+        }]
+    ,
+          yAxes: [{
+            scaleLabel:{
+              display :true,
+              labelString : ''
+              },
+              ticks: {
+                min:1,
+                stepSize: 1,
+                callback: function(value, index, values) {
+                  return  property[property.length-1-index] ;
+                 }
+              }
+          }]
+      }
+  }
   }
 
   }
