@@ -4,6 +4,11 @@
     display: flex;
     justify-content: center;
 }
+.header{
+    display: flex;
+    justify-content: center;
+    font-weight: bolder;
+}
 h4{
     padding-top: 10px;
 }
@@ -51,6 +56,7 @@ input{
 }
 .table{
     margin-bottom: 50px;
+    overflow-x: auto;
 }
 .heading{
     padding-left: 20px;

@@ -51,8 +51,8 @@
               <!-- <span><input type="checkbox" (click)="toggle(this,'cluster[]')" />Select all</span><br/><br> -->
               <div >
                   <h6>Privileges:</h6>
-                  <div class="checkbox text-justify">
-                  <span *ngFor="let panel of dropdown"><input type="checkbox" name="panel[]" value="{{panel.columnName}}" *ngIf="panel.division!='Analysis'">{{panel.panelName}}<br></span>
+                  <div class="checkbox text-justify" >
+                  <span *ngFor="let panel of dropdown" [class.hide]="panel.division=='Analysis' || panel.division=='Report'"><input type="checkbox" name="panel[]" value="{{panel.columnName}}" *ngIf="panel.division!='Analysis' && panel.division!='Report'">{{panel.panelName}}<br></span>
                   </div>    
                   <h6><span><input type="checkbox" (click)="toggle(this,'panel[]')" />Select all</span><br/><br></h6>                
               </div>

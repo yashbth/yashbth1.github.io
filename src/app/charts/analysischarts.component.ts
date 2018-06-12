@@ -4,6 +4,9 @@ import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import {Cluster} from '../delhiCluster'
 import { chartData } from '../water-dispense/waterDispenserparam';
 import { Property } from '../users';
+import { callbackify } from 'util';
+import { DEFAULT_VALUE_ACCESSOR } from '@angular/forms/src/directives/default_value_accessor';
+import { ThrowStmt } from '@angular/compiler';
 declare var jquery:any;
 declare var $ :any; 
 
@@ -17,15 +20,20 @@ export class AnalysisChartsComponent{
   cluster : string; 
   _property : string;
   _ids :string;
+  _chartData : any;
   @Input () set property(property : string){
     this._property = property;
     console.log(this._property)    
     this.checkGraph = true;
   } ;
-  @Input () chartData : any;
+  @Input () set chartData(chartData :any){
+    this._chartData=chartData
+    this.checkGraph=true;
+  }
   @Input () set ids(ids : string){
     this._ids = ids;
     this.checkGraph = true;
+    console.log(this._ids)
   } ;
   @Input () ty;
   Data1=[];
@@ -43,48 +51,16 @@ export class AnalysisChartsComponent{
   ngOnInit(){
     if(this.ty=='bubble'){
     Chart.defaults.global.legend.display = false;
-    for( let property of this._property){
+    for( let id of this._ids){
       this.datasets.push(
         { 
           label:'',
-          data:this.chartData.splice(0,this._property.length),
-          backgroundColor: [
-
-            "#A93226",
-            "#E74C3C",
-            "#9B59B6",
-            "#8E44AD",
-            "#2980B9",
-            "#3498DB",
-            "#1ABC9C",
-            "#16A085",
-            "#27AE60",
-            "#2ECC71",
-            "#F1C40F",
-            "#F39C12",
-            "#E67E22",
-            "#D35400",
-            "#ECF0F1",
-            "#BDC3C7",
-            "#95A5A6",
-            "#7F8C8D",
-            "#34495E",
-            "#2C3E50",
-
-            "#0033cc",
-            "#00cc00",
-            "#ffff33",
-            "#6600cc",
-            "#ff9900",
-            "#cc00cc",
-            "#663300",
-            "#00e6e6",
-            "#9999ff"
-
-          ]
+          data:this._chartData.splice(0,this._property.length),
+          backgroundColor:this.backGroundColor
       }
       )
     }
+
     this.Options();
     }
     else{
@@ -94,40 +70,8 @@ export class AnalysisChartsComponent{
       this.datasets.push(
         { 
           label:this._ids,
-          data:this.chartData,
-          backgroundColor: [
-
-            "#A93226",
-            "#E74C3C",
-            "#9B59B6",
-            "#8E44AD",
-            "#2980B9",
-            "#3498DB",
-            "#1ABC9C",
-            "#16A085",
-            "#27AE60",
-            "#2ECC71",
-            "#F1C40F",
-            "#F39C12",
-            "#E67E22",
-            "#D35400",
-            "#ECF0F1",
-            "#BDC3C7",
-            "#95A5A6",
-            "#7F8C8D",
-            "#34495E",
-            "#2C3E50",
-
-            "#0033cc",
-            "#00cc00",
-            "#ffff33",
-            "#6600cc",
-            "#ff9900",
-            "#cc00cc",
-            "#663300",
-            "#00e6e6",
-            "#9999ff"
-          ]
+          data:this._chartData,
+          backgroundColor: this.backGroundColor
       }
       );
     }
@@ -136,57 +80,45 @@ export class AnalysisChartsComponent{
 
   ngAfterContentChecked(){
     if(this.checkGraph&&this.ty=='polarArea'){
-      this.datasets=[];      
+      console.log(this._property,this._chartData)
+      this.datasets=[]; 
+      let ids=this._ids ; 
+      let chartData = this._chartData;   
       this.datasets.push(
         { 
           label:this._ids,
-          data:this.chartData,
-          backgroundColor: [
-
-            "#A93226",
-            "#E74C3C",
-            "#9B59B6",
-            "#8E44AD",
-            "#2980B9",
-            "#3498DB",
-            "#1ABC9C",
-            "#16A085",
-            "#27AE60",
-            "#2ECC71",
-            "#F1C40F",
-            "#F39C12",
-            "#E67E22",
-            "#D35400",
-            "#ECF0F1",
-            "#BDC3C7",
-            "#95A5A6",
-            "#7F8C8D",
-            "#34495E",
-            "#2C3E50",
-
-            "#0033cc",
-            "#00cc00",
-            "#ffff33",
-            "#6600cc",
-            "#ff9900",
-            "#cc00cc",
-            "#663300",
-            "#00e6e6",
-            "#9999ff"
-          ]
+          data:this._chartData,
+          backgroundColor: this.backGroundColor
       }
       )
+      this.options= {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    suggestedMin:-Math.max.apply(null, chartData),
+                    suggestedMax:Math.max.apply(null, chartData),
+                    callback : function(value,index,values){
+                      if(value<0){
+                        return -value+ids
+                      }
+                      else{
+                        return value + ids;
+                      }
+                   }
+                }
+            }]
+        }
+    }
       this.Chart(this.ty);
       this.checkGraph=false;
     }
   }
 
   Chart(type:string){
-
     this.type= type;
     this.data= {
       labels : this._property,
-        datasets:this.datasets,  
+      datasets:this.datasets,  
     };
     this.options=this.options
 
@@ -220,13 +152,46 @@ export class AnalysisChartsComponent{
                 min:1,
                 stepSize: 1,
                 callback: function(value, index, values) {
-                  return  property[property.length-1-index] ;
+                  return  property[value-1] ;
                  }
               }
           }]
       }
   }
   }
+  backGroundColor=[
+
+    "#0033cc",
+    "#00cc00",
+    "#ffff33",
+    "#6600cc",
+    "#ff9900",
+    "#cc00cc",
+    "#663300",
+    "#00e6e6",
+    "#9999ff",
+
+    "#A93226",
+    "#E74C3C",
+    "#9B59B6",
+    "#8E44AD",
+    "#2980B9",
+    "#3498DB",
+    "#1ABC9C",
+    "#16A085",
+    "#27AE60",
+    "#2ECC71",
+    "#F1C40F",
+    "#F39C12",
+    "#E67E22",
+    "#D35400",
+    "#ECF0F1",
+    "#BDC3C7",
+    "#95A5A6",
+    "#7F8C8D",
+    "#34495E",
+    "#2C3E50",
+  ]
 
   }
 

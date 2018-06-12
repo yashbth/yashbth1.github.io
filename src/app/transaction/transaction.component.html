@@ -1,6 +1,6 @@
 <app-loading *ngIf="dataAvailable==false"></app-loading>
-<div [class.selected]="!dataAvailable1" >
-    <div class="container" *ngIf="dataAvailable">
+<div class="maxHeight">
+    <div class="container " *ngIf="dataAvailable">
         <div class="jumbotron text-center">
             <h1> {{cluster}} Cluster <span> ( Machine Id : {{dev}} )</span></h1>
             <span id="deviceLoc"><b>Device located at :</b> <span id="place">{{location}}</span></span>
@@ -9,15 +9,11 @@
     
     </div>
     
-    <div class="row">
-        <div class="form-group text-right col-sm-5">
-            <select  [(ngModel)]="property1" name="data" style="text-align: center" id="options">
-                <option *ngFor="let name of trans_params[0];let rowIndex = index" [value]="trans_params[1][rowIndex]" >{{name}}</option>
-            </select>
-        </div>
-        
-        
-        <div class="dateRange text-center col-sm-7">
+    <div class="row option">
+        <select  [(ngModel)]="property1" name="data" style="text-align: center" id="options">
+            <option *ngFor="let name of trans_params[0];let rowIndex = index" [value]="trans_params[1][rowIndex]" >{{name}}</option>
+        </select>
+        <div class="dateRange text-center" >
             <div class="from_to">
                 <label for="date"><span class="pad">From:</span> <input id="date_from" type="date" name="from" [(ngModel)]="fromDate" ></label>
                 <label><span class="pad"> To:</span><input id="date_to" type="date" name="to" [(ngModel)]="toDate"></label> 
@@ -29,7 +25,7 @@
     </div>
     
  
-    <div [class.selected]="dataAvailable1" class="container-fluid  table-responsive-xs" *ngIf="dataAvailable1">
+    <div  class="container-fluid  table-responsive-xs" *ngIf="dataAvailable1">
         <h2 class="text-center">{{param_name}}: {{param_count}}</h2>
 
             <table id="table" class="table table-hover " style="width:100%">

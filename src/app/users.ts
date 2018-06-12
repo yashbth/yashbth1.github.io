@@ -15,6 +15,7 @@ export const dropdowntableSettings={
     selectAllText: 'Select All',
     unSelectAllText: 'UnSelect All',
     itemsShowLimit: 3,
+    clearSearchFilter :true
 }
 export const  dropdownpolarSettings={
     enableCheckAll : false,
@@ -25,8 +26,7 @@ export const  dropdownpolarSettings={
     itemsShowLimit: 3,
     closeDropDownOnSelection : true
 }
-export const dropdownbubbleSettings ={
-    enableCheckAll : false,
+export const dropdownbubbleSettings ={  
     idField: 'name',
     textField: 'title',
     singleSelection:false,

@@ -9,7 +9,7 @@
           <span class="col-sm-10">
               <a class="navbar-brand text-center" href="">
                 <!-- <span id="enlarge">S</span>WA<span id="fontColor">JAL</span> -->
-                <img src="/assets/images/swajal.png" width="135px">
+                <img src="/assets/images/swajal.png" width="150px">
               </a>
           </span>
           <span id="settings" class="user" (click)="settingToggle()"></span>
@@ -20,10 +20,10 @@
       <ul class="navbar-nav Settings">
         <app-search-devices appClickDetection></app-search-devices>
         <li class="nav-item padTop">
-          <a class="nav-link" routerLink="/{{cluster}}/{{id}}/settings" [class.active_setting-link]="currDiv=='Settings'">Settings</a>
+          <a class="nav-link" routerLink="/{{cluster}}/{{id}}/settings" [class.active-options]="currDiv=='settings'" (click)="cookieService.put('prevDiv','settings')">Settings</a>
         </li>
         <li class="nav-item padTop">
-          <a class="nav-link" routerLink="/{{cluster}}/{{id}}/report" >Analysis</a>
+          <a class="nav-link" routerLink="/{{cluster}}/{{id}}/report" [class.active-options]="currDiv=='report'" (click)="cookieService.put('prevDiv','report')">Analysis</a>
         </li>
         <li class="nav-item padTop">
           <a class="nav-link" (click)="logout()" ><i class="fas fa-sign-out-alt"></i></a>

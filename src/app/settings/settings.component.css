@@ -8,6 +8,9 @@
 .pad{
     padding-left: 0px;
 }
+.hide{
+    display: none;
+}
 .page-header h2{
     font-size: 2vw;
 }
