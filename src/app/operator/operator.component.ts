@@ -37,7 +37,7 @@ export class OperatorComponent implements OnInit {
   chart:boolean=false;
   location : string = this.cookieService.get('location');
   jwtHelper = new JwtHelperService();
-  absent_boolean : boolean = false;
+
   constructor(private service : FetchWaterDispenseDataService,private Cluster : Cluster,private router:Router,private route: ActivatedRoute,private globalservice : GlobalService, private cookieService:CookieService) { 
     router.events.subscribe((val)=>{
       if(val instanceof NavigationEnd){
@@ -120,9 +120,6 @@ export class OperatorComponent implements OnInit {
       setTimeout(()=>{
         this.present = 0 || this.presents.length;
         console.log(this.presents); 
-        if(this.absent>=0){
-          this.absent_boolean = true;
-        }
         this.absent = this.expected_attendance[index]-this.present;
 
         this.chart = true;
