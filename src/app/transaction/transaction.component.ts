@@ -60,6 +60,8 @@ export class TransactionComponent implements OnInit {
     setTimeout(()=>{
       this.dataAvailable =true;
       document.getElementById('options')["options"][0].selected = true;
+      this.property1 = '0';
+
     },1000)
   }
   ngAfterContentChecked(){

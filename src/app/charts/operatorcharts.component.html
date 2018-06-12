@@ -4,7 +4,7 @@
         </div>
         <div class="col-sm-3" >
             <h5 class="pad">
-                <b>Absents</b> : {{chartData.absent}}<br>
+                <span *ngIf = "chartData.absent>=0"><b>Absents</b> : {{chartData.absent}}<br></span>
                 <b>Presents</b> : {{chartData.present}}<br>
             </h5>
                 <div><ul><li *ngFor = "let present of chartData.presents;">{{present.PunchTime}}</li></ul></div>

@@ -23,9 +23,8 @@ export class SettingsComponent implements OnInit {
   flag : boolean = true;
   flag1 : boolean;
   dropdown = Dropdown;
-  dropdownSettings={};
-  selectedItems =[];
-  prevClusters=[];
+  dropdownSettings = {};
+  prevClusters = [];
   // url = "http://localhost/~yashbahetiiitk/swajal_dashboard/src/assets/Php";
   url = "http://localhost:8000/assets/Php";
   
@@ -33,6 +32,7 @@ export class SettingsComponent implements OnInit {
   constructor(private Cluster: Cluster, private cookieService:CookieService,private global : GlobalService) { }
 
   ngOnInit() {
+    this.cookieService.put('prevDiv','Settings');
     console.log("ngonit")
     this.dropdownSettings = {
       singleSelection: false,

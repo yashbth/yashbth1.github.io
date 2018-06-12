@@ -26,7 +26,7 @@ export class OperatorComponent implements OnInit {
   cluster :string;
   data: any;
   date : any=new Date(Date.now());
-  place:string = "New Delhi Cluster";
+  place:string;
   info :any; 
   operators = [];
   expected_attendance=[];
@@ -37,6 +37,7 @@ export class OperatorComponent implements OnInit {
   chart:boolean=false;
   location : string = this.cookieService.get('location');
   jwtHelper = new JwtHelperService();
+  absent_boolean : boolean = false;
   constructor(private service : FetchWaterDispenseDataService,private Cluster : Cluster,private router:Router,private route: ActivatedRoute,private globalservice : GlobalService, private cookieService:CookieService) { 
     router.events.subscribe((val)=>{
       if(val instanceof NavigationEnd){
@@ -63,7 +64,19 @@ export class OperatorComponent implements OnInit {
 
   getOperators(filename):void{
     this.operators=[];    
-    this.service.getData(this.id,this.table,filename).subscribe(operators=>this.operators=operators,(err)=>console.error(err),()=>{       
+    this.service.getData(this.id,this.table,filename).subscribe(operators=>this.operators=operators,(err)=>console.error(err),()=>{  
+      console.log(this.operators,'1');
+      for(let operator of this.operators){
+       console.log(operator,'2');
+       console.log(operator.OperatorID.substr(0,3) ,'3');
+
+
+        // var re = /3↵/gi; 
+        operator.OperatorID = operator.OperatorID.substr(0,10);
+      }
+
+      console.log(this.operators,'4');
+  
       if( !this.operators || Object.keys(this.operators).length==0 ){
         this.router.navigateByUrl('/'+this.cluster+'/'+this.id +'/error')              
       }
@@ -72,6 +85,7 @@ export class OperatorComponent implements OnInit {
           this.operators.map(operator=>operator.OperatorID.trim());
           this.operators = this.operators.filter((x, i, a) => a.indexOf(x) == i)
           for(let oper of this.operators){
+            console.log(oper.OperatorID.toString() ,'oper.openID');
             this.id[1]=oper.OperatorID;
             this.id[2]='';
             this.getInfo('operatorPunch.php');
@@ -106,7 +120,11 @@ export class OperatorComponent implements OnInit {
       setTimeout(()=>{
         this.present = 0 || this.presents.length;
         console.log(this.presents); 
+        if(this.absent>=0){
+          this.absent_boolean = true;
+        }
         this.absent = this.expected_attendance[index]-this.present;
+
         this.chart = true;
       },400);
     });

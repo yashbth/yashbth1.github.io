@@ -6,6 +6,7 @@ import { chartData } from '../water-dispense/waterDispenserparam';
 import { Property } from '../users';
 import { callbackify } from 'util';
 import { DEFAULT_VALUE_ACCESSOR } from '@angular/forms/src/directives/default_value_accessor';
+import { ThrowStmt } from '@angular/compiler';
 declare var jquery:any;
 declare var $ :any; 
 
@@ -49,22 +50,13 @@ export class AnalysisChartsComponent{
   }
   ngOnInit(){
     if(this.ty=='bubble'){
+    Chart.defaults.global.legend.display = false;
     for( let id of this._ids){
       this.datasets.push(
         { 
           label:'',
           data:this._chartData.splice(0,this._property.length),
-          backgroundColor: [
-            "#0033cc",
-            "#00cc00",
-            "#ffff33",
-            "#6600cc",
-            "#ff9900",
-            "#cc00cc",
-            "#663300",
-            "#00e6e6",
-            "#9999ff"
-          ]
+          backgroundColor:this.backGroundColor
       }
       )
     }
@@ -72,21 +64,14 @@ export class AnalysisChartsComponent{
     this.Options();
     }
     else{
+      Chart.defaults.global.legend.display = true;
+
+      console.log(this.chartData);
       this.datasets.push(
         { 
           label:this._ids,
           data:this._chartData,
-          backgroundColor: [
-            "#0033cc",
-            "#00cc00",
-            "#ffff33",
-            "#6600cc",
-            "#ff9900",
-            "#cc00cc",
-            "#663300",
-            "#00e6e6",
-            "#9999ff"
-          ]
+          backgroundColor: this.backGroundColor
       }
       );
     }
@@ -103,17 +88,7 @@ export class AnalysisChartsComponent{
         { 
           label:this._ids,
           data:this._chartData,
-          backgroundColor: [
-            "#0033cc",
-            "#00cc00",
-            "#ffff33",
-            "#6600cc",
-            "#ff9900",
-            "#cc00cc",
-            "#663300",
-            "#00e6e6",
-            "#9999ff"
-          ]
+          backgroundColor: this.backGroundColor
       }
       )
       this.options= {
@@ -184,6 +159,39 @@ export class AnalysisChartsComponent{
       }
   }
   }
+  backGroundColor=[
+
+    "#0033cc",
+    "#00cc00",
+    "#ffff33",
+    "#6600cc",
+    "#ff9900",
+    "#cc00cc",
+    "#663300",
+    "#00e6e6",
+    "#9999ff",
+
+    "#A93226",
+    "#E74C3C",
+    "#9B59B6",
+    "#8E44AD",
+    "#2980B9",
+    "#3498DB",
+    "#1ABC9C",
+    "#16A085",
+    "#27AE60",
+    "#2ECC71",
+    "#F1C40F",
+    "#F39C12",
+    "#E67E22",
+    "#D35400",
+    "#ECF0F1",
+    "#BDC3C7",
+    "#95A5A6",
+    "#7F8C8D",
+    "#34495E",
+    "#2C3E50",
+  ]
 
   }
 

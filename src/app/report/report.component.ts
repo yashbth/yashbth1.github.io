@@ -3,7 +3,7 @@ import { FetchWaterDispenseDataService } from '../fetch-water-dispense-data.serv
 import { Cluster } from '../delhiCluster';
 import {Sales} from './report';
 import { filter, mergeMap } from 'rxjs/operators';
-import {Property,dropdowntableSettings, charts, dropdownpolarSettings} from '../users'
+import {Property,dropdowntableSettings, charts, dropdownpolarSettings} from '../users';
 import { Observable } from 'rxjs';
 import { forkJoin } from 'rxjs'
 import { GlobalService } from '../global.service';
@@ -320,7 +320,7 @@ export class ReportComponent {
               }
           </style>
         </head>
-    <body onload="window.print();">${printContents}</body>
+    <body onload="window.print() , window.close();">${printContents}</body>
       </html>`
     );
     popupWin.document.close();

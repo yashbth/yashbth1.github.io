@@ -12,10 +12,13 @@ export const dropdowntableSettings={
     idField: 'SrNo',
     textField: 'DeviceID',
     allowSearchFilter : true,
+    selectAllText: 'Select All',
+    unSelectAllText: 'UnSelect All',
     itemsShowLimit: 3,
     clearSearchFilter :true
 }
 export const  dropdownpolarSettings={
+    enableCheckAll : false,
     idField: 'name',
     textField: 'title',
     singleSelection:true,
