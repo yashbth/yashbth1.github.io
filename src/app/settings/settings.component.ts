@@ -33,8 +33,8 @@ export class SettingsComponent implements OnInit {
   selDrop2=[];
   selectedparameter =[this.selDrop1,this.selDrop2];
   selectedpanel=[[],[]]
-  // url = "http://localhost/~yashbahetiiitk/swajal_dashboard/src/assets/Php";
-  url = "http://localhost:8000/assets/Php";
+  url = "http://localhost/~yashbahetiiitk/swajal_dashboard/src/assets/Php";
+  // url = "http://localhost:8000/assets/Php";
   // url = "/iiot/assets/Php"
   
   
