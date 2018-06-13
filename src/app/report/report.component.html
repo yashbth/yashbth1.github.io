@@ -103,7 +103,7 @@
                   <thead class="thead-dark">
                     <tr>
                       <th>Date</th>
-                      <th *ngFor="let data of selectedparameter[0]">{{data.title}}</th>
+                      <th *ngFor="let data of selectedparameter[0];let rowIndex=index">{{data.title }}<span *ngIf = "unit[rowIndex] != ''">(in {{unit[rowIndex]}})</span></th>
                     </tr>
                   </thead>
                   <tbody >

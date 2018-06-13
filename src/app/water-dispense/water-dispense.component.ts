@@ -62,7 +62,8 @@ export class WaterDispenseComponent implements OnInit{
         } 
     })
   }
-  ngOnInit(){ 
+  ngOnInit(){
+    $('html').css({"height":"auto"}); 
     setTimeout(()=>{
       if(this.jwtHelper.isTokenExpired(this.globalservice.token)){      
         this.service.getSessionVariables('session.php/?action=destroy').subscribe(data=>this.data=data,(err)=>console.log(err),()=>{

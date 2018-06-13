@@ -39,8 +39,8 @@ else{
 $conn->close();
 
 echo('1');
-// header("Location: "."https://swajal.in/iiot/#/".$_COOKIE['cluster']."/".$_COOKIE['id']."/settings");
-header("Location: "."http://localhost:4200/#/".$_COOKIE['cluster']."/".$_COOKIE['id']."/settings");
+header("Location: "."https://swajal.in/iiot/#/".$_COOKIE['cluster']."/".$_COOKIE['id']."/settings");
+// header("Location: "."http://localhost:4200/#/".$_COOKIE['cluster']."/".$_COOKIE['id']."/settings");
 
 echo('2');
 exit;

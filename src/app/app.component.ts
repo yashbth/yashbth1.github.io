@@ -9,6 +9,7 @@ import { StorageService, SESSION_STORAGE } from 'angular-webstorage-service';
 
 
 declare var  $ : any;
+declare var myMap: any;
 
 @Component({
   selector: 'app-root',
@@ -26,11 +27,19 @@ export class AppComponent implements OnInit{
   users : any;
   date = new Date();
   session_variable:any;
+  locating:boolean=false;
   constructor(private _router : Router,private service: FetchWaterDispenseDataService,private global : GlobalService,private cookieService: CookieService,@Inject(SESSION_STORAGE) private storage : StorageService){
     this.router = _router;
   }
   ngOnInit(){
     if(this.cookieService.get('PHPSESSID')){
+      $('#id01').css({"display":"none"});
+      this.locating=true;
+      $('body').css({"background":"url('') #222"})
+      setTimeout(() => {
+        this.timeout = false;
+        $('#map').css({"visibility":"visible"}); 
+      }, 5000);
       this.service.getSessionVariables('session.php/?action=start').subscribe(session_var=>this.session_variable=session_var,(err)=>console.log(err),()=>{
         if(this.session_variable.JWTtoken){
           this.global.token= this.session_variable.JWTtoken;
@@ -41,17 +50,15 @@ export class AppComponent implements OnInit{
           if(this.global.user["0"].Username=='Admin'){
             this.global.admin= true;
           }
-          this.storage.set("user",this.global.user["0"]);          
+          this.storage.set("user",this.global.user["0"]); 
+          myMap();         
         }
         else{
           this.cookieService.removeAll();
         }
       });
     }
-    setTimeout(() => {
-      this.timeout = false;
-      $('#map').css({"visibility":"visible"}); 
-    }, 5000);
+
  
     
   }
@@ -62,6 +69,9 @@ export class AppComponent implements OnInit{
     form.append('psw',this.password);   
     this.service.userAuthentication(form,'users.php').subscribe(users=>this.users=users,(err)=>console.log(err),()=>{
         if(this.users){
+          this.locating=true;
+          $('#id01').css({"display":"none"});     
+          $('body').css({"background":"url('') #222"})
           this.session_variable=[];
           this.service.getSessionVariables('session.php/?action=start').subscribe(session_var=>this.session_variable=session_var,(err)=>console.log(err),()=>{
             this.global.token= this.session_variable.JWTtoken;
@@ -70,14 +80,18 @@ export class AppComponent implements OnInit{
               this.global.admin= true;
             }
             this.storage.set("user",this.global.user["0"]);
+            myMap();
             setTimeout(()=>{
-              $('#id01').css({"display":"none"});     
               if(this.global.user["0"][this.cookieService.get('cluster')]==0){
                 $('#message_failure').html('<div class="alert alert-danger" style="justify-content: center; text-align: center;margin-bottom:0px"><span style="justify-content: center">Access Denied!</span></div>');           
               } 
               else{
                 $('#message_failure').html('');
-                window.location.href = window.location.href + this.cookieService.get('cluster')+'/'+this.cookieService.get('id')+'/WaterDispenser';                     
+                setTimeout(() => {
+                  this.timeout = false;
+                  $('#map').css({"visibility":"visible"}); 
+                }, 3000);
+                // window.location.href = window.location.href + this.cookieService.get('cluster')+'/'+this.cookieService.get('id')+'/WaterDispenser';                     
               }           
             },1000);
           });
