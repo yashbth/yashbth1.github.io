@@ -3,7 +3,7 @@
     header("Access-Control-Allow-Origin: http://localhost:4200");
     header('Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE, OPTIONS');
     header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token');
-    header('Access-Control-Allow-Credential: true');
+    header('Access-Control-Allow-Credentials: true');
     $action = $_GET['action'];
     if($action=='start'){
         session_start();
