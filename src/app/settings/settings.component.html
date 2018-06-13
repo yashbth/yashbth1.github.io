@@ -119,15 +119,16 @@
               </div><br><br>              
               <h6>Privileges:</h6>
               <div class="checkbox text-justify" style="display: none">
-              <input type="checkbox" name="panelP[]" value="Water_Dispensing_Panel">Water Dispensing Panel<br>
-              <input type="checkbox" name="panelP[]" value="RO_Parameters">RO Parameters<br>
-              <input type="checkbox" name="panelP[]" value="Transaction_Log">Transaction Log<br>
-              <input type="checkbox" name="panelP[]" value="Operator_Attendance">Operator Attendance<br>
-              <input type="checkbox" name="panelP[]" value="Cup_Dispensing_Panel">Cup Dispensing Panel<br>
-              <input type="checkbox" name="panelP[]" value="Supervisor_Data">Supervisor Data<br>
-              <input type="checkbox" name="panelP[]" value="Analysis_Panel">Analysis Panel<br>
+              <input type="checkbox" name="panelP[]" value="Water_Dispensing_Panel" id="Water_Dispensing_Panel" >Water Dispensing Panel<br>
+              <input type="checkbox" name="panelP[]" value="RO_Parameters" id="RO_Parameters">RO Parameters<br>
+              <input type="checkbox" name="panelP[]" value="Transaction_Log" id="Transaction_Log">Transaction Log<br>
+              <input type="checkbox" name="panelP[]" value="Operator_Attendance" id="Operator_Attendance">Operator Attendance<br>
+              <input type="checkbox" name="panelP[]" value="Cup_Dispensing_Panel" id="Cup_Dispensing_Panel">Cup Dispensing Panel<br>
+              <input type="checkbox" name="panelP[]" value="Supervisor_Data" id="Supervisor_Data">Supervisor Data<br>
+              <input type="checkbox" name="panelP[]" value="Analysis_Panel" id="Analysis_Panel">Analysis Panel<br>
               <h6><input type="checkbox" (click)="toggle(this,'panelP[]')">Select all<br><br></h6>
               </div>    
+           
               
               <div class="col-sm-12" style="display: flex;justify-content: center">
                 <ng-multiselect-dropdown *ngIf="selectedpanel[1].length!=0"

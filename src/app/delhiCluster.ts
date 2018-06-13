@@ -247,7 +247,6 @@ export class Cluster{
             "pH_of_water",
             "Total_Collection_Sale",
 
-
             "TimeStamp",
             "DeviceID",
             
@@ -258,7 +257,6 @@ export class Cluster{
             'Total Collection From Coin',
             'pH Of Water',
             'Total Collection',
-
 
         ],
             [
@@ -486,7 +484,6 @@ export class Cluster{
                 "Rs",
                 "",
                 "Rs",
-                "",
                 "Volts",
                 "A",
                 "Volts",

@@ -99,7 +99,8 @@ export class TransactionComponent implements OnInit {
       $(document).ready(function(){
         $('#table').DataTable()
         $('.paginate_button').css({"padding":"10px","border":"none"});
-        $('#table_length').html($('#table_length').html()+'<i class="fas fa-download" onclick="print()"></i>');
+        // $('#table_length').html($('#table_length').html()+'<i id="to_print">');
+        // $('#table_paginate').html($('#table_paginate').html()+'</i>here');
         $('.fas').css({"padding-left":"10px"});
       })
     },1000)
@@ -107,7 +108,12 @@ export class TransactionComponent implements OnInit {
 
   print(): void {
     let printContents, popupWin;
-    printContents = document.getElementsByClassName('table')["innerHTML"];
+    $('#table_length').css({"visibility":"hidden"});
+    $('#table_filter').css({"visibility":"hidden"});
+    $('#table_paginate').css({"visibility":"hidden"});
+
+
+    printContents = document.getElementById('to_print').innerHTML;
     popupWin = window.open('', '_blank', 'top=0,left=0,height=100%,width=auto');
     popupWin.document.open();
     popupWin.document.write(`
@@ -124,10 +130,13 @@ export class TransactionComponent implements OnInit {
               }
           </style>
         </head>
-    <body onload="window.print() , window.close();">${printContents}</body>
+    <body onload="window.print(),window.close();">${printContents}</body>
       </html>`
     );
     popupWin.document.close();
+    $('#table_length').css({"visibility":"visible"});
+    $('#table_filter').css({"visibility":"visible"});
+    $('#table_paginate').css({"visibility":"visible"});
 }
 
 
