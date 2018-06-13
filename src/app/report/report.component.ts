@@ -44,7 +44,7 @@ export class ReportComponent {
   selDrop1=[];
   selDrop2=[];
   selectedparameter =[this.selDrop1,this.selDrop2];
-
+  unit = [];
   data = [];  
   bubblechartData=[];
   polarchartData=[];
@@ -143,9 +143,20 @@ export class ReportComponent {
           this.chartData[1]=[this.selectedIds,this.polarchartData,element[0].unit,'polarArea'];
           this.chartsActive[1]=true;
         }
+        this.unit=[];
         for(let parameter of this.selectedparameter[0]){
           this.bubblechartData[id][parameter.name]=(extend.reduce((sum,element)=>sum +element[parameter.name],0));
-          console.log(this.bubblechartData)
+          if(parameter.name){
+            this.unit.push(this.parameters[0].filter(function(element){
+              return (element.name==parameter.name)
+            })[0].unit)
+          }
+          else{
+            this.unit.push(this.parameters[0].filter(function(element){
+              return (element.name==parameter)
+            })[0].unit)
+          }
+
         }
         this.tableData[id]=extend;
         // this.chartData.push(this.parsedInfo[id].reduce((sum,element)=>sum +element[item.name],0));

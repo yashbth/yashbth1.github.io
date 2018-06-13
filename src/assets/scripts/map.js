@@ -23,33 +23,36 @@ function myMap() {
     var temp=-1;
     var html='';
     for( var device of devices){
-      var lat = lanAndlon(parseInt(device.Latitude));
-      var lon = lanAndlon(parseInt(device.Longitude));
-      var address = '\"'+device.Location+'\"';
-      var id = '\"'+ device.DeviceID+'\"';
-      var cluster = '\"'+ device.Cluster_Name+'\"';
-      var deviceLoc = new google.maps.LatLng(lat,lon);
-      currentCluster = device.Cluster_Name;
-      if(currentCluster!=previousCluster){
-        temp=temp+1;
-        previousCluster=currentCluster;            
-        html=html+'<li><button class="btn" onclick="opacity('+"\'"+ currentCluster+"\'"+','+temp+')"style="width:100%;background:white;padding:1px">'+currentCluster+'</button></li>';
-      }
-      markers.push(new google.maps.Marker({position:deviceLoc,id:i,cluster:device.Cluster_Name,icon:'https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=•|'+iconSrc[temp%10]}));
-      markers[markers.length-1].setMap(map);
-      infowindow.push(new google.maps.InfoWindow({
-            content: "Decive Location: <b><span style = \"display: flex; justify-content: center; font-size:15px;\">"+device.Location+" ("+device.Cluster_Name+
-            ")</span><br></b>DeviceID: <b><span style = \"display: flex; justify-content: center; font-size:15px; color:#999\">  "+device.DeviceID+
-            "</span></b><br><span style = \"display: flex; justify-content: center; font-size:15px;\"><button type='button' onclick='redirect("+id+","+address+","+cluster+
-            ")'>Analyse</button></span>"
-      }));
-      google.maps.event.addListener(markers[markers.length-1],'click',function() {
-        for(var marker of markers){
-          infowindow[marker.id].close(map,markers[marker.id]);
+      if(JSON.parse(sessionStorage.user)[device.Cluster_Name]==1){
+        var lat = lanAndlon(parseInt(device.Latitude));
+        var lon = lanAndlon(parseInt(device.Longitude));
+        var address = '\"'+device.Location+'\"';
+        var id = '\"'+ device.DeviceID+'\"';
+        var cluster = '\"'+ device.Cluster_Name+'\"';
+        var deviceLoc = new google.maps.LatLng(lat,lon);
+        currentCluster = device.Cluster_Name;
+        if(currentCluster!=previousCluster){
+          temp=temp+1;
+          previousCluster=currentCluster;            
+          html=html+'<li><button class="btn" onclick="opacity('+"\'"+ currentCluster+"\'"+','+temp+')"style="width:100%;background:white;padding:1px">'+currentCluster+'</button></li>';
         }
-        infowindow[this.id].open(map,markers[this.id]);
-      });
-      i=i+1;
+        markers.push(new google.maps.Marker({position:deviceLoc,id:i,cluster:device.Cluster_Name,icon:'https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=•|'+iconSrc[temp%10]}));
+        markers[markers.length-1].setMap(map);
+        infowindow.push(new google.maps.InfoWindow({
+              content: "Decive Location: <b><span style = \"display: flex; justify-content: center; font-size:15px;\">"+device.Location+" ("+device.Cluster_Name+
+              ")</span><br></b>DeviceID: <b><span style = \"display: flex; justify-content: center; font-size:15px; color:#999\">  "+device.DeviceID+
+              "</span></b><br><span style = \"display: flex; justify-content: center; font-size:15px;\"><button type='button' onclick='redirect("+id+","+address+","+cluster+
+              ")'>Analyse</button></span>"
+        }));
+        google.maps.event.addListener(markers[markers.length-1],'click',function() {
+          for(var marker of markers){
+            infowindow[marker.id].close(map,markers[marker.id]);
+          }
+          infowindow[this.id].open(map,markers[this.id]);
+        });
+        i=i+1;
+      }
+   
     }
 
 
@@ -67,22 +70,7 @@ function redirect(id,address,cluster){
   document.cookie="location="+address+"; path=/";
   document.cookie="cluster="+cluster+"; path=/";
   document.cookie="id="+id+"; path=/"; 
-  if(getCookie("PHPSESSID")){
-    console.log(JSON.parse(sessionStorage.user)[getCookie('cluster')]);
-    setTimeout(()=>{
-      if(JSON.parse(sessionStorage.user)[getCookie('cluster')]==1){
-        $('#message_failure').html('');        
-        window.location.href = window.location.href + cluster+'/'+id+'/WaterDispenser';      
-      }
-      else{
-        $('#message_failure').html('<div class="alert alert-danger" style="justify-content: center; text-align: center;margin-bottom:0px"><span style="justify-content: center">Access Denied!</span></div>');
-      }
-    },1000)
-  }
-  else{
-    var modal = document.getElementById('id01');
-    modal.style.display = "block";
-  }
+  window.location.href= window.location.href + cluster+'/'+id+'/WaterDispenser'
 }
 
 function opacity(cluster,temp){

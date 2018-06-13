@@ -100,7 +100,7 @@ export class Cluster{
             [
                 "mins",
                 "",
-                "ºC",
+                "C",
                 "ppm",
                 "ppm",
                 "lph",
@@ -311,7 +311,7 @@ export class Cluster{
             [
                 "mins",
                 "",
-                "ºC",
+                "C",
                 "ppm",
                 "ppm",
                 "lph",
@@ -534,7 +534,7 @@ export class Cluster{
             [
                 "mins",
                 "",
-                "ºC",
+                "C",
                 "ppm",
                 "ppm",
                 "lph",
@@ -744,7 +744,7 @@ export class Cluster{
             [
                 "mins",
                 "",
-                "ºC",
+                "C",
                 "ppm",
                 "ppm",
                 "lph",
@@ -903,7 +903,7 @@ export class Cluster{
             "*Unit of Column1's data*",
             "*Unit of Column2's data*",
             //...
-            //(e.g. "L", "Rs", "", "A", "ºC", "ppm", "lph") IMPORTANT!: add "" corresponding to column having no units
+            //(e.g. "L", "Rs", "", "A", "C", "ppm", "lph") IMPORTANT!: add "" corresponding to column having no units
             
         ],
         ['*Table name of the table in database corresponding to "Water Dispensing Panel"*']
@@ -927,7 +927,7 @@ export class Cluster{
             "*Unit of Column1's data*",
             "*Unit of Column2's data*",
             //...
-            //(e.g. "L", "Rs", "", "A", "ºC", "ppm", "lph") IMPORTANT!: add "" corresponding to column having no units
+            //(e.g. "L", "Rs", "", "A", "C", "ppm", "lph") IMPORTANT!: add "" corresponding to column having no units
             
         ],
         ['*Table name of the table in database corresponding to "RO Parameters"*']
@@ -951,7 +951,7 @@ export class Cluster{
             "*Unit of Column1's data*",
             "*Unit of Column2's data*",
             //...
-            //(e.g. "L", "Rs", "", "A", "ºC", "ppm", "lph") IMPORTANT!: add "" corresponding to column having no units
+            //(e.g. "L", "Rs", "", "A", "C", "ppm", "lph") IMPORTANT!: add "" corresponding to column having no units
             
         ],
         ['*Table name of the table in database corresponding to "Cup Dispensing Panel"*']
@@ -975,7 +975,7 @@ export class Cluster{
             "*Unit of Column1's data*",
             "*Unit of Column2's data*",
             //...
-            //(e.g. "L", "Rs", "", "A", "ºC", "ppm", "lph") IMPORTANT!: add "" corresponding to column having no units
+            //(e.g. "L", "Rs", "", "A", "C", "ppm", "lph") IMPORTANT!: add "" corresponding to column having no units
             
         ],
         ['*Table name of the table in database corresponding to "Transaction Log"*']
@@ -998,7 +998,7 @@ export class Cluster{
             "*Unit of Column1's data*",
             "*Unit of Column2's data*",
             //...
-            //(e.g. "L", "Rs", "", "A", "ºC", "ppm", "lph") IMPORTANT!: add "" corresponding to column having no units
+            //(e.g. "L", "Rs", "", "A", "C", "ppm", "lph") IMPORTANT!: add "" corresponding to column having no units
             
         ],
         ['*Table name of the table in database corresponding to "Supervisor Login"*']
@@ -1022,7 +1022,7 @@ export class Cluster{
             "*Unit of Column1's data*",
             "*Unit of Column2's data*",
             //...
-            //(e.g. "L", "Rs", "", "A", "ºC", "ppm", "lph") IMPORTANT!: add "" corresponding to column having no units
+            //(e.g. "L", "Rs", "", "A", "C", "ppm", "lph") IMPORTANT!: add "" corresponding to column having no units
             
         ],
         ['*Table name of the table in database corresponding to "operator attendance"*']

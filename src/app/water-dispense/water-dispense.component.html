@@ -32,14 +32,14 @@
         </form>
         <app-charts [property1]="property1" [property2]="property2"></app-charts>
         <div class="dateRange text-center">
-            <label for="sel2" class="sel2"><b>Select a custom date range to analyze:</b></label>
+            <label for="sel2" class="sel2"><b>Select a custom date range to analyse:</b></label>
             <br>
             <div class="from_to">
                 <label for="date"><span class="pad">From:</span> <input id="date_from" type="date" name="from" [(ngModel)]="fromDate" ></label>
                 <label><span class="pad"> To:</span><input id="date_to" type="date" name="to" [(ngModel)]="toDate"></label> 
             </div>
             <div class="pad">
-                <button type="submit" class="btn btn-secondary" (click)="generateGraph()">Analyse</button>                        
+                <button type="submit" class="btn btn-info" (click)="generateGraph()">Analyse</button>                        
             </div>
         </div>
     </div>
