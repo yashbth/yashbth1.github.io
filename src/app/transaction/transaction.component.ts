@@ -108,15 +108,16 @@ export class TransactionComponent implements OnInit {
 
   print(): void {
     let printContents, popupWin;
-    $('#table_length').css({"visibility":"hidden"});
+    $('#table_length').css({"display":"none"});
     $('#table_filter').css({"visibility":"hidden"});
     $('#table_paginate').css({"visibility":"hidden"});
 
 
     printContents = document.getElementById('to_print').innerHTML;
-    popupWin = window.open('', '_blank', 'top=0,left=0,height=100%,width=auto');
+    popupWin = window.open('', '_blank', 'top=10,left=0,height=100%,width=auto');
     popupWin.document.open();
     popupWin.document.write(`
+      <br>
       <html>
         <head>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">    
@@ -134,7 +135,7 @@ export class TransactionComponent implements OnInit {
       </html>`
     );
     popupWin.document.close();
-    $('#table_length').css({"visibility":"visible"});
+    // $('#table_length').css({"visibility":"visible"});
     $('#table_filter').css({"visibility":"visible"});
     $('#table_paginate').css({"visibility":"visible"});
 }
