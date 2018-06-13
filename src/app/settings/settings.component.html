@@ -15,7 +15,7 @@
             <h6 style="padding-top: 10px">Confirm Password:</h6>
             <input type="password" name="new_pass_check" required><br><br>
   
-            <input type="submit" class="rounded btn-secondary" value="Change Password">
+            <input type="submit" class="rounded btn-info" value="Change Password">
         </form>
       </div>
       <!-- <button id="change_pass_btn" (click)="show('CP')">Change Password</button> -->
@@ -50,13 +50,44 @@
                   </div><br><br>
               <!-- <span><input type="checkbox" (click)="toggle(this,'cluster[]')" />Select all</span><br/><br> -->
               <div >
-                  <h6>Privileges:</h6>
-                  <div class="checkbox text-justify" >
-                  <span *ngFor="let panel of dropdown" [class.hide]="panel.division=='Analysis'"><input type="checkbox" name="panel[]" value="{{panel.columnName}}" *ngIf="panel.division!='Analysis'">{{panel.panelName}}<br></span>
-                  </div>    
-                  <h6><span><input type="checkbox" (click)="toggle(this,'panel[]')" />Select all</span><br/><br></h6>                
+                  <h6>Privileges:</h6><br>
+                  <div class="checkbox text-justify" style="display:none">
+                  <span *ngFor="let panel of dropdown" [class.hide]="panel.division=='Analysis'"><input type="checkbox" name="panel[]" value="{{panel.columnName}}" *ngIf="panel.division!='Analysis'" id="{{panel.columnName}}_create">{{panel.panelName}}<br></span>
+                  </div> 
+                  <div class="col-sm-12" style="display: flex;justify-content: center">
+                    <ng-multiselect-dropdown
+                    [placeholder]="'Select Panels'"
+                    [data]="dropdown"
+                    [(ngModel)]="selectedpanel[0]"
+                    [settings]="paneldropdownSettings"
+                    (onSelect)="onpanelSelect($event,'_create')"
+                    (onDeSelect)="onpanelDeSelect($event,'_create')"
+                    (onDeSelectAll)="onDeSelectAll($event,'panel[]')"
+                    (onSelectAll)="onSelectAll($event,'panel[]')">
+                  </ng-multiselect-dropdown> 
+                  </div>     
+             
               </div>
-              <input type="submit" class="rounded btn-secondary" value="Create User">
+              <br>
+              <div class="text-center">
+                <h6>Internal Privileges:</h6>  
+                <div *ngFor = "let parameter of parameters;" class = 'checkbox'  style="display: none;">
+                  <input type="checkbox" name="property[]" value='{{parameter.name}}' id="{{parameter.name}}_create">{{parameter.title}}<br>
+                </div> 
+                <div class="col-sm-12" style="display: flex;justify-content: center">
+                  <ng-multiselect-dropdown
+                  [placeholder]="'Select Properties'"
+                  [data]="parameters"
+                  [(ngModel)]="selectedparameter[0]"
+                  [settings]="propertydropdownSettings"
+                  (onSelect)="onpropertySelect($event,'_create')"
+                  (onDeSelect)="onpropertyDeSelect($event,'_create')"
+                  (onDeSelectAll)="onDeSelectAll($event,'property[]')"
+                  (onSelectAll)="onSelectAll($event,'property[]')">
+                </ng-multiselect-dropdown>
+                </div> 
+            </div><br>
+              <input type="submit" class="rounded btn-info" value="Create User">
           </form>
         </div>
     </div><br><br>
@@ -68,7 +99,7 @@
         <div class="pad">
             <h6>Please enter username:</h6>
             <input type="text"   name="username" value="{{UserName}}">
-            <input type="submit" class=" btn-secondary" value="Check Privileges" formaction="{{url}}/get_user.php"><br><br>
+            <input type="submit" class=" btn-info" value="Check Privileges" formaction="{{url}}/get_user.php"><br><br>
             <div id="priv" style="visibility: hidden;">
               <h6>Clusters:</h6>
               <div class="text-left">
@@ -87,23 +118,53 @@
               </ng-multiselect-dropdown>
               </div><br><br>              
               <h6>Privileges:</h6>
-              <div class="checkbox text-justify">
+              <div class="checkbox text-justify" style="display: none">
               <input type="checkbox" name="panelP[]" value="Water_Dispensing_Panel">Water Dispensing Panel<br>
               <input type="checkbox" name="panelP[]" value="RO_Parameters">RO Parameters<br>
               <input type="checkbox" name="panelP[]" value="Transaction_Log">Transaction Log<br>
               <input type="checkbox" name="panelP[]" value="Operator_Attendance">Operator Attendance<br>
               <input type="checkbox" name="panelP[]" value="Cup_Dispensing_Panel">Cup Dispensing Panel<br>
               <input type="checkbox" name="panelP[]" value="Supervisor_Data">Supervisor Data<br>
-              <input type="checkbox" name="panelP[]" value="Supervisor_Data">Analysis Panel<br>
-              </div>    
+              <input type="checkbox" name="panelP[]" value="Analysis_Panel">Analysis Panel<br>
               <h6><input type="checkbox" (click)="toggle(this,'panelP[]')">Select all<br><br></h6>
-
-              <input type="submit" class="rounded btn-secondary" value="Save changes" formaction="{{url}}/edit_user.php">
-              <input type="submit" class="rounded btn-secondary" style="margin-left: 1px;" value="Delete User" onclick="return confirm('Warning! The user will be permanently deleted from the database!')" formaction="{{url}}/delete_user.php"><br><br>
+              </div>    
+              
+              <div class="col-sm-12" style="display: flex;justify-content: center">
+                <ng-multiselect-dropdown *ngIf="selectedpanel[1].length!=0"
+                [placeholder]="'Select Panels'"
+                [data]="dropdown"
+                [(ngModel)]="selectedpanel[1]"
+                [settings]="paneldropdownSettings"
+                (onSelect)="onpanelSelect($event,'')"
+                (onDeSelect)="onpanelDeSelect($event,'')"
+                (onDeSelectAll)="onDeSelectAll($event,'panelP[]')"
+                (onSelectAll)="onSelectAll($event,'panelP[]')">
+              </ng-multiselect-dropdown> 
+              </div>  <br>  
+              <div class="text-center">
+                <h6>Internal Privileges:</h6>  
+                <div *ngFor = "let parameter of parameters;" class = 'checkbox'  style="display: none;">
+                  <input type="checkbox" name="propertyP[]" value='{{parameter.name}}' id="{{parameter.name}}">{{parameter.name}}<br>
+                </div> 
+                <div class="col-sm-12" style="display: flex;justify-content: center">
+                  <ng-multiselect-dropdown *ngIf="selectedparameter[1].length!=0"
+                  [placeholder]="'Select Properties'"
+                  [data]="parameters"
+                  [(ngModel)]="selectedparameter[1]"
+                  [settings]="propertydropdownSettings"
+                  (onSelect)="onpropertySelect($event,'')"
+                  (onDeSelect)="onpropertyDeSelect($event,'')"
+                  (onDeSelectAll)="onDeSelectAll($event,'propertyP[]')"
+                  (onSelectAll)="onSelectAll($event,'propertyP[]')">
+                </ng-multiselect-dropdown>
+                </div> 
+            </div><br>
+              <input type="submit" class="rounded btn-info" value="Save changes" formaction="{{url}}/edit_user.php">
+              <input type="submit" class="rounded btn-info" style="margin-left: 1px;" value="Delete User" onclick="return confirm('Warning! The user will be permanently deleted from the database!')" formaction="{{url}}/delete_user.php"><br><br>
 
               <h6>Change Password:</h6>              
               <input type="password"   name="admin_pass">
-              <input type="submit" class="btn-secondary" value="Save" formaction="{{url}}/admin_pass_change.php">
+              <input type="submit" class="btn-info" value="Save" formaction="{{url}}/admin_pass_change.php">
               
             </div>
         </div>

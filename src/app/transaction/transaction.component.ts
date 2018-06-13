@@ -107,7 +107,7 @@ export class TransactionComponent implements OnInit {
 
   print(): void {
     let printContents, popupWin;
-    printContents = document.getElementById('table').innerHTML;
+    printContents = document.getElementsByClassName('table')["innerHTML"];
     popupWin = window.open('', '_blank', 'top=0,left=0,height=100%,width=auto');
     popupWin.document.open();
     popupWin.document.write(`

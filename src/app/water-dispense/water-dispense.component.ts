@@ -2,7 +2,6 @@ import { Component, Input, OnInit,OnChanges, AfterContentChecked,DoCheck, AfterC
 import {  Router,NavigationEnd, ActivationStart,ActivatedRoute} from '@angular/router'
 
 import {FetchWaterDispenseDataService} from '../fetch-water-dispense-data.service'
-import {waterDispenserParam} from './waterDispenserparam'
 import {Cluster} from '../delhiCluster'
 import { GlobalService } from '../global.service';
 import { CookieService } from 'angular2-cookie/core';
