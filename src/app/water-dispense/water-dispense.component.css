@@ -48,6 +48,9 @@ button{
 .sel2{
     padding-top: 4px;   
 }
+.hide{
+    display: none;
+}
 
 @media only screen and (max-width:792px){
     .dateRange{

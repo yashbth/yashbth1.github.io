@@ -131,7 +131,7 @@ export class TransactionComponent implements OnInit {
               }
           </style>
         </head>
-    <body onload="window.print() ;">${printContents}</body>
+    <body onload="window.print(),window.close();">${printContents}</body>
       </html>`
     );
     popupWin.document.close();

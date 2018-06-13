@@ -20,7 +20,7 @@
       <ul class="navbar-nav Settings">
         <app-search-devices appClickDetection></app-search-devices>
         <li class="nav-item padTop">
-          <a class="nav-link" routerLink="/{{cluster}}/{{id}}/settings" [class.active-options]="currDiv=='settings'" (click)="cookieService.put('prevDiv','settings')">Settings</a>
+          <a class="nav-link" routerLink="/{{cluster}}/{{id}}/settings" [class.active-options]="currDiv=='Settings'" (click)="cookieService.put('prevDiv','Settings')">Settings</a>
         </li>
         <li class="nav-item padTop">
           <a class="nav-link" routerLink="/{{cluster}}/{{id}}/report" [class.active-options]="currDiv=='report'" (click)="cookieService.put('prevDiv','report')" *ngIf="user['Analysis_Panel']==1">Analysis</a>

@@ -65,21 +65,18 @@ export class OperatorComponent implements OnInit {
   getOperators(filename):void{
     this.operators=[];    
     this.service.getData(this.id,this.table,filename).subscribe(operators=>this.operators=operators,(err)=>console.error(err),()=>{  
-      console.log(this.operators,'1');
-      for(let operator of this.operators){
-       console.log(operator,'2');
-       console.log(operator.OperatorID.substr(0,3) ,'3');
-
-
-        // var re = /3↵/gi; 
-        operator.OperatorID = operator.OperatorID.substr(0,10);
-      }
-
-      console.log(this.operators,'4');
-  
       if( !this.operators || Object.keys(this.operators).length==0 ){
         this.router.navigateByUrl('/'+this.cluster+'/'+this.id +'/error')              
       }
+      for(let operator of this.operators){
+        //  console.log(operator,'2');
+        //  console.log(operator.OperatorID.substr(0,3) ,'3');
+  
+  
+          // var re = /3↵/gi; 
+          operator.OperatorID = operator.OperatorID.substr(0,10);
+        }
+  
       if( this.checkOperators){     
         if(this.operators.length){
           this.operators.map(operator=>operator.OperatorID.trim());

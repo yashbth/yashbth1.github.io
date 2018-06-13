@@ -26,6 +26,12 @@ foreach($_POST['panelP'] as $selected){
 foreach($_POST['clusterP'] as $selected){
     $update_query .= " , ". $selected . " = 1 " ;
 }
+
+foreach($_POST['propertyP'] as $selected){
+    echo ($selected);
+    echo ('<br>');
+    $update_query .= " , ". $selected . " = 1 " ;
+}
 $update_query .= " WHERE Username = " . $username;
 
 $delete_query='';
@@ -50,7 +56,6 @@ if($result1->num_rows>0){
         
     }   
 }
-
 $resultU = $conn->query($update_query);
 $conn->close();
 

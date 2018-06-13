@@ -68,11 +68,11 @@ export class ReportComponent {
     this.from=this.from.toISOString().slice(0,10);
     for (var table of this.tables){
       let i=0;
-      for(var property of this.Cluster['NISE'][table][1]){
-        if(this.parameters[0].indexOf(property)==-1){
+      for(var property of this.Cluster['NISE'][table][0]){
+        if(this.parameters[0].indexOf(property)==-1 && this.global.user["0"][property]==1){
           let obj = {
-            name : this.Cluster['NISE'][table][0][i],
-            title : property,
+            name : property,
+            title : this.Cluster['NISE'][table][1][i],
             unit : this.Cluster['NISE'][table][2][i]
           }
           this.parameters[0].push(obj);

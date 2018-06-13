@@ -7,7 +7,7 @@ session_start();
     header("Access-Control-Allow-Origin: http://localhost:4200");
     header('Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE, OPTIONS');
     header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token');
-    header('Access-Control-Allow-Credentials: true');
+    header('Access-Control-Allow-Credential: true');
 
     $username = $_POST['uname'];
     $password = $_POST['psw'];
@@ -19,7 +19,7 @@ session_start();
             if ($username==$row['Username'] && password_verify($password,$row['Password'])) {
                 $header = json_encode(['typ' => 'JWT', 'alg' => 'HS256']);
                 // Create token payload as a JSON string
-                    $payload = json_encode([$row,'exp'=>time()+3600]);
+                    $payload = json_encode([$row,'exp'=>time()+3600*9]);
                 
                     // Encode Header to Base64Url String
                     $base64UrlHeader = str_replace(['+', '/', '='], ['-', '_', ''], base64_encode($header));

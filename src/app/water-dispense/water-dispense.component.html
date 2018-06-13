@@ -10,8 +10,8 @@
 
     <div class="container">
         <div class=" innerContainer">
-            <div class="col-sm-3 text-center tabs" *ngFor="let name of data[1];let rowIndex = index;">
-                    <dl>
+            <div class="col-sm-3 text-center tabs" *ngFor="let name of data[1];let rowIndex = index;" [class.hide]="globalservice.user['0'][data[0][rowIndex]]==0">
+                    <dl *ngIf="globalservice.user['0'][data[0][rowIndex]]==1">
                         <dt>{{name}}</dt>
                         <dd *ngIf = "data[2][rowIndex] != 'Rs'" id="{{data[0][rowIndex]}}">{{info[0][data[0][rowIndex]]}} {{data[2][rowIndex]}}</dd>
                         <dd *ngIf = "data[2][rowIndex] == 'Rs'" >{{data[2][rowIndex]}} {{info[0][data[0][rowIndex]]}}</dd>
@@ -24,7 +24,7 @@
             <div class="form-group">
                 <label for="sel1" >Graph Select :</label>
                 <select class="form-control" [(ngModel)]="property1" name="data">
-                    <option *ngFor="let name of data[1];let rowIndex = index" [value]="data[0][rowIndex]" >{{name}}</option>
+                    <option *ngFor="let name of data[1];let rowIndex = index" [value]="data[0][rowIndex]" [class.hide]="globalservice.user['0'][data[0][rowIndex]]==0"><span *ngIf="globalservice.user['0'][data[0][rowIndex]]==1">{{name}}</span></option>
                 </select>
                
 
