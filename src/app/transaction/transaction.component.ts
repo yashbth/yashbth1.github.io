@@ -99,9 +99,36 @@ export class TransactionComponent implements OnInit {
       $(document).ready(function(){
         $('#table').DataTable()
         $('.paginate_button').css({"padding":"10px","border":"none"});
+        $('#table_length').html($('#table_length').html()+'<i class="fas fa-download" onclick="print()"></i>');
+        $('.fas').css({"padding-left":"10px"});
       })
     },1000)
   }
+
+  print(): void {
+    let printContents, popupWin;
+    printContents = document.getElementById('table').innerHTML;
+    popupWin = window.open('', '_blank', 'top=0,left=0,height=100%,width=auto');
+    popupWin.document.open();
+    popupWin.document.write(`
+      <html>
+        <head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">    
+          <style>
+
+            @media print {
+              body {-webkit-print-color-adjust: black !important;}
+              th{
+                color: black !important;
+              }
+              }
+          </style>
+        </head>
+    <body onload="window.print() , window.close();">${printContents}</body>
+      </html>`
+    );
+    popupWin.document.close();
+}
 
 
 

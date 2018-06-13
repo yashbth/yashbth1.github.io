@@ -27,6 +27,7 @@ export class SettingsComponent implements OnInit {
   prevClusters = [];
   // url = "http://localhost/~yashbahetiiitk/swajal_dashboard/src/assets/Php";
   url = "http://localhost:8000/assets/Php";
+  // url = "/iiot/assets/Php"
   
   
   constructor(private Cluster: Cluster, private cookieService:CookieService,private global : GlobalService) { }
@@ -119,6 +120,10 @@ check(source,panel_name){
     console.log((checkboxes[5] as HTMLInputElement).checked = true);
     this.cookieService.put('Supervisor_Data','01');
   }
+  if(this.cookieService.get('Analysis_Panel')=='11'){
+    console.log((checkboxes[6] as HTMLInputElement).checked = true);
+    this.cookieService.put('Analysis_Panel','01');
+  }
   for(let cluster of this.clusters){
     if(document.getElementById(cluster)){
       console.log('called1');
@@ -158,6 +163,10 @@ check(source,panel_name){
   if(this.cookieService.get('Supervisor_Data')=='01'){
     console.log((checkboxes[5] as HTMLInputElement).checked = true);
     this.cookieService.put('Supervisor_Data','00');
+  }
+  if(this.cookieService.get('Analysis_Panel')=='01'){
+    console.log((checkboxes[6] as HTMLInputElement).checked = true);
+    this.cookieService.put('Analysis_Panel','00');
   }
   for(let cluster of this.clusters){
     if(document.getElementById(cluster)){

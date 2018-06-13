@@ -41,14 +41,10 @@ export const Dropdown : Object[]=[{
   
     },
     {
-        division : 'Analysis',
-        id: 'analysis'  ,
-        columnName : ''
-    },
-    {
         division : 'Report',
         id: 'report'  ,
-        columnName : ''
+        columnName : 'Analysis_Panel',
+        panelName:'Analysis Panel'
     }
 ]
     

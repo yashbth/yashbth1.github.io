@@ -1,3 +1,4 @@
+<?php ob_start() ?>
 <?php require_once("./db_connection.php"); ?>
 <?php require_once("./functions.php"); ?>
 
@@ -38,7 +39,9 @@ $conn->close();
 
 setcookie('priv-vis','1',time() + (60), "/");
 
+// header("Location: "."https://swajal.in/iiot/#/".$_COOKIE['cluster']."/".$_COOKIE['id']."/settings");
 header("Location: "."http://localhost:4200/#/".$_COOKIE['cluster']."/".$_COOKIE['id']."/settings");
+
 exit;
 
 ?>

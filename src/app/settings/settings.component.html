@@ -52,7 +52,7 @@
               <div >
                   <h6>Privileges:</h6>
                   <div class="checkbox text-justify" >
-                  <span *ngFor="let panel of dropdown" [class.hide]="panel.division=='Analysis' || panel.division=='Report'"><input type="checkbox" name="panel[]" value="{{panel.columnName}}" *ngIf="panel.division!='Analysis' && panel.division!='Report'">{{panel.panelName}}<br></span>
+                  <span *ngFor="let panel of dropdown" [class.hide]="panel.division=='Analysis'"><input type="checkbox" name="panel[]" value="{{panel.columnName}}" *ngIf="panel.division!='Analysis'">{{panel.panelName}}<br></span>
                   </div>    
                   <h6><span><input type="checkbox" (click)="toggle(this,'panel[]')" />Select all</span><br/><br></h6>                
               </div>
@@ -94,6 +94,7 @@
               <input type="checkbox" name="panelP[]" value="Operator_Attendance">Operator Attendance<br>
               <input type="checkbox" name="panelP[]" value="Cup_Dispensing_Panel">Cup Dispensing Panel<br>
               <input type="checkbox" name="panelP[]" value="Supervisor_Data">Supervisor Data<br>
+              <input type="checkbox" name="panelP[]" value="Supervisor_Data">Analysis Panel<br>
               </div>    
               <h6><input type="checkbox" (click)="toggle(this,'panelP[]')">Select all<br><br></h6>
 

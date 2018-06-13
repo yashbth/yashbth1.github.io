@@ -1,3 +1,5 @@
+<?php ob_start() ?>
+
 <?php require_once("./db_connection.php"); ?>
 <?php require_once("./functions.php"); ?>
 
@@ -81,4 +83,5 @@ $result = $conn->query($sql);
 $conn->close();
 
 redirect_with_message('message_success',"New user (".$_POST["username"]. ") successfully created.");
+
 ?>

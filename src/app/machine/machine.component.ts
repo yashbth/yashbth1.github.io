@@ -48,7 +48,7 @@ export class MachineComponent implements OnInit{
 
   logout(){
     this.cookieService.removeAll();
-    window.location.href= '/';
+    window.location.href= 'https://swajal.in/iiot/';
   }
 
   settingToggle(){
