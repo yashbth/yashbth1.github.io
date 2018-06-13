@@ -1,3 +1,4 @@
+<?php ob_start() ?>
 <?php require_once("./db_connection.php"); ?>
 <?php require_once("./functions.php"); ?>
 
@@ -37,8 +38,14 @@ else{
 }
 $conn->close();
 
+echo('1');
+// header("Location: "."https://swajal.in/iiot/#/".$_COOKIE['cluster']."/".$_COOKIE['id']."/settings");
 header("Location: "."http://localhost:4200/#/".$_COOKIE['cluster']."/".$_COOKIE['id']."/settings");
+
+echo('2');
 exit;
+echo('3');
+
 
 
 ?>

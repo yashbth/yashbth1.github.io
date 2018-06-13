@@ -35,7 +35,6 @@ export class Cluster{
             "Total_collection_from_coin",
             "pH_of_water",
             "Total_Collection_Sale",
-            "Total_Coin_Count1",
             // "Tank_Level",
             "TimeStamp",
             "DeviceID",
@@ -47,7 +46,6 @@ export class Cluster{
             'Total Collection From Coin',
             'pH Of Water',
             'Total Collection',
-            'Total Coin Count',
             // 'Tank Level'
             ],
             [
@@ -57,7 +55,6 @@ export class Cluster{
                 "Rs",
                 "",
                 "Rs",
-                "",
                 // "%",        
                 "",
                 "",
@@ -249,7 +246,6 @@ export class Cluster{
             "Total_collection_from_coin",
             "pH_of_water",
             "Total_Collection_Sale",
-            "Total_Coin_Count1",
 
             "TimeStamp",
             "DeviceID",
@@ -261,7 +257,6 @@ export class Cluster{
             'Total Collection From Coin',
             'pH Of Water',
             'Total Collection',
-            'Total Coin Count',
 
         ],
             [
@@ -271,7 +266,6 @@ export class Cluster{
                 "Rs",
                 "",
                 "Rs",
-                "",
      
                 "",
                 "",
@@ -460,7 +454,6 @@ export class Cluster{
             "Total_collection_from_coin",
             "pH_of_water",
             "Total_Collection_Sale",
-            "Total_Coin_Count1",
             "PV_Voltage",
             "PV_Current",
             "Battery_Voltage",
@@ -477,7 +470,6 @@ export class Cluster{
             'Total Collection From Coin',
             'pH Of Water',
             'Total Collection',
-            'Total Coin Count',
             "PV Voltage",
             "PV Current",
             "Battery Voltage",
@@ -492,7 +484,6 @@ export class Cluster{
                 "Rs",
                 "",
                 "Rs",
-                "",
                 "Volts",
                 "A",
                 "Volts",

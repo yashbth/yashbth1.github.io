@@ -80,6 +80,7 @@ form{
 }
 #deviceLoc{
     font-size: 1.17em;
+
 }
 .dateRange{
     display: flex;
@@ -88,6 +89,7 @@ form{
 button{
     padding: 3px 15px;
     background: #33334d
+    
 }
 .pad{
     padding: 0px 10px; 
@@ -105,3 +107,8 @@ button{
     }
 }
 
+.fas{
+    font-size: 20px;
+    color: #164b83;
+    cursor: pointer;
+}
