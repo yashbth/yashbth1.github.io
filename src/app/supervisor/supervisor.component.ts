@@ -44,7 +44,7 @@ export class SupervisorComponent implements OnInit {
   }
   ngOnInit() { 
     if(this.jwtHelper.isTokenExpired(this.globalservice.token)){
-      window.location.href= '/';
+      window.location.href= 'https://swajal.in/iiot';
     }
     this.id[0] = this.route.snapshot.paramMap.get('id');
     this.panel = this.route.snapshot.paramMap.get('panel');       

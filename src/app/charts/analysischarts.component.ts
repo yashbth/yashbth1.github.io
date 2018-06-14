@@ -138,7 +138,7 @@ export class AnalysisChartsComponent{
               min:1,
               stepSize: 1,
               callback: function(value, index, values) {
-                return  ids[ids.length-1-index] ;
+                return  ids[value-1] ;
                }
             }
         }]

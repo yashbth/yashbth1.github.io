@@ -67,10 +67,10 @@ export class ReportComponent {
     this.from.setDate(this.from.getDate()-7);
     this.from=this.from.toISOString().slice(0,10);
     for (var table of this.tables){
-      let i=0;
+      var i=0;
       for(var property of this.Cluster['NISE'][table][0]){
         if(this.parameters[0].indexOf(property)==-1 && this.global.user["0"][property]==1){
-          let obj = {
+          var obj = {
             name : property,
             title : this.Cluster['NISE'][table][1][i],
             unit : this.Cluster['NISE'][table][2][i]
@@ -85,17 +85,15 @@ export class ReportComponent {
   generateReport(){
 
   this.request=[];    
-    let date= new Date(this.from);
-    date.setDate(date.getDate()-1);
     for(var t of this.tables){
-    let table = this.Cluster[this.cluster][t][3]; 
-      this.request.push(this.service.getChartData('report.php',this.selectedIds,table,date.toISOString().slice(0,10),this.to));
+    var table = this.Cluster[this.cluster][t][3]; 
+      this.request.push(this.service.getChartData('report.php',this.selectedIds,table,this.from,this.to));
     }
     forkJoin(this.request).subscribe(info=>this.info=info,(err)=>console.log(err),()=>{
         for( var id of this.selectedIds){
           this.parsedInfo[id]=[];        
           this.bubblechartData[id]=[];  
-          for(let i=0;i<5;i++){ 
+          for(var i=0;i<5;i++){ 
             this.parsedInfo[id][i]=this.info[i].filter(function(element){
               return (element["DeviceID"]==id);
           })
@@ -120,38 +118,54 @@ export class ReportComponent {
     else{
       $('html').css({"height":"auto"});
     } 
+
   }
   setChartData(item : any,chart){
+    console.log("hi");
     if(chart==1||chart==2){
       this.polarchartData=[];
       for (var id of this.selectedIds){
-        let temp=[];
-        let extend=[];      
-        for(let table of this.tables){
-          temp[table]=this.selectedparameter[0].filter((element,index,option)=>{
+        var temp=[];
+        var extend=[]; 
+        var prop=[] 
+        var i=0;    
+        for(var table of this.tables){
+          prop[table]=this.selectedparameter[0].filter((element,index,option)=>{
             return ((this.Cluster[this.cluster][table][0].indexOf(element.name))>=0)
         })
-          temp[table]=this.dataRise(this.parsedInfo[id][0],temp[table]);
-          extend=this.mergeResult(extend,temp[table]); 
+          console.log(prop[table],"prop")
+        
+          temp[table]=this.dataRise(this.parsedInfo[id][i],prop[table]);
+          console.log(temp,"temp",i)
+
+          if(extend.length!=0){
+            extend=this.mergeResult(extend,temp[table]); 
+          }
+          else{
+            extend= temp[table];
+          }
+          i=i+1; 
         }
         if(chart==1){
-          let element=this.parameters[0].filter(function(element){
+          var element=this.parameters[0].filter(function(element){
             return (element.name==item.name)
           })
           this.polarchartData.push(extend.reduce((sum,element)=>sum +element[item.name],0));
 
           this.chartData[1]=[this.selectedIds,this.polarchartData,element[0].unit,'polarArea'];
+          console.log(this.chartData,"polar");
           this.chartsActive[1]=true;
         }
         this.unit=[];
-        for(let parameter of this.selectedparameter[0]){
-          this.bubblechartData[id][parameter.name]=(extend.reduce((sum,element)=>sum +element[parameter.name],0));
+        for(var parameter of this.selectedparameter[0]){
           if(parameter.name){
+          this.bubblechartData[id][parameter.name]=(extend.reduce((sum,element)=>sum +parseFloat(element[parameter.name]),0));
             this.unit.push(this.parameters[0].filter(function(element){
               return (element.name==parameter.name)
             })[0].unit)
           }
           else{
+          this.bubblechartData[id][parameter.name]=(extend.reduce((sum,element)=>sum +parseFloat(element[parameter]),0));
             this.unit.push(this.parameters[0].filter(function(element){
               return (element.name==parameter)
             })[0].unit)
@@ -218,39 +232,43 @@ export class ReportComponent {
     this.r_bubble_row = [];
     this.data = [];
     this.x_bubble = this.selectedIds;
-    for(let parameter of this.selectedparameter[0]){
+    for(var parameter of this.selectedparameter[0]){
       this.y_bubble.push(parameter.title);
-      for(let divID of this.selectedIds){
-
+      for(var divID of this.selectedIds){
+        console.log(this.bubblechartData[divID][parameter.name])
         this.r_bubble_row.push(this.bubblechartData[divID][parameter.name]);
         //TODO: define get_r (outputs the total in the given data range)
       }
       this.r_bubble_row=this.normalise(this.r_bubble_row);
       this.r_bubble.push(this.r_bubble_row);
+      console.log(this.r_bubble,'r_bubble');
       this.r_bubble_row = [];
       
     }
   
     this.x_index = 0;
-    for(let x_element of this.x_bubble){
+    console.log(this.x_bubble,this.y_bubble,'X,y _buuble');
+    for(var x_element of this.x_bubble){
       this.y_index = 0;
-      for(let y_element of this.y_bubble){
+      for(var y_element of this.y_bubble){
         this.x_data = this.x_index+1;
         this.y_data = this.y_index+1;
         this.r_data = this.r_bubble[this.y_index][this.x_index];
+        console.log(this.x_data,this.y_data,this.r_data,'x,y,r _data');
         this.y_index += 1;
         this.data.push({x:this.x_data,y: this.y_data,r :this.r_data});
-        
+        console.log(this.data,'data in for loop');
         //TODO: add labels as in x_bubble[y-index], y_bubble[y_index]
       }
       this.x_index += 1;
     }
     this.chartData[0]=[this.y_bubble,this.data,this.selectedIds,'bubble'];  
+    console.log(this.chartData,"bubble");
   }
   
   normalise(r_bubble_row){
     var k=r_bubble_row[0];
-    for(let temp of r_bubble_row){
+    for(var temp of r_bubble_row){
       if(temp>k){
         k = temp;
       }
@@ -273,47 +291,132 @@ export class ReportComponent {
 
 
 
-
-
-
-
-  dataRise(inputArray,properties){
-    let dates=[]
-    let prevRowData=inputArray[0];
-    // console.log(prevRowData,properties);
-    let i=0;
-    let lastDay_rowIndex=0;
+  dataRise( inputArray : any,properties : any){
+    var dates=[]
+    if(properties.length==0){
+      return dates;
+    }
+    var firstrowData=inputArray[0];
+    var prevRowData=inputArray[0];
+    console.log(inputArray,"input i");
+    var i=0;
+    var lastDay_rowIndex=0;
     for( var row of inputArray){
       i=i+1;
       if(prevRowData['date']!=row['date'] || inputArray.length==i){
+        console.log(prevRowData['date'],row['date'],i,lastDay_rowIndex,'here');
         var temp={}
+        console.log(properties,"properties i")
         for( var data of properties){
-          var prevData=dates.length?inputArray[lastDay_rowIndex][data.name]:0
+          // var prevData=dates.length?inputArray[lastDay_rowIndex][data.name]:0
+          if(data.name.toLowerCase().search("total")==-1){
+            temp[data.name]=prevRowData[data.name];
+          }
+          else{
+            temp[data.name]=prevRowData[data.name]-firstrowData[data.name];
+          }
           temp["date"]= prevRowData["date"];
-          temp[data.name]=prevRowData[data.name]-prevData;
         }
+        // console.log(temp,prevData,prevRowData,"temp push dates i")
         dates.push(temp);       
-        lastDay_rowIndex=i-2;                    
+        lastDay_rowIndex=i-2;
+        firstrowData=row;
       }
     prevRowData = row; 
     }
-    dates.shift()
+    // dates.shift()
+    console.log(dates,"dates i");
     return dates;
   }
 
-  mergeResult(array1,array2){
-    let mergedArray=[];
-    let i=0;
-    for(let row of array2){
-      mergedArray.push($.extend( array1[i], array2[i] ));
-      i=i+1;              
+  mergeResult(array1:any,array2:any){
+    console.log(array1,array2,"1")
+    var mergedArray=[];
+    var i=0,j=0;
+    if(array2.length==0){
+      return array1;
+    }
+    if(array1.length==0){
+      return array2
+    }
+    var array1_temp = array1;
+    var array2_temp = array2;
+
+    var keys1=Object.keys(array1[0]);
+    var keys2= Object.keys(array2[0]);
+    
+    console.log(keys1,keys2,"ss")
+    var tempObj={};
+    for(var key of keys1){
+      tempObj[key]=0;
+    }
+    array1_temp.push(tempObj);console.log(array1_temp,"2");
+    array1 = array1_temp;
+    var tempObj2={};
+    for(var keyz of keys2){
+      tempObj2[keyz]=0;
+    }
+    array2_temp.push(tempObj2);console.log(array2_temp,"3");
+    array2 = array2_temp;
+    while(!(array1.length-1==i || array2.length-1==j)){
+      if(array1[i].date==array2[j].date){
+        mergedArray.push($.extend( array1[i], array2[j] ));
+        i=i+1;j=j+1;
+      }
+      else if(array1[i].date>array2[j].date){
+        mergedArray.push($.extend( array1[array1.length-1],array2[j] ));
+        debugger;
+        j=j+1;
+        array1.pop();
+        tempObj={};
+        for(var key of keys1){
+          tempObj[key]=0;
+        }
+
+        array1.push(tempObj);
+      }
+      else{
+        mergedArray.push($.extend( array2[array2.length-1],array1[i] ));
+        i=i+1;
+        array2.pop();
+        tempObj2={};
+        for(var keyz of keys2){
+          tempObj2[keyz]=0;
+        }
+        array2.push(tempObj2);
+      }              
     }    
-    // console.log(mergedArray)
+    if(array1.length-1==i){
+      while(array2.length-1>j){ 
+        mergedArray.push($.extend( array1[array1.length-1],array2[j] ));
+        j=j+1;
+        array1.pop();
+        tempObj={};
+        for(var key of keys1){
+          tempObj[key]=0;
+        }
+        array1.push(tempObj);
+      }
+    }
+    else if(array2.length-1==j){
+      while(array1.length-1>i){
+        mergedArray.push($.extend( array2[array2.length-1],array1[i] ));
+        i=i+1;
+        array2.pop();
+        tempObj2={};
+        for(var keyz of keys2){
+          tempObj2[keyz]=0;
+        }
+        array2.push(tempObj2);
+      }
+
+    }
+    console.log(mergedArray,"4");
     return mergedArray;
   }
 
   print(id): void {
-    let printContents, popupWin;
+    var printContents, popupWin;
     printContents = document.getElementById(id).innerHTML;
     popupWin = window.open('', '_blank', 'top=0,left=0,height=100%,width=auto');
     popupWin.document.open();

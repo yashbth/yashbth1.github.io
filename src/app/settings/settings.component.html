@@ -50,7 +50,7 @@
                   </div><br><br>
               <!-- <span><input type="checkbox" (click)="toggle(this,'cluster[]')" />Select all</span><br/><br> -->
               <div >
-                  <h6>Privileges:</h6><br>
+                  <h6>Privileges:</h6>
                   <div class="checkbox text-justify" style="display:none">
                   <span *ngFor="let panel of dropdown" [class.hide]="panel.division=='Analysis'"><input type="checkbox" name="panel[]" value="{{panel.columnName}}" *ngIf="panel.division!='Analysis'" id="{{panel.columnName}}_create">{{panel.panelName}}<br></span>
                   </div> 

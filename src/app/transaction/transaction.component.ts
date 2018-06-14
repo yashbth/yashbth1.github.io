@@ -46,7 +46,7 @@ export class TransactionComponent implements OnInit {
   ngOnInit(){
     setTimeout(()=>{
       if(this.jwtHelper.isTokenExpired(this.globalservice.token)){
-        window.location.href= '/';
+        window.location.href= 'https://swajal.in/iiot';
       }
       this.id[0] = this.route.snapshot.paramMap.get('id');
       this.panel = this.route.snapshot.paramMap.get('panel')
@@ -59,9 +59,8 @@ export class TransactionComponent implements OnInit {
     })
     setTimeout(()=>{
       this.dataAvailable =true;
-      document.getElementById('options')["options"][0].selected = true;
       this.property1 = '0';
-
+      document.getElementById('options')["options"][0].selected = true;
     },1000)
   }
   ngAfterContentChecked(){
@@ -69,10 +68,8 @@ export class TransactionComponent implements OnInit {
     $('#table_filter').css({"display":"inline-block","float":"right"});
     $('#table_length').css({"display":"inline-block"});
     $('.dataTables_info').css({"visibility":"hidden"});
-    $('html').css({"height":"100%"});   
-    if(this.param_count>5){
-      $('html').css({"height":"auto"});      
-     } 
+    // $('html').css({"height":"100%"});   
+
 
   }
 

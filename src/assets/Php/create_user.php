@@ -78,24 +78,8 @@ foreach($_POST['cluster'] as $selected){
     }
 }
 
-$selected_properties = '';
-$property_flag = 0;
+$sql = "INSERT INTO Dashboard_Users ( Username , Password ,"  . $selected_clusters ."," . $selected_panels .") VALUES (" . $username ."," . $password . "," . $booleans . ")" ; 
 
-foreach($_POST['property'] as $selected){
-    echo ($selected);
-    echo ('<br>');
-    if($property_flag == 0){
-        $selected_properties .= $selected;
-        $property_flag = 1;
-        add_boolean($boolean_flag);
-    }
-    else{
-        $selected_properties .= ','.$selected;
-        add_boolean($boolean_flag);
-    }
-}
-
-$sql = "INSERT INTO Dashboard_Users ( Username , Password ,"  . $selected_clusters ."," . $selected_panels . "," . $selected_properties .") VALUES (" . $username ."," . $password . "," . $booleans . ")" ; 
 echo($sql);
 $result = $conn->query($sql);
 $conn->close();

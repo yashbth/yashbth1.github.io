@@ -1,5 +1,5 @@
 <app-loading *ngIf="dataAvailable==false"></app-loading>
-<div class="maxHeight">
+<div [class.maxHeight]="!dataAvailable1">
     <div class="container " *ngIf="dataAvailable">
         <div class="jumbotron text-center">
             <h1> {{cluster}} Cluster <span> ( Machine Id : {{dev}} )</span></h1>
@@ -25,7 +25,7 @@
     </div>
     
  
-    <div  class="container-fluid  table-responsive-xs" *ngIf="dataAvailable1">
+    <div  class="container-fluid  table-responsive-xs" *ngIf="dataAvailable1" [class.maxHeight]="dataAvailable1">
 
         <h2 class="text-center">{{param_name}}: {{param_count}}</h2>
         <i class="fas fa-download" (click)="print()"></i>

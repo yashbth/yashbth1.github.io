@@ -40,7 +40,7 @@ export class WaterDispenseComponent implements OnInit{
     router.events.subscribe(()=>{
       if(this.jwtHelper.isTokenExpired(this.globalservice.token)){
         this.service.getSessionVariables('session.php/?action=destroy').subscribe(data=>this.data=data,(err)=>console.log(err),()=>{
-          window.location.href= '/';
+          window.location.href= 'https://swajal.in/iiot';
         }); 
       }
       this.dataAvailable=false;
@@ -67,7 +67,7 @@ export class WaterDispenseComponent implements OnInit{
     setTimeout(()=>{
       if(this.jwtHelper.isTokenExpired(this.globalservice.token)){      
         this.service.getSessionVariables('session.php/?action=destroy').subscribe(data=>this.data=data,(err)=>console.log(err),()=>{
-          window.location.href= '/';
+          window.location.href= 'https://swajal.in/iiot';
         }); 
       }
       this.panel = this.route.snapshot.paramMap.get('panel');  
