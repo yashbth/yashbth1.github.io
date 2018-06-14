@@ -16,13 +16,13 @@
     $toDate = $_POST['toDate'];
     
     if($tor === '00'){
-        $sql = "SELECT * FROM ".$table." WHERE DeviceID='".$id."' AND Type_of_Request='0' AND TapNo ='0' AND date BETWEEN '". $fromDate ."' AND '". $toDate ."' ORDER BY date DESC";  
+        $sql = "SELECT * FROM ".$table." WHERE DeviceID='".$id."' AND Type_of_Request='0' AND TapNo ='0' AND date BETWEEN '". $fromDate ."' AND '". $toDate ."' ORDER BY SrNo DESC";  
     }
     else if($tor === '0'){
-        $sql = "SELECT * FROM ".$table." WHERE DeviceID='".$id."' AND Type_of_Request='".$tor."' AND TapNo != '0' AND date BETWEEN '". $fromDate ."' AND '". $toDate ."' ORDER BY date DESC";
+        $sql = "SELECT * FROM ".$table." WHERE DeviceID='".$id."' AND Type_of_Request='".$tor."' AND TapNo != '0' AND date BETWEEN '". $fromDate ."' AND '". $toDate ."' ORDER BY SrNo DESC";
     }
     else{
-        $sql = "SELECT * FROM ".$table." WHERE DeviceID='".$id."' AND Type_of_Request='".$tor."' AND date BETWEEN '". $fromDate ."' AND '". $toDate ."' ORDER BY date DESC";
+        $sql = "SELECT * FROM ".$table." WHERE DeviceID='".$id."' AND Type_of_Request='".$tor."' AND date BETWEEN '". $fromDate ."' AND '". $toDate ."' ORDER BY SrNo DESC";
         
     }
 

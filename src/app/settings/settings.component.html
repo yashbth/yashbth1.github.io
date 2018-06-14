@@ -148,7 +148,7 @@
                   <input type="checkbox" name="propertyP[]" value='{{parameter.name}}' id="{{parameter.name}}">{{parameter.name}}<br>
                 </div> 
                 <div class="col-sm-12" style="display: flex;justify-content: center">
-                  <ng-multiselect-dropdown *ngIf="selectedparameter[1].length!=0"
+                  <ng-multiselect-dropdown *ngIf="flagProperty"
                   [placeholder]="'Select Properties'"
                   [data]="parameters"
                   [(ngModel)]="selectedparameter[1]"

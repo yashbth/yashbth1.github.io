@@ -9,8 +9,11 @@
     width: 400px;
     margin-top:8px;; 
     height:35px;
+    visibility: hidden;
   }
-
+  .visible{
+      visibility: visible !important;
+  }
   #searchInput:focus {
     border-color: #4d90fe;
   }

@@ -4,8 +4,8 @@ session_start();
 ?>
 <?php require_once("./db_connection.php"); ?>
 <?php
-    // header("Access-Control-Allow-Origin: https://swajal.in/iiot/");
-    header("Access-Control-Allow-Origin: http://localhost:4200");    
+    header("Access-Control-Allow-Origin: https://swajal.in/iiot/");
+    // header("Access-Control-Allow-Origin: http://localhost:4200");    
     header('Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE, OPTIONS');
     header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token');
     header('Access-Control-Allow-Credential: true');
@@ -18,6 +18,7 @@ session_start();
         $all_rows=array();
 		while($row = $result->fetch_assoc()){
             if ($username==$row['Username'] && password_verify($password,$row['Password'])) {
+                $row['Password']='';
                 $header = json_encode(['typ' => 'JWT', 'alg' => 'HS256']);
                 // Create token payload as a JSON string
                     $payload = json_encode([$row,'exp'=>time()+3600*9]);
@@ -38,7 +39,6 @@ session_start();
                     $jwt = $base64UrlHeader . "." . $base64UrlPayload . "." . $base64UrlSignature;
                 
                 $row['jwttoken']=$jwt;
-                $row['Password']='';
                 $_SESSION['JWTtoken']=$jwt;
                 echo json_encode($row);
             }

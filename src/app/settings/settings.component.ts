@@ -22,6 +22,7 @@ export class SettingsComponent implements OnInit {
   UserName : string;
   flag : boolean = true;
   flag1 : boolean;
+  flagProperty:boolean=false;
   dropdown = Dropdown;
   dropdownSettings = {};
   propertydropdownSettings = {};
@@ -34,8 +35,8 @@ export class SettingsComponent implements OnInit {
   selectedparameter =[this.selDrop1,this.selDrop2];
   selectedpanel=[[],[]]
   // url = "http://localhost/~yashbahetiiitk/swajal_dashboard/src/assets/Php";
-  url = "http://localhost:8000/assets/Php";
-  // url = "/iiot/assets/Php"
+  // url = "http://localhost:8000/assets/Php";
+  url = "/iiot/assets/Php"
   
   
   constructor(private Cluster: Cluster, private cookieService:CookieService,private global : GlobalService) { }
@@ -88,6 +89,7 @@ this.paneldropdownSettings = {
             
       if($('#get_user_form').length){
         this.flag1 = true;
+        this.flagProperty=true;
       }
       if(this.flag&&this.flag1){
         this.check(this,'panelP[]');
