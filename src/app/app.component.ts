@@ -35,7 +35,6 @@ export class AppComponent implements OnInit{
     if(this.cookieService.get('PHPSESSID')){
       $('#id01').css({"display":"none"});
       this.locating=true;
-      $('html').css({"overflow-y":"auto"});
       $('body').css({"background":"url('') #222"})
       setTimeout(() => {
         this.timeout = false; 
@@ -72,7 +71,6 @@ export class AppComponent implements OnInit{
         if(this.users){
           console.log(this.users);
           this.locating=true;
-          $('html').css({"overflow-y":"auto"});
           $('#id01').css({"display":"none"});     
           $('body').css({"background":"url('') #222"});
           this.global.token= this.users.jwttoken;

@@ -57,6 +57,10 @@ export class SettingsComponent implements OnInit {
         i=i+1;
       }
     }
+    var checkboxes = document.getElementsByName('property[]');
+    for(var i=0, n=checkboxes.length;i<n;i++) {
+      (checkboxes[i] as HTMLInputElement).checked = true;
+    }
     this.cookieService.put('prevDiv','Settings');
     console.log(this.parameters)
     this.dropdownSettings = {

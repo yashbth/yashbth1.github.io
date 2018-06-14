@@ -9,7 +9,7 @@
     
     </div>
     
-    <div class="row option">
+    <div class="row option" *ngIf="dataAvailable">
         <select  [(ngModel)]="property1" name="data" style="text-align: center" id="options">
             <option *ngFor="let name of trans_params[0];let rowIndex = index" [value]="trans_params[1][rowIndex]" >{{name}}</option>
         </select>

@@ -69,24 +69,6 @@
              
               </div>
               <br>
-              <div class="text-center">
-                <h6>Internal Privileges:</h6>  
-                <div *ngFor = "let parameter of parameters;" class = 'checkbox'  style="display: none;">
-                  <input type="checkbox" name="property[]" value='{{parameter.name}}' id="{{parameter.name}}_create">{{parameter.title}}<br>
-                </div> 
-                <div class="col-sm-12" style="display: flex;justify-content: center">
-                  <ng-multiselect-dropdown
-                  [placeholder]="'Select Properties'"
-                  [data]="parameters"
-                  [(ngModel)]="selectedparameter[0]"
-                  [settings]="propertydropdownSettings"
-                  (onSelect)="onpropertySelect($event,'_create')"
-                  (onDeSelect)="onpropertyDeSelect($event,'_create')"
-                  (onDeSelectAll)="onDeSelectAll($event,'property[]')"
-                  (onSelectAll)="onSelectAll($event,'property[]')">
-                </ng-multiselect-dropdown>
-                </div> 
-            </div><br>
               <input type="submit" class="rounded btn-info" value="Create User">
           </form>
         </div>

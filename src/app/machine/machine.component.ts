@@ -39,7 +39,8 @@ export class MachineComponent implements OnInit{
     private global :GlobalService,private service : FetchWaterDispenseDataService,private location: Location,@Inject(SESSION_STORAGE) private storage : StorageService) {
    }
 
-  ngOnInit(){   
+  ngOnInit(){  
+    $('html').css({"overflow-y":"auto"});
     setTimeout(()=>{
       if(!this.user){
         window.location.href='/';

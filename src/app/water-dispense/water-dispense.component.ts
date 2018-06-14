@@ -145,36 +145,36 @@ export class WaterDispenseComponent implements OnInit{
       else{
         this.info[0]["UV_State"] = "On";          
       }                 
-    }
     switch (parseInt(this.info[0]["Trip_state"])){
       case 0 : this.info[0]["Trip_state"]="RO ON";break;
       case 1 : this.info[0]["Trip_state"]="TW Tank Full";break;
-      case 2 : this.info[0]["Trip_state"]="RW Tank Empty";this.blink();break;
-      case 3 : this.info[0]["Trip_state"]="High Pressure Trip";this.blink();break;
-      case 5 : this.info[0]["Trip_state"]="RWP Dry Run";this.blink();break;
-      case 6 : this.info[0]["Trip_state"]="RWP Overload";this.blink();break;
-      case 7 : this.info[0]["Trip_state"]="HPP Dry Run";this.blink();break;
-      case 8 : this.info[0]["Trip_state"]="HPP Overload";this.blink();break;
-      case 9 : this.info[0]["Trip_state"]="LOW Pressure";this.blink();break;
+      case 2 : this.info[0]["Trip_state"]="RW Tank Empty";this.blink("Trip_state");break;
+      case 3 : this.info[0]["Trip_state"]="High Pressure Trip";this.blink("Trip_state");break;
+      case 5 : this.info[0]["Trip_state"]="RWP Dry Run";this.blink("Trip_state");break;
+      case 6 : this.info[0]["Trip_state"]="RWP Overload";this.blink("Trip_state");break;
+      case 7 : this.info[0]["Trip_state"]="HPP Dry Run";this.blink("Trip_state");break;
+      case 8 : this.info[0]["Trip_state"]="HPP Overload";this.blink("Trip_state");break;
+      case 9 : this.info[0]["Trip_state"]="LOW Pressure";this.blink("Trip_state");break;
       case 10 : 
       case 11 : 
       case 12 : 
-      case 13 : this.info[0]["Trip_state"]="Backwash ON";this.blink();break;
-      default : this.info[0]["Trip_state"]="Out of Range";this.blink();break;
+      case 13 : this.info[0]["Trip_state"]="Backwash ON";this.blink("Trip_state");break;
+      default : this.info[0]["Trip_state"]="Out of Range";this.blink("Trip_state");break;
     }
 
     switch (parseInt(this.info[0]["Tank_Level"])){
       
       case 0 : this.info[0]["Tank_Level"]="100";break;
       case 1 : this.info[0]["Tank_Level"]="<100";break;
-      case 2 : this.info[0]["Tank_Level"]="0";this.blink();break;
-      default : this.info[0]["Tank_Level"]="Out of Range";this.blink();break;
+      case 2 : this.info[0]["Tank_Level"]="0";this.blink("Tank_Level");break;
+      default : this.info[0]["Tank_Level"]="Out of Range";this.blink("Tank_Level");break;
     }
   }
-  blink(){
+  }
+  blink(id){
     setInterval(()=>{
-      $('#Trip_state').fadeToggle(1000);
-      $('#Trip_state').css({"color":"red"})
+      $('#'+id).fadeToggle(1000);
+      $('#'+id).css({"color":"red"})
     },1000)
   }
 }
