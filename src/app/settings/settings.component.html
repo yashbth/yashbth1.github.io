@@ -50,7 +50,7 @@
                   </div><br><br>
               <!-- <span><input type="checkbox" (click)="toggle(this,'cluster[]')" />Select all</span><br/><br> -->
               <div >
-                  <h6>Privileges:</h6><br>
+                  <h6>Privileges:</h6>
                   <div class="checkbox text-justify" style="display:none">
                   <span *ngFor="let panel of dropdown" [class.hide]="panel.division=='Analysis'"><input type="checkbox" name="panel[]" value="{{panel.columnName}}" *ngIf="panel.division!='Analysis'" id="{{panel.columnName}}_create">{{panel.panelName}}<br></span>
                   </div> 
@@ -69,24 +69,6 @@
              
               </div>
               <br>
-              <div class="text-center">
-                <h6>Internal Privileges:</h6>  
-                <div *ngFor = "let parameter of parameters;" class = 'checkbox'  style="display: none;">
-                  <input type="checkbox" name="property[]" value='{{parameter.name}}' id="{{parameter.name}}_create">{{parameter.title}}<br>
-                </div> 
-                <div class="col-sm-12" style="display: flex;justify-content: center">
-                  <ng-multiselect-dropdown
-                  [placeholder]="'Select Properties'"
-                  [data]="parameters"
-                  [(ngModel)]="selectedparameter[0]"
-                  [settings]="propertydropdownSettings"
-                  (onSelect)="onpropertySelect($event,'_create')"
-                  (onDeSelect)="onpropertyDeSelect($event,'_create')"
-                  (onDeSelectAll)="onDeSelectAll($event,'property[]')"
-                  (onSelectAll)="onSelectAll($event,'property[]')">
-                </ng-multiselect-dropdown>
-                </div> 
-            </div><br>
               <input type="submit" class="rounded btn-info" value="Create User">
           </form>
         </div>
@@ -148,7 +130,7 @@
                   <input type="checkbox" name="propertyP[]" value='{{parameter.name}}' id="{{parameter.name}}">{{parameter.name}}<br>
                 </div> 
                 <div class="col-sm-12" style="display: flex;justify-content: center">
-                  <ng-multiselect-dropdown *ngIf="selectedparameter[1].length!=0"
+                  <ng-multiselect-dropdown *ngIf="flagProperty"
                   [placeholder]="'Select Properties'"
                   [data]="parameters"
                   [(ngModel)]="selectedparameter[1]"

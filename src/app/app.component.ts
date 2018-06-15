@@ -1,4 +1,4 @@
-import { Component, OnInit,DoCheck,Inject} from '@angular/core';
+import { Component, OnInit,Inject} from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import {HttpClient,HttpHeaders} from '@angular/common/http'
 import { FetchWaterDispenseDataService } from './fetch-water-dispense-data.service';
@@ -37,9 +37,8 @@ export class AppComponent implements OnInit{
       this.locating=true;
       $('body').css({"background":"url('') #222"})
       setTimeout(() => {
-        this.timeout = false;
-        $('#map').css({"visibility":"visible"}); 
-      }, 5000);
+        this.timeout = false; 
+      }, 3000);
       this.service.getSessionVariables('session.php/?action=start').subscribe(session_var=>this.session_variable=session_var,(err)=>console.log(err),()=>{
         if(this.session_variable.JWTtoken){
           this.global.token= this.session_variable.JWTtoken;
@@ -50,6 +49,7 @@ export class AppComponent implements OnInit{
           if(this.global.user["0"].Username=='Admin'){
             this.global.admin= true;
           }
+          console.log(this.global.user);
           this.storage.set("user",this.global.user["0"]); 
           myMap();         
         }
@@ -69,32 +69,31 @@ export class AppComponent implements OnInit{
     form.append('psw',this.password);   
     this.service.userAuthentication(form,'users.php').subscribe(users=>this.users=users,(err)=>console.log(err),()=>{
         if(this.users){
+          console.log(this.users);
           this.locating=true;
           $('#id01').css({"display":"none"});     
-          $('body').css({"background":"url('') #222"})
-          this.session_variable=[];
-          this.service.getSessionVariables('session.php/?action=start').subscribe(session_var=>this.session_variable=session_var,(err)=>console.log(err),()=>{
-            this.global.token= this.session_variable.JWTtoken;
-            this.global.user = this.jwtHelper.decodeToken(this.global.token);
-            if(this.global.user["0"].Username=='Admin'){
-              this.global.admin= true;
-            }
-            this.storage.set("user",this.global.user["0"]);
-            myMap();
-            setTimeout(()=>{
-              if(this.global.user["0"][this.cookieService.get('cluster')]==0){
-                $('#message_failure').html('<div class="alert alert-danger" style="justify-content: center; text-align: center;margin-bottom:0px"><span style="justify-content: center">Access Denied!</span></div>');           
-              } 
-              else{
-                $('#message_failure').html('');
-                setTimeout(() => {
-                  this.timeout = false;
-                  $('#map').css({"visibility":"visible"}); 
-                }, 3000);
-                // window.location.href = window.location.href + this.cookieService.get('cluster')+'/'+this.cookieService.get('id')+'/WaterDispenser';                     
-              }           
-            },1000);
-          });
+          $('body').css({"background":"url('') #222"});
+          this.global.token= this.users.jwttoken;
+          console.log(this.global.token,this.users.jwttoken);
+          this.global.user = this.jwtHelper.decodeToken(this.global.token);
+          console.log(this.jwtHelper.decodeToken(this.global.token));
+          // console.log(this.global.user);
+          if(this.global.user["0"].Username=='Admin'){
+            this.global.admin= true;
+          }
+          this.storage.set("user",this.global.user["0"]);
+          myMap();
+          setTimeout(()=>{
+            if(this.global.user["0"][this.cookieService.get('cluster')]==0){
+              $('#message_failure').html('<div class="alert alert-danger" style="justify-content: center; text-align: center;margin-bottom:0px"><span style="justify-content: center">Access Denied!</span></div>');           
+            } 
+            else{
+              $('#message_failure').html('');
+              setTimeout(() => {
+                this.timeout = false; 
+              }, 3000);                    
+            }           
+          },1000);
         }
         else{
           this.cookieService.put('message','Authentication Failure');

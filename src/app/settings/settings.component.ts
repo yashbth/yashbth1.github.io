@@ -22,6 +22,7 @@ export class SettingsComponent implements OnInit {
   UserName : string;
   flag : boolean = true;
   flag1 : boolean;
+  flagProperty:boolean=false;
   dropdown = Dropdown;
   dropdownSettings = {};
   propertydropdownSettings = {};
@@ -56,6 +57,10 @@ export class SettingsComponent implements OnInit {
         i=i+1;
       }
     }
+    var checkboxes = document.getElementsByName('property[]');
+    for(var i=0, n=checkboxes.length;i<n;i++) {
+      (checkboxes[i] as HTMLInputElement).checked = true;
+    }
     this.cookieService.put('prevDiv','Settings');
     console.log(this.parameters)
     this.dropdownSettings = {
@@ -88,6 +93,7 @@ this.paneldropdownSettings = {
             
       if($('#get_user_form').length){
         this.flag1 = true;
+        this.flagProperty=true;
       }
       if(this.flag&&this.flag1){
         this.check(this,'panelP[]');

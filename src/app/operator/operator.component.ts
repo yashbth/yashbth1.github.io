@@ -48,7 +48,7 @@ export class OperatorComponent implements OnInit {
 
   ngOnInit() {
     if(this.jwtHelper.isTokenExpired(this.globalservice.token)){
-      window.location.href= '/';
+      window.location.href= 'https://swajal.in/iiot';
     }
     this.date= this.date.getFullYear() + '-'+((this.date.getMonth()+1)/10>1 ? '':'0')+(this.date.getMonth()+1)+'-'+this.date.getDate();
     setTimeout(()=>{

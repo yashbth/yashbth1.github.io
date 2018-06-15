@@ -25,7 +25,7 @@
     </div>
     
  
-    <div  class="container-fluid  table-responsive-xs" *ngIf="dataAvailable1" [class.maxHeight]= "dataAvailable1">
+    <div  class="container-fluid  table-responsive-xs" *ngIf="dataAvailable1" [class.maxHeight]="dataAvailable1">
 
         <h2 class="text-center">{{param_name}}: {{param_count}}</h2>
         <i class="fas fa-download" (click)="print()"></i>

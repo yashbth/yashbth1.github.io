@@ -7,6 +7,7 @@ import { GlobalService } from '../global.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { FetchWaterDispenseDataService } from '../fetch-water-dispense-data.service';
 import { Location } from '@angular/common';
+import {SESSION_STORAGE , StorageService} from 'angular-webstorage-service'
 
 declare var jquery:any;
 declare var $ :any;
@@ -35,20 +36,26 @@ export class MachineComponent implements OnInit{
   message_failure: string;
   
   constructor(private router : Router,private cookieService : CookieService,private route : ActivatedRoute,
-    private global :GlobalService,private service : FetchWaterDispenseDataService,private location: Location) {
+    private global :GlobalService,private service : FetchWaterDispenseDataService,private location: Location,@Inject(SESSION_STORAGE) private storage : StorageService) {
    }
 
-  ngOnInit(){   
+  ngOnInit(){  
+    $('html').css({"overflow-y":"auto"});
     setTimeout(()=>{
       if(!this.user){
-        window.location.href='/';
+        window.location.href='https://swajal.in/iiot';
       }
     },5000);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
   }
 
   logout(){
-    this.cookieService.removeAll();
-    window.location.href= 'https://swajal.in/iiot/';
+    this.service.getSessionVariables('session.php/?action=destroy').subscribe(session_var=>this.session_variable=session_var,(err)=>console.log(err),()=>{
+      console.log(this.session_variable);
+      this.cookieService.removeAll();
+      this.storage.remove("user");
+      window.location.href= 'https://swajal.in/iiot/';
+    })
+
   }
 
   settingToggle(){
