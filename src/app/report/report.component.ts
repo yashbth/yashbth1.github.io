@@ -150,7 +150,7 @@ export class ReportComponent {
           var element=this.parameters[0].filter(function(element){
             return (element.name==item.name)
           })
-          this.polarchartData.push(extend.reduce((sum,element)=>sum +element[item.name],0));
+          this.polarchartData.push(extend.reduce((sum,element)=>sum +parseFloat(element[item.name]),0));
 
           this.chartData[1]=[this.selectedIds,this.polarchartData,element[0].unit,'polarArea'];
           console.log(this.chartData,"polar");
