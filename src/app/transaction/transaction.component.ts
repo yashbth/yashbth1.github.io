@@ -59,20 +59,23 @@ export class TransactionComponent implements OnInit {
     })
     setTimeout(()=>{
       this.dataAvailable =true;
-      document.getElementById('options')["options"][0].selected = true;
       this.property1 = '0';
+      document.getElementById('options')["options"][0].selected = true;
 
-    },1000)
+    },1000);
   }
   ngAfterContentChecked(){
     $('.paginate_button').css({"padding":"10px"});
     $('#table_filter').css({"display":"inline-block","float":"right"});
     $('#table_length').css({"display":"inline-block"});
     $('.dataTables_info').css({"visibility":"hidden"});
-    $('html').css({"height":"100%"});   
-    if(this.param_count>5){
-      $('html').css({"height":"auto"});      
-     } 
+    // $('html').css({"height":"100%"});   
+    // if($('body').scrollTop()+$(document).height()){
+    //   $('html').css({"height":"auto"}); 
+
+    //  } 
+    //  console.log(document.getElementsByTagName('body')['scrollHeight'])
+    console.log($('body').scrollTop()+$(document).height());
 
   }
 
@@ -85,7 +88,12 @@ export class TransactionComponent implements OnInit {
         $('#table').DataTable();
         // }
     this.dataAvailable1 = false;
-    this.param_count = this.info.length;
+    if(this.info){
+      this.param_count = this.info.length;
+    }
+    else{
+      this.param_count = 0;
+    }
 
     });
     setTimeout(()=>{

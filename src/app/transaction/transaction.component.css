@@ -1,9 +1,9 @@
 span{
     font-size: .7em !important;
 }
-/* .maxHeight{
+.maxHeight{
     height: -webkit-fill-available;
-} */
+}
 #tabel_paginate a{
     padding: 10px;
 }
@@ -30,7 +30,8 @@ th span{
 }
 .table-responsive-xs{
     padding : 2em;
-    overflow: auto;
+    overflow-x: auto;
+    overflow-y: hidden;
 }
 .btn-secondary {
     color: #fff;
