@@ -1,4 +1,7 @@
-
+<?php
+    session_id($_COOKIE['PHPSESSID']);
+    session_start();
+?>
 <?php
     error_reporting(0);
     // header("Access-Control-Allow-Origin: http://localhost:4200");
@@ -8,12 +11,9 @@
     header('Access-Control-Allow-Credential: true');
     $action = $_GET['action'];
     if($action=='start'){
-        session_id($_COOKIE['PHPSESSID']);
-        session_start();
         echo(json_encode($_SESSION));
     }
     if($action == 'destroy'){
-        session_start();
         session_unset();        
         session_destroy();
 

@@ -6,7 +6,7 @@ html{
 }
 body{
     background-color: #222;
-    background: url('/assets/images/loginBG.png');
+    background: url('/assets/images/loginBG.jpg');
     background-attachment: fixed;
     background-size:cover; 
     background-repeat: no-repeat;

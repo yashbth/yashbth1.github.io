@@ -10,8 +10,7 @@
     $from= $_POST['from'];
     $to = $_POST['to'];
     $id= str_replace(",","','",$id);
-    // echo $id,$table,$from,$to;
-    $sql = "SELECT * FROM $table WHERE DeviceID in ('$id') AND date BETWEEN '$from' AND '$to' ORDER BY SrNo ASC";
+    $sql = "SELECT * FROM $table WHERE DeviceID in ('$id') AND date BETWEEN '$from' AND '$to' ORDER BY date, SrNo ASC";
     $result = $conn->query($sql);
     $all_rows = array();            
     if($result->num_rows>0){
