@@ -45,10 +45,11 @@ export class AppComponent implements OnInit{
           if(this.jwtHelper.isTokenExpired(this.global.token)){
             this.cookieService.put('PHPSESSID','');
           }
-          this.global.user["0"] = this.storage.get("user");
+          this.global.user = this.jwtHelper.decodeToken(this.global.token);
           if(this.global.user["0"].Username=='Admin'){
             this.global.admin= true;
           }
+          console.log(this.global.user);
           this.storage.set("user",this.global.user["0"]); 
           myMap();         
         }

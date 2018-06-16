@@ -310,10 +310,10 @@ export class ReportComponent {
         for( var data of properties){
           // var prevData=dates.length?inputArray[lastDay_rowIndex][data.name]:0
           if(data.name.toLowerCase().search("total")==-1){
-            temp[data.name]=prevRowData[data.name];
+            temp[data.name]=prevRowData[data.name].replace(",","");
           }
           else{
-            temp[data.name]=prevRowData[data.name]-firstrowData[data.name];
+            temp[data.name]=(prevRowData[data.name].replace(",","")-firstrowData[data.name].replace(",","")).toFixed(2);
           }
           temp["date"]= prevRowData["date"];
         }
