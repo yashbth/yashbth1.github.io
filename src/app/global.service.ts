@@ -9,7 +9,7 @@ export class GlobalService {
   lat: number;
   lon:number;
   showSearchResult : boolean =false;
-  user: any;
+  user: any=[];
   token: any;
   DropDown = Dropdown;
   admin : boolean;

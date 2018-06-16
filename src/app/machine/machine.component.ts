@@ -50,7 +50,6 @@ export class MachineComponent implements OnInit{
 
   logout(){
     this.service.getSessionVariables('session.php/?action=destroy').subscribe(session_var=>this.session_variable=session_var,(err)=>console.log(err),()=>{
-      console.log(this.session_variable);
       this.cookieService.removeAll();
       this.storage.remove("user");
       window.location.href= 'https://swajal.in/iiot/';
