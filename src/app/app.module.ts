@@ -26,8 +26,6 @@ import { LoadingComponent } from './loading/loading.component';
 import { Cluster } from './delhiCluster';
 import { ClickDetectionDirective } from './click-detection.directive';
 import {StorageServiceModule} from 'angular-webstorage-service'
-import { AuthService } from './auth.service';
-import { AnalysisComponent } from './analysis/analysis.component';
 import { SettingsComponent } from './settings/settings.component';
 import { ReportComponent } from './report/report.component';
 
@@ -49,7 +47,6 @@ import { ReportComponent } from './report/report.component';
     ErrorComponent,
     LoadingComponent,
     ClickDetectionDirective,
-    AnalysisComponent,
     AnalysisChartsComponent,
     SettingsComponent,
     ReportComponent,
@@ -65,7 +62,7 @@ import { ReportComponent } from './report/report.component';
     NgMultiSelectDropDownModule
     
   ],
-  providers: [AuthService,FetchWaterDispenseDataService,GlobalService,CookieService,Cluster],
+  providers: [FetchWaterDispenseDataService,GlobalService,CookieService,Cluster],
   bootstrap: [AppComponent]                                                                                                                                                                                                                                                                                                                                                                                                     
 })
 

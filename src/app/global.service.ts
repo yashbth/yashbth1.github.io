@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import {Dropdown} from './machine/dropdown'
+import { CookieService,CookieOptionsArgs } from 'angular2-cookie/core';
 
 @Injectable({
   providedIn: 'root'
@@ -14,20 +15,15 @@ export class GlobalService {
   DropDown = Dropdown;
   admin : boolean;
   clusters : any;
-  constructor(private router : Router) { }
+  panel : string;
+  id: string;
+  cluster :string;
+  constructor(private router : Router,private cookieService : CookieService,private route : ActivatedRoute) {
+   }
   setVar(lat,lon):void{
     this.lat=lat;
     this.lon=lon;
   }
-  isAllowed(cluster,panel,id){
-    for ( var dropdown of this.DropDown ){
-      if(dropdown['id']==panel){
-        if(this.user["0"][cluster]=='0' || this.user["0"][dropdown['division']]=='0'){
-          this.router.navigateByUrl('/'+cluster+'/'+id +'/error')
-        }
-      }
-    }
-
-  }
+  
 
 }
