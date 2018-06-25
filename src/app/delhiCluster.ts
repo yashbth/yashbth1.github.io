@@ -20,6 +20,16 @@ export class Cluster{
         ]
         
     ]
+  
+    config_params = [
+
+          ['SrNo', 'DeviceID', 'Flag', 'FLOW_CONSTANT_PFS', 'FLOW_CONSTANT_RFS', 'LOWER_CURRENT_LIMIT_RWP', 'UPPER_CURRENT_LIMIT_RWP', 'LOWER_CURRENT_LIMIT_HPP', 'UPPER_CURRENT_LIMIT_HPP', 'Current_Constant1', 'Current_Constant2', 'RO_Serialno', 'Backwash_Trigger_Time', 'RWP_Wait_Timeout', 'LPS_Wait_Timeout', 'Flushing_Time', 'Current_Sampling_Time', 'Flow_Sampling_Time', 'RO_Lock', 'Trigger_Backwash', 'WATER_VOL1', 'WATER_VOL2', 'WATER_VOL3', 'WATER_VOL4', 'WATER_VOL5', 'TARIFF_VOL1', 'TARIFF_VOL2', 'TARIFF_VOL3', 'TARIFF_VOL4', 'TARIFF_VOL5', 'PULSE_VOL1', 'PULSE_VOL2', 'PULSE_VOL3', 'PULSE_VOL4', 'PULSE_VOL5', 'COIN1_VOL', 'COIN2_VOL', 'COIN1_TARIFF', 'COIN2_TARIFF', 'COIN1_PULSE_TAP1', 'COIN2_PULSE_TAP1', 'COIN1_PULSE_TAP2', 'COIN2_PULSE_TAP2', 'COIN1_COUNT_PULSE', 'COIN2_COUNT_PULSE', 'SN_UPPER_BOUND', 'SN_LOWER_BOUND', 'OPERATOR_ID', 'SUPERVISOR_ID', 'ADMIN_ID', 'WDP_LOCK'],
+
+          ['SrNo', 'DeviceID', 'Flag', 'FLOW CONSTANT PFS', 'FLOW CONSTANT RFS', 'LOWER CURRENT LIMIT RWP', 'UPPER CURRENT LIMIT RWP', 'LOWER CURRENT LIMIT HPP', 'UPPER CURRENT LIMIT HPP', 'Current Constant1', 'Current Constant2', 'RO Serialno', 'Backwash Trigger Time', 'RWP Wait Timeout', 'LPS Wait Timeout', 'Flushing Time', 'Current Sampling Time', 'Flow Sampling Time', 'RO Lock', 'Trigger Backwash', 'WATER VOL1', 'WATER VOL2', 'WATER VOL3', 'WATER VOL4', 'WATER VOL5', 'TARIFF VOL1', 'TARIFF VOL2', 'TARIFF VOL3', 'TARIFF VOL4', 'TARIFF VOL5', 'PULSE VOL1', 'PULSE VOL2', 'PULSE VOL3', 'PULSE VOL4', 'PULSE VOL5', 'COIN1 VOL', 'COIN2 VOL', 'COIN1 TARIFF', 'COIN2 TARIFF', 'COIN1 PULSE TAP1', 'COIN2 PULSE TAP1', 'COIN1 PULSE TAP2', 'COIN2 PULSE TAP2', 'COIN1 COUNT PULSE', 'COIN2 COUNT PULSE', 'SN UPPER BOUND', 'SN LOWER BOUND', 'OPERATOR ID', 'SUPERVISOR ID', 'ADMIN ID', 'WDP LOCK'],
+
+          ['','','','','','A','A','A','A','','','','s','s','s','s','s','s','','','ml','ml','ml','ml','ml','','','','','','','','','','','','','','','','','','','','','','','','','','']
+     ]
+  
     clusters=[
         'Delhi','IRCTC','NISE','Guwahati'
         /* 1. Add cluster name. e.g. if name of cluster is ABC then append " ,'ABC' " to the above line*/
