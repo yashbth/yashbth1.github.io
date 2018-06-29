@@ -10,9 +10,9 @@
 
     <div class="container">
         <div class=" innerContainer">
-            <div class="col-sm-3 text-center tabs" *ngFor="let name of data[1];let rowIndex = index;" [class.hide]="globalservice.user['0'][data[0][rowIndex]]==0">
+            <div class="col-sm-3 text-center tabs" *ngFor="let name of data[0];let rowIndex = index;" [class.hide]="globalservice.user['0'][data[0][rowIndex]]==0||!globalservice.user['0'][data[0][rowIndex]]">
                     <dl *ngIf="globalservice.user['0'][data[0][rowIndex]]==1">
-                        <dt>{{name}}</dt>
+                        <dt>{{data[1][rowIndex]}}</dt>
                         <dd *ngIf = "data[2][rowIndex] != 'Rs'" id="{{data[0][rowIndex]}}">{{info[0][data[0][rowIndex]]}} {{data[2][rowIndex]}}</dd>
                         <dd *ngIf = "data[2][rowIndex] == 'Rs'" >{{data[2][rowIndex]}} {{info[0][data[0][rowIndex]]}}</dd>
                         

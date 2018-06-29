@@ -21,11 +21,14 @@
     else if($tor === '0'){
         $sql = "SELECT * FROM ".$table." WHERE DeviceID='".$id."' AND Type_of_Request='".$tor."' AND TapNo != '0' AND date BETWEEN '". $fromDate ."' AND '". $toDate ."' ORDER BY SrNo DESC";
     }
+    else if($tor=="cards"){
+        $sql = "SELECT * FROM $table WHERE DeviceID='$id' AND date BETWEEN '$fromDate' AND '$toDate' ORDER BY SrNo DESC";
+    }
     else{
         $sql = "SELECT * FROM ".$table." WHERE DeviceID='".$id."' AND Type_of_Request='".$tor."' AND date BETWEEN '". $fromDate ."' AND '". $toDate ."' ORDER BY SrNo DESC";
         
     }
-
+// echo($sql); 
     // echo("<script>console.log('PHP: ".$sql."');</script>");
 
     $result = $conn->query($sql);

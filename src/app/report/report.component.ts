@@ -93,7 +93,7 @@ export class ReportComponent {
     }
   }
 
-  generateReport(){
+  generateReport(onlyreport){
 
   this.request=[];    
     for(var t of this.tables){
@@ -111,8 +111,15 @@ export class ReportComponent {
         } 
       }
       this.setChartData(this.selectedparameter[0],2);
-      this.dataAvailable= true;           
-      this.chartsActive[0]=true;
+      if(onlyreport){
+        this.tableActive= true;
+        $('html').css({"height":"auto"});
+      }
+      else{
+        this.dataAvailable= true;           
+        this.chartsActive[0]=true;
+      }
+
     })
 
   }
@@ -123,7 +130,7 @@ export class ReportComponent {
   }
   ngAfterContentChecked(){
     this.parameters[1]=this.selectedparameter[0];
-    if(!this.chartsActive[0]){
+    if(!this.chartsActive[0] && !this.tableActive){
      $('html').css({"height":"100%"});      
     } 
     else{
@@ -131,6 +138,7 @@ export class ReportComponent {
     } 
 
   }
+
   setChartData(item : any,chart){
     console.log("hi");
     if(chart==1||chart==2){

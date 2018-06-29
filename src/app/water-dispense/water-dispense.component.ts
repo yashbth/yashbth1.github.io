@@ -19,6 +19,7 @@ export class WaterDispenseComponent implements OnInit{
   dataAvailable : boolean=false; // to check if data has arrived or it is null 
   property1:string; // properties of chart
   property2:string;
+  properties=[];
   filename: string; //php filename
   table: string; // data table name
   cluster : string;
@@ -97,7 +98,9 @@ export class WaterDispenseComponent implements OnInit{
   generateGraph(){
     this.dataChange = true;
     this.chartData=[];
-    this.service.getChartData('chart_date.php',this.id,this.table,this.fromDate,this.toDate).subscribe(chartData=>this.chartData=chartData);  //getChartData in fetchWaterDispenseService  
+    this.service.getChartData('chart_date.php',this.id,this.table,this.fromDate,this.toDate).subscribe(chartData=>this.chartData=chartData,(err)=>console.log(err),()=>{
+      this.chartData=this.globalservice.dataRise(this.chartData,this.properties);
+    });  //getChartData in fetchWaterDispenseService  
   }
   // getWaterinfo subscribe data from database
   getWaterinfo():void{
@@ -121,8 +124,14 @@ export class WaterDispenseComponent implements OnInit{
       this.formatParamters();  // function to format data of Ro log Parameter    
       this.fromDate = this.info[0].date;
       this.toDate = this.info[0].date;
+      let date = new Date(this.fromDate);
+      this.fromDate=date.setDate(date.getDate()-7);
+      this.fromDate = new Date(this.fromDate).toISOString().slice(0,10);
+      console.log(this.fromDate)
       //subscribing last 1 days data from the last updated date (Chart data)
-      this.service.getChartData('chart_date.php',this.id,this.table,this.fromDate,this.toDate).subscribe(chartData=>this.chartData=chartData); 
+      this.service.getChartData('chart_date.php',this.id,this.table,this.fromDate,this.toDate).subscribe(chartData=>this.chartData=chartData,(err)=>console.log(err),()=>{
+        this.chartData=this.globalservice.dataRise(this.chartData,this.properties);
+      }); 
     }); 
     // Loading of page before showing up data
     setTimeout(()=>{
@@ -132,6 +141,7 @@ export class WaterDispenseComponent implements OnInit{
   }
   // panelParameteers function set certain properties or which table to select from  url information
   panelParameters(){
+    this.properties=[]; 
     switch (this.panel){
       case 'WaterDispenser' : this.data= this.Cluster[this.cluster].WaterDispenseData; // Taking data from Cluster file (delhiCluster) using cluster and panel
                           this.filename = 'Water.php';
@@ -142,8 +152,8 @@ export class WaterDispenseComponent implements OnInit{
                           break;
       case 'Ro' :  this.data = this.Cluster[this.cluster].RoData;
                         this.filename = 'Ro.php';
-                        this.property1 = 'Operational_Minutes';
-                        this.property2 = 'date'
+                        this.property1 = 'Backwash_cycle_count';
+                        this.property2 = 'date';
                         this.table =  this.Cluster[this.cluster].RoData[3];
                         this.columnName = 'RO_Parameters'
                         break;
@@ -155,6 +165,11 @@ export class WaterDispenseComponent implements OnInit{
                         this.columnName = 'Cup_Dispensing_Panel'
                         break;
       default  :    break;
+    }
+    let i=0;
+    for(let property of this.data[1]){
+      this.properties.push({name:this.data[0][i]});
+      i=i+1;
     }
   }
 

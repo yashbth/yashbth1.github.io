@@ -42,9 +42,8 @@ export class ChartsComponent implements OnInit {
     this.chartData = this.water;
     if(this.chartData.chartData.length){
       this.ConvertIntoArray(this.chartData.chartData,this._property1,this.property2);
-      this.Chart('line');
+      this.Chart('bar');
     }
-
   }
   ngAfterContentChecked(){
     if(this.checkGraph || this.chartData.dataChange){
@@ -64,7 +63,7 @@ export class ChartsComponent implements OnInit {
         this.labelString =  this.Cluster[this.cluster].CupDispenseData[1][index]+(this.Cluster[this.cluster].CupDispenseData[2][index]?' (in ':'')+this.Cluster[this.cluster].CupDispenseData[2][index]+(this.Cluster[this.cluster].CupDispenseData[2][index]?')':'');
       }
       this.ConvertIntoArray(this.chartData.chartData,this._property1,this.property2);
-      this.Chart('line');
+      this.Chart('bar');
       if(this.chartData.chartData.length){
         this.checkGraph = false;
         this.chartData.dataChange = false;
@@ -74,7 +73,7 @@ export class ChartsComponent implements OnInit {
   
   ngOnChanges(){
     this.ConvertIntoArray(this.chartData.chartData,this._property1,this.property2);
-    this.Chart('line');
+    this.Chart('bar');
   }
 
   Chart(type:string){
@@ -84,17 +83,7 @@ export class ChartsComponent implements OnInit {
         datasets: [{
             label: this.label,
             data: this.Data1,
-            backgroundColor: [
-              "rgba(255,255,255,0)"
-            ],
-            borderColor: [
-                'rgba(255,99,132,1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
-            ],
+            backgroundColor: this.backGroundColor[this._property1],
             borderWidth: 1,
             lineTension : 0
         }
@@ -124,5 +113,37 @@ export class ChartsComponent implements OnInit {
       this.Data2.push(obj[property2]);
     }
   }
+  backGroundColor=
+    { "Total_Volume_Dispensed":"#3498DB",
+     "Total_Recharge":"#1ABC9C",
+     "Total_collection_from_Card":"#16A085",
+     "Total_collection_from_coin":"#27AE60",
+     "pH_of_water":"#3498DB",
+     "Total_Collection_Sale":"#2ECC71",
+
+     "Backwash_cycle_count":"#A93226",
+     "Temperature":"#E74C3C",
+     "tds_inlet":"#8E44AD",
+     "tds_outlet":"#6600cc",
+     "flow_inlet":"#F39C12",
+     "flow_reject":"#D35400",
+     "current_rwp":"#95A5A6",
+     "current_hpp":"#7F8C8D",
+     "total_treated_volume":"#2980B9",
+     "total_reject_volume":"#3498DB",
+     "Tank_Level":"#1ABC9C",
+
+     "TotalCupsDispensed":"#3498DB",
+     "TotalCoinCollection":"#16A085",
+     "TotalCardCollection":"#27AE60",
+
+     "Trip_Total_Volume_Dispensed":"#0033cc",
+     "Trip_Total_Smartcard_Collection":"#1ABC9C",
+     "Trip_Total_CoinCollection":"#16A085",
+     "Trip_Total_Card_Recharge":"#27AE60",
+     "Trip_Actual_Amount_Collection":"#00cc00",
+
+  }
   
+
 }

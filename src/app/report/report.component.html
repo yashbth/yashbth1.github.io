@@ -59,7 +59,7 @@
     <div class="header" *ngIf="rowIndex==1">
       <h5>Compare Single Parameter</h5>
     </div>
-    <div class="select col-sm-3">
+    <div class="select col-sm-3" style="margin: 5px;">
       <ng-multiselect-dropdown (click)="tableActive=false"
         [placeholder]="rowIndex?'Select Parameter':'Select Parameters'"
         [data]="parameters[rowIndex]"
@@ -74,7 +74,8 @@
       </ng-multiselect-dropdown>
     </div>
     <span class="button">
-      <button type="submit" class="btn btn-info" (click)="generateReport()" *ngIf="rowIndex==0">Visualise Data</button>
+      <button type="submit" class="btn btn-info" (click)="generateReport(false)" *ngIf="rowIndex==0" style="margin: 5px;">Visualise Data</button>
+      <button type="submit" class="btn btn-info" (click)="generateReport(true)" style="margin: 5px;">Generate Report</button>
     </span>
     </div>
     <div class="row">
@@ -83,11 +84,7 @@
       </div>
   </div>
 </div>
-<div class="row">
-  <span class="button reportbtn">
-    <button type="submit" class="btn btn-info" (click)="tableActive=true;" *ngIf="chartsActive[0]">Generate Report</button>
-  </span>
-</div>
+
 
 <div class="col-sm-12 table" *ngIf="tableActive">
     <div class="row" >

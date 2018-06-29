@@ -5,6 +5,7 @@ import {Cluster} from '../delhiCluster'
 import { GlobalService } from '../global.service';
 import { CookieService,CookieOptionsArgs } from 'angular2-cookie/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { utf8Encode } from '@angular/compiler/src/util';
 
 declare var jquery : any;
 declare var $ : any;
@@ -25,13 +26,14 @@ export class TransactionComponent implements OnInit {
   cluster : string;
   data : any;
   panel : string;
-
+  cards:any;
   location : string = this.cookieService.get('location');
   dev : string = this.cookieService.get('id'); //DeviceID
 
   jwtHelper = new JwtHelperService();// Service to implement methods on Jwttoken
   trans_params : any = this.Cluster.trans_params;
   property1 : string = null;
+  card:string;
 
   fromDate: any=new Date().toISOString().slice(0,10); // chart dates formated in yyyy-mm-dd
   toDate : any =new Date().toISOString().slice(0,10);
@@ -65,7 +67,9 @@ export class TransactionComponent implements OnInit {
       this.cluster = this.route.snapshot.paramMap.get('cluster');
       this.data= this.Cluster[this.cluster].transaction;
       this.cookieService.put('prevDiv','transactionLog');            
-         
+      this.service.getData(this.id,this.data[3][0],'cards.php').subscribe(cards=>this.cards=cards,(err)=>console.log(err),()=>{
+      console.log(this.cards);
+      }); 
     })
     // setting dataAvailable after 1s ( for loading)
     setTimeout(()=>{
@@ -96,6 +100,7 @@ export class TransactionComponent implements OnInit {
     this.param_count = this.info.length;
 
     });
+
     setTimeout(()=>{
       // Defining certain values according to thier values
       if(this.property1 !== '00'){
@@ -111,6 +116,14 @@ export class TransactionComponent implements OnInit {
         $('.fas').css({"padding-left":"10px"});
       })
     },1000)
+  }
+  CardData(){
+    // console.log("hel")
+    $('#table_filter input').val(this.card);
+    $(function() {
+      $('#table_filter input').keyup();
+  });
+
   }
   // Prints the table 
   print(): void {

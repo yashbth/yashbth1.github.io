@@ -7,7 +7,8 @@ export class Cluster{
         'Admin Attendance',
         'User Card Recharge',
         'Operator Card Recharge',
-        'Machine Restart'
+        'Machine Restart',
+        'Filter by Card'
         ],
         [
             '0',
@@ -16,7 +17,8 @@ export class Cluster{
             '3',
             '4',
             '5',
-            '00'
+            '00',
+            'cards'
         ]
         
     ]
@@ -45,7 +47,7 @@ export class Cluster{
             "Total_collection_from_coin",
             "pH_of_water",
             "Total_Collection_Sale",
-            // "Tank_Level",
+            // "Tank_Level","Operational_Minutes",
             "TimeStamp",
             "DeviceID",
             
@@ -55,7 +57,7 @@ export class Cluster{
             'Total Card Collection',
             'Total Coin Collection',
             'pH Of Water',
-            'Total Collection',
+            'Total Sale',
             // 'Tank Level'
             ],
             [
@@ -75,7 +77,7 @@ export class Cluster{
 
         RoData : [
             [
-                "Operational_Minutes",
+                
                 "Backwash_cycle_count",
                 "Temperature",
                 "tds_inlet",
@@ -86,13 +88,15 @@ export class Cluster{
                 "current_hpp",
                 "total_treated_volume",
                 "total_reject_volume",
+                "Tank_Level",
                 "UV_State",
                 "Trip_state",
-                "Tank_Level"
+                "Operational_Minutes",
+
 
             ],
             [
-                "Operational Time",
+                
                 "Backwash Cycle Count",
                 "Temperature",
                 "TDS Inlet",
@@ -103,12 +107,11 @@ export class Cluster{
                 "HPP Current",
                 "Total Treated Volume",
                 "Total Reject Volume",
+                "Tank Level",
                 "UV State",
-                "Trip State",
-                "Tank Level"
+                "Trip State"
             ],
             [
-                "mins",
                 "",
                 "C",
                 "ppm",
@@ -119,9 +122,11 @@ export class Cluster{
                 "A",
                 "L",
                 "L",
+                "%",
                 "",
                 "",
-                "%"
+                "mins"
+
             ],
             ['RO_Log_Parameter']
 
@@ -138,7 +143,6 @@ export class Cluster{
                 "Total Cups Dispensed",
                 "Total Coin Collection",
                 "Total Card Collection",
-                "Last Transaction State"
             ],
             [
                 "",
@@ -192,20 +196,19 @@ export class Cluster{
         ],
         supervisorData :[
             [
-                "TimeStamp",
-                "Trip_CollectionID",
-                "Trip_Total_Reset_Count",
+
                 "Trip_Total_Volume_Dispensed",
                 "Trip_Total_Smartcard_Collection",
                 "Trip_Total_CoinCollection",
                 "Trip_Total_Card_Recharge",
                 "Total_Collection_Sale",
-                "Trip_Actual_Amount_Collection"
+                "Trip_Actual_Amount_Collection",
+                "TimeStamp",
+                "Trip_CollectionID",
+                "Trip_Total_Reset_Count",
             ],
             [
-                "Time",
-                "Trip Collection ID",
-                "Trip Total Reset Count",
+
                 "Trip Total Water Dispensed",
                 "Trip Total Smartcard Collection",
                 "Trip Total Coin Collection",
@@ -215,9 +218,6 @@ export class Cluster{
 
             ],
             [
-                "",
-                "",
-                "",
                 "L",
                 "Rs",
                 "Rs",
@@ -264,8 +264,7 @@ export class Cluster{
             'Total Card Recharge',
             'Total Card Collection',
             'Total Coin Collection',
-            'pH Of Water',
-            'Total Collection',
+            'Total Sale',
 
         ],
             [
@@ -284,7 +283,7 @@ export class Cluster{
 
         RoData : [
             [
-                "Operational_Minutes",
+                
                 "Backwash_cycle_count",
                 "Temperature",
                 "tds_inlet",
@@ -295,13 +294,15 @@ export class Cluster{
                 "current_hpp",
                 "total_treated_volume",
                 "total_reject_volume",
+                "Tank_Level",
                 "UV_State",
                 "Trip_state",
-                "Tank_Level"
+                "Operational_Minutes",
+
 
             ],
             [
-                "Operational Time",
+                
                 "Backwash Cycle Count",
                 "Temperature",
                 "TDS Inlet",
@@ -312,12 +313,11 @@ export class Cluster{
                 "HPP Current",
                 "Total Treated Volume",
                 "Total Reject Volume",
+                "Tank Level",
                 "UV State",
-                "Trip State",
-                "Tank Level"
+                "Trip State"
             ],
             [
-                "mins",
                 "",
                 "C",
                 "ppm",
@@ -328,9 +328,11 @@ export class Cluster{
                 "A",
                 "L",
                 "L",
+                "%",
                 "",
                 "",
-                "%"
+                "mins"
+
             ],
             ['RO_Log_Parameter']
 
@@ -347,7 +349,6 @@ export class Cluster{
                 "Total Cups Dispensed",
                 "Total Coin Collection",
                 "Total Card Collection",
-                "Last Transaction State"
             ],
             [
                 "",
@@ -477,7 +478,7 @@ export class Cluster{
             'Total Card Collection',
             'Total Coin Collection',
             'pH Of Water',
-            'Total Collection',
+            'Total Sale',
             "PV Voltage",
             "PV Current",
             "Battery Voltage",
@@ -507,7 +508,7 @@ export class Cluster{
 
         RoData : [
             [
-                "Operational_Minutes",
+                
                 "Backwash_cycle_count",
                 "Temperature",
                 "tds_inlet",
@@ -518,13 +519,15 @@ export class Cluster{
                 "current_hpp",
                 "total_treated_volume",
                 "total_reject_volume",
+                "Tank_Level",
                 "UV_State",
                 "Trip_state",
-                "Tank_Level"
+                "Operational_Minutes",
+
 
             ],
             [
-                "Operational Time",
+                
                 "Backwash Cycle Count",
                 "Temperature",
                 "TDS Inlet",
@@ -535,12 +538,11 @@ export class Cluster{
                 "HPP Current",
                 "Total Treated Volume",
                 "Total Reject Volume",
+                "Tank Level",
                 "UV State",
-                "Trip State",
-                "Tank Level"
+                "Trip State"
             ],
             [
-                "mins",
                 "",
                 "C",
                 "ppm",
@@ -551,9 +553,11 @@ export class Cluster{
                 "A",
                 "L",
                 "L",
+                "%",
                 "",
                 "",
-                "%"
+                "mins"
+
             ],
             ['NISE_RO_Log_Parameter']
 
@@ -570,7 +574,6 @@ export class Cluster{
                 "Total Cups Dispensed",
                 "Total Coin Collection",
                 "Total Card Collection",
-                "Last Transaction State"
             ],
             [
                 "",
@@ -695,7 +698,7 @@ export class Cluster{
             'Total Card Collection',
             'Total Coin Collection',
             'pH Of Water',
-            'Total Collection',
+            'Total Sale',
 
 
         ],
@@ -717,7 +720,7 @@ export class Cluster{
 
         RoData : [
             [
-                "Operational_Minutes",
+                
                 "Backwash_cycle_count",
                 "Temperature",
                 "tds_inlet",
@@ -728,13 +731,15 @@ export class Cluster{
                 "current_hpp",
                 "total_treated_volume",
                 "total_reject_volume",
+                "Tank_Level",
                 "UV_State",
                 "Trip_state",
-                "Tank_Level"
+                "Operational_Minutes",
+
 
             ],
             [
-                "Operational Time",
+                
                 "Backwash Cycle Count",
                 "Temperature",
                 "TDS Inlet",
@@ -745,12 +750,11 @@ export class Cluster{
                 "HPP Current",
                 "Total Treated Volume",
                 "Total Reject Volume",
+                "Tank Level",
                 "UV State",
-                "Trip State",
-                "Tank Level"
+                "Trip State"
             ],
             [
-                "mins",
                 "",
                 "C",
                 "ppm",
@@ -761,9 +765,11 @@ export class Cluster{
                 "A",
                 "L",
                 "L",
+                "%",
                 "",
                 "",
-                "%"
+                "mins"
+
             ],
             ['GSCP_RO_Log_Parameter']
 
@@ -780,7 +786,6 @@ export class Cluster{
                 "Total Cups Dispensed",
                 "Total Coin Collection",
                 "Total Card Collection",
-                "Last Transaction State"
             ],
             [
                 "",
