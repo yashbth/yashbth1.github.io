@@ -1,5 +1,6 @@
 <app-loading *ngIf="dataAvailable==false"></app-loading>
 <div [class.maxHeight]="!dataAvailable1">
+    <!-- Jumbotron , division information-->
     <div class="container " *ngIf="dataAvailable">
         <div class="jumbotron text-center">
             <h1> {{cluster}} Cluster <span> ( Machine Id : {{dev}} )</span></h1>
@@ -10,6 +11,7 @@
     </div>
     
     <div class="row option" *ngIf="dataAvailable">
+        <!-- Transaction parameters to select -->
         <div>
             <select  [(ngModel)]="property1" name="data" style="text-align: center" id="options">
                 <option *ngFor="let name of trans_params[0];let rowIndex = index" [value]="trans_params[1][rowIndex]">{{name}}</option>
@@ -18,7 +20,7 @@
                 <option *ngFor="let card of cards;let rowIndex = index" [value]="card['CardNo']" >{{card['CardNo']}}</option>
             </select>
         </div>
-
+        <!-- Date Range Column -->
         <div class="dateRange text-center" >
             <div class="from_to">
                 <label for="date"><span class="pad">From:</span> <input id="date_from" type="date" name="from" [(ngModel)]="fromDate" ></label>
@@ -30,7 +32,7 @@
         </div>
     </div>
 
- 
+    <!-- Table Division  -->
     <div  class="container-fluid  table-responsive-xs" *ngIf="dataAvailable1" [class.maxHeight]="dataAvailable1">
 
         <h2 class="text-center" *ngIf="property1!='cards'">{{param_name}}: {{param_count}}</h2>
@@ -54,7 +56,4 @@
             </table>
         </div>
     </div>
-
-
-    
 </div>

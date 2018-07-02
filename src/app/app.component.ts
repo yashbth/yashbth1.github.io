@@ -78,7 +78,6 @@ export class AppComponent implements OnInit{
     this.service.userAuthentication(form,'users.php').subscribe(users=>this.users=users,(err)=>console.log(err),()=>{
       // if authentication is successful
         if(this.users){
-          console.log(this.users);
           // shows loading and hide authentication display
           this.locating=true;
           $('#id01').css({"display":"none"});     
@@ -86,7 +85,6 @@ export class AppComponent implements OnInit{
           // recieves jwt token and decode it to get privledges of user
           this.global.token= this.users.jwttoken;
           this.global.user = this.jwtHelper.decodeToken(this.global.token);
-          // console.log(this.global.user);
           if(this.global.user["0"].Username=='Admin'){
             this.global.admin= true;
           }

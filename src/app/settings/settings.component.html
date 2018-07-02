@@ -1,184 +1,185 @@
+<!-- Message Failure and Success Alerts -->
 <div *ngIf = "message_success" class="alert alert-success" style="justify-content: center; text-align: center;"><span style="justify-content: center "><b>Success! </b>{{message_success}}</span></div>
 <div *ngIf = "message_failure" class="alert alert-danger" style="justify-content: center; text-align: center;"><span style="justify-content: center"><b>Warning! </b>{{message_failure}}</span></div>
+
 <div class="container-fluid" style="padding-top: 26px" [class.maxHeight]= "!global.admin">
    <div class="row">
-    <div class= "col text-center ">
-      <div class="page-header">
-          <h2>Change Password</h2>
-      </div>
-      <div class="pad">
-          <form ngNoForm action="{{url}}/pass_change.php/?user={{userName}}" id="change_pass_form"  onsubmit="this.submit()" method="POST">
-            <h6>Current Password:</h6>
-            <input type="password" name="curr_pass" required><br><br>
-            <h6>New Password:</h6>
-            <input type="password" name="new_pass" required><br>
-            <h6 style="padding-top: 10px">Confirm Password:</h6>
-            <input type="password" name="new_pass_check" required><br><br>
-  
-            <input type="submit" class="rounded btn-info" value="Change Password">
-        </form>
-      </div>
-      <!-- <button id="change_pass_btn" (click)="show('CP')">Change Password</button> -->
-
-    </div><br><br>
-  
-    <div class = "col text-center" *ngIf="global.admin">
-        <div class="page-header">
-          <h2>Create New User</h2>            
-        </div>
-        <div class="pad">
-            <form ngNoForm action="{{url}}/create_user.php" id="create_user_form" onsubmit="this.submit()" method="POST">
-              <h6>Username:</h6>
-              <input type="text"   name="username" required><br><br>
-              <h6>Password:</h6>
-              <input type="password" name="password" required><br><br>
-              <h6>Clusters:</h6>
-              <div class="text-left">
-                  <div *ngFor = "let cluster of clusters;" class = 'checkbox'  style="display: none;">
-                      <input type="checkbox" name="cluster[]" value='{{cluster}}' id="{{cluster}}_create">{{cluster}}<br>
-                    </div>
-                    <ng-multiselect-dropdown
-                      [placeholder]="'Select Clusters'"
-                      [data]="Cluster.clusters"
-                      [(ngModel)]="selectedItems"
-                      [settings]="dropdownSettings"
-                      (onSelect)="onItemSelect($event,'_create')"
-                      (onDeSelect)="onDeSelect($event,'_create')"
-                      (onDeSelectAll)="onDeSelectAll($event,'cluster[]')"
-                      (onSelectAll)="onSelectAll($event,'cluster[]')">
-                    </ng-multiselect-dropdown>
-                  </div><br><br>
-              <!-- <span><input type="checkbox" (click)="toggle(this,'cluster[]')" />Select all</span><br/><br> -->
-              <div >
-                  <h6>Privileges:</h6>
-                  <div class="checkbox text-justify" style="display:none">
-                  <span *ngFor="let panel of dropdown" [class.hide]="panel.division=='Analysis'"><input type="checkbox" name="panel[]" value="{{panel.columnName}}" *ngIf="panel.division!='Analysis'" id="{{panel.columnName}}_create">{{panel.panelName}}<br></span>
-                  </div> 
-                  <div class="col-sm-12" style="display: flex;justify-content: center">
-                    <ng-multiselect-dropdown
-                    [placeholder]="'Select Panels'"
-                    [data]="dropdown"
-                    [(ngModel)]="selectedpanel[0]"
-                    [settings]="paneldropdownSettings"
-                    (onSelect)="onpanelSelect($event,'_create')"
-                    (onDeSelect)="onpanelDeSelect($event,'_create')"
-                    (onDeSelectAll)="onDeSelectAll($event,'panel[]')"
-                    (onSelectAll)="onSelectAll($event,'panel[]')">
-                  </ng-multiselect-dropdown> 
-                  </div>     
-             
-              </div>
-              <br>
-              <input type="submit" class="rounded btn-info" value="Create User">
-          </form>
-        </div>
-    </div><br><br>
-    <div class = "col text-center" *ngIf="global.admin">
-        <div class="page-header">
-            <h2>Edit Users' Privileges</h2>            
-          </div>
-      <form *ngIf = "1" ngNoForm id="get_user_form" onsubmit="this.submit()" method="POST">
-        <div class="pad">
-            <h6>Please enter username:</h6>
-            <input type="text"   name="username" value="{{UserName}}">
-            <input type="submit" class=" btn-info" value="Check Privileges" formaction="{{url}}/get_user.php"><br><br>
-            <div id="priv" style="visibility: hidden;">
-              <h6>Clusters:</h6>
-              <div class="text-left">
-                <div *ngFor = "let cluster of clusters;" class = 'checkbox' style="display: none">
-                    <input id ="{{cluster}}" type="checkbox" name="clusterP[]" value='{{cluster}}'>{{cluster}}<br>
-                  </div>
-                  <ng-multiselect-dropdown *ngIf="!flag"
-                  [placeholder]="'Select Clusters'"
-                  [data]="Cluster.clusters"
-                  [(ngModel)]="prevClusters"
-                  [settings]="dropdownSettings"
-                  (onSelect)="onItemSelect($event,'')"
-                  (onDeSelect)="onDeSelect($event,'')"
-                  (onDeSelectAll)="onDeSelectAll($event,'clusterP[]')"
-                  (onSelectAll)="onSelectAll($event,'clusterP[]')">
-              </ng-multiselect-dropdown>
-              </div><br><br>              
-              <h6>Privileges:</h6>
-              <div class="checkbox text-justify" style="display: none">
-              <input type="checkbox" name="panelP[]" value="Water_Dispensing_Panel" id="Water_Dispensing_Panel" >Water Dispensing Panel<br>
-              <input type="checkbox" name="panelP[]" value="RO_Parameters" id="RO_Parameters">RO Parameters<br>
-              <input type="checkbox" name="panelP[]" value="Transaction_Log" id="Transaction_Log">Transaction Log<br>
-              <input type="checkbox" name="panelP[]" value="Operator_Attendance" id="Operator_Attendance">Operator Attendance<br>
-              <input type="checkbox" name="panelP[]" value="Cup_Dispensing_Panel" id="Cup_Dispensing_Panel">Cup Dispensing Panel<br>
-              <input type="checkbox" name="panelP[]" value="Supervisor_Data" id="Supervisor_Data">Supervisor Data<br>
-              <input type="checkbox" name="panelP[]" value="Analysis_Panel" id="Analysis_Panel">Analysis Panel<br>
-              <h6><input type="checkbox" (click)="toggle(this,'panelP[]')">Select all<br><br></h6>
-              </div>    
-           
-              
-              <div class="col-sm-12" style="display: flex;justify-content: center">
-                <ng-multiselect-dropdown *ngIf="selectedpanel[1].length!=0"
-                [placeholder]="'Select Panels'"
-                [data]="dropdown"
-                [(ngModel)]="selectedpanel[1]"
-                [settings]="paneldropdownSettings"
-                (onSelect)="onpanelSelect($event,'')"
-                (onDeSelect)="onpanelDeSelect($event,'')"
-                (onDeSelectAll)="onDeSelectAll($event,'panelP[]')"
-                (onSelectAll)="onSelectAll($event,'panelP[]')">
-              </ng-multiselect-dropdown> 
-              </div>  <br>  
-              <div class="text-center">
-                <h6>Internal Privileges:</h6>  
-                <div *ngFor = "let parameter of parameters;" class = 'checkbox'  style="display: none;">
-                  <input type="checkbox" name="propertyP[]" value='{{parameter.name}}' id="{{parameter.name}}">{{parameter.name}}<br>
-                </div> 
-                <div class="col-sm-12" style="display: flex;justify-content: center">
-                  <ng-multiselect-dropdown *ngIf="flagProperty"
-                  [placeholder]="'Select Properties'"
-                  [data]="parameters"
-                  [(ngModel)]="selectedparameter[1]"
-                  [settings]="propertydropdownSettings"
-                  (onSelect)="onpropertySelect($event,'')"
-                  (onDeSelect)="onpropertyDeSelect($event,'')"
-                  (onDeSelectAll)="onDeSelectAll($event,'propertyP[]')"
-                  (onSelectAll)="onSelectAll($event,'propertyP[]')">
-                </ng-multiselect-dropdown>
-                </div> 
-            </div><br>
-              <input type="submit" class="rounded btn-info" value="Save changes" formaction="{{url}}/edit_user.php">
-              <input type="submit" class="rounded btn-info" style="margin-left: 1px;" value="Delete User" onclick="return confirm('Warning! The user will be permanently deleted from the database!')" formaction="{{url}}/delete_user.php"><br><br>
-
-              <h6>Change Password:</h6>              
-              <input type="password"   name="admin_pass">
-              <input type="submit" class="btn-info" value="Save" formaction="{{url}}/admin_pass_change.php">
-              
+       <!-- Change Password Field -->
+        <div class= "col text-center ">
+            <div class="page-header">
+                <h2>Change Password</h2>
+            </div>
+            <div class="pad">
+                <form ngNoForm action="{{url}}/pass_change.php/?user={{userName}}" id="change_pass_form"  onsubmit="this.submit()" method="POST">
+                    <h6>Current Password:</h6>
+                    <input type="password" name="curr_pass" required><br><br>
+                    <h6>New Password:</h6>
+                    <input type="password" name="new_pass" required><br>
+                    <h6 style="padding-top: 10px">Confirm Password:</h6>
+                    <input type="password" name="new_pass_check" required><br><br>
+                    <input type="submit" class="rounded btn-info" value="Change Password">
+                </form>
             </div>
         </div>
-
-      </form> 
+         <br><br>
+        <!-- Create New User Field -->
+        <div class = "col text-center" *ngIf="global.admin">
+            <div class="page-header">
+            <h2>Create New User</h2>            
+            </div>
+            <div class="pad">
+                <form ngNoForm action="{{url}}/create_user.php" id="create_user_form" onsubmit="this.submit()" method="POST">
+                    <h6>Username:</h6>
+                    <input type="text"   name="username" required><br><br>
+                    <h6>Password:</h6>
+                    <input type="password" name="password" required><br><br>
+                    <!-- Cluster Entry -->
+                    <h6>Clusters:</h6>
+                    <div class="text-left">
+                        <div *ngFor = "let cluster of clusters;" class = 'checkbox'  style="display: none;">
+                            <input type="checkbox" name="cluster[]" value='{{cluster}}' id="{{cluster}}_create">{{cluster}}<br>
+                            </div>
+                            <ng-multiselect-dropdown
+                            [placeholder]="'Select Clusters'"
+                            [data]="Cluster.clusters"
+                            [(ngModel)]="selectedItems"
+                            [settings]="dropdownSettings"
+                            (onSelect)="onItemSelect($event,'_create')"
+                            (onDeSelect)="onDeSelect($event,'_create')"
+                            (onDeSelectAll)="onDeSelectAll($event,'cluster[]')"
+                            (onSelectAll)="onSelectAll($event,'cluster[]')">
+                            </ng-multiselect-dropdown>
+                    </div>
+                    <br><br>
+                    <!-- Panel Privleges Entry -->
+                    <div>
+                        <h6>Privileges:</h6>
+                        <div class="checkbox text-justify" style="display:none">
+                        <span *ngFor="let panel of dropdown" [class.hide]="panel.division=='Analysis'"><input type="checkbox" name="panel[]" value="{{panel.columnName}}" *ngIf="panel.division!='Analysis'" id="{{panel.columnName}}_create">{{panel.panelName}}<br></span>
+                        </div> 
+                        <div class="col-sm-12" style="display: flex;justify-content: center">
+                            <ng-multiselect-dropdown
+                            [placeholder]="'Select Panels'"
+                            [data]="dropdown"
+                            [(ngModel)]="selectedpanel[0]"
+                            [settings]="paneldropdownSettings"
+                            (onSelect)="onpanelSelect($event,'_create')"
+                            (onDeSelect)="onpanelDeSelect($event,'_create')"
+                            (onDeSelectAll)="onDeSelectAll($event,'panel[]')"
+                            (onSelectAll)="onSelectAll($event,'panel[]')">
+                            </ng-multiselect-dropdown> 
+                        </div>     
+                    </div>
+                    <br>
+                    <input type="submit" class="rounded btn-info" value="Create User">
+                </form>
+            </div>
+        </div>
+        <br><br>
+        <!-- Edit Privleges -->
+        <div class = "col text-center" *ngIf="global.admin">
+            <div class="page-header">
+                <h2>Edit Users' Privileges</h2>            
+            </div>
+            <form *ngIf = "1" ngNoForm id="get_user_form" onsubmit="this.submit()" method="POST">
+                <div class="pad">
+                    <h6>Please enter username:</h6>
+                    <input type="text"   name="username" value="{{UserName}}">
+                    <input type="submit" class=" btn-info" value="Check Privileges" formaction="{{url}}/get_user.php"><br><br>
+                    <div id="priv" style="visibility: hidden;">
+                        <!-- Cluster Edit Priveleges -->
+                        <h6>Clusters:</h6>
+                        <div class="text-left">
+                            <div *ngFor = "let cluster of clusters;" class = 'checkbox' style="display: none">
+                                <input id ="{{cluster}}" type="checkbox" name="clusterP[]" value='{{cluster}}'>{{cluster}}<br>
+                            </div>
+                            <ng-multiselect-dropdown *ngIf="!flag"
+                            [placeholder]="'Select Clusters'"
+                            [data]="Cluster.clusters"
+                            [(ngModel)]="prevClusters"
+                            [settings]="dropdownSettings"
+                            (onSelect)="onItemSelect($event,'')"
+                            (onDeSelect)="onDeSelect($event,'')"
+                            (onDeSelectAll)="onDeSelectAll($event,'clusterP[]')"
+                            (onSelectAll)="onSelectAll($event,'clusterP[]')">
+                            </ng-multiselect-dropdown>
+                        </div><br><br>  
+                        <!-- Edit Panel checkboxes -->
+                        <h6>Privileges:</h6>
+                        <div class="checkbox text-justify" style="display: none">
+                            <input type="checkbox" name="panelP[]" value="Water_Dispensing_Panel" id="Water_Dispensing_Panel" >Water Dispensing Panel<br>
+                            <input type="checkbox" name="panelP[]" value="RO_Parameters" id="RO_Parameters">RO Parameters<br>
+                            <input type="checkbox" name="panelP[]" value="Transaction_Log" id="Transaction_Log">Transaction Log<br>
+                            <input type="checkbox" name="panelP[]" value="Operator_Attendance" id="Operator_Attendance">Operator Attendance<br>
+                            <input type="checkbox" name="panelP[]" value="Cup_Dispensing_Panel" id="Cup_Dispensing_Panel">Cup Dispensing Panel<br>
+                            <input type="checkbox" name="panelP[]" value="Supervisor_Data" id="Supervisor_Data">Supervisor Data<br>
+                            <input type="checkbox" name="panelP[]" value="Analysis_Panel" id="Analysis_Panel">Analysis Panel<br>
+                            <h6><input type="checkbox" (click)="toggle(this,'panelP[]')">Select all<br><br></h6>
+                        </div>    
+                    
+                        <!-- Edit Panel Priveleges -->
+                        <div class="col-sm-12" style="display: flex;justify-content: center">
+                            <ng-multiselect-dropdown *ngIf="selectedpanel[1].length!=0"
+                            [placeholder]="'Select Panels'"
+                            [data]="dropdown"
+                            [(ngModel)]="selectedpanel[1]"
+                            [settings]="paneldropdownSettings"
+                            (onSelect)="onpanelSelect($event,'')"
+                            (onDeSelect)="onpanelDeSelect($event,'')"
+                            (onDeSelectAll)="onDeSelectAll($event,'panelP[]')"
+                            (onSelectAll)="onSelectAll($event,'panelP[]')">
+                            </ng-multiselect-dropdown> 
+                        </div>  <br> 
+                         <!--Edit Property Priveleges  -->
+                        <div class="text-center">
+                            <h6>Internal Privileges:</h6>  
+                            <div *ngFor = "let parameter of parameters;" class = 'checkbox'  style="display: none;">
+                            <input type="checkbox" name="propertyP[]" value='{{parameter.name}}' id="{{parameter.name}}">{{parameter.name}}<br>
+                            </div> 
+                            <div class="col-sm-12" style="display: flex;justify-content: center">
+                            <ng-multiselect-dropdown *ngIf="flagProperty"
+                            [placeholder]="'Select Properties'"
+                            [data]="parameters"
+                            [(ngModel)]="selectedparameter[1]"
+                            [settings]="propertydropdownSettings"
+                            (onSelect)="onpropertySelect($event,'')"
+                            (onDeSelect)="onpropertyDeSelect($event,'')"
+                            (onDeSelectAll)="onDeSelectAll($event,'propertyP[]')"
+                            (onSelectAll)="onSelectAll($event,'propertyP[]')">
+                            </ng-multiselect-dropdown>
+                            </div> 
+                        </div><br>
+                        <input type="submit" class="rounded btn-info" value="Save changes" formaction="{{url}}/edit_user.php">
+                        <input type="submit" class="rounded btn-info" style="margin-left: 1px;" value="Delete User" onclick="return confirm('Warning! The user will be permanently deleted from the database!')" formaction="{{url}}/delete_user.php"><br><br>
+                        <!-- Change Password Field -->
+                        <h6>Change Password:</h6>              
+                        <input type="password"   name="admin_pass">
+                        <input type="submit" class="btn-info" value="Save" formaction="{{url}}/admin_pass_change.php">           
+                    </div>
+                </div>
+            </form> 
+        </div>
     </div>
-  </div>
-  <div>
-  <br>
-  <h2 class="text-center" *ngIf = "global.admin&&tableActive">Configurations</h2>
-
-  <div  class="container-fluid table-responsive-xs maxHeight" *ngIf = "global.admin&&tableActive">
-
-        <table id="table" class="table table-hover " >
-
-
-            <thead class="thead-dark">
-                <tr>
-                    <th *ngFor="let thead of config_data[1];let rowIndex = index">{{thead}} <span *ngIf = "config_data[2][rowIndex] != ''">(in {{config_data[2][rowIndex]}})</span></th>
-                </tr>
-            </thead>
-            <tbody class="text-center">
-                <tr *ngFor="let row of config_info">
-                <td *ngFor= "let td of config_data[0]">
-                    {{row[td]}}
-                </td>
-                </tr>
-            </tbody>
-        </table>
-    <!-- </div> -->
-</div>
-</div>
+<div>
+    <br>
+    <h2 class="text-center" *ngIf = "global.admin&&tableActive">Configurations</h2>
+<!-- Configuration File table -->
+        <div  class="container-fluid table-responsive-xs maxHeight" *ngIf = "global.admin&&tableActive">
+            <table id="table" class="table table-hover " >
+                <thead class="thead-dark">
+                    <tr>
+                        <th *ngFor="let thead of config_data[1];let rowIndex = index">{{thead}} <span *ngIf = "config_data[2][rowIndex] != ''">(in {{config_data[2][rowIndex]}})</span></th>
+                    </tr>
+                </thead>
+                <tbody class="text-center">
+                    <tr *ngFor="let row of config_info">
+                    <td *ngFor= "let td of config_data[0]">
+                        {{row[td]}}
+                    </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
   
 </div>

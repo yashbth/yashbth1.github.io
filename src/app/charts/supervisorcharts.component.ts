@@ -2,7 +2,7 @@ import { Component, OnInit,Input, ViewChild,AfterViewInit,AfterContentChecked,On
 import {Chart} from 'chart.js';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { SupervisorComponent } from '../supervisor/supervisor.component';
-import {Cluster} from '../delhiCluster'
+import {Cluster} from '../Clusters'
 declare var jquery:any;
 declare var $ :any; 
 

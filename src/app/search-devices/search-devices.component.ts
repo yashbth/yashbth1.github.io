@@ -4,7 +4,7 @@ import { Observable, Subject} from 'rxjs';
 import {
   debounce,distinctUntilChanged,switchMap, debounceTime
 } from 'rxjs/operators'
-import {Cluster} from '../delhiCluster'
+import {Cluster} from '../Clusters'
 import {FetchWaterDispenseDataService} from '../fetch-water-dispense-data.service'
 import { CookieService } from 'angular2-cookie/core';
 import { GlobalService } from '../global.service';

@@ -1,16 +1,18 @@
 <app-loading *ngIf="dataAvailable==false"></app-loading>
 <div *ngIf="dataAvailable">
     <div>
-        <div class="container">
-              <div class="jumbotron text-center">
-                      <h1> {{cluster}} Cluster<span> ( Machine Id : {{info[0]?.DeviceID}} )</span></h1>
-                      <span id="deviceLoc"><b>Device located at :</b> <span id="place">{{location}}</span></span>
-                      <h1 class="blockquote-footer ">Reset Count: {{info[0]?.Trip_Total_Reset_Count}}</h1> 
-              </div>
+    <!-- Jumbotron , division information-->
+      <div class="container">
+        <div class="jumbotron text-center">
+          <h1> {{cluster}} Cluster<span> ( Machine Id : {{info[0]?.DeviceID}} )</span></h1>
+          <span id="deviceLoc"><b>Device located at :</b> <span id="place">{{location}}</span></span>
+          <h1 class="blockquote-footer ">Reset Count: {{info[0]?.Trip_Total_Reset_Count}}</h1> 
         </div>
+      </div>
       </div>
       <div class="container">
         <h2></h2>
+        <!-- Other Information about division -->
         <table id= "table" class="table table-striped text-center">
           <thead class = 'bold'>
             <td>SrNo</td>
@@ -34,7 +36,7 @@
         
         <h2 style="text-align: center">Sales Data</h2>
         
-      
+        <!-- Sales Table -->
         <table class="table table-striped text-center">
           <thead class="bold">
       
@@ -56,6 +58,8 @@
             </tr>
           </tbody>
         </table>
+
+        <!-- Select Property for chart -->
         <form (ngSubmit)="test()">
             <div class="form-group">
                 <label for="sel1" >Graph Select :</label>
@@ -64,8 +68,9 @@
                  </select>
             </div>
         </form>
-         
+         <!-- Charts Division -->
         <app-supervisor-charts [property1]="property1" [property2]="'TimeStamp'" ></app-supervisor-charts>  
+        <!-- Date Range Division -->
         <div class="dateRange text-center">
           <label for="sel2" class="sel2"><b>Select a custom date range to analyse:</b></label>
           <br>
@@ -76,7 +81,7 @@
           <div class="pad">
               <button type="submit" class="btn btn-info" (click)="generateGraph()">Analyse</button>                        
           </div>
-      </div>
+        </div>
       </div>
         
 </div>

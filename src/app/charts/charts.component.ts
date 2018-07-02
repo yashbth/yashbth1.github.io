@@ -3,7 +3,7 @@ import {Chart} from 'chart.js';
 import {WaterDispenseComponent} from '../water-dispense/water-dispense.component'
 import {waterDispenserParam} from '../water-dispense/waterDispenserparam'
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
-import { Cluster } from '../delhiCluster';
+import { Cluster } from '../Clusters';
 import { ThrowStmt } from '@angular/compiler';
 
 

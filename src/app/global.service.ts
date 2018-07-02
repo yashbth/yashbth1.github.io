@@ -35,7 +35,6 @@ export class GlobalService {
     }
     var firstrowData=inputArray[0];
     var prevRowData=inputArray[0];
-    console.log(inputArray,"input i");
     var i=0;
     var lastDay_rowIndex=0;
     // iterates for each row of data
@@ -43,7 +42,6 @@ export class GlobalService {
       i=i+1;
       // checks if there is change in date  or data point is last one, if yes then subtract last data point from first data point of that date
       if(prevRowData['date']!=row['date'] || inputArray.length==i){
-        console.log(prevRowData['date'],row['date'],i,lastDay_rowIndex,'here');
         var temp={}
         //  Iterates over each property that has been given as input 
         for( var data of properties){

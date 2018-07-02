@@ -1,14 +1,15 @@
 <app-loading *ngIf="dataAvailable==false"></app-loading>
 
 <div class="maxHeight" *ngIf="dataAvailable">
+    <!-- Jumbotron , division information-->
     <div class="container">
       <div class="jumbotron text-center">
         <h1> {{cluster}} Cluster <span> ( Machine Id : {{id[0]}} )</span></h1>
         <span id="deviceLoc"><b>Device located at :</b> <span id="place">{{location}}</span></span>
         <h1 class="blockquote-footer ">Operator Attendence Division</h1> 
-</div>
+      </div>
     </div>
-    
+    <!-- Tables with operator details -->
     <div class="table-responsive-sm spacing">
       <table class="table text-center table-striped rounded">
         <thead class="thead-light ">
@@ -25,12 +26,12 @@
             <td><input type="date"  [(ngModel)]="date"></td>            
             <td><input type="text" [(ngModel)]="expected_attendance[rowIndex]" ></td>
             <td><button type="button" (click)="generateChart(row,rowIndex)" class="btn btn-secondary">Inspect</button></td>            
-            <!-- <input type="submit" value="Go" (click)="generateChart()">  -->
           </tr>
         </tbody>
       </table>
     </div>
     <div>
+      <!-- Chart -->
     <app-other-chart [property1]="'present'" [property2]="'absent'" *ngIf="chart"></app-other-chart>
     </div>
 </div>

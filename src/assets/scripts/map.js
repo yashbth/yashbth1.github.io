@@ -4,17 +4,19 @@ var infowindow = [];
 
 var map;
 
+// Calls from app.component.ts
 function myMap() {
-
+  // Execute only if url is only these , to avoid unneccessary loading of map
   if(window.location.href=='http://localhost:4200/#/' ||window.location.href=='http://swajal.in/iiot/#/'||window.location.href=='https://swajal.in/iiot/#/' ){
     getLocation();
-
+    // set the center of map, position it will show the map for first time
     var myCenter = new google.maps.LatLng(28.7041,77.1025);
     var mapCanvas = document.getElementById("map");
     var mapOptions = {center: myCenter, zoom: 5,
       mapTypeControl: true,
       mapTypeControlOptions: {style: google.maps.MapTypeControlStyle.DROPDOWN_MENU}
     };
+    // creates map 
     map = new google.maps.Map(mapCanvas, mapOptions);
     
     setTimeout(()=>{
@@ -23,7 +25,9 @@ function myMap() {
       var currentCluster;
       var temp=-1;
       var html='';
+      // for each device set markers on map
       for( var device of devices){
+        // set only those markers which user is privledged
         if(JSON.parse(sessionStorage.user)[device.Cluster_Name]==1){
           var lat = lanAndlon(parseInt(device.Latitude));
           var lon = lanAndlon(parseInt(device.Longitude));
@@ -32,19 +36,23 @@ function myMap() {
           var cluster = '\"'+ device.Cluster_Name+'\"';
           var deviceLoc = new google.maps.LatLng(lat,lon);
           currentCluster = device.Cluster_Name;
+          // Cluster's in the dropdown
           if(currentCluster!=previousCluster){
             temp=temp+1;
             previousCluster=currentCluster;            
             html=html+'<li><button class="btn" onclick="opacity('+"\'"+ currentCluster+"\'"+','+temp+')"style="width:100%;background:white;padding:1px">'+currentCluster+'</button></li>';
           }
+          // type of marker to be embedded
           markers.push(new google.maps.Marker({position:deviceLoc,id:i,cluster:device.Cluster_Name,icon:'https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=•|'+iconSrc[temp%10]}));
           markers[markers.length-1].setMap(map);
+          // content to show in the marker
           infowindow.push(new google.maps.InfoWindow({
                 content: "Decive Location: <b><span style = \"display: flex; justify-content: center; font-size:15px;\">"+device.Location+" ("+device.Cluster_Name+
                 ")</span><br></b>DeviceID: <b><span style = \"display: flex; justify-content: center; font-size:15px; color:#999\">  "+device.DeviceID+
                 "</span></b><br><span style = \"display: flex; justify-content: center; font-size:15px;\"><button type='button' onclick='redirect("+id+","+address+","+cluster+
                 ")'>Analyse</button></span>"
           }));
+          // if user clicks on marker other markers closed and the clicked one opened
           google.maps.event.addListener(markers[markers.length-1],'click',function() {
             for(var marker of markers){
               infowindow[marker.id].close(map,markers[marker.id]);
@@ -56,10 +64,12 @@ function myMap() {
      
       }
   
-  
+      // creates a div for  Filter By Cluster Button on map
       var centerControlDiv = document.createElement('div');
+      //set it on map
       var centerControl = new CenterControl(centerControlDiv, map,html);
       centerControlDiv.index = 1;
+      // position of button on map
       map.controls[google.maps.ControlPosition.TOP_RIGHT].push(centerControlDiv);
       searchBar();
   
@@ -113,7 +123,7 @@ function lanAndlon(param){
   return param;
 }
 
-// 
+// Map search bar added to search location of machines , "Refer Google Maps api for javascript"
 function searchBar(){
     var input = document.getElementById('searchInput');
     var searchBox = new google.maps.places.SearchBox(input);
@@ -161,10 +171,10 @@ function searchBar(){
     });
 }
 
-
+// Filter By Cluster Button (Control-UI) (Refer google maps center control options)
 function CenterControl(controlDiv, map,html) {
 
-  // Set CSS for the control border.
+  // CSS For Button 'Filter By Cluster'
   var controlUI = document.createElement('div');
   controlUI.style.backgroundColor = '#fff';
   controlUI.style.border = '2px solid #fff';
@@ -175,15 +185,15 @@ function CenterControl(controlDiv, map,html) {
   controlUI.style.textAlign = 'center';
   controlUI.style.marginTop = '8px';
   controlUI.style.marginRight = '16px';
-  controlDiv.appendChild(controlUI);
+  controlDiv.appendChild(controlUI); // appends the button on maps
 
-  // Set CSS for the control interior.
+  // CSS for interior text of button.
   var controlText = document.createElement('div');
   controlText.style.color = 'rgb(25,25,25)';
   controlText.style.fontFamily = 'Roboto,Arial,sans-serif';
   controlText.style.fontSize = '16px';
   controlText.style.lineHeight = '38px';
-  // controlText.style.paddingLeft = '5px';
+  // sets the cluster names in the dropdown menu
   controlText.innerHTML = '<div class="dropdown"><button class="dropdown-toggle" type="button" data-toggle="dropdown" style="background:none;border:none">Filter by Cluster<span class="caret"></span></button><ul class="dropdown-menu">'+html+'</ul></div>';
   controlUI.appendChild(controlText);
   $('.dropdown-menu show').css({"display":"contents"})

@@ -23,7 +23,7 @@ import { CookieService } from 'angular2-cookie/services/cookies.service';
 import { SearchDevicesComponent } from './search-devices/search-devices.component';
 import { ErrorComponent } from './error/error.component';
 import { LoadingComponent } from './loading/loading.component';
-import { Cluster } from './delhiCluster';
+import { Cluster } from './Clusters';
 import { ClickDetectionDirective } from './click-detection.directive';
 import {StorageServiceModule} from 'angular-webstorage-service'
 import { SettingsComponent } from './settings/settings.component';

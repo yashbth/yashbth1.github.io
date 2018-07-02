@@ -2,7 +2,7 @@ import { Component, OnInit,} from '@angular/core';
 import {  Router,ActivatedRoute} from '@angular/router'
 
 import {FetchWaterDispenseDataService} from '../fetch-water-dispense-data.service'
-import {Cluster} from '../delhiCluster'
+import {Cluster} from '../Clusters'
 import { GlobalService } from '../global.service';
 import { CookieService,CookieOptionsArgs } from 'angular2-cookie/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
@@ -148,7 +148,7 @@ export class WaterDispenseComponent implements OnInit{
   panelParameters(){
     this.properties=[]; 
     switch (this.panel){
-      case 'WaterDispenser' : this.data= this.Cluster[this.cluster].WaterDispenseData; // Taking data from Cluster file (delhiCluster) using cluster and panel
+      case 'WaterDispenser' : this.data= this.Cluster[this.cluster].WaterDispenseData; // Taking data from Cluster file (Clusters) using cluster and panel
                           this.filename = 'Water.php'; //php to call for taking information from assets ( called from fetchWaterDispenseDataService)
                           this.property1 = 'Total_Volume_Dispensed';// Chart y axis property
                           this.property2 = 'date'; // Chart x axis property

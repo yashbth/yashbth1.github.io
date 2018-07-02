@@ -1,31 +1,33 @@
 <div id="map" *ngIf="router.url=='/'" style="visibility:hidden;width:100%;height:-webkit-fill-available" class="container-fluid" [class.visible]="!timeout">
 </div>
+<!-- Input bar on map -->
 <input id="searchInput" class="form-control" type="text" placeholder="Search Box" *ngIf="router.url=='/'" [class.visible]="!timeout">
+<!-- Load loading component -->
 <app-loading [timeout]="timeout" *ngIf="router.url=='/'&& locating"></app-loading>
+<!-- Load Machine Component -->
 <app-machine *ngIf="router.url!='/'" ></app-machine>
 
-
+<!-- Authentication Login Form -->
 <div id="id01" class="modal" style="display: block">
-
-        <form class="modal-content animate" >
-          
-          <div class="container">
-            <div class="row">
-              <div class="page-header">
-                <h2>User Authentication</h2 >
-              </div>
-            </div>
-            <p>{{cookieService.get('message')}}</p>
-            <label for="uname"><b>Username</b></label>
-            <input type="text" placeholder="Enter Username" name="uname" [(ngModel)]="username" required>
-      
-            <label for="psw"><b>Password</b></label>
-            <input type="password" placeholder="Enter Password" name="psw" [(ngModel)]="password" required>
-              
-            <button type="submit" (click)="requestAuth()" style="margin-bottom: 30px">Login</button>
-          </div>
-      
-        </form>
+  <form class="modal-content animate" >
+    
+    <div class="container">
+      <div class="row">
+        <div class="page-header">
+          <h2>User Authentication</h2 >
+        </div>
       </div>
+      <p>{{cookieService.get('message')}}</p>
+      <label for="uname"><b>Username</b></label>
+      <input type="text" placeholder="Enter Username" name="uname" [(ngModel)]="username" required>
+
+      <label for="psw"><b>Password</b></label>
+      <input type="password" placeholder="Enter Password" name="psw" [(ngModel)]="password" required>
+        
+      <button type="submit" (click)="requestAuth()" style="margin-bottom: 30px">Login</button>
+    </div>
+
+  </form>
+</div>
       
 

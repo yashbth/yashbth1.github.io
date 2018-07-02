@@ -35,8 +35,8 @@ export class MachineComponent implements OnInit{
   message_failure: string;
   
   constructor(private router : Router,private cookieService : CookieService,private route : ActivatedRoute,
-    private global :GlobalService,private service : FetchWaterDispenseDataService,private location: Location,@Inject(SESSION_STORAGE) private storage : StorageService) {
-   }
+    private global :GlobalService,private service : FetchWaterDispenseDataService,private location: Location,
+    @Inject(SESSION_STORAGE) private storage : StorageService) {}
 
   ngOnInit(){  
     $('html').css({"overflow-y":"auto"});
@@ -129,7 +129,7 @@ export class MachineComponent implements OnInit{
     let param=this.router.url.split('/');
     this.url= param[param.length-1];
     this.id = param[param.length-2];
-    this.currDiv = this.cookieService.get('prevDiv'); // Gettoing the previous Division to highlight the navbar option when navigated to error page  
+    this.currDiv = this.cookieService.get('prevDiv'); // Geting the previous Division to highlight the navbar option when navigated to error page  
   }
   
 }

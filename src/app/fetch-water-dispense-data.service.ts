@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient,HttpHeaders} from '@angular/common/http'
 import {Observable,of} from 'rxjs'
 import {waterDispenserParam,chartData} from './water-dispense/waterDispenserparam'
-import {Cluster} from './delhiCluster'
+import {Cluster} from './Clusters'
 import {catchError, map, tap } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CookieService } from 'angular2-cookie/core';
@@ -37,7 +37,6 @@ export class FetchWaterDispenseDataService {
     data.append('table',table);
     data.append('operatorId',id[1]);
     data.append('date',id[2]);
-    console.log(id,table);
     return this.http.post<waterDispenserParam[]>(this.url+filename,data).pipe(
       catchError(this.handleError('getData',[]))
     );
