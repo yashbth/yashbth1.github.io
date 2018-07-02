@@ -4,6 +4,7 @@ import { Dropdown} from '../machine/dropdown'
 import '../../assets/scripts/settings_functions.js';
 import { CookieService } from 'angular2-cookie/core';
 import { GlobalService } from '../global.service';
+import { FetchWaterDispenseDataService } from '../fetch-water-dispense-data.service';
 
 declare var $ : any;
 
@@ -34,15 +35,40 @@ export class SettingsComponent implements OnInit {
   selDrop2=[];
   selectedparameter =[this.selDrop1,this.selDrop2];
   selectedpanel=[[],[]]
+
+
+  config_data : any;
+  config_info : any;
+  config_table = 'ConfigurationFile';
+  config_filename : string='configData.php';
+  tableActive : boolean = false;
+
+
   url = "http://localhost/~yashbahetiiitk/swajal_dashboard/src/assets/Php";
   // url = "http://localhost:8000/assets/Php";
   // url = "/iiot/assets/Php"
   
   
-  constructor(private Cluster: Cluster, private cookieService:CookieService,private global : GlobalService) { }
+  constructor(private Cluster: Cluster, private cookieService:CookieService,private global : GlobalService,private service : FetchWaterDispenseDataService) { }
 
   ngOnInit() {
 
+    this.config_data= this.Cluster.config_params;
+    // console.log(this.Cluster,'config data here');
+    this.config_info=[];
+    this.service.getConfigData(this.config_filename).subscribe(info=>this.config_info=info,(err)=>console.error(err),()=>{      
+
+        // $('#table').DataTable();
+
+    });
+    setTimeout(()=>{
+      this.tableActive=true;
+      $(document).ready(function(){
+        $('#table').DataTable()
+
+      })
+    },1000)
+    console.log(this.config_info, 'config info here');
     for (var table of this.tables){
       let i=0;
       for(var property of this.Cluster['NISE'][table][1]){

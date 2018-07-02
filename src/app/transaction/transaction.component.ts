@@ -74,7 +74,7 @@ export class TransactionComponent implements OnInit {
 
   getInfo(){
     this.info=[];
-    console.log(this.id[0], this.table,this.filename,this.property1,this.fromDate,this.toDate,'see here');
+    // console.log(this.id[0], this.table,this.filename,this.property1,this.fromDate,this.toDate,'see here');
     this.service.getData_trans_params(this.id,this.table,this.filename,this.property1,this.fromDate,this.toDate).subscribe(info=>this.info=info,(err)=>console.error(err),()=>{      
       // if( !this.info || Object.keys(this.info).length==0 ){
       //   this.router.navigateByUrl('/'+this.cluster+'/'+this.id +'/error')              
