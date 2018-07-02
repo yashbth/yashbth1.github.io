@@ -8,11 +8,12 @@ declare var $ : any;
 export class ClickDetectionDirective {
   constructor(private el : ElementRef,private global :GlobalService) { 
   }
+  // listen for click event 
   @HostListener('document:click', ['$event.target'])
     public onClick(targetElement) {
-      const clickedInside = this.el.nativeElement.contains(targetElement);
-      if (!clickedInside) {
-          this.global.showSearchResult=false;
+      const clickedInside = this.el.nativeElement.contains(targetElement); // checks if click is inside the required element as in our case search bar
+      if (!clickedInside) { // if clicked outside the element
+          this.global.showSearchResult=false; // result section becomes invisible and navsearch bar becomes small in width
           if(window.innerWidth>600){
             $('.nav-search').animate({"width":"190px"},300);
             setTimeout(()=>{

@@ -14,7 +14,7 @@ declare var $ :any;
 })
 export class OperatorChartsComponent implements OnInit {
   private _property1: string;
-  @Input() 
+  @Input() // check if property1 has changed or not, if changed sets checkGraph=true to update chart
   set property1(property1:string){
     this._property1=property1;
     this.checkGraph = true;
@@ -40,13 +40,13 @@ export class OperatorChartsComponent implements OnInit {
     this.ConvertIntoArray(this.chartData,this._property1,this.property2);
     this.Chart('doughnut');
   }
-
+//  Refer Char.js for more info about charts
   Chart(type:string){
     this.type= type;
     this.data= {
       labels : ['Presents','Absents'],
         datasets: [{
-            data: this.Data1,
+            data: this.Data1, // no.of  presents and absents
             backgroundColor: [
               '#00cc00',
                 '#cc3300',

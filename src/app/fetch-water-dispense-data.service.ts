@@ -19,7 +19,7 @@ const httpOptions = {
 export class FetchWaterDispenseDataService {
 
   // private url = 'http://localhost/~yashbahetiiitk/swajal_dashboard/src/assets/Php/';
-  private url = 'http://localhost:8000/assets/Php/';
+  private url = 'http://localhost:8000/assets/Php/'; 
   // private url = '/iiot/assets/Php/';
   // private url="https://swajal.in/iiot/assets/Php/"
   cluster: string;
@@ -28,6 +28,9 @@ export class FetchWaterDispenseDataService {
 
    }
 
+  //  All the function recieves data in the form of json and asynchoronously using observable
+
+  // get basic data of all the tables 
   getData(id,table,filename) : Observable<waterDispenserParam[]>{
     let data = new FormData();
     data.append('id',id[0]);
@@ -39,6 +42,7 @@ export class FetchWaterDispenseDataService {
       catchError(this.handleError('getData',[]))
     );
   }
+  // All the data corresponding to configuration table is requested through this post request , call from 'settings component'
   getConfigData(filename) : Observable<waterDispenserParam[]>{
     let data = new FormData();
     // data.append('table',table);
@@ -46,6 +50,7 @@ export class FetchWaterDispenseDataService {
       catchError(this.handleError('getData',[]))
     );
   }
+  // calls from transaction component, recieves all the data for requested division
   getData_trans_params(id,table,filename,tor,fromDate,toDate) : Observable<waterDispenserParam[]>{
     let data = new FormData();
     data.append('id',id[0]);
@@ -59,7 +64,10 @@ export class FetchWaterDispenseDataService {
       catchError(this.handleError('getData',[]))
     );
   }
+
+  // Used to recieve location of device from 'Device_Data' Cluster
   getLocation(id,clusterName) : Observable<waterDispenserParam[]>{
+    // Sending data in post request as formdata(id,cluster.tablename)
     let data = new FormData();
     data.append('id',id);
     data.append('cluster',clusterName);
@@ -68,18 +76,21 @@ export class FetchWaterDispenseDataService {
       catchError(this.handleError('getData',[]))
     );
   }
+  // Used to recieve all the ids related to one particular cluster, call from (search devices component)
   getIds(id:string,cluster: string,table: string):Observable<Cluster[]>{
     let term = new FormData();
     if(!id.trim()&&table=='Device_Data'){
       return of([])
-    }
-    console.log(table);
+    } 
+    // hint : the letter which are typed in
     term.append('hint',id);
     term.append('cluster',cluster);
     term.append('table',table);
     return this.http.post<Cluster[]>(this.url+'ids.php',term)
   }
+  // This function collects data related to charts from start date to last date 
   getChartData(filename,id,table,from,to): Observable<waterDispenserParam[]>{
+    // post all required information id,tablename,date1,date2
     let chartData = new FormData();
     chartData.append('id',id);
     chartData.append('table',table);
@@ -90,29 +101,25 @@ export class FetchWaterDispenseDataService {
       
     );
   }
+
+  // This checks whether the user is authorised or not ; recieves form data from authentication form ( Call in app.component.ts)
   userAuthentication(form,filename):Observable<Users[]>{
     return this.http.post<Users[]>(this.url+filename,form,{withCredentials:true}).pipe(
       catchError(this.handleError('userAuthentication',[]))
       
     );
   }
+  // This function is used to get session data(primarily jwt token) from session.php 
   getSessionVariables(filename):Observable<Token[]>{
     return this.http.get<Token[]>(this.url+filename,{withCredentials:true}).pipe(
       catchError(this.handleError('getSessionVariables',[])) 
     );
   }
 
-
+  // Handles Error of service , if there is some problem it log it down
   private handleError<T> (operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
-   
-      // TODO: send the error to remote logging infrastructure
-      console.error(error); // log to console instead
-   
-      // TODO: better job of transforming error for user consumption
       console.log(`${operation} failed: ${error.message}`);
-   
-      // Let the app keep running by returning an empty result.
       return of(result as T);
     };
   }

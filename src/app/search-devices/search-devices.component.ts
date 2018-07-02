@@ -16,6 +16,8 @@ declare var $ : any;
   templateUrl: './search-devices.component.html',
   styleUrls: ['./search-devices.component.css']
 })
+
+//  Refer Angular.io search example in http = "https://angular.io/tutorial/toh-pt6#search-by-name"
 export class SearchDevicesComponent implements OnInit {
 
   selectId:string;// selected Id
@@ -29,7 +31,7 @@ export class SearchDevicesComponent implements OnInit {
 
  
   onmouseover(id){
-    this.selectId = id;// Setting input id on mouse over the id
+    this.selectId = id;// Setting input id on mouse hover the id
   }
   ngOnInit() {
     this.user = this.global.user["0"];
@@ -46,15 +48,16 @@ export class SearchDevicesComponent implements OnInit {
     this.table= this.Cluster[this.cluster].WaterDispenseData[3];
     this.searchTerms.next(term);// Pushing hint into search query to request ids
   }
+  // Navigation of page by clicking on id and setting cluster and id in cookie
   selectOther(){       
     this.cookieService.put('cluster',this.cluster);
     this.cookieService.put('id',this.selectId);                
     this.router.navigateByUrl('/'+this.cluster+'/'+this.selectId+'/WaterDispenser'); // navigate to another id 
     window.location.reload();
   }
-  // Changing the width of search bar on focus and simultaneousl increasing result section part only and making it visible
+  // Changing the width of search bar on focus and simultaneously increasing result section part only and making it visible
   largewidth(){
-      this.global.showSearchResult= true;   // Setting result section to be true 
+      this.global.showSearchResult= true;   // Setting result section to be visible  
       if(window.innerWidth>600){
         $('.nav-search').animate({"width":"350px"},300);// increasing width of search bar
         // Setting result section width after some ms

@@ -109,7 +109,8 @@ export class Cluster{
                 "Total Reject Volume",
                 "Tank Level",
                 "UV State",
-                "Trip State"
+                "Trip State",
+                "Operational Minutes",
             ],
             [
                 "",
@@ -143,6 +144,7 @@ export class Cluster{
                 "Total Cups Dispensed",
                 "Total Coin Collection",
                 "Total Card Collection",
+                "Trip State"
             ],
             [
                 "",
@@ -315,7 +317,8 @@ export class Cluster{
                 "Total Reject Volume",
                 "Tank Level",
                 "UV State",
-                "Trip State"
+                "Trip State",
+                "Operational Minutes",
             ],
             [
                 "",
@@ -349,6 +352,7 @@ export class Cluster{
                 "Total Cups Dispensed",
                 "Total Coin Collection",
                 "Total Card Collection",
+                "Trip State"
             ],
             [
                 "",
@@ -540,7 +544,8 @@ export class Cluster{
                 "Total Reject Volume",
                 "Tank Level",
                 "UV State",
-                "Trip State"
+                "Trip State",
+                "Operational Minutes"
             ],
             [
                 "",
@@ -574,6 +579,7 @@ export class Cluster{
                 "Total Cups Dispensed",
                 "Total Coin Collection",
                 "Total Card Collection",
+                "Trip State"
             ],
             [
                 "",
@@ -752,7 +758,8 @@ export class Cluster{
                 "Total Reject Volume",
                 "Tank Level",
                 "UV State",
-                "Trip State"
+                "Trip State",
+                "Operational Minutes"
             ],
             [
                 "",
@@ -786,6 +793,7 @@ export class Cluster{
                 "Total Cups Dispensed",
                 "Total Coin Collection",
                 "Total Card Collection",
+                "Trip State"
             ],
             [
                 "",

@@ -7,7 +7,7 @@ import { GlobalService } from '../global.service';
 import { CookieService,CookieOptionsArgs } from 'angular2-cookie/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 
-declare var jquery:any;
+declare var jquery:any; // Used to use jquery symbols
 declare var $ :any; 
 
 @Component({
@@ -35,8 +35,8 @@ export class WaterDispenseComponent implements OnInit{
   location : string ; // location of machine
   location_info : any;
   jwtHelper = new JwtHelperService(); // service to decode jwt token
-  token : string;
-  columnName:string;
+  token : string; // jwt token
+  columnName:string; // column Name used to show or hide data for users
   constructor( private service : FetchWaterDispenseDataService,private router : Router,private route: ActivatedRoute,private globalservice : GlobalService, private cookieService:CookieService,private Cluster : Cluster){
     // Same as ngOnInit except the fact that it occurs when route changed 
     router.events.subscribe(()=>{
@@ -52,7 +52,9 @@ export class WaterDispenseComponent implements OnInit{
 
       this.cookieService.put('cluster',this.cluster);
       this.cookieService.put('id',this.id[0]);
-      this.panelParameters();        
+      this.panelParameters(); 
+
+      // Checking if route changed to avoid requesting too much request to database        
       if(this.checkRouteChange.indexOf(this.property1)<0){
         this.service.getLocation(this.id[0],this.cluster).subscribe(location=>this.location_info=location,(err)=>console.log(err),()=>{
           this.cookieService.put('location',this.location_info[0].Location);
@@ -74,7 +76,7 @@ export class WaterDispenseComponent implements OnInit{
           window.location.href= 'https://swajal.in/iiot';
         }); 
       }
-      // Getting page info from url 
+      // Getting page info from URL
       this.panel = this.route.snapshot.paramMap.get('panel');  
       this.id[0] = this.route.snapshot.paramMap.get('id');  
       this.cluster = this.route.snapshot.paramMap.get('cluster');
@@ -82,7 +84,7 @@ export class WaterDispenseComponent implements OnInit{
       this.cookieService.put('id',this.id[0]);   
       //Getting info related to data using information from url  
       this.panelParameters();
-      // Checking if route changed has happened or to change data
+      // Checking if route changed to avoid requesting too much request to database
       if(this.checkRouteChange.indexOf(this.property1)<0){   
           this.service.getLocation(this.id[0],this.cluster).subscribe(location=>this.location_info=location,(err)=>console.log(err),()=>{
           this.cookieService.put('location',this.location_info[0].Location);
@@ -94,7 +96,7 @@ export class WaterDispenseComponent implements OnInit{
     })
 
   }
- //generateGraph subscribe data from database using chart_date.php for given dates 
+ //generateGraph subscribe data from database using chart_date.php for given dates using service fetchwaterdispensedata
   generateGraph(){
     this.dataChange = true;
     this.chartData=[];
@@ -106,8 +108,8 @@ export class WaterDispenseComponent implements OnInit{
   getWaterinfo():void{
     this.info=[];
     this.chartData=[];
-    this.service.getData(this.id,this.table,this.filename).subscribe(info=>this.info=info,(err)=>console.error(err),()=>{      
-      // navigate to error page if data is not found
+    this.service.getData(this.id,this.table,this.filename).subscribe(info=>this.info=info,(err)=>console.error(err),()=>{   
+      // After Data Shows Check if user has priveledge to that data and setting cookie access denied for it   
       if(this.globalservice.user["0"][this.columnName]=="0"){
         var time = new Date();
         time.setSeconds(time.getSeconds() + 5);
@@ -117,17 +119,20 @@ export class WaterDispenseComponent implements OnInit{
         this.cookieService.put("access_denied","Access Denied!",opts);
         this.router.navigateByUrl('/'+this.cluster+'/'+this.id +'/error')              
       }
+      // navigate to error page if data is not found
 
       if(!this.info || Object.keys(this.info).length==0 ){
         this.router.navigateByUrl('/'+this.cluster+'/'+this.id +'/error')              
       }
+
       this.formatParamters();  // function to format data of Ro log Parameter    
+      // Setting dates for chart  data
       this.fromDate = this.info[0].date;
       this.toDate = this.info[0].date;
       let date = new Date(this.fromDate);
       this.fromDate=date.setDate(date.getDate()-7);
       this.fromDate = new Date(this.fromDate).toISOString().slice(0,10);
-      console.log(this.fromDate)
+
       //subscribing last 1 days data from the last updated date (Chart data)
       this.service.getChartData('chart_date.php',this.id,this.table,this.fromDate,this.toDate).subscribe(chartData=>this.chartData=chartData,(err)=>console.log(err),()=>{
         this.chartData=this.globalservice.dataRise(this.chartData,this.properties);
@@ -144,11 +149,11 @@ export class WaterDispenseComponent implements OnInit{
     this.properties=[]; 
     switch (this.panel){
       case 'WaterDispenser' : this.data= this.Cluster[this.cluster].WaterDispenseData; // Taking data from Cluster file (delhiCluster) using cluster and panel
-                          this.filename = 'Water.php';
-                          this.property1 = 'Total_Volume_Dispensed';
-                          this.property2 = 'date';
-                          this.table =  this.Cluster[this.cluster].WaterDispenseData[3];
-                          this.columnName = 'Water_Dispensing_Panel'
+                          this.filename = 'Water.php'; //php to call for taking information from assets ( called from fetchWaterDispenseDataService)
+                          this.property1 = 'Total_Volume_Dispensed';// Chart y axis property
+                          this.property2 = 'date'; // Chart x axis property
+                          this.table =  this.Cluster[this.cluster].WaterDispenseData[3]; // name of table in cluster
+                          this.columnName = 'Water_Dispensing_Panel' //used for hiding and showing based on user's priveledges
                           break;
       case 'Ro' :  this.data = this.Cluster[this.cluster].RoData;
                         this.filename = 'Ro.php';
@@ -167,10 +172,10 @@ export class WaterDispenseComponent implements OnInit{
       default  :    break;
     }
     let i=0;
-    for(let property of this.data[1]){
+    for(let property of this.data[1]){// data[1] from delhi Cluster
       this.properties.push({name:this.data[0][i]});
       i=i+1;
-    }
+    } // setting properties to show different color for different property
   }
 
   // formatParamters function formats the data of Ro Log Parameter into readable data  
@@ -206,7 +211,9 @@ export class WaterDispenseComponent implements OnInit{
         
         case 0 : this.info[0]["Tank_Level"]="100";break;
         case 1 : this.info[0]["Tank_Level"]="<100";break;
-        case 2 : this.info[0]["Tank_Level"]="0";this.blink("Tank_Level");break;
+        case 2 : if(this.info[0]["Trip_state"]=="RW Tank Empty"){this.info[0]["Tank_Level"]="0"}
+                else{this.info[0]["Tank_Level"]="<80"};
+                this.blink("Tank_Level");break;
         default : this.info[0]["Tank_Level"]="Out of Range";this.blink("Tank_Level");break;
       }
     }

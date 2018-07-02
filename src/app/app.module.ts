@@ -59,7 +59,7 @@ import { ReportComponent } from './report/report.component';
     ChartModule,
     FormsModule,
     StorageServiceModule,
-    NgMultiSelectDropDownModule
+    NgMultiSelectDropDownModule,
     
   ],
   providers: [FetchWaterDispenseDataService,GlobalService,CookieService,Cluster],

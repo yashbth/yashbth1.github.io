@@ -41,10 +41,13 @@ export class SupervisorChartsComponent implements OnInit {
     },100);
 
   }
+    // This function changes data on route changes from different component to this
   ngAfterContentChecked(){
     if(this.checkGraph || this.chartData.dataChange){
+      //index no of property in that cluster in delhi Cluster file corresponding to that array ( Cluster corresponds to delhi Cluster file)
       let index = this.Cluster[this.cluster].supervisorData[0].indexOf(this._property1); 
       this.label = this.Cluster[this.cluster].supervisorData[1][index];  
+      // side label to display
       this.labelString = this.Cluster[this.cluster].supervisorData[1][index]+(this.Cluster[this.cluster].supervisorData[2][index]?' (in ':'')+this.Cluster[this.cluster].supervisorData[2][index]+(this.Cluster[this.cluster].supervisorData[2][index]?')':'');
       this.ConvertIntoArray(this.chartData.chartData,this._property1,this.property2);
       this.Chart('line');
@@ -59,7 +62,7 @@ export class SupervisorChartsComponent implements OnInit {
     this.ConvertIntoArray(this.chartData.chartData,this._property1,this.property2);
     this.Chart('line');
   }
-
+  // Refer Chart.js for more info
   Chart(type:string){
     this.type= type;
     this.data= {
@@ -98,7 +101,8 @@ export class SupervisorChartsComponent implements OnInit {
         }
     }
   }
-
+  
+ // Convert the chartdata into useful array according to selected properties, property1=yaxis,property2=xaxis
   ConvertIntoArray(data,property1:string,property2:string):void{  
     this.Data1=[];
     this.Data2=[];
