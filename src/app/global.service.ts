@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import {Dropdown} from './machine/dropdown'
 import { CookieService,CookieOptionsArgs } from 'angular2-cookie/core';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -12,12 +13,13 @@ export class GlobalService {
   showSearchResult : boolean =false;
   user: any;
   token: any;
-  DropDown = Dropdown;
+  DropDown = Dropdown; // side navigation divisions
   admin : boolean;
   clusters : any;
   panel : string;
   id: string;
   cluster :string;
+
   constructor(private router : Router,private cookieService : CookieService,private route : ActivatedRoute) {
    }
   setVar(lat,lon):void{
@@ -25,6 +27,7 @@ export class GlobalService {
     this.lon=lon;
   }
   
+  // function which takes an array as input and gives the difference in property for a respective day
   dataRise( inputArray : any,properties : any){
     var dates=[]
     if(properties.length==0){
@@ -35,31 +38,33 @@ export class GlobalService {
     console.log(inputArray,"input i");
     var i=0;
     var lastDay_rowIndex=0;
+    // iterates for each row of data
     for( var row of inputArray){
       i=i+1;
+      // checks if there is change in date  or data point is last one, if yes then subtract last data point from first data point of that date
       if(prevRowData['date']!=row['date'] || inputArray.length==i){
         console.log(prevRowData['date'],row['date'],i,lastDay_rowIndex,'here');
         var temp={}
-        console.log(properties,"propertiess i")
+        //  Iterates over each property that has been given as input 
         for( var data of properties){
           // var prevData=dates.length?inputArray[lastDay_rowIndex][data.name]:0
+          // checks for keyword 'total' if present subtract last from first else return last entry
           if(data.name.toLowerCase().search("total")==-1){
             temp[data.name]=prevRowData[data.name].replace(",","");
           }
           else{
             temp[data.name]=(prevRowData[data.name].replace(",","")-firstrowData[data.name].replace(",","")).toFixed(2);
           }
-          temp["date"]= prevRowData["date"];
+          temp["date"]= prevRowData["date"]; // setting date 
         }
-        console.log(temp,"temp push dates i");
-        dates.push(temp);       
+        dates.push(temp);    // pushing subtracted values or required values in dates array    
         lastDay_rowIndex=i-2;
         firstrowData=row;
       }
     prevRowData = row; 
     }
-    // dates.shift()
-    console.log(dates,"dates i");
-    return dates;
+    return dates; // return dates array with cummulative property(last-first) for no of dates
   }
+
+
 }

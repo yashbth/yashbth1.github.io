@@ -1,11 +1,12 @@
 import { Component, OnInit, OnChanges, AfterContentChecked,DoCheck,AfterContentInit } from '@angular/core';
 import { FetchWaterDispenseDataService } from '../fetch-water-dispense-data.service';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
-import { Cluster } from '../delhiCluster'
+import { Cluster } from '../Clusters'
 import { DatePipe } from '@angular/common';
 import { GlobalService } from '../global.service';
 import { CookieService,CookieOptionsArgs } from 'angular2-cookie/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
+
 
 
 
@@ -19,7 +20,7 @@ declare var displayLocation : any;
   styleUrls: ['./operator.component.css']
 })
 export class OperatorComponent implements OnInit {
-  dataAvailable : boolean =false;
+  dataAvailable : boolean =false; // loading boolean
   table= "Operator_Attendence"
   id=[];
   panel : string;
@@ -28,13 +29,13 @@ export class OperatorComponent implements OnInit {
   date : any=new Date(Date.now());
   place:string;
   info :any; 
-  operators = [];
-  expected_attendance=[];
+  operators = []; // Distinct operators
+  expected_attendance=[]; // expected no. of attendance for each operator
   checkOperators:boolean=true;
-  presents=[];
-  present: number;
-  absent: number;
-  chart:boolean=false;
+  presents=[];  // Presents for each and every operator
+  present: number;// no. of presents of particular operator
+  absent: number;//no. of presents of particular operator
+  chart:boolean=false; // boolean to show and hide doughnut chart
   location : string = this.cookieService.get('location');
   jwtHelper = new JwtHelperService();
 
@@ -47,10 +48,13 @@ export class OperatorComponent implements OnInit {
   }
 
   ngOnInit() {
+    // Checking if jwttoken is expired or not, if yes then navigate to home (map)
     if(this.jwtHelper.isTokenExpired(this.globalservice.token)){
       window.location.href= 'https://swajal.in/iiot';
     }
+      // setting date in yyyy-mm-dd format
     this.date= this.date.getFullYear() + '-'+((this.date.getMonth()+1)/10>1 ? '':'0')+(this.date.getMonth()+1)+'-'+this.date.getDate();
+    // Information from url
     setTimeout(()=>{
       this.id[0] = this.route.snapshot.paramMap.get('id');
       this.panel = this.route.snapshot.paramMap.get('panel');
@@ -61,10 +65,11 @@ export class OperatorComponent implements OnInit {
     },500)
   }
 
-
+  // Getting Informtaion of each operator at beginning of  page only
   getOperators(filename):void{
     this.operators=[];    
     this.service.getData(this.id,this.table,filename).subscribe(operators=>this.operators=operators,(err)=>console.error(err),()=>{  
+    // Checks if user has permission for requested division ("Transaction Log") and if not set's access denied to cookie
       if(this.globalservice.user["0"]['Operator_Attendance']=="0"){
         var time = new Date();
         time.setSeconds(time.getSeconds() + 5);
@@ -74,26 +79,24 @@ export class OperatorComponent implements OnInit {
         this.cookieService.put("access_denied","Access Denied!",opts);
         this.router.navigateByUrl('/'+this.cluster+'/'+this.id +'/error')              
       }
-
+    // Navigate to error page if no operators is present
       if( !this.operators || Object.keys(this.operators).length==0 ){
         this.router.navigateByUrl('/'+this.cluster+'/'+this.id +'/error')              
       }
+      let uniqueOperators=[];
+      // trimming white spaces form beginning and end
       for(let operator of this.operators){
-        //  console.log(operator,'2');
-        //  console.log(operator.OperatorID.substr(0,3) ,'3');
-  
-  
-          // var re = /3↵/gi; 
-          operator.OperatorID = operator.OperatorID.substr(0,10);
+          operator.OperatorID = operator.OperatorID.trim();
+          // Pushing unique operators into uniqueOperator array
+          if(uniqueOperators.indexOf(operator.OperatorID)==-1){// checks if array contains that operator already or not
+            uniqueOperators.push(operator.OperatorID);
+          }
         }
-  
+      this.operators=uniqueOperators;
       if( this.checkOperators){     
         if(this.operators.length){
-          this.operators.map(operator=>operator.OperatorID.trim());
-          this.operators = this.operators.filter((x, i, a) => a.indexOf(x) == i)
           for(let oper of this.operators){
-            console.log(oper.OperatorID.toString() ,'oper.openID');
-            this.id[1]=oper.OperatorID;
+            this.id[1]=oper;
             this.id[2]='';
             this.getInfo('operatorPunch.php');
           }
@@ -106,30 +109,54 @@ export class OperatorComponent implements OnInit {
       this.dataAvailable = true;
     },1000);
   }
+  // function to call php file through service
   getInfo(filename):void{
     this.info=[];   
     this.service.getData(this.id,this.table,filename).subscribe(info=>this.info=info);
 
   }
+
+  // Generating Chart for a particular operator
   generateChart(operator,index){
     this.chart = false;
     this.presents=[];
     let dateArray = this.date.split('-');
+    //if date format is 'yyyy-mm-dd' in database
     let dateString = dateArray[2] + '/'+dateArray[1]+'/'+dateArray[0];
     this.id[2] = dateString;
     this.id[1]= operator;
+    // Request for chart data for particular operator when user clicks analyse button
     this.service.getData(this.id,this.table,'operatorPunch.php').subscribe(presents=>this.presents=presents,(err)=>console.log(err),()=>{
+      // if date format is yyyy/mm/dd in database
       if(!this.presents){
         dateString = dateArray[2] + '-'+dateArray[1]+'-'+dateArray[0];
         this.id[2] = dateString;
         this.service.getData(this.id,this.table,'operatorPunch.php').subscribe(presents=>this.presents=presents);
       }
       setTimeout(()=>{
-        this.present = 0 || this.presents.length;
-        console.log(this.presents); 
+        // calculating no.of presents and absents of operators
+        try{
+          this.present = 0 || this.presents.length;
+        }
+        catch(err){
+          this.present=0;
+          console.log(err.message);    
+        }
         this.absent = this.expected_attendance[index]-this.present;
-
-        this.chart = true;
+        //Cookie set if expected punches are less no. of presents else chart becomes visible
+        if(this.absent<0){
+          var time = new Date();
+          time.setSeconds(time.getSeconds() + 5);
+          let opts: CookieOptionsArgs = {
+            expires: time
+          };
+          this.cookieService.put('access_denied','Warning! Expected punches is less than number of actual presents(' + this.present+')',opts);
+        }
+        else{ 
+          console.log(this.absent);
+          this.chart = true;
+          this.cookieService.put('access_denied','');
+        }
       },400);
     });
 

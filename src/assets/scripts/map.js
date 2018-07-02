@@ -68,28 +68,29 @@ function myMap() {
   }
  
 }
-
+// Redirect the page according to the selected id  , calls on click of marker 
 function redirect(id,address,cluster){
   document.cookie="location="+address+"; path=/";
   document.cookie="cluster="+cluster+"; path=/";
   document.cookie="id="+id+"; path=/"; 
   window.location.href= window.location.href + cluster+'/'+id+'/WaterDispenser'
 }
-
+// Removes other markers when filter by cluster
 function opacity(cluster,temp){
   for(var marker of markers){
     if(cluster!=marker.cluster){   
-      marker.setMap(null);
+      marker.setMap(null); // removes marker from map
     }
     else{
-      marker.setMap(map);
+      marker.setMap(map); // set markers of that particular cluster on map
     }
   }
 }
-
+// Request all the machines from Device_Data table
 function getLocation(){
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function(){
+      // if response status is 200 , parse text into json
       if(this.readyState==4 && this.status ==200){
         devices=JSON.parse(this.responseText);
       }	
@@ -97,10 +98,13 @@ function getLocation(){
     xhttp.open("POST","http://localhost/~yashbahetiiitk/swajal_dashboard/src/assets/Php/machines.php",true);
     // xhttp.open("POST","http://localhost:8000/assets/Php/machines.php",true);
     // xhttp.open("POST","/iiot/assets/Php/machines.php",true);  
-    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xhttp.send("table=Device_Data");
+    // xhttp.open("POST","https://swajal.in/iiot/assets/Php/machines.php",true);  
+
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded"); // content-set header
+    xhttp.send("table=Device_Data"); // send table name ( url encoded)
 }
 
+// Convert string formatted lat , lon into decimal formatted lat,lon (28889981,22463287) => (28.889981,22.463287)
 function lanAndlon(param){
   while(Math.abs(param)>100){
     if(param/100<1) {break};
@@ -109,7 +113,7 @@ function lanAndlon(param){
   return param;
 }
 
-
+// 
 function searchBar(){
     var input = document.getElementById('searchInput');
     var searchBox = new google.maps.places.SearchBox(input);
@@ -185,7 +189,7 @@ function CenterControl(controlDiv, map,html) {
   $('.dropdown-menu show').css({"display":"contents"})
 }
 
-
+// Colors of markers on map for one particular cluster
 var iconSrc=[
     "ff0000",
     "0033cc",
@@ -197,9 +201,9 @@ var iconSrc=[
     "663300",
     "00e6e6",
     "9999ff"
-] // marker Colors
+] 
 
-
+// function returns the value of cookie for a given name
 function getCookie(cname) {
   var name = cname + "=";
   var decodedCookie = decodeURIComponent(document.cookie);

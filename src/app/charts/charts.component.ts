@@ -3,7 +3,7 @@ import {Chart} from 'chart.js';
 import {WaterDispenseComponent} from '../water-dispense/water-dispense.component'
 import {waterDispenserParam} from '../water-dispense/waterDispenserparam'
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
-import { Cluster } from '../delhiCluster';
+import { Cluster } from '../Clusters';
 import { ThrowStmt } from '@angular/compiler';
 
 
@@ -19,11 +19,11 @@ declare var $ :any;
 export class ChartsComponent implements OnInit {
   private _property1: string;
   private chartData : any;
-  @Input() 
+  @Input() // checks if there is change in property1
   set property1(property1:string){
     this._property1=property1;
     this.checkGraph = true;
-  };
+  }; 
   @Input() property2:string;
   Data1=[];
   Data2=[];
@@ -32,24 +32,29 @@ export class ChartsComponent implements OnInit {
   options: any;
   label : string;
   labelString:string;
-  checkGraph : boolean=true;
+  checkGraph : boolean=true; // boolean to check if chartdata is changed or not
   cluster :string
 
   constructor(private water : WaterDispenseComponent,private Cluster : Cluster,private router : Router,private route: ActivatedRoute) { 
     this.cluster = route.snapshot.paramMap.get('cluster');
   }
+  // initalizing charts
   ngOnInit(){
-    this.chartData = this.water;
+    this.chartData = this.water; // setting chartData field to water Dispense Component
     if(this.chartData.chartData.length){
       this.ConvertIntoArray(this.chartData.chartData,this._property1,this.property2);
       this.Chart('bar');
     }
   }
+  // This function changes data on route changes like ro to water or cupDispensig
   ngAfterContentChecked(){
     if(this.checkGraph || this.chartData.dataChange){
+      // if property1 which is equals to _property1 found in any of ro ,water,or cupDispensing takes data from that division 
       if(this.Cluster[this.cluster].WaterDispenseData[0].indexOf(this._property1)>=0){
+        //index no of property in that cluster in delhi Cluster file corresponding to that array ( Cluster corresponds to delhi Cluster file)
         let index = this.Cluster[this.cluster].WaterDispenseData[0].indexOf(this._property1); 
         this.label = this.Cluster[this.cluster].WaterDispenseData[1][index];  
+        // side label to display
         this.labelString = this.Cluster[this.cluster].WaterDispenseData[1][index]+(this.Cluster[this.cluster].WaterDispenseData[2][index]?' (in ':'')+this.Cluster[this.cluster].WaterDispenseData[2][index]+(this.Cluster[this.cluster].WaterDispenseData[2][index]?')':'');
       }
       else if(this.Cluster[this.cluster].RoData[0].indexOf(this._property1)>=0){
@@ -70,12 +75,12 @@ export class ChartsComponent implements OnInit {
       }
     }
   }
-  
+  // Calling to update chart data if some changes has occured
   ngOnChanges(){
     this.ConvertIntoArray(this.chartData.chartData,this._property1,this.property2);
     this.Chart('bar');
   }
-
+  // Refer Chart.js for further information
   Chart(type:string){
     this.type= type;
     this.data= {
@@ -83,7 +88,7 @@ export class ChartsComponent implements OnInit {
         datasets: [{
             label: this.label,
             data: this.Data1,
-            backgroundColor: this.backGroundColor[this._property1],
+            backgroundColor: this.backGroundColor[this._property1], // setting background color for specific property
             borderWidth: 1,
             lineTension : 0
         }
@@ -104,7 +109,7 @@ export class ChartsComponent implements OnInit {
         }
     }
   }
-
+ // Convert the chartdata into useful array according to selected properties, property1=yaxis,property2=xaxis
   ConvertIntoArray(data,property1:string,property2:string):void{  
     this.Data1=[];
     this.Data2=[];
@@ -113,6 +118,7 @@ export class ChartsComponent implements OnInit {
       this.Data2.push(obj[property2]);
     }
   }
+  // Background colors for individual properties for bar chart
   backGroundColor=
     { "Total_Volume_Dispensed":"#3498DB",
      "Total_Recharge":"#1ABC9C",

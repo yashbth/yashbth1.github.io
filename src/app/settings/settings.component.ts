@@ -1,5 +1,5 @@
 import { Component, OnInit, AfterViewInit,AfterContentChecked, Inject} from '@angular/core';
-import {Cluster} from '../delhiCluster';
+import {Cluster} from '../Clusters';
 import { Dropdown} from '../machine/dropdown'
 import '../../assets/scripts/settings_functions.js';
 import { CookieService } from 'angular2-cookie/core';

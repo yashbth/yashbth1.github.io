@@ -1,7 +1,7 @@
 import { Component, OnInit,Input, ViewChild,AfterViewInit,AfterContentChecked,OnChanges,AfterViewChecked,AfterContentInit} from '@angular/core';
 import {Chart} from 'chart.js';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
-import {Cluster} from '../delhiCluster'
+import {Cluster} from '../Clusters'
 import { chartData } from '../water-dispense/waterDispenserparam';
 import { Property } from '../users';
 import { callbackify } from 'util';
@@ -21,15 +21,18 @@ export class AnalysisChartsComponent{
   _property : string;
   _ids :string;
   _chartData : any;
+  //Check change in properties selected
   @Input () set property(property : string){
     this._property = property;
     console.log(this._property)    
     this.checkGraph = true;
   } ;
+  // Check change in chart Data
   @Input () set chartData(chartData :any){
     this._chartData=chartData
     this.checkGraph=true;
   }
+  // Check Id change
   @Input () set ids(ids : string){
     this._ids = ids;
     this.checkGraph = true;
@@ -41,7 +44,7 @@ export class AnalysisChartsComponent{
   type: string;
   data : any;
   options: any;
-  checkGraph : boolean=true;
+  checkGraph : boolean=true; // checks if chart has to update or not
   label : string;
   labelString: string;
   flag=true;
@@ -49,21 +52,24 @@ export class AnalysisChartsComponent{
   constructor(private Cluster : Cluster,private router : Router,private route : ActivatedRoute) { 
   }
   ngOnInit(){
+    // If requested chart type is bubble splice the datasets into a group of length size of property array 
     if(this.ty=='bubble'){
-    Chart.defaults.global.legend.display = false;
-    for( let id of this._ids){
-      this.datasets.push(
-        { 
-          label:'',
-          data:this._chartData.splice(0,this._property.length),
-          backgroundColor:this.backGroundColor
+      Chart.defaults.global.legend.display = false;
+      // making datasets for each and every id selected
+      for( let id of this._ids){
+        this.datasets.push(
+          { 
+            label:'',
+            data:this._chartData.splice(0,this._property.length),
+            backgroundColor:this.backGroundColor // this enables the same property with same color
+        }
+        )
       }
-      )
-    }
-
-    this.Options();
+      // Selecting options written below for bubble chart
+      this.Options();
     }
     else{
+      // for polar chart no need of splicing 
       Chart.defaults.global.legend.display = true;
 
       console.log(this.chartData);
@@ -79,6 +85,7 @@ export class AnalysisChartsComponent{
   }
 
   ngAfterContentChecked(){
+    // if type is polar chart update data and labels on changing property
     if(this.checkGraph&&this.ty=='polarArea'){
       console.log(this._property,this._chartData)
       this.datasets=[]; 
@@ -88,7 +95,7 @@ export class AnalysisChartsComponent{
         { 
           label:this._ids,
           data:this._chartData,
-          backgroundColor: this.backGroundColor
+          backgroundColor: this.backGroundColor // setting background color
       }
       )
       this.options= {
@@ -99,10 +106,10 @@ export class AnalysisChartsComponent{
                     suggestedMax:Math.max.apply(null, chartData),
                     callback : function(value,index,values){
                       if(value<0){
-                        return -value+ids
+                        return -value+ids // side labels of value for (-)ve half
                       }
                       else{
-                        return value + ids;
+                        return value + ids;// side labels of value (+)ve half
                       }
                    }
                 }
@@ -113,7 +120,7 @@ export class AnalysisChartsComponent{
       this.checkGraph=false;
     }
   }
-
+//  Refer Chart.js for more info
   Chart(type:string){
     this.type= type;
     this.data= {
@@ -123,12 +130,14 @@ export class AnalysisChartsComponent{
     this.options=this.options
 
   }
-
+ // Chart.js option field
   Options(){
     let property = this._property;
     let ids =this._ids;
     this.options= {
+      // labelling axes  with respective labels
       scales: {
+        // x axis
         xAxes: [{
           scaleLabel:{
             display :true,
@@ -138,27 +147,30 @@ export class AnalysisChartsComponent{
               min:1,
               stepSize: 1,
               callback: function(value, index, values) {
-                return  ids[value-1] ;
+                return  ids[value-1] ; // name of id
                }
             }
         }]
     ,
-          yAxes: [{
-            scaleLabel:{
-              display :true,
-              labelString : ''
-              },
-              ticks: {
-                min:1,
-                stepSize: 1,
-                callback: function(value, index, values) {
-                  return  property[value-1] ;
-                 }
-              }
-          }]
+        // yaxis
+        yAxes: [{
+          scaleLabel:{
+            display :true,
+            labelString : ''
+            },
+            ticks: {
+              min:1,
+              stepSize: 1,
+              callback: function(value, index, values) {
+                return  property[value-1] ; // name of prperty
+                }
+            }
+        }]
       }
   }
   }
+
+  // Different Background Color for different properties
   backGroundColor=[
 
     "#0033cc",

@@ -1,6 +1,6 @@
 import { Component, OnInit ,AfterContentChecked} from '@angular/core';
 import { FetchWaterDispenseDataService } from '../fetch-water-dispense-data.service';
-import { Cluster } from '../delhiCluster';
+import { Cluster } from '../Clusters';
 import {Sales} from './report';
 import { filter, mergeMap } from 'rxjs/operators';
 import {Property,dropdowntableSettings, charts, dropdownpolarSettings} from '../users';
@@ -29,6 +29,7 @@ export class ReportComponent {
   id: any;
   isActive:boolean;
   tableActive:boolean;
+  specialtableActive:boolean;
   chartsActive=[false,false];
   selectedIds=[];
   info =[];
@@ -62,7 +63,7 @@ export class ReportComponent {
   x_data : number;
   y_data: number;
   r_data: number;
-
+  button:string='report';
   constructor(private service : FetchWaterDispenseDataService,private Cluster : Cluster,private global : GlobalService,private cookieService : CookieService,private router : Router ) { }
 
   ngOnInit() {  
@@ -93,7 +94,7 @@ export class ReportComponent {
     }
   }
 
-  generateReport(onlyreport){
+  generateReport(onlyreport,button){
 
   this.request=[];    
     for(var t of this.tables){
@@ -112,7 +113,14 @@ export class ReportComponent {
       }
       this.setChartData(this.selectedparameter[0],2);
       if(onlyreport){
-        this.tableActive= true;
+        if(button=='report'){
+          this.tableActive= true;
+          this.specialtableActive=false ;
+        }
+        else{
+          this.tableActive= false;
+          this.specialtableActive=true;
+        }
         $('html').css({"height":"auto"});
       }
       else{
@@ -130,7 +138,7 @@ export class ReportComponent {
   }
   ngAfterContentChecked(){
     this.parameters[1]=this.selectedparameter[0];
-    if(!this.chartsActive[0] && !this.tableActive){
+    if(!this.chartsActive[0] && (!this.tableActive && !this.specialtableActive) ){
      $('html').css({"height":"100%"});      
     } 
     else{
@@ -240,8 +248,14 @@ export class ReportComponent {
   }
 
 
-
-
+// Special Table
+  getSale(i){
+    let sale=0;
+    for(let id of this.selectedIds){
+      sale=sale+ parseInt(this.tableData[id][i]['Total_Collection_Sale']);
+    }
+    return sale;
+  }
 
 
   generate_data(){

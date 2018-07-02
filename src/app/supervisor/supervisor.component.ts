@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {  Router,NavigationEnd, ActivationStart,ActivatedRoute} from '@angular/router'
 
 import {FetchWaterDispenseDataService} from '../fetch-water-dispense-data.service'
-import {Cluster} from '../delhiCluster'
+import {Cluster} from '../Clusters'
 import { GlobalService } from '../global.service'
 import { CookieService , CookieOptionsArgs} from 'angular2-cookie/core';
 import { JwtHelperService } from '@auth0/angular-jwt';

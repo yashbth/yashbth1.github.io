@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FetchWaterDispenseDataService} from '../fetch-water-dispense-data.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import {Cluster} from '../delhiCluster'
+import {Cluster} from '../Clusters'
 import { GlobalService } from '../global.service';
 import { CookieService,CookieOptionsArgs } from 'angular2-cookie/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
@@ -17,11 +17,11 @@ declare var $ : any;
 })
 export class TransactionComponent implements OnInit {
   dataAvailable : Boolean = false; // First Check if document is ready or not ( for loading part)
-  dataAvailable1 : Boolean = false; // Second check if required information is recieved or not
+  dataAvailable1 : Boolean = false; // Second check if required information for table is recieved or not
   
   table = 'Transaction_logging'; // table name in php
   private id =[];
-  private filename : string='transactionLog.php';
+  private filename : string='transactionLog.php'; // file name to call from assets through service
   info : any;
   cluster : string;
   data : any;
@@ -31,7 +31,7 @@ export class TransactionComponent implements OnInit {
   dev : string = this.cookieService.get('id'); //DeviceID
 
   jwtHelper = new JwtHelperService();// Service to implement methods on Jwttoken
-  trans_params : any = this.Cluster.trans_params;
+  trans_params : any = this.Cluster.trans_params; // options to display
   property1 : string = null;
   card:string;
 
@@ -39,14 +39,13 @@ export class TransactionComponent implements OnInit {
   toDate : any =new Date().toISOString().slice(0,10);
   
   param_count: number; // information rows count for certain option
-  param_name: string;
-
-  flagPriveledge : boolean= true;
+  param_name: string; // Selected table name
 
   constructor(private router :Router ,private service : FetchWaterDispenseDataService,private Cluster : Cluster,private route : ActivatedRoute, private globalservice : GlobalService, private cookieService:CookieService ) { 
   }
 
   ngOnInit(){
+    // Checks if user has permission for requested division ("Transaction Log") and if not set's access denied to cookie
     if(this.globalservice.user["0"]['Transaction_Log']=="0" ){
       var time = new Date();
       time.setSeconds(time.getSeconds() + 5);
@@ -56,24 +55,26 @@ export class TransactionComponent implements OnInit {
       this.cookieService.put("access_denied","Access Denied!",opts);
       this.router.navigateByUrl('/'+this.cluster+'/'+this.id +'/error')             
     }
+
     setTimeout(()=>{
       // Checking expiry of jwttoken
       if(this.jwtHelper.isTokenExpired(this.globalservice.token)){
         window.location.href= 'https://swajal.in/iiot';
       }
-      // information from url 
+      // Getting information from url 
       this.id[0] = this.route.snapshot.paramMap.get('id');
       this.panel = this.route.snapshot.paramMap.get('panel')
       this.cluster = this.route.snapshot.paramMap.get('cluster');
+      // getting column Names and title from them from delhi Cluster file
       this.data= this.Cluster[this.cluster].transaction;
-      this.cookieService.put('prevDiv','transactionLog');            
+      this.cookieService.put('prevDiv','transactionLog');  
+      //  Getting distinct cards issued for that machine     
       this.service.getData(this.id,this.data[3][0],'cards.php').subscribe(cards=>this.cards=cards,(err)=>console.log(err),()=>{
       console.log(this.cards);
       }); 
     })
     // setting dataAvailable after 1s ( for loading)
     setTimeout(()=>{
-      // this.globalservice.isAllowed('Transaction_Log'); // Checks the authentication for direct url navigation (Function defined in Global Service)                       
       this.dataAvailable =true;
       this.property1 = '0';
       document.getElementById('options')["options"][0].selected = true; // Setting select parameter to first option 
@@ -96,6 +97,12 @@ export class TransactionComponent implements OnInit {
       //   this.router.navigateByUrl('/'+this.cluster+'/'+this.id +'/error')              
         $('#table').DataTable();
         // }
+        this.info.forEach(element => {
+          if(element.CardNo=='2017000000'){
+            element.CardNo='Coin';
+          }
+        });
+    // Show and hide of table data
     this.dataAvailable1 = false;
     if(this.info){
       this.param_count = this.info.length;
@@ -114,6 +121,7 @@ export class TransactionComponent implements OnInit {
       else{
       this.param_name = "Machine Restart";
       }
+      // Show and hide of table data
       this.dataAvailable1 =true;
       $(document).ready(function(){
         $('#table').DataTable()
@@ -123,14 +131,13 @@ export class TransactionComponent implements OnInit {
     },1000)
   }
   CardData(){
-    // console.log("hel")
     $('#table_filter input').val(this.card);
     $(function() {
       $('#table_filter input').keyup();
   });
 
   }
-  // Prints the table 
+  // Prints the table from html using id given to element "to_print"
   print(): void {
     let printContents, popupWin;
     $('#table_length').css({"display":"none"});

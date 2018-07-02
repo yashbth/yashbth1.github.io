@@ -74,8 +74,11 @@
       </ng-multiselect-dropdown>
     </div>
     <span class="button">
-      <button type="submit" class="btn btn-info" (click)="generateReport(false)" *ngIf="rowIndex==0" style="margin: 5px;">Visualise Data</button>
-      <button type="submit" class="btn btn-info" (click)="generateReport(true)" style="margin: 5px;">Generate Report</button>
+      <button type="submit" class="btn btn-info" (click)="generateReport(false,'')" *ngIf="rowIndex==0" style="margin: 5px;">Visualise Data</button>
+      <select class="btn btn-info" (click)="generateReport(true,button)" style="margin: 5px;" [(ngModel)]="button" name="report">
+          <option [value]="'report'">Generate Report</option>
+          <option [value]="'specialreport'">Generate Special Report</option>
+      </select>
     </span>
     </div>
     <div class="row">
@@ -114,5 +117,41 @@
         </div>      
       </div>
 </div>
+<div class="col-sm-12 table" *ngIf="specialtableActive">
+      <i class="fas fa-download" (click)="print('specialTable')"></i>
+          <div id="specialTable">
+            <table class="table table-striped text-center" >
+              <thead class="thead-dark">
+                <tr>
+                  <th>Date</th>
+                  <th>Day</th>
+                  <th *ngFor="let id of selectedIds">
+                      {{id}}
+                      <table width="100%">
+                        <tr>
+                          <th>Sale</th><th>300ml Glass Sold</th><th>1l Bottle Sold</th>
+                        </tr>
+                      </table>
+                  </th>
+                  <th>Total Sale</th><th>Deposit</th><th>Cash In Hand</th><th>Remark</th>
+                  <!-- <th *ngFor="let data of selectedparameter[0];let rowIndex=index">{{data.title }}<span *ngIf = "unit[rowIndex] != ''">(in {{unit[rowIndex]}})</span></th> -->
+                </tr>
+              </thead>
+              <tbody >
+                <tr *ngFor="let info of tableData[selectedIds[0]];let rowIndex=index">
+                  <td>{{info['date']}}</td>
+                  <td>{{info['date']| date:'EEEE'}}</td>
+                  <td *ngFor="let id of selectedIds;">
+                    <table width="100%">
+                      <tr>
+                        <td>{{tableData[id][rowIndex]['Total_Collection_Sale']}}</td><td>{{tableData[id][rowIndex]['TotalCupsDispensed']?tableData[id][rowIndex]['TotalupsDispensed']:0}}</td><td>{{tableData[id][rowIndex]['Total_Volume_Dispensed']}}</td>
+                      </tr>
+                    </table>
+                  </td>
+                  <td>{{getSale(rowIndex)}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
 
 </div>

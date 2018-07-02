@@ -26,7 +26,7 @@ const routes: Routes = [
 @NgModule({
   imports: [
     CommonModule,
-    RouterModule.forRoot(routes,{ useHash: true })
+    RouterModule.forRoot(routes,{ useHash: true }) // Hashing is true, so that every time page refresh it starts from index.html only
   ],
   exports:[
     RouterModule
