@@ -7,7 +7,7 @@
 if($_POST["username"]==''){
     redirect_with_message('message_failure',"Please enter a valid username.");
 }
-if($_POST["username"]=='Admin'){
+if(strtolower($_POST["username"])=='admin'){
     redirect_with_message('message_failure',"Admin's privileges cannot be altered!");
 }
 $username = "'".$_POST['username']."'";

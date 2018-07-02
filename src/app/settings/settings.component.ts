@@ -1,10 +1,11 @@
-import { Component, OnInit, AfterViewInit,AfterContentChecked} from '@angular/core';
+import { Component, OnInit, AfterViewInit,AfterContentChecked, Inject} from '@angular/core';
 import {Cluster} from '../delhiCluster';
 import { Dropdown} from '../machine/dropdown'
 import '../../assets/scripts/settings_functions.js';
 import { CookieService } from 'angular2-cookie/core';
 import { GlobalService } from '../global.service';
 import { FetchWaterDispenseDataService } from '../fetch-water-dispense-data.service';
+import { SESSION_STORAGE, StorageService } from 'angular-webstorage-service';
 
 declare var $ : any;
 
@@ -35,7 +36,7 @@ export class SettingsComponent implements OnInit {
   selDrop2=[];
   selectedparameter =[this.selDrop1,this.selDrop2];
   selectedpanel=[[],[]]
-
+  
 
   config_data : any;
   config_info : any;
@@ -49,18 +50,21 @@ export class SettingsComponent implements OnInit {
   // url = "/iiot/assets/Php"
   
   
-  constructor(private Cluster: Cluster, private cookieService:CookieService,private global : GlobalService,private service : FetchWaterDispenseDataService) { }
+  constructor(private Cluster: Cluster, private cookieService:CookieService,private global : GlobalService,private service : FetchWaterDispenseDataService,@Inject(SESSION_STORAGE) private storage : StorageService) { }
 
   ngOnInit() {
 
     this.config_data= this.Cluster.config_params;
     // console.log(this.Cluster,'config data here');
     this.config_info=[];
-    this.service.getConfigData(this.config_filename).subscribe(info=>this.config_info=info,(err)=>console.error(err),()=>{      
-
-        // $('#table').DataTable();
-
+    if(!this.storage.get('config') && this.global.admin){
+      this.service.getConfigData(this.config_filename).subscribe(info=>this.config_info=info,(err)=>console.error(err),()=>{   
+        this.storage.set('config',this.config_info);   
     });
+    }
+    else if(this.storage.get('config') && this.global.admin){
+      this.config_info= this.storage.get('config');
+    }
     setTimeout(()=>{
       this.tableActive=true;
       $(document).ready(function(){
@@ -68,7 +72,6 @@ export class SettingsComponent implements OnInit {
 
       })
     },1000)
-    console.log(this.config_info, 'config info here');
     for (var table of this.tables){
       let i=0;
       for(var property of this.Cluster['NISE'][table][1]){

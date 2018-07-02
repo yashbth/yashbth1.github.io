@@ -9,10 +9,9 @@
     
     $id = $_POST['id'];
     $table = $_POST['table'];
-    $date1 = $_POST['from'];
-    $date2 = $_POST['to'];
 
-    $sql ="SELECT * FROM $table WHERE DeviceID='$id' AND date BETWEEN '$date1' AND '$date2' ORDER BY date,SrNo ASC"; 
+    $sql ="SELECT DISTINCT CardNo FROM $table WHERE DeviceID='$id'"; 
+    // echo($sql);
     $result = $conn->query($sql);
 	 if($result->num_rows>0) {
 		    $all_rows=array();

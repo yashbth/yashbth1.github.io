@@ -156,29 +156,29 @@
     </div>
   </div>
   <div>
-    <br>
-    <h2 class="text-center" *ngIf = "global.admin&&tableActive">Configurations</h2>
-    
-    <div  class="container-fluid table-responsive-xs maxHeight" *ngIf = "global.admin&&tableActive">
+  <br>
+  <h2 class="text-center" *ngIf = "global.admin&&tableActive">Configurations</h2>
 
-          <table id="table" class="table table-hover " >
+  <div  class="container-fluid table-responsive-xs maxHeight" *ngIf = "global.admin&&tableActive">
+
+        <table id="table" class="table table-hover " >
 
 
-              <thead class="thead-dark">
-                  <tr>
-                      <th *ngFor="let thead of config_data[1];let rowIndex = index">{{thead}} <span *ngIf = "config_data[2][rowIndex] != ''">(in {{config_data[2][rowIndex]}})</span></th>
-                  </tr>
-              </thead>
-              <tbody class="text-center">
-                  <tr *ngFor="let row of config_info">
-                  <td *ngFor= "let td of config_data[0]">
-                      {{row[td]}}
-                  </td>
-                  </tr>
-              </tbody>
-          </table>
-      <!-- </div> -->
-  </div>
-  </div>
+            <thead class="thead-dark">
+                <tr>
+                    <th *ngFor="let thead of config_data[1];let rowIndex = index">{{thead}} <span *ngIf = "config_data[2][rowIndex] != ''">(in {{config_data[2][rowIndex]}})</span></th>
+                </tr>
+            </thead>
+            <tbody class="text-center">
+                <tr *ngFor="let row of config_info">
+                <td *ngFor= "let td of config_data[0]">
+                    {{row[td]}}
+                </td>
+                </tr>
+            </tbody>
+        </table>
+    <!-- </div> -->
+</div>
+</div>
   
 </div>

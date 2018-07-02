@@ -4,7 +4,7 @@ import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { Cluster } from '../delhiCluster'
 import { DatePipe } from '@angular/common';
 import { GlobalService } from '../global.service';
-import { CookieService } from 'angular2-cookie/core';
+import { CookieService,CookieOptionsArgs } from 'angular2-cookie/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 
 
@@ -56,7 +56,7 @@ export class OperatorComponent implements OnInit {
       this.panel = this.route.snapshot.paramMap.get('panel');
       this.cluster = this.route.snapshot.paramMap.get('cluster');
       this.data= this.Cluster[this.cluster].operator;
-      this.globalservice.isAllowed(this.cluster,this.panel,this.id);                       
+      // this.globalservice.isAllowed('Operator_Attendance');                       
       this.getOperators('operator.php');
     },500)
   }
@@ -65,6 +65,16 @@ export class OperatorComponent implements OnInit {
   getOperators(filename):void{
     this.operators=[];    
     this.service.getData(this.id,this.table,filename).subscribe(operators=>this.operators=operators,(err)=>console.error(err),()=>{  
+      if(this.globalservice.user["0"]['Operator_Attendance']=="0"){
+        var time = new Date();
+        time.setSeconds(time.getSeconds() + 5);
+        let opts: CookieOptionsArgs = {
+          expires: time
+        };
+        this.cookieService.put("access_denied","Access Denied!",opts);
+        this.router.navigateByUrl('/'+this.cluster+'/'+this.id +'/error')              
+      }
+
       if( !this.operators || Object.keys(this.operators).length==0 ){
         this.router.navigateByUrl('/'+this.cluster+'/'+this.id +'/error')              
       }

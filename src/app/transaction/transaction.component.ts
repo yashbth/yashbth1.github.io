@@ -1,14 +1,14 @@
-import { Component, OnInit , AfterContentChecked,DoCheck,AfterContentInit,OnChanges} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {FetchWaterDispenseDataService} from '../fetch-water-dispense-data.service';
-import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import {Cluster} from '../delhiCluster'
 import { GlobalService } from '../global.service';
-import { CookieService } from 'angular2-cookie/core';
+import { CookieService,CookieOptionsArgs } from 'angular2-cookie/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { utf8Encode } from '@angular/compiler/src/util';
 
 declare var jquery : any;
 declare var $ : any;
-declare var displayLocation : any;
 
 @Component({
   selector: 'app-transaction',
@@ -16,60 +16,76 @@ declare var displayLocation : any;
   styleUrls: ['./transaction.component.css'],
 })
 export class TransactionComponent implements OnInit {
-  dataAvailable : Boolean = false;
-  dataAvailable1 : Boolean = false;
+  dataAvailable : Boolean = false; // First Check if document is ready or not ( for loading part)
+  dataAvailable1 : Boolean = false; // Second check if required information is recieved or not
   
-  table = 'Transaction_logging';
+  table = 'Transaction_logging'; // table name in php
   private id =[];
   private filename : string='transactionLog.php';
   info : any;
   cluster : string;
   data : any;
   panel : string;
-
+  cards:any;
   location : string = this.cookieService.get('location');
-  dev : string = this.cookieService.get('id');
+  dev : string = this.cookieService.get('id'); //DeviceID
 
-  jwtHelper = new JwtHelperService();
+  jwtHelper = new JwtHelperService();// Service to implement methods on Jwttoken
   trans_params : any = this.Cluster.trans_params;
   property1 : string = null;
+  card:string;
 
-  fromDate: any=new Date().toISOString().slice(0,10);
+  fromDate: any=new Date().toISOString().slice(0,10); // chart dates formated in yyyy-mm-dd
   toDate : any =new Date().toISOString().slice(0,10);
   
-  param_count: number;
+  param_count: number; // information rows count for certain option
   param_name: string;
 
-  constructor(private service : FetchWaterDispenseDataService,private Cluster : Cluster, private router : Router,private route : ActivatedRoute, private globalservice : GlobalService, private cookieService:CookieService ) { 
+  flagPriveledge : boolean= true;
+
+  constructor(private router :Router ,private service : FetchWaterDispenseDataService,private Cluster : Cluster,private route : ActivatedRoute, private globalservice : GlobalService, private cookieService:CookieService ) { 
   }
 
   ngOnInit(){
+    if(this.globalservice.user["0"]['Transaction_Log']=="0" ){
+      var time = new Date();
+      time.setSeconds(time.getSeconds() + 5);
+      let opts: CookieOptionsArgs = {
+        expires: time
+      };
+      this.cookieService.put("access_denied","Access Denied!",opts);
+      this.router.navigateByUrl('/'+this.cluster+'/'+this.id +'/error')             
+    }
     setTimeout(()=>{
+      // Checking expiry of jwttoken
       if(this.jwtHelper.isTokenExpired(this.globalservice.token)){
         window.location.href= 'https://swajal.in/iiot';
       }
+      // information from url 
       this.id[0] = this.route.snapshot.paramMap.get('id');
       this.panel = this.route.snapshot.paramMap.get('panel')
       this.cluster = this.route.snapshot.paramMap.get('cluster');
       this.data= this.Cluster[this.cluster].transaction;
-      this.globalservice.isAllowed(this.cluster,this.panel,this.id);                       
       this.cookieService.put('prevDiv','transactionLog');            
-      
-      // this.getInfo();      
+      this.service.getData(this.id,this.data[3][0],'cards.php').subscribe(cards=>this.cards=cards,(err)=>console.log(err),()=>{
+      console.log(this.cards);
+      }); 
     })
+    // setting dataAvailable after 1s ( for loading)
     setTimeout(()=>{
+      // this.globalservice.isAllowed('Transaction_Log'); // Checks the authentication for direct url navigation (Function defined in Global Service)                       
       this.dataAvailable =true;
       this.property1 = '0';
-      document.getElementById('options')["options"][0].selected = true;
+      document.getElementById('options')["options"][0].selected = true; // Setting select parameter to first option 
     },1000)
   }
+  // css Changes for table
   ngAfterContentChecked(){
     $('.paginate_button').css({"padding":"10px"});
     $('#table_filter').css({"display":"inline-block","float":"right"});
     $('#table_length').css({"display":"inline-block"});
     $('.dataTables_info').css({"visibility":"hidden"});
     // $('html').css({"height":"100%"});   
-
   }
 
   getInfo(){
@@ -89,7 +105,9 @@ export class TransactionComponent implements OnInit {
     }
 
     });
+
     setTimeout(()=>{
+      // Defining certain values according to thier values
       if(this.property1 !== '00'){
         this.param_name = this.trans_params[0][this.property1];
       }
@@ -100,13 +118,19 @@ export class TransactionComponent implements OnInit {
       $(document).ready(function(){
         $('#table').DataTable()
         $('.paginate_button').css({"padding":"10px","border":"none"});
-        // $('#table_length').html($('#table_length').html()+'<i id="to_print">');
-        // $('#table_paginate').html($('#table_paginate').html()+'</i>here');
         $('.fas').css({"padding-left":"10px"});
       })
     },1000)
   }
+  CardData(){
+    // console.log("hel")
+    $('#table_filter input').val(this.card);
+    $(function() {
+      $('#table_filter input').keyup();
+  });
 
+  }
+  // Prints the table 
   print(): void {
     let printContents, popupWin;
     $('#table_length').css({"display":"none"});
@@ -114,8 +138,8 @@ export class TransactionComponent implements OnInit {
     $('#table_paginate').css({"visibility":"hidden"});
 
 
-    printContents = document.getElementById('to_print').innerHTML;
-    popupWin = window.open('', '_blank', 'top=10,left=0,height=100%,width=auto');
+    printContents = document.getElementById('to_print').innerHTML;// id of element to be printed
+    popupWin = window.open('', '_blank', 'top=0,left=0,height=100%,width=auto');
     popupWin.document.open();
     popupWin.document.write(`
       <br>

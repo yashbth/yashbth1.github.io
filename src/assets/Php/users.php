@@ -1,5 +1,6 @@
 <?php
 // Start the session
+ini_set('session.cookie_lifetime', 9*3060); 
 session_start();
 ?>
 <?php require_once("./db_connection.php"); ?>
@@ -17,7 +18,8 @@ session_start();
 	if($result->num_rows>0){
         $all_rows=array();
 		while($row = $result->fetch_assoc()){
-            if ($username==$row['Username'] && password_verify($password,$row['Password'])) {
+            if (strtolower($username)==strtolower($row['Username']) && password_verify($password,$row['Password'])) {
+                $row['Password']='';
                 $header = json_encode(['typ' => 'JWT', 'alg' => 'HS256']);
                 // Create token payload as a JSON string
                     $payload = json_encode([$row,'exp'=>time()+3600*9]);

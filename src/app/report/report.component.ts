@@ -7,6 +7,8 @@ import {Property,dropdowntableSettings, charts, dropdownpolarSettings} from '../
 import { Observable } from 'rxjs';
 import { forkJoin } from 'rxjs'
 import { GlobalService } from '../global.service';
+import { CookieService,CookieOptionsArgs } from 'angular2-cookie/core';
+import { Router } from '@angular/router';
 
 
 declare var $:any;
@@ -61,7 +63,7 @@ export class ReportComponent {
   y_data: number;
   r_data: number;
 
-  constructor(private service : FetchWaterDispenseDataService,private Cluster : Cluster,private global : GlobalService ) { }
+  constructor(private service : FetchWaterDispenseDataService,private Cluster : Cluster,private global : GlobalService,private cookieService : CookieService,private router : Router ) { }
 
   ngOnInit() {  
     this.from.setDate(this.from.getDate()-7);
@@ -80,9 +82,18 @@ export class ReportComponent {
         i=i+1;
       }
     }
+    if(this.global.user["0"]['Analysis_Panel']=="0" ){
+      var time = new Date();
+      time.setSeconds(time.getSeconds() + 5);
+      let opts: CookieOptionsArgs = {
+        expires: time
+      };
+      this.cookieService.put("access_denied","Access Denied!",opts);
+      this.router.navigateByUrl('/'+this.cluster+'/'+this.id +'/error')             
+    }
   }
 
-  generateReport(){
+  generateReport(onlyreport){
 
   this.request=[];    
     for(var t of this.tables){
@@ -100,8 +111,15 @@ export class ReportComponent {
         } 
       }
       this.setChartData(this.selectedparameter[0],2);
-      this.dataAvailable= true;           
-      this.chartsActive[0]=true;
+      if(onlyreport){
+        this.tableActive= true;
+        $('html').css({"height":"auto"});
+      }
+      else{
+        this.dataAvailable= true;           
+        this.chartsActive[0]=true;
+      }
+
     })
 
   }
@@ -112,7 +130,7 @@ export class ReportComponent {
   }
   ngAfterContentChecked(){
     this.parameters[1]=this.selectedparameter[0];
-    if(!this.chartsActive[0]){
+    if(!this.chartsActive[0] && !this.tableActive){
      $('html').css({"height":"100%"});      
     } 
     else{
@@ -120,6 +138,7 @@ export class ReportComponent {
     } 
 
   }
+
   setChartData(item : any,chart){
     console.log("hi");
     if(chart==1||chart==2){

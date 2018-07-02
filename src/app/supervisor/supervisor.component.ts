@@ -4,7 +4,7 @@ import {  Router,NavigationEnd, ActivationStart,ActivatedRoute} from '@angular/r
 import {FetchWaterDispenseDataService} from '../fetch-water-dispense-data.service'
 import {Cluster} from '../delhiCluster'
 import { GlobalService } from '../global.service'
-import { CookieService } from 'angular2-cookie/core';
+import { CookieService , CookieOptionsArgs} from 'angular2-cookie/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
  
 declare var jquery: any;
@@ -49,7 +49,6 @@ export class SupervisorComponent implements OnInit {
     this.id[0] = this.route.snapshot.paramMap.get('id');
     this.panel = this.route.snapshot.paramMap.get('panel');       
     this.cluster = this.route.snapshot.paramMap.get('cluster');     
-    this.globalservice.isAllowed(this.cluster,this.panel,this.id); //prevent url mishandling                                                                   
     this.panelParameters();
     if(this.checkRouteChange.indexOf(this.property1)<0){ //detect a route change and update info if route was changed
       this.getWaterinfo();
@@ -65,8 +64,18 @@ export class SupervisorComponent implements OnInit {
 
   getWaterinfo():void{ 
     this.info=[];
-    this.service.getData(this.id,this.table,this.filename).subscribe(info=>this.info=info,(err)=>console.error(err),()=>{       
-      if( !this.info || Object.keys(this.info).length==0 ){ //if no data is recieved from database then redirect to error page
+    this.service.getData(this.id,this.table,this.filename).subscribe(info=>this.info=info,(err)=>console.error(err),()=>{   
+      if(this.globalservice.user["0"]['Supervisor_Data']=="0"){
+        var time = new Date();
+        time.setSeconds(time.getSeconds() + 5);
+        let opts: CookieOptionsArgs = {
+          expires: time
+        };
+        this.cookieService.put("access_denied","Access Denied!",opts);
+        this.router.navigateByUrl('/'+this.cluster+'/'+this.id +'/error')              
+      }
+    
+      if( !this.info || Object.keys(this.info).length==0 ){
         this.router.navigateByUrl('/'+this.cluster+'/'+this.id +'/error')              
       }
       this.fromDate = this.info[0].date;
@@ -83,6 +92,7 @@ export class SupervisorComponent implements OnInit {
   }
 
   panelParameters(){
+    // this.globalservice.isAllowed('Supervisor_Data');                                                                    
     this.data = this.Cluster[this.cluster].supervisorData;
     this.filename = 'supervisor.php';
     this.property1 = 'Total_Collection_Sale';

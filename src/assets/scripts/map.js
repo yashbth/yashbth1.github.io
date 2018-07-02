@@ -6,64 +6,67 @@ var map;
 
 function myMap() {
 
-  getLocation();
+  if(window.location.href=='http://localhost:4200/#/' ||window.location.href=='http://swajal.in/iiot/#/'||window.location.href=='https://swajal.in/iiot/#/' ){
+    getLocation();
 
-  var myCenter = new google.maps.LatLng(28.7041,77.1025);
-  var mapCanvas = document.getElementById("map");
-  var mapOptions = {center: myCenter, zoom: 5,
-    mapTypeControl: true,
-    mapTypeControlOptions: {style: google.maps.MapTypeControlStyle.DROPDOWN_MENU}
-  };
-  map = new google.maps.Map(mapCanvas, mapOptions);
-  
-  setTimeout(()=>{
-    var i=0
-    var previousCluster='';
-    var currentCluster;
-    var temp=-1;
-    var html='';
-    for( var device of devices){
-      if(JSON.parse(sessionStorage.user)[device.Cluster_Name]==1){
-        var lat = lanAndlon(parseInt(device.Latitude));
-        var lon = lanAndlon(parseInt(device.Longitude));
-        var address = '\"'+device.Location+'\"';
-        var id = '\"'+ device.DeviceID+'\"';
-        var cluster = '\"'+ device.Cluster_Name+'\"';
-        var deviceLoc = new google.maps.LatLng(lat,lon);
-        currentCluster = device.Cluster_Name;
-        if(currentCluster!=previousCluster){
-          temp=temp+1;
-          previousCluster=currentCluster;            
-          html=html+'<li><button class="btn" onclick="opacity('+"\'"+ currentCluster+"\'"+','+temp+')"style="width:100%;background:white;padding:1px">'+currentCluster+'</button></li>';
-        }
-        markers.push(new google.maps.Marker({position:deviceLoc,id:i,cluster:device.Cluster_Name,icon:'https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=•|'+iconSrc[temp%10]}));
-        markers[markers.length-1].setMap(map);
-        infowindow.push(new google.maps.InfoWindow({
-              content: "Decive Location: <b><span style = \"display: flex; justify-content: center; font-size:15px;\">"+device.Location+" ("+device.Cluster_Name+
-              ")</span><br></b>DeviceID: <b><span style = \"display: flex; justify-content: center; font-size:15px; color:#999\">  "+device.DeviceID+
-              "</span></b><br><span style = \"display: flex; justify-content: center; font-size:15px;\"><button type='button' onclick='redirect("+id+","+address+","+cluster+
-              ")'>Analyse</button></span>"
-        }));
-        google.maps.event.addListener(markers[markers.length-1],'click',function() {
-          for(var marker of markers){
-            infowindow[marker.id].close(map,markers[marker.id]);
+    var myCenter = new google.maps.LatLng(28.7041,77.1025);
+    var mapCanvas = document.getElementById("map");
+    var mapOptions = {center: myCenter, zoom: 5,
+      mapTypeControl: true,
+      mapTypeControlOptions: {style: google.maps.MapTypeControlStyle.DROPDOWN_MENU}
+    };
+    map = new google.maps.Map(mapCanvas, mapOptions);
+    
+    setTimeout(()=>{
+      var i=0
+      var previousCluster='';
+      var currentCluster;
+      var temp=-1;
+      var html='';
+      for( var device of devices){
+        if(JSON.parse(sessionStorage.user)[device.Cluster_Name]==1){
+          var lat = lanAndlon(parseInt(device.Latitude));
+          var lon = lanAndlon(parseInt(device.Longitude));
+          var address = '\"'+device.Location+'\"';
+          var id = '\"'+ device.DeviceID+'\"';
+          var cluster = '\"'+ device.Cluster_Name+'\"';
+          var deviceLoc = new google.maps.LatLng(lat,lon);
+          currentCluster = device.Cluster_Name;
+          if(currentCluster!=previousCluster){
+            temp=temp+1;
+            previousCluster=currentCluster;            
+            html=html+'<li><button class="btn" onclick="opacity('+"\'"+ currentCluster+"\'"+','+temp+')"style="width:100%;background:white;padding:1px">'+currentCluster+'</button></li>';
           }
-          infowindow[this.id].open(map,markers[this.id]);
-        });
-        i=i+1;
+          markers.push(new google.maps.Marker({position:deviceLoc,id:i,cluster:device.Cluster_Name,icon:'https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=•|'+iconSrc[temp%10]}));
+          markers[markers.length-1].setMap(map);
+          infowindow.push(new google.maps.InfoWindow({
+                content: "Decive Location: <b><span style = \"display: flex; justify-content: center; font-size:15px;\">"+device.Location+" ("+device.Cluster_Name+
+                ")</span><br></b>DeviceID: <b><span style = \"display: flex; justify-content: center; font-size:15px; color:#999\">  "+device.DeviceID+
+                "</span></b><br><span style = \"display: flex; justify-content: center; font-size:15px;\"><button type='button' onclick='redirect("+id+","+address+","+cluster+
+                ")'>Analyse</button></span>"
+          }));
+          google.maps.event.addListener(markers[markers.length-1],'click',function() {
+            for(var marker of markers){
+              infowindow[marker.id].close(map,markers[marker.id]);
+            }
+            infowindow[this.id].open(map,markers[this.id]);
+          });
+          i=i+1;
+        }
+     
       }
-   
-    }
-
-
-    var centerControlDiv = document.createElement('div');
-    var centerControl = new CenterControl(centerControlDiv, map,html);
-    centerControlDiv.index = 1;
-    map.controls[google.maps.ControlPosition.TOP_RIGHT].push(centerControlDiv);
-    searchBar();
-
-  },2500)
-
+  
+  
+      var centerControlDiv = document.createElement('div');
+      var centerControl = new CenterControl(centerControlDiv, map,html);
+      centerControlDiv.index = 1;
+      map.controls[google.maps.ControlPosition.TOP_RIGHT].push(centerControlDiv);
+      searchBar();
+  
+    },2500)
+  
+  }
+ 
 }
 
 function redirect(id,address,cluster){
