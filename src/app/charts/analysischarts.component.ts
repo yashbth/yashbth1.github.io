@@ -24,7 +24,6 @@ export class AnalysisChartsComponent{
   //Check change in properties selected
   @Input () set property(property : string){
     this._property = property;
-    console.log(this._property)    
     this.checkGraph = true;
   } ;
   // Check change in chart Data
@@ -36,7 +35,6 @@ export class AnalysisChartsComponent{
   @Input () set ids(ids : string){
     this._ids = ids;
     this.checkGraph = true;
-    console.log(this._ids)
   } ;
   @Input () ty;
   Data1=[];
@@ -72,7 +70,6 @@ export class AnalysisChartsComponent{
       // for polar chart no need of splicing 
       Chart.defaults.global.legend.display = true;
 
-      console.log(this.chartData);
       this.datasets.push(
         { 
           label:this._ids,
@@ -87,7 +84,6 @@ export class AnalysisChartsComponent{
   ngAfterContentChecked(){
     // if type is polar chart update data and labels on changing property
     if(this.checkGraph&&this.ty=='polarArea'){
-      console.log(this._property,this._chartData)
       this.datasets=[]; 
       let ids=this._ids ; 
       let chartData = this._chartData;   

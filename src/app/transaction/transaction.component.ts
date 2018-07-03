@@ -70,7 +70,6 @@ export class TransactionComponent implements OnInit {
       this.cookieService.put('prevDiv','transactionLog');  
       //  Getting distinct cards issued for that machine     
       this.service.getData(this.id,this.data[3][0],'cards.php').subscribe(cards=>this.cards=cards,(err)=>console.log(err),()=>{
-      console.log(this.cards);
       }); 
     })
     // setting dataAvailable after 1s ( for loading)
@@ -91,7 +90,6 @@ export class TransactionComponent implements OnInit {
 
   getInfo(){
     this.info=[];
-    // console.log(this.id[0], this.table,this.filename,this.property1,this.fromDate,this.toDate,'see here');
     this.service.getData_trans_params(this.id,this.table,this.filename,this.property1,this.fromDate,this.toDate).subscribe(info=>this.info=info,(err)=>console.error(err),()=>{      
       // if( !this.info || Object.keys(this.info).length==0 ){
       //   this.router.navigateByUrl('/'+this.cluster+'/'+this.id +'/error')              

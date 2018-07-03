@@ -1,0 +1,12 @@
+1. How to change the username and password for database login?
+    a. Go to assets/Php/db_connection.php
+    b. Change the username and password in the defining sentences of DB_NAME and DB_PPASS'.
+
+2. How to deploy the app after making changes?
+    a. Open the terminal.
+    b. Navigate into the dashboard folder.
+    c. Type "ng build --base-href=/iiot/" in the terminal, this command updates the 'dist' folder.
+    d. Delete everything except .ftpquota nad .htaccess files from the server and upload everything in dist folder to the server
+       
+        Remove the cache from the browser and run the app.
+    

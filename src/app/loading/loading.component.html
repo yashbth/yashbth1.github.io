@@ -1,4 +1,5 @@
 <div class="container text-center" *ngIf="router.url!='/'">
+    <!-- Loading Between different components -->
     <div class="loading">
         <div class="loading-1"></div>
         <div class="loading-2"></div>
@@ -12,7 +13,7 @@
         <div class="loading-10"></div>
       </div>
 </div>
-
+<!-- Login-Map loading -->
 <div *ngIf="router.url=='/' && timeout">
     <div class="e-loadholder">
         <div class="m-loader">

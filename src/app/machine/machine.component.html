@@ -3,6 +3,7 @@
   <!-- Main Navbar  -->
   <div class="nav">
     <nav class="navbar navbar-expand-sm  navbar-dark fixed-top">
+      <!-- Right side of navbar Logo and mobile size view -->
       <span id="collective" class="text-center">
           <span id="toggleButton" class="bars" (click)="toggle()" ></span>
           <!-- Brand/logo -->
@@ -18,7 +19,10 @@
       
       <!-- Links -->
       <ul class="navbar-nav Settings">
-        <app-search-devices appClickDetection></app-search-devices>
+        <!-- Search Bar for id added -->
+        <!-- appClickDetection directive to check whether click is outside the input bar or it is inside -->
+        <app-search-devices appClickDetection></app-search-devices> 
+        <!-- Settings , Analysis panel and logout -->
         <li class="nav-item padTop">
           <a class="nav-link" routerLink="/{{cluster}}/{{id}}/settings" [class.active-options]="currDiv=='Settings'" (click)="cookieService.put('prevDiv','Settings')">Settings</a>
         </li>
@@ -51,9 +55,10 @@
           </nav>
     </div>
     <div class="components">
+      <!-- Message Failure Message -->
       <div *ngIf = "message_failure" class="alert alert-danger container" style="justify-content: center; text-align: center;"><span style="justify-content: center"><b></b>{{message_failure}}</span></div>
-        <router-outlet>      
-        </router-outlet> 
+      <!-- Outlet of panels on navigation -->
+      <router-outlet></router-outlet> 
     </div>
    
   </div>

@@ -1,4 +1,5 @@
 <div id="report" class="container-fluid">
+  <!-- Jumbotro Information related to Component -->
   <div class="container">
     <div class="jumbotron text-center">
       <div class="page-header">
@@ -12,7 +13,9 @@
       </div>
     </div>
   </div>
+
   <div class="row ">
+    <!-- Select 'Cluster and Id' Division -->
     <div class="selectMachines">
         <div class="dropdown col-sm-2 text-center">
             <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
@@ -37,9 +40,8 @@
           </ng-multiselect-dropdown>
         </div>
     </div>
-
-
   </div>
+  <!-- Date Range Select division -->
   <div class="dateRange text-center">
     <form >
       <div class="form-group">
@@ -54,11 +56,13 @@
       </div>
     </form>
 </div>
+<!-- Polar and bubble chart division -->
 <div class="col-sm-12 charts" *ngFor="let chart of charts;let rowIndex =index;">
   <div class="row polar" *ngIf="chartsActive[0]||rowIndex==0">
     <div class="header" *ngIf="rowIndex==1">
       <h5>Compare Single Parameter</h5>
     </div>
+    <!-- Dropdowns for property /properties -->
     <div class="select col-sm-3" style="margin: 5px;">
       <ng-multiselect-dropdown (click)="tableActive=false"
         [placeholder]="rowIndex?'Select Parameter':'Select Parameters'"
@@ -68,11 +72,10 @@
         (onSelect)="setChartData($event,rowIndex)"
         (onSelectAll)="setChartData($event,rowIndex)"
         (onDeSelect)="setChartData($event,rowIndex)"
-        (onDeSelectAll)="emptyChartData()"
-
-        >
+        (onDeSelectAll)="emptyChartData()">
       </ng-multiselect-dropdown>
     </div>
+    <!-- Buttons  -->
     <span class="button">
       <button type="submit" class="btn btn-info" (click)="generateReport(false,'')" *ngIf="rowIndex==0" style="margin: 5px;">Visualise Data</button>
       <select class="btn btn-info" (click)="generateReport(true,button)" style="margin: 5px;" [(ngModel)]="button" name="report">
@@ -81,14 +84,14 @@
       </select>
     </span>
     </div>
+    <!-- Charts to show -->
     <div class="row">
       <div class="chart col-sm-9" *ngIf="chartsActive[rowIndex]">
         <app-analysis-charts [property]="chartData[rowIndex][0]" [chartData]="chartData[rowIndex][1]" [ids]="chartData[rowIndex][2]" [ty]="chartData[rowIndex][3]" ></app-analysis-charts>
       </div>
   </div>
 </div>
-
-
+<!-- Table for cummlative data information -->
 <div class="col-sm-12 table" *ngIf="tableActive">
     <div class="row" >
         <div class="page-header" *ngFor="let id of selectedIds">
@@ -99,6 +102,7 @@
                 </h3>
               </span>
               <div id="{{id}}">
+                <!-- Table -->
                 <table class="table table-striped text-center" >
                   <thead class="thead-dark">
                     <tr>
@@ -117,41 +121,42 @@
         </div>      
       </div>
 </div>
+<!-- Special Table for selected parameters -->
 <div class="col-sm-12 table" *ngIf="specialtableActive">
-      <i class="fas fa-download" (click)="print('specialTable')"></i>
-          <div id="specialTable">
-            <table class="table table-striped text-center" >
-              <thead class="thead-dark">
-                <tr>
-                  <th>Date</th>
-                  <th>Day</th>
-                  <th *ngFor="let id of selectedIds">
-                      {{id}}
-                      <table width="100%">
-                        <tr>
-                          <th>Sale</th><th>300ml Glass Sold</th><th>1l Bottle Sold</th>
-                        </tr>
-                      </table>
-                  </th>
-                  <th>Total Sale</th><th>Deposit</th><th>Cash In Hand</th><th>Remark</th>
-                  <!-- <th *ngFor="let data of selectedparameter[0];let rowIndex=index">{{data.title }}<span *ngIf = "unit[rowIndex] != ''">(in {{unit[rowIndex]}})</span></th> -->
-                </tr>
-              </thead>
-              <tbody >
-                <tr *ngFor="let info of tableData[selectedIds[0]];let rowIndex=index">
-                  <td>{{info['date']}}</td>
-                  <td>{{info['date']| date:'EEEE'}}</td>
-                  <td *ngFor="let id of selectedIds;">
-                    <table width="100%">
-                      <tr>
-                        <td>{{tableData[id][rowIndex]['Total_Collection_Sale']}}</td><td>{{tableData[id][rowIndex]['TotalCupsDispensed']?tableData[id][rowIndex]['TotalupsDispensed']:0}}</td><td>{{tableData[id][rowIndex]['Total_Volume_Dispensed']}}</td>
-                      </tr>
-                    </table>
-                  </td>
-                  <td>{{getSale(rowIndex)}}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
+  <i class="fas fa-download" (click)="print('specialTable')"></i>
+      <div id="specialTable">
+        <table class="table table-striped text-center" >
+          <!-- Thead for main table -->
+          <thead class="thead-dark">
+            <tr>
+              <th>Date</th>
+              <th>Day</th>
+              <th *ngFor="let id of selectedIds">
+                  {{id}}
+                  <table width="100%">
+                    <tr>
+                      <th>Sale</th><th>300ml Glass Sold</th><th>1l Bottle Sold</th>
+                    </tr>
+                  </table>
+              </th>
+              <th>Total Sale</th><th>Deposit</th><th>Cash In Hand</th><th>Remark</th>
+            </tr>
+          </thead>
+          <!-- Body of main table -->
+          <tbody >
+            <tr *ngFor="let info of tableData[selectedIds[0]];let rowIndex=index">
+              <td>{{info['date']}}</td>
+              <td>{{info['date']| date:'EEEE'}}</td>
+              <td *ngFor="let id of selectedIds;">
+                <table width="100%">
+                  <tr>
+                    <td>{{tableData[id][rowIndex]['Total_Collection_Sale']}}</td><td>{{tableData[id][rowIndex]['TotalCupsDispensed']?tableData[id][rowIndex]['TotalupsDispensed']:0}}</td><td>{{tableData[id][rowIndex]['Total_Volume_Dispensed']}}</td>
+                  </tr>
+                </table>
+              </td>
+              <td>{{getSale(rowIndex)}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 </div>

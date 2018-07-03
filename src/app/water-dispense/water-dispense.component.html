@@ -1,5 +1,6 @@
 <app-loading *ngIf="dataAvailable==false"></app-loading>
 <div *ngIf="dataAvailable">
+    <!-- Jumbotron , division information-->
     <div class="container">
         <div class="jumbotron text-center">
                 <h1> {{cluster}} Cluster <span> ( Machine Id : {{info[0]?.DeviceID}} )</span></h1>
@@ -7,7 +8,7 @@
                 <h1 class="blockquote-footer ">Last Updated at {{info[0]?.TimeStamp}}{{info[0]?.Timestamp}}</h1> 
         </div>
     </div>
-
+    <!-- Tabs to show last updated information  -->
     <div class="container">
         <div class=" innerContainer">
             <div class="col-sm-3 text-center tabs" *ngFor="let name of data[0];let rowIndex = index;" [class.hide]="globalservice.user['0'][data[0][rowIndex]]==0||!globalservice.user['0'][data[0][rowIndex]]">
@@ -19,7 +20,7 @@
                     </dl>
             </div>
         </div>
-
+        <!-- Select Property from dropdown -->
         <form (ngSubmit)="test()">
             <div class="form-group">
                 <label for="sel1" >Graph Select :</label>
@@ -30,7 +31,9 @@
 
             </div>
         </form>
+        <!-- Chart : Open chart component for further details-->
         <app-charts [property1]="property1" [property2]="property2"></app-charts>
+        <!-- Date Range options -->
         <div class="dateRange text-center">
             <label for="sel2" class="sel2"><b>Select a custom date range to analyse:</b></label>
             <br>

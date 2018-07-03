@@ -148,7 +148,7 @@ export class WaterDispenseComponent implements OnInit{
   panelParameters(){
     this.properties=[]; 
     switch (this.panel){
-      case 'WaterDispenser' : this.data= this.Cluster[this.cluster].WaterDispenseData; // Taking data from Cluster file (delhiCluster) using cluster and panel
+      case 'WaterDispenser' : this.data= this.Cluster[this.cluster].WaterDispenseData; // Taking data from Cluster file (Clusters) using cluster and panel
                           this.filename = 'Water.php'; //php to call for taking information from assets ( called from fetchWaterDispenseDataService)
                           this.property1 = 'Total_Volume_Dispensed';// Chart y axis property
                           this.property2 = 'date'; // Chart x axis property

@@ -8,6 +8,8 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { FetchWaterDispenseDataService } from '../fetch-water-dispense-data.service';
 import { Location } from '@angular/common';
 import {SESSION_STORAGE , StorageService} from 'angular-webstorage-service'
+import {Cluster} from '../Clusters'
+
 
 declare var jquery:any;
 declare var $ :any;
@@ -34,11 +36,12 @@ export class MachineComponent implements OnInit{
   privledges : boolean= true; // Priveldeged to particular cluster
   message_failure: string;
   
-  constructor(private router : Router,private cookieService : CookieService,private route : ActivatedRoute,
-    private global :GlobalService,private service : FetchWaterDispenseDataService,private location: Location,@Inject(SESSION_STORAGE) private storage : StorageService) {
-   }
+  constructor(private router : Router,private Cluster : Cluster,private cookieService : CookieService,private route : ActivatedRoute,
+    private global :GlobalService,private service : FetchWaterDispenseDataService,private location: Location,
+    @Inject(SESSION_STORAGE) private storage : StorageService) {}
 
   ngOnInit(){  
+    $('#transactionLog').css({"visibility":"hidden"});
     $('html').css({"overflow-y":"auto"});
     // If no User Info is found navigate back to map after 5s
     setTimeout(()=>{
@@ -129,7 +132,7 @@ export class MachineComponent implements OnInit{
     let param=this.router.url.split('/');
     this.url= param[param.length-1];
     this.id = param[param.length-2];
-    this.currDiv = this.cookieService.get('prevDiv'); // Gettoing the previous Division to highlight the navbar option when navigated to error page  
+    this.currDiv = this.cookieService.get('prevDiv'); // Geting the previous Division to highlight the navbar option when navigated to error page  
   }
   
 }

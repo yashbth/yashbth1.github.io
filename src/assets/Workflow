@@ -1,0 +1,33 @@
+Tip: Use the app and go through the mentioned files while reading the workflow.
+
+Login: A login popup takes username and password and sends it to users.php for verification from app component. Users.php send a query to the databse to verify the user and start a session for the user.
+    The popup will appear only when there is no session ID (which is being checked in app component) which avoids the redundancy of writing the password aagin and again.
+
+Map: When a user logs in, machine.php gets data regarding the latitude and longitude of all the machines from the database, which are then displayed as markers.
+
+
+Dashboard: The app is now in the machine component.
+    NavBar: NavBar has six panels and panel corresponds to its own component (a folder in src/app folder). Each of this component has their own html, css and ts files which decides the workflow and presentation of that particular component. The router outlet of each panel is in the the end of the machine component.
+    
+    SearchBar: SearchBar has its own component named 'search-devices' and calls ids.php to get the ids of a particualr cluster from the database
+    
+    Settings Component: Settings Component has two variations depending upon the user:
+        Admin: It contains 3 forms along with the config parameters table:
+            1. The first form lets you change your own password and does it through pass_change.php
+            2. The second form is used to create a new user through create_user.php
+            3. The third form is used to edit privileges of an existing user by:
+                a. First getting the previous privileges by get_user.php
+                b. The form gives option to edit or delete a user or change the password of that user which is done through edit_user.php, delete_user.php and admin_pass_change.php respectively.
+        User: It contains just the 1st form (to change one's own password).
+
+    Analysis Component: This component's purpose is to give a visualization of the data accumulated and generate different reports
+        1. After selecting the cluster, DeviceID, date range and the parameters user has two options
+            a. Visualise data: Muptiple parameters and muptiple device IDs can be compared efficiently with a bubble chart and a single parameter of different IDs can be compared with polar chart.
+            b. Generate report: Generate daily report of each machine seperately in a printable form.
+              All the data for this visualization and reporting is fetched by analysis_chart.php
+              
+
+Logout: Clicking on logout destroys the session, delete the session id and redirects to the login page again.
+
+
+

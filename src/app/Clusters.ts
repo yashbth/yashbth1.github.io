@@ -47,7 +47,6 @@ export class Cluster{
             "Total_collection_from_coin",
             "pH_of_water",
             "Total_Collection_Sale",
-            // "Tank_Level","Operational_Minutes",
             "TimeStamp",
             "DeviceID",
             
@@ -58,7 +57,9 @@ export class Cluster{
             'Total Coin Collection',
             'pH Of Water',
             'Total Sale',
-            // 'Tank Level'
+            'Time Stamp',
+            "DeviceID",
+
             ],
             [
                 "L",
@@ -66,8 +67,7 @@ export class Cluster{
                 "Rs",
                 "Rs",
                 "",
-                "Rs",
-                // "%",        
+                "Rs",      
                 "",
                 "",
                 
@@ -899,159 +899,4 @@ export class Cluster{
 
     ]
     }
-    
-
-// 2. Copy everything between /* and */ (starting from *Cluster Name*... ending at ...}' below and paste it above this line.
-// 3. Replace all the variables ( variable are marked between two *'s ) with corresponding names (e.g. if cluster name ABC then replace "*Cluster Name*" by "ABC".
-/*
-//start copying below
-*ClusterName*={
-    WaterDispenseData :
-    [
-        [
-            '*Column1's name as in database table*',
-            '*Column2's name as in database table*',
-            //...
-        
-        ],
-        [   
-            '*Column1's name to be displayed in dashboard*',
-            '*Column2's name to be displayed in dashboard*',
-            //...
-
-        ],
-        [
-            "*Unit of Column1's data*",
-            "*Unit of Column2's data*",
-            //...
-            //(e.g. "L", "Rs", "", "A", "C", "ppm", "lph") IMPORTANT!: add "" corresponding to column having no units
-            
-        ],
-        ['*Table name of the table in database corresponding to "Water Dispensing Panel"*']
-    ],
-
-    RoData : 
-    [
-        [
-            '*Column1's name as in database table*',
-            '*Column2's name as in database table*',
-            //...
-        
-        ],
-        [   
-            '*Column1's name to be displayed in dashboard*',
-            '*Column2's name to be displayed in dashboard*',
-            //...
-
-        ],
-        [
-            "*Unit of Column1's data*",
-            "*Unit of Column2's data*",
-            //...
-            //(e.g. "L", "Rs", "", "A", "C", "ppm", "lph") IMPORTANT!: add "" corresponding to column having no units
-            
-        ],
-        ['*Table name of the table in database corresponding to "RO Parameters"*']
-    ],
-
-    CupDispenseData :
-    [
-        [
-            '*Column1's name as in database table*',
-            '*Column2's name as in database table*',
-            //...
-        
-        ],
-        [   
-            '*Column1's name to be displayed in dashboard*',
-            '*Column2's name to be displayed in dashboard*',
-            //...
-
-        ],
-        [
-            "*Unit of Column1's data*",
-            "*Unit of Column2's data*",
-            //...
-            //(e.g. "L", "Rs", "", "A", "C", "ppm", "lph") IMPORTANT!: add "" corresponding to column having no units
-            
-        ],
-        ['*Table name of the table in database corresponding to "Cup Dispensing Panel"*']
-    ],
-
-    transaction :
-    [
-        [
-            '*Column1's name as in database table*',
-            '*Column2's name as in database table*',
-            //...
-        
-        ],
-        [   
-            '*Column1's name to be displayed in dashboard*',
-            '*Column2's name to be displayed in dashboard*',
-            //...
-
-        ],
-        [
-            "*Unit of Column1's data*",
-            "*Unit of Column2's data*",
-            //...
-            //(e.g. "L", "Rs", "", "A", "C", "ppm", "lph") IMPORTANT!: add "" corresponding to column having no units
-            
-        ],
-        ['*Table name of the table in database corresponding to "Transaction Log"*']
-    ],
-    supervisorData :
-    [
-        [
-            '*Column1's name as in database table*',
-            '*Column2's name as in database table*',
-            //...
-        
-        ],
-        [   
-            '*Column1's name to be displayed in dashboard*',
-            '*Column2's name to be displayed in dashboard*',
-            //...
-
-        ],
-        [
-            "*Unit of Column1's data*",
-            "*Unit of Column2's data*",
-            //...
-            //(e.g. "L", "Rs", "", "A", "C", "ppm", "lph") IMPORTANT!: add "" corresponding to column having no units
-            
-        ],
-        ['*Table name of the table in database corresponding to "Supervisor Login"*']
-    ],
-
-    operator: 
-    [
-        [
-            '*Column1's name as in database table*',
-            '*Column2's name as in database table*',
-            //...
-        
-        ],
-        [   
-            '*Column1's name to be displayed in dashboard*',
-            '*Column2's name to be displayed in dashboard*',
-            //...
-
-        ],
-        [
-            "*Unit of Column1's data*",
-            "*Unit of Column2's data*",
-            //...
-            //(e.g. "L", "Rs", "", "A", "C", "ppm", "lph") IMPORTANT!: add "" corresponding to column having no units
-            
-        ],
-        ['*Table name of the table in database corresponding to "operator attendance"*']
-    ],
-
-
-}
-// end copying above
-*/
-
 }

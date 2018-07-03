@@ -1,3 +1,6 @@
+Open Clusters.ts file from the /src/app folder
+Tip: Have a look at one of the previously defined clusters to have an idea
+
 1. Add cluster name in the 'clusters' array
 
 2. Just before the last '}' add a new object in the following format:
@@ -10,3 +13,9 @@
             SA2: The corresponding name which are to be displayed in the dashboard as strings
             SA3: The corresponding units (tip: Leave a blank string if there is no unit corresponding to a cloumn).
             SA4: The corresponding (to the panel) table name in sql database
+
+3. Add a new column (with the same name given in step1) to the Dashboard_Users table.
+
+4. Add new DeviceID(s) to the Device_Data table in the database.
+
+Your new cluuster has now been added into the dashboard.

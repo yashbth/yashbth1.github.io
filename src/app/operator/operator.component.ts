@@ -140,7 +140,6 @@ export class OperatorComponent implements OnInit {
         }
         catch(err){
           this.present=0;
-          console.log(err.message);    
         }
         this.absent = this.expected_attendance[index]-this.present;
         //Cookie set if expected punches are less no. of presents else chart becomes visible
@@ -153,7 +152,6 @@ export class OperatorComponent implements OnInit {
           this.cookieService.put('access_denied','Warning! Expected punches is less than number of actual presents(' + this.present+')',opts);
         }
         else{ 
-          console.log(this.absent);
           this.chart = true;
           this.cookieService.put('access_denied','');
         }
