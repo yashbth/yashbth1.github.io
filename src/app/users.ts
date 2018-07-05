@@ -9,8 +9,8 @@ export class Property{
     property : string;
 }
 export const dropdowntableSettings={
-    idField: 'SrNo',
-    textField: 'DeviceID',
+    idField: 'DeviceID',
+    textField: 'dropdownText',
     allowSearchFilter : true,
     selectAllText: 'Select All',
     unSelectAllText: 'UnSelect All',

@@ -29,7 +29,7 @@ export class TransactionComponent implements OnInit {
   cards:any;
   location : string = this.cookieService.get('location');
   dev : string = this.cookieService.get('id'); //DeviceID
-
+  machineNo= this.cookieService.get('machineNo');
   jwtHelper = new JwtHelperService();// Service to implement methods on Jwttoken
   trans_params : any = this.Cluster.trans_params; // options to display
   property1 : string = null;
@@ -37,7 +37,8 @@ export class TransactionComponent implements OnInit {
 
   fromDate: any=new Date().toISOString().slice(0,10); // chart dates formated in yyyy-mm-dd
   toDate : any =new Date().toISOString().slice(0,10);
-  
+  chunks=[];
+  chunkIndex=0;
   param_count: number; // information rows count for certain option
   param_name: string; // Selected table name
 
@@ -92,17 +93,28 @@ export class TransactionComponent implements OnInit {
     this.info=[];
     this.service.getData_trans_params(this.id,this.table,this.filename,this.property1,this.fromDate,this.toDate).subscribe(info=>this.info=info,(err)=>console.error(err),()=>{      
       // if( !this.info || Object.keys(this.info).length==0 ){
-      //   this.router.navigateByUrl('/'+this.cluster+'/'+this.id +'/error')              
+      //   this.router.navigateByUrl('/'+this.cluster+'/'+this.id +'/error')     
+
         $('#table').DataTable();
         // }
+        let i=0
+        let temp=[];
         this.info.forEach(element => {
+          i=i+1;
+          if(i%1000==0){
+            this.chunks.push(temp);
+            temp=[];
+          }
+          temp.push(element);
           if(element.CardNo=='2017000000'){
             element.CardNo='Coin';
           }
         });
+      this.chunks.push(temp);
+      
     // Show and hide of table data
-    this.dataAvailable1 = false;
-    this.param_count = this.info.length; // No of entries count in selected table
+      this.dataAvailable1 = false;
+      this.param_count = this.info.length; // No of entries count in selected table
 
     });
 
@@ -123,6 +135,24 @@ export class TransactionComponent implements OnInit {
       })
     },1000)
   }
+  chunkChange(){
+    if(this.chunkIndex>this.chunks.length-1){
+      this.chunkIndex=0;
+    }
+    if(this.chunkIndex<0){
+      this.chunkIndex=this.chunks.length-1;
+    }
+    setTimeout(()=>{
+      this.dataAvailable1 =true;
+      $(document).ready(function(){
+        $('#table').DataTable()
+        $('.paginate_button').css({"padding":"10px","border":"none"});
+        $('.fas').css({"padding-left":"10px"});
+      }) 
+
+    },1000)
+  }
+
   CardData(){
     $('#table_filter input').val(this.card);
     $(function() {

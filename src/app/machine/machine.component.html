@@ -10,7 +10,8 @@
           <span class="col-sm-10">
               <a class="navbar-brand text-center" href="">
                 <!-- <span id="enlarge">S</span>WA<span id="fontColor">JAL</span> -->
-                <img src="/assets/images/swajal.png" width="150px">
+                <!-- <img src="/iiot/assets/images/swajal.png" width="150px"> -->
+                <img src="assets/images/swajal.png" width="150px">
               </a>
           </span>
           <span id="settings" class="user" (click)="settingToggle()"></span>
@@ -45,8 +46,8 @@
                 <h6>User : {{user.Username}}</h6>
                 <br>
                 <ul class="navbar-nav text-center">
-                    <li class="nav-item dropdown text-center" *ngFor="let nav of dropdownlist" [class.hide]="user[nav.columnName]==0">
-                        <a class="nav-link text-center" (click)="hide()" *ngIf="user[nav.columnName]==1 && nav.division!='Report' " routerLink="/{{cluster}}/{{id}}/{{nav.id}}"   id="navbardrop" routerLinkActiveOptions="{exact:true}" [class.active-link]="nav.id==currDiv" >
+                    <li class="nav-item dropdown text-center" *ngFor="let nav of dropdownlist" [class.hide]="user[nav.columnName]==0 || !Cluster[cluster][nav.tableName] ">
+                        <a class="nav-link text-center" (click)="hide()" *ngIf="(user[nav.columnName]==1 && nav.division!='Report') && Cluster[cluster][nav.tableName] " routerLink="/{{cluster}}/{{id}}/{{nav.id}}"   id="navbardrop" routerLinkActiveOptions="{exact:true}" [class.active-link]="nav.id==currDiv" >
                           {{nav.division}}
                         </a>
                       </li>

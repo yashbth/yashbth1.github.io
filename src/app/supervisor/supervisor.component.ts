@@ -28,6 +28,7 @@ export class SupervisorComponent implements OnInit {
   checkRouteChange=['waterPanel'] ;
   data = [];
   location : string = this.cookieService.get('location');
+  machineNo: string= this.cookieService.get('machineNo');
   fromDate : any;
   toDate : any;
   chartData =[];

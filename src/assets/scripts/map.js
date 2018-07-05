@@ -34,6 +34,7 @@ function myMap() {
           var address = '\"'+device.Location+'\"';
           var id = '\"'+ device.DeviceID+'\"';
           var cluster = '\"'+ device.Cluster_Name+'\"';
+          var machineNo = '\"'+ device.MachineNo+'\"';
           var deviceLoc = new google.maps.LatLng(lat,lon);
           currentCluster = device.Cluster_Name;
           // Cluster's in the dropdown
@@ -49,7 +50,7 @@ function myMap() {
           infowindow.push(new google.maps.InfoWindow({
                 content: "Decive Location: <b><span style = \"display: flex; justify-content: center; font-size:15px;\">"+device.Location+" ("+device.Cluster_Name+
                 ")</span><br></b>DeviceID: <b><span style = \"display: flex; justify-content: center; font-size:15px; color:#999\">  "+device.DeviceID+
-                "</span></b><br><span style = \"display: flex; justify-content: center; font-size:15px;\"><button type='button' onclick='redirect("+id+","+address+","+cluster+
+                "</span></b><br><span style = \"display: flex; justify-content: center; font-size:15px;\"><button type='button' onclick='redirect("+id+","+address+","+cluster+","+machineNo+
                 ")'>Analyse</button></span>"
           }));
           // if user clicks on marker other markers closed and the clicked one opened
@@ -79,10 +80,11 @@ function myMap() {
  
 }
 // Redirect the page according to the selected id  , calls on click of marker 
-function redirect(id,address,cluster){
+function redirect(id,address,cluster,machineNo){
   document.cookie="location="+address+"; path=/";
   document.cookie="cluster="+cluster+"; path=/";
   document.cookie="id="+id+"; path=/"; 
+  document.cookie="machineNo="+machineNo+"; path=/"
   window.location.href= window.location.href + cluster+'/'+id+'/WaterDispenser'
 }
 // Removes other markers when filter by cluster

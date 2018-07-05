@@ -3,7 +3,7 @@
     <!-- Jumbotron , division information-->
     <div class="container">
         <div class="jumbotron text-center">
-                <h1> {{cluster}} Cluster <span> ( Machine Id : {{info[0]?.DeviceID}} )</span></h1>
+                <h1> {{cluster}} Cluster <br><span> ( Machine: {{info[0]?.DeviceID}}/{{machineNo}} )</span></h1>
                 <span id="deviceLoc"><b>Device located at :</b> <span id="place">{{location}}</span></span>
                 <h1 class="blockquote-footer ">Last Updated at {{info[0]?.TimeStamp}}{{info[0]?.Timestamp}}</h1> 
         </div>

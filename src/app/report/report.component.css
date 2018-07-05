@@ -51,9 +51,7 @@ input{
 .page-header{
     width:100%;
 }
-.container-fluid{
-    /* overflow-y: auto; */
-}
+
 .table{
     margin-bottom: 50px;
     overflow-x: auto;
@@ -76,6 +74,11 @@ input{
     justify-content: center;
     width:100%;
 }
-
+.col-sm-8{
+    max-width: 250px !important;
+}
+.col-sm-9{
+    max-width: 350px !important;
+}
 
     

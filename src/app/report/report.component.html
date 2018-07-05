@@ -27,7 +27,7 @@
               </span>
             </div>
         </div>
-        <div class="col-sm-2" *ngIf="isActive">
+        <div class="col-sm-8" *ngIf="isActive">
           <ng-multiselect-dropdown
               [placeholder]="'Select Ids'"
               [data]="ids"
@@ -63,7 +63,7 @@
       <h5>Compare Single Parameter</h5>
     </div>
     <!-- Dropdowns for property /properties -->
-    <div class="select col-sm-3" style="margin: 5px;">
+    <div class="select col-sm-9" style="margin: 5px;">
       <ng-multiselect-dropdown (click)="tableActive=false"
         [placeholder]="rowIndex?'Select Parameter':'Select Parameters'"
         [data]="parameters[rowIndex]"
@@ -80,6 +80,7 @@
       <button type="submit" class="btn btn-info" (click)="generateReport(false,'')" *ngIf="rowIndex==0" style="margin: 5px;">Visualise Data</button>
       <select class="btn btn-info" (click)="generateReport(true,button)" style="margin: 5px;" [(ngModel)]="button" name="report">
           <option [value]="'report'">Generate Report</option>
+          <option [value]="'cummlativereport'">Cummlative Report</option>
           <option [value]="'specialreport'">Generate Special Report</option>
       </select>
     </span>
@@ -123,40 +124,77 @@
 </div>
 <!-- Special Table for selected parameters -->
 <div class="col-sm-12 table" *ngIf="specialtableActive">
-  <i class="fas fa-download" (click)="print('specialTable')"></i>
+
+  <div class="page-header">
+      <span class="heading">
+          <h3>
+              Sales Data Cummlative Data
+              <i class="fas fa-download" (click)="print('specialTable')"></i>
+            </h3>
+      </span>
       <div id="specialTable">
-        <table class="table table-striped text-center" >
-          <!-- Thead for main table -->
-          <thead class="thead-dark">
-            <tr>
-              <th>Date</th>
-              <th>Day</th>
-              <th *ngFor="let id of selectedIds">
-                  {{id}}
+          <table class="table table-striped text-center" >
+            <!-- Thead for main table -->
+            <thead class="thead-dark">
+              <tr>
+                <th>Date</th>
+                <th>Day</th>
+                <th *ngFor="let id of selectedIds">
+                    {{id}}
+                    <table width="100%">
+                      <tr>
+                        <th>Sale</th><th>300ml Glass Sold</th><th>1l Bottle Sold</th>
+                      </tr>
+                    </table>
+                </th>
+                <th>Total Sale</th><th>Deposit</th><th>Cash In Hand</th><th>Remark</th>
+              </tr>
+            </thead>
+            <!-- Body of main table -->
+            <tbody >
+              <tr *ngFor="let info of tableData[selectedIds[0]];let rowIndex=index">
+                <td>{{info['date']}}</td>
+                <td>{{info['date']| date:'EEEE'}}</td>
+                <td *ngFor="let id of selectedIds;">
                   <table width="100%">
                     <tr>
-                      <th>Sale</th><th>300ml Glass Sold</th><th>1l Bottle Sold</th>
+                      <td>{{tableData[id][rowIndex]['Total_Collection_Sale']}}</td><td>{{tableData[id][rowIndex]['TotalCupsDispensed']?tableData[id][rowIndex]['TotalupsDispensed']:0}}</td><td>{{tableData[id][rowIndex]['Total_Volume_Dispensed']}}</td>
                     </tr>
                   </table>
-              </th>
-              <th>Total Sale</th><th>Deposit</th><th>Cash In Hand</th><th>Remark</th>
-            </tr>
-          </thead>
-          <!-- Body of main table -->
-          <tbody >
-            <tr *ngFor="let info of tableData[selectedIds[0]];let rowIndex=index">
-              <td>{{info['date']}}</td>
-              <td>{{info['date']| date:'EEEE'}}</td>
-              <td *ngFor="let id of selectedIds;">
-                <table width="100%">
-                  <tr>
-                    <td>{{tableData[id][rowIndex]['Total_Collection_Sale']}}</td><td>{{tableData[id][rowIndex]['TotalCupsDispensed']?tableData[id][rowIndex]['TotalupsDispensed']:0}}</td><td>{{tableData[id][rowIndex]['Total_Volume_Dispensed']}}</td>
-                  </tr>
-                </table>
-              </td>
-              <td>{{getSale(rowIndex)}}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+                </td>
+                <td>{{getSale(rowIndex)}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+  </div>
+</div>
+<div class="col-sm-12 table" *ngIf="cummlativetableActive">
+  <div class="row" >
+    <div class="page-header">
+        <span class="heading">
+            <h3>
+              Cummlative Results
+              <i class="fas fa-download" (click)="print('cummlativereport')"></i>
+              </h3>
+        </span>
+        <div id="cummlativereport">
+          <!-- Table -->
+          <table class="table table-striped text-center" >
+            <thead class="thead-dark">
+              <tr>
+                <th>Machine Id</th>
+                <th *ngFor="let data of selectedparameter[0];let rowIndex=index">{{data.title }}<span *ngIf = "unit[rowIndex] != ''">(in {{unit[rowIndex]}})</span></th>
+              </tr>
+            </thead>
+            <tbody >
+              <tr *ngFor="let id of selectedIds;let rowIndex=index">
+                <td>{{id}}</td>
+                <td *ngFor="let data of selectedparameter[0]">{{getCummlativeData(id,data)}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>     
+    </div>
+  </div>
 </div>

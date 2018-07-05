@@ -8,6 +8,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { FetchWaterDispenseDataService } from '../fetch-water-dispense-data.service';
 import { Location } from '@angular/common';
 import {SESSION_STORAGE , StorageService} from 'angular-webstorage-service'
+import { Cluster} from '../Clusters'
 
 declare var jquery:any;
 declare var $ :any;
@@ -36,16 +37,17 @@ export class MachineComponent implements OnInit{
   
   constructor(private router : Router,private cookieService : CookieService,private route : ActivatedRoute,
     private global :GlobalService,private service : FetchWaterDispenseDataService,private location: Location,
-    @Inject(SESSION_STORAGE) private storage : StorageService) {}
+    @Inject(SESSION_STORAGE) private storage : StorageService,private Cluster: Cluster) {}
 
   ngOnInit(){  
+
     $('html').css({"overflow-y":"auto"});
     // If no User Info is found navigate back to map after 5s
     setTimeout(()=>{
       if(!this.user){
         window.location.href='https://swajal.in/iiot';
       }
-    },5000);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+    },5000);    
   }
   // Logout User Session and navigate to map
   logout(){

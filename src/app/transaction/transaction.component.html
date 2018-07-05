@@ -3,9 +3,9 @@
     <!-- Jumbotron , division information-->
     <div class="container " *ngIf="dataAvailable">
         <div class="jumbotron text-center">
-            <h1> {{cluster}} Cluster <span> ( Machine Id : {{dev}} )</span></h1>
+            <h1> {{cluster}} Cluster <br><span> ( Machine : {{dev}}/{{machineNo}} )</span></h1>
             <span id="deviceLoc"><b>Device located at :</b> <span id="place">{{location}}</span></span>
-            <h1 class="blockquote-footer ">Transaction Division</h1> 
+            <h1 class="blockquote-footer ">Last Updated : {{cards[0]['lastUpdated']}}</h1> 
         </div>
     
     </div>
@@ -47,7 +47,7 @@
                     </tr>
                 </thead>
                 <tbody class="text-center">
-                    <tr *ngFor="let row of info">
+                    <tr *ngFor="let row of chunks[chunkIndex]">
                     <td *ngFor= "let td of data[0]">
                         {{row[td]}}
                     </td>
@@ -55,5 +55,8 @@
                 </tbody>
             </table>
         </div>
+        <span style="display: flex; justify-content: center">
+            <h6 (click)="chunkIndex=chunkIndex-1;dataAvailable1=false;chunkChange()">Previous</h6><h6 (click)="chunkIndex=chunkIndex+1;dataAvailable1=false;chunkChange()">Next</h6>
+        </span>
     </div>
 </div>
