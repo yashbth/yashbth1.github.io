@@ -54,7 +54,6 @@ input{
 
 .table{
     margin-bottom: 50px;
-    overflow-x: auto;
 }
 .heading{
     padding-left: 20px;
@@ -79,6 +78,9 @@ input{
 }
 .col-sm-9{
     max-width: 350px !important;
+}
+.idtable{
+    overflow-x: auto;
 }
 
     

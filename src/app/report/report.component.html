@@ -87,7 +87,7 @@
     </div>
     <!-- Charts to show -->
     <div class="row">
-      <div class="chart col-sm-9" *ngIf="chartsActive[rowIndex]">
+      <div class="chart col-sm-10" *ngIf="chartsActive[rowIndex]">
         <app-analysis-charts [property]="chartData[rowIndex][0]" [chartData]="chartData[rowIndex][1]" [ids]="chartData[rowIndex][2]" [ty]="chartData[rowIndex][3]" ></app-analysis-charts>
       </div>
   </div>
@@ -95,7 +95,7 @@
 <!-- Table for cummlative data information -->
 <div class="col-sm-12 table" *ngIf="tableActive">
     <div class="row" >
-        <div class="page-header" *ngFor="let id of selectedIds">
+        <div class="page-header idtable" *ngFor="let id of selectedIds">
           <span class="heading">
               <h3>
                   Id : {{id}}
@@ -107,14 +107,14 @@
                 <table class="table table-striped text-center" >
                   <thead class="thead-dark">
                     <tr>
-                      <th>Date</th>
+                      <th>{{timeFormat}}</th>
                       <th *ngFor="let data of selectedparameter[0];let rowIndex=index">{{data.title }}<span *ngIf = "unit[rowIndex] != ''">(in {{unit[rowIndex]}})</span></th>
                     </tr>
                   </thead>
                   <tbody >
-                    <tr *ngFor="let info of tableData[id];let rowIndex=index">
+                    <tr *ngFor="let info of timeFormatedData[id];let rowIndex=index">
                       <td>{{info["date"]}}</td>
-                      <td *ngFor="let data of selectedparameter[0]">{{info[data.name]}}</td>
+                      <td *ngFor="let data of selectedparameter[0]">{{info[data.name].toFixed(2)}}</td>
                     </tr>
                   </tbody>
                 </table>

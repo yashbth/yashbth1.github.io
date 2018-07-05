@@ -38,6 +38,8 @@ export class ReportComponent {
   dates =[];
   parsedInfo=[];// Array to store information for different ids
   tableData=[];// stores data for tables
+  timeFormatedData=[];
+  timeFormat='Date';
   sales=Sales;
   dropdowntableSettings=dropdowntableSettings;// dropdown's setting available in user.ts file
   charts =charts // Type of charts in user.ts file
@@ -125,6 +127,7 @@ generateReport(onlyreport,button){
     if(onlyreport){
       // in case of special table set specialtable visible
       if(button=='report'){
+        this.getDateDiff();
         this.tableActive= true;
         this.specialtableActive=false ;
         this.cummlativetableActive=false;
@@ -201,7 +204,7 @@ setChartData(item : any,chart){
           return (element.name==item.name)
         })
         // Sums all the cumulative data for the date range
-        this.polarchartData.push(extend.reduce((sum,element)=>sum +parseFloat(element[item.name]),0));
+        this.polarchartData.push(extend.reduce((sum,element)=>sum +parseFloat(element[item.name]),0).toFixed(2));
         // creates chart element by sending data to analysis chart component
         this.chartData[1]=[this.selectedIds,this.polarchartData,element[0].unit,'polarArea'];
         this.chartsActive[1]=true;
@@ -486,6 +489,86 @@ mergeResult(array1:any,array2:any){
   return mergedArray;
 }
 
+getDateDiff(){
+  let from = new Date(this.from);
+  let to  = new Date (this.to);
+  let dateDiff=(to.getTime()-from.getTime())/(3600*24000);
+  let monthDiff = (to.getMonth()-from.getTime());
+
+  if(dateDiff<=31){
+    this.timeFormatedData=this.tableData;
+  }
+  else if(dateDiff<=366){
+    this.timeFormatedData=this.getDataTimewise('month');
+    this.timeFormat = 'Month';
+  }
+  else{
+    this.timeFormatedData=this.getDataTimewise('year');
+    this.timeFormat = 'Year';
+
+  }
+  
+  
+}
+
+getDataTimewise(format){
+  let getmonth=["January","February","March","April","May","June","July","August","September","October","November","December"];
+  let Data=[];
+  for (let id of this.selectedIds){
+    Data[id]=[];
+    let previousMonth;
+    if(format=='month'){
+      previousMonth= new Date(this.tableData[id][0].date).getMonth();
+    }
+    else{
+      previousMonth= new Date(this.tableData[id][0].date).getFullYear();
+    }
+    var sum = Object.assign({}, this.tableData[id][0]);
+    let i=0;
+    this.tableData[id].forEach(element => {
+      i=i+1;
+      let month ;
+      if(format=='month'){
+        month = new Date(element.date).getMonth();  
+      }
+      else{
+        month = new Date(element.date).getFullYear();
+      }
+      if(month==previousMonth && i!=this.tableData[id].length){
+        this.selectedparameter[0].forEach(parameter => {
+          if(parameter.name){
+            if(parameter['name'].toLowerCase().search("total")==-1){
+              sum[parameter['name']]=element[parameter['name']];
+            }
+            else{
+              sum[parameter['name']]=parseFloat(sum[parameter['name']])+parseFloat(element[parameter['name']]);
+            }
+          }
+          else{ 
+            if(parameter.toLowerCase().search("total")==-1){
+              sum[parameter]=element[parameter];
+            }
+            else{
+              sum[parameter]=parseFloat(sum[parameter])+parseFloat(element[parameter]);
+            }
+          }
+        }); 
+      }
+      else {
+        if(format=='month'){
+          sum['date']=getmonth[previousMonth];
+        }
+        else{
+          sum['date']=previousMonth;
+        }
+        Data[id].push(sum);
+        sum=Object.assign({}, element);
+        previousMonth= month;
+      }
+    });
+  }
+  return Data;
+}
 // Print function to print table using id of table
 print(id): void {
   var printContents, popupWin;

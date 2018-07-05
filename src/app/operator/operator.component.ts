@@ -26,7 +26,7 @@ export class OperatorComponent implements OnInit {
   panel : string;
   cluster :string;
   data: any;
-  date : any=new Date().toISOString().slice(0,10);
+  date : any=new Date();
   place:string;
   info :any; 
   operators = []; // Distinct operators
