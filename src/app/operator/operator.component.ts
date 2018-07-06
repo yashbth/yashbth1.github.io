@@ -26,7 +26,7 @@ export class OperatorComponent implements OnInit {
   panel : string;
   cluster :string;
   data: any;
-  date : any=new Date(Date.now());
+  date : any=new Date();
   place:string;
   info :any; 
   operators = []; // Distinct operators
@@ -37,6 +37,7 @@ export class OperatorComponent implements OnInit {
   absent: number;//no. of presents of particular operator
   chart:boolean=false; // boolean to show and hide doughnut chart
   location : string = this.cookieService.get('location');
+  machineNo: string = this.cookieService.get('machineNo');
   jwtHelper = new JwtHelperService();
 
   constructor(private service : FetchWaterDispenseDataService,private Cluster : Cluster,private router:Router,private route: ActivatedRoute,private globalservice : GlobalService, private cookieService:CookieService) { 

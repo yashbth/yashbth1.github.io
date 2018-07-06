@@ -110,7 +110,7 @@ export class Cluster{
                 "Tank Level",
                 "UV State",
                 "Trip State",
-                "Operational Minutes",
+                "Operational Time",
             ],
             [
                 "",
@@ -318,7 +318,7 @@ export class Cluster{
                 "Tank Level",
                 "UV State",
                 "Trip State",
-                "Operational Minutes",
+                "Operational Time",
             ],
             [
                 "",
@@ -545,7 +545,7 @@ export class Cluster{
                 "Tank Level",
                 "UV State",
                 "Trip State",
-                "Operational Minutes"
+                "Operational Time"
             ],
             [
                 "",
@@ -759,7 +759,7 @@ export class Cluster{
                 "Tank Level",
                 "UV State",
                 "Trip State",
-                "Operational Minutes"
+                "Operational Time"
             ],
             [
                 "",
@@ -782,27 +782,27 @@ export class Cluster{
 
         ]
 ,
-        CupDispenseData :[
-            [
-                "TotalCupsDispensed",
-                "TotalCoinCollection",
-                "TotalCardCollection",
-                "TripState"
-            ],
-            [
-                "Total Cups Dispensed",
-                "Total Coin Collection",
-                "Total Card Collection",
-                "Trip State"
-            ],
-            [
-                "",
-                "Rs",
-                "Rs",
-                ""
-            ],
-            ['GSCP_CupDispensing']
-        ],
+        // CupDispenseData :[
+        //     [
+        //         "TotalCupsDispensed",
+        //         "TotalCoinCollection",
+        //         "TotalCardCollection",
+        //         "TripState"
+        //     ],
+        //     [
+        //         "Total Cups Dispensed",
+        //         "Total Coin Collection",
+        //         "Total Card Collection",
+        //         "Trip State"
+        //     ],
+        //     [
+        //         "",
+        //         "Rs",
+        //         "Rs",
+        //         ""
+        //     ],
+        //     ['GSCP_CupDispensing']
+        // ],
             transaction :[
             [
                 "Time",

@@ -8,6 +8,7 @@ import {Cluster} from '../Clusters'
 import {FetchWaterDispenseDataService} from '../fetch-water-dispense-data.service'
 import { CookieService } from 'angular2-cookie/core';
 import { GlobalService } from '../global.service';
+import {Dropdown} from '../machine/dropdown'
 
 declare var $ : any;
 
@@ -51,8 +52,13 @@ export class SearchDevicesComponent implements OnInit {
   // Navigation of page by clicking on id and setting cluster and id in cookie
   selectOther(){       
     this.cookieService.put('cluster',this.cluster);
-    this.cookieService.put('id',this.selectId);                
-    this.router.navigateByUrl('/'+this.cluster+'/'+this.selectId+'/WaterDispenser'); // navigate to another id 
+    this.cookieService.put('id',this.selectId); 
+    for(let table of Dropdown) {
+      if(this.Cluster[this.cluster][table['tableName']]){
+        this.router.navigateByUrl('/'+this.cluster+'/'+this.selectId+'/'+table['id']); // navigate to another id 
+        break;
+      }
+    }            
     window.location.reload();
   }
   // Changing the width of search bar on focus and simultaneously increasing result section part only and making it visible

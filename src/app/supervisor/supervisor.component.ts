@@ -27,8 +27,9 @@ export class SupervisorComponent implements OnInit {
   info =[];
   checkRouteChange=['waterPanel'] ;//set current panel
   data = [];
-  location : string = this.cookieService.get('location'); 
-  fromDate : any; //date range to plot the graph
+  location : string = this.cookieService.get('location');
+  machineNo: string= this.cookieService.get('machineNo');
+  fromDate : any;
   toDate : any;
   chartData =[];
   table : string = 'SuperVisor_Login'; //table name in database

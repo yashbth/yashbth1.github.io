@@ -50,23 +50,25 @@ export class ChartsComponent implements OnInit {
   ngAfterContentChecked(){
     if(this.checkGraph || this.chartData.dataChange){
       // if property1 which is equals to _property1 found in any of ro ,water,or cupDispensing takes data from that division 
-      if(this.Cluster[this.cluster].WaterDispenseData[0].indexOf(this._property1)>=0){
+      if(this.Cluster[this.cluster].WaterDispenseData && this.Cluster[this.cluster].WaterDispenseData[0].indexOf(this._property1)>=0){
         //index no of property in that cluster in delhi Cluster file corresponding to that array ( Cluster corresponds to delhi Cluster file)
         let index = this.Cluster[this.cluster].WaterDispenseData[0].indexOf(this._property1); 
         this.label = this.Cluster[this.cluster].WaterDispenseData[1][index];  
         // side label to display
         this.labelString = this.Cluster[this.cluster].WaterDispenseData[1][index]+(this.Cluster[this.cluster].WaterDispenseData[2][index]?' (in ':'')+this.Cluster[this.cluster].WaterDispenseData[2][index]+(this.Cluster[this.cluster].WaterDispenseData[2][index]?')':'');
       }
-      else if(this.Cluster[this.cluster].RoData[0].indexOf(this._property1)>=0){
-        let index = this.Cluster[this.cluster].RoData[0].indexOf(this._property1);
-        this.label = this.Cluster[this.cluster].RoData[1][index];          
-        this.labelString =  this.Cluster[this.cluster].RoData[1][index]+(this.Cluster[this.cluster].RoData[2][index]?' (in ':'')+this.Cluster[this.cluster].RoData[2][index]+(this.Cluster[this.cluster].RoData[2][index]?')':'');
-      }
-      else if (this.Cluster[this.cluster].CupDispenseData[0].indexOf(this._property1)>=0){
-        let index = this.Cluster[this.cluster].CupDispenseData[0].indexOf(this._property1);
-        this.label = this.Cluster[this.cluster].CupDispenseData[1][index];          
-        this.labelString =  this.Cluster[this.cluster].CupDispenseData[1][index]+(this.Cluster[this.cluster].CupDispenseData[2][index]?' (in ':'')+this.Cluster[this.cluster].CupDispenseData[2][index]+(this.Cluster[this.cluster].CupDispenseData[2][index]?')':'');
-      }
+    
+    
+    else if(this.Cluster[this.cluster].RoData && this.Cluster[this.cluster].RoData[0].indexOf(this._property1)>=0){
+      let index = this.Cluster[this.cluster].RoData[0].indexOf(this._property1);
+      this.label = this.Cluster[this.cluster].RoData[1][index];          
+      this.labelString =  this.Cluster[this.cluster].RoData[1][index]+(this.Cluster[this.cluster].RoData[2][index]?' (in ':'')+this.Cluster[this.cluster].RoData[2][index]+(this.Cluster[this.cluster].RoData[2][index]?')':'');
+    }
+    else if (this.Cluster[this.cluster].CupDispenseData && this.Cluster[this.cluster].CupDispenseData[0].indexOf(this._property1)>=0){
+      let index = this.Cluster[this.cluster].CupDispenseData[0].indexOf(this._property1);
+      this.label = this.Cluster[this.cluster].CupDispenseData[1][index];          
+      this.labelString =  this.Cluster[this.cluster].CupDispenseData[1][index]+(this.Cluster[this.cluster].CupDispenseData[2][index]?' (in ':'')+this.Cluster[this.cluster].CupDispenseData[2][index]+(this.Cluster[this.cluster].CupDispenseData[2][index]?')':'');
+    }
       this.ConvertIntoArray(this.chartData.chartData,this._property1,this.property2);
       this.Chart('bar');
       if(this.chartData.chartData.length){

@@ -41,14 +41,13 @@ export class MachineComponent implements OnInit{
     @Inject(SESSION_STORAGE) private storage : StorageService) {}
 
   ngOnInit(){  
-    $('#transactionLog').css({"visibility":"hidden"});
     $('html').css({"overflow-y":"auto"});
     // If no User Info is found navigate back to map after 5s
     setTimeout(()=>{
       if(!this.user){
         window.location.href='https://swajal.in/iiot';
       }
-    },5000);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+    },5000);    
   }
   // Logout User Session and navigate to map
   logout(){

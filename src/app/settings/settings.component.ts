@@ -45,9 +45,9 @@ export class SettingsComponent implements OnInit {
   tableActive : boolean = false;
 
 
-  url = "http://localhost/~yashbahetiiitk/swajal_dashboard/src/assets/Php";
+  // url = "http://localhost/~yashbahetiiitk/swajal_dashboard/src/assets/Php";
   // url = "http://localhost:8000/assets/Php";
-  // url = "/iiot/assets/Php"
+  url = "/iiot/assets/Php"
   
   
   constructor(private Cluster: Cluster, private cookieService:CookieService,private global : GlobalService,private service : FetchWaterDispenseDataService,@Inject(SESSION_STORAGE) private storage : StorageService) { }

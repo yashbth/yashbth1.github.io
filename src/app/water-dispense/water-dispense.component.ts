@@ -37,9 +37,11 @@ export class WaterDispenseComponent implements OnInit{
   jwtHelper = new JwtHelperService(); // service to decode jwt token
   token : string; // jwt token
   columnName:string; // column Name used to show or hide data for users
+  machineNo : string;
   constructor( private service : FetchWaterDispenseDataService,private router : Router,private route: ActivatedRoute,private globalservice : GlobalService, private cookieService:CookieService,private Cluster : Cluster){
     // Same as ngOnInit except the fact that it occurs when route changed 
     router.events.subscribe(()=>{
+      
       if(this.jwtHelper.isTokenExpired(this.globalservice.token)){
         this.service.getSessionVariables('session.php/?action=destroy').subscribe(data=>this.data=data,(err)=>console.log(err),()=>{
           window.location.href= 'https://swajal.in/iiot';
@@ -58,7 +60,10 @@ export class WaterDispenseComponent implements OnInit{
       if(this.checkRouteChange.indexOf(this.property1)<0){
         this.service.getLocation(this.id[0],this.cluster).subscribe(location=>this.location_info=location,(err)=>console.log(err),()=>{
           this.cookieService.put('location',this.location_info[0].Location);
-          this.location = this.cookieService.get('location');          
+          this.cookieService.put('machineNo',this.location_info[0].MachineNo);
+          this.location = this.cookieService.get('location');
+          this.machineNo = this.cookieService.get('machineNo');
+
         });
         this.getWaterinfo();
         this.cookieService.put('prevDiv',this.panel);                                                                       
@@ -88,7 +93,10 @@ export class WaterDispenseComponent implements OnInit{
       if(this.checkRouteChange.indexOf(this.property1)<0){   
           this.service.getLocation(this.id[0],this.cluster).subscribe(location=>this.location_info=location,(err)=>console.log(err),()=>{
           this.cookieService.put('location',this.location_info[0].Location);
+          this.cookieService.put('machineNo',this.location_info[0].MachineNo);
           this.location = this.cookieService.get('location');
+          this.machineNo = this.cookieService.get('machineNo');
+
         });
         this.getWaterinfo();
         this.cookieService.put('prevDiv',this.panel);                                                                       
@@ -124,7 +132,6 @@ export class WaterDispenseComponent implements OnInit{
       if(!this.info || Object.keys(this.info).length==0 ){
         this.router.navigateByUrl('/'+this.cluster+'/'+this.id +'/error')              
       }
-
       this.formatParamters();  // function to format data of Ro log Parameter    
       // Setting dates for chart  data
       this.fromDate = this.info[0].date;
@@ -132,8 +139,7 @@ export class WaterDispenseComponent implements OnInit{
       let date = new Date(this.fromDate);
       this.fromDate=date.setDate(date.getDate()-7);
       this.fromDate = new Date(this.fromDate).toISOString().slice(0,10);
-
-      //subscribing last 1 days data from the last updated date (Chart data)
+      //subscribing last 7 days data from the last updated date (Chart data)
       this.service.getChartData('chart_date.php',this.id,this.table,this.fromDate,this.toDate).subscribe(chartData=>this.chartData=chartData,(err)=>console.log(err),()=>{
         this.chartData=this.globalservice.dataRise(this.chartData,this.properties);
       }); 
