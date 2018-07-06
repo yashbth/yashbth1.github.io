@@ -11,6 +11,7 @@ import { CookieService,CookieOptionsArgs } from 'angular2-cookie/core';
 import { Router } from '@angular/router';
 
 
+
 declare var $:any;
 declare var tableExport : any;
 @Component({
@@ -66,6 +67,10 @@ export class ReportComponent {
   x_data : number;
   y_data: number;
   r_data: number;
+
+  head1=[];
+  head2=[];
+  body= [];
 
   constructor(private service : FetchWaterDispenseDataService,private Cluster : Cluster,private global : GlobalService,private cookieService : CookieService,private router : Router ) { }
 
@@ -127,11 +132,48 @@ export class ReportComponent {
         if(button=='report'){
           this.tableActive= true;
           this.specialtableActive=false ;
+          for(let id of this.selectedIds){
+            setTimeout(()=>{
+              $(document).ready(function(){
+                console.log('#'+id+'dt')
+                $('#'+id+'dt').DataTable({
+                  scrollX: true,
+                  retrieve: true,
+                  "ordering": false,
+                  dom: 'Bfrtip',
+                  buttons: ['csv', 'excel','print']
+                });
+    
+    
+              })
+            },3000)
+        }
         }
         else{
           this.tableActive= false;
+          console.log(this.from,this.to,'daterange')
+          this.generate_head_body(this.tableData,this.selectedIds,this.from,this.to);
           this.specialtableActive=true;
-        }
+        
+        setTimeout(()=>{
+          $(document).ready(function(){
+            $('#table').DataTable({
+              retrieve: true,
+              "ordering": false,
+              dom: 'Bfrtip',
+              buttons: [
+                {
+                  extend: 'excelHtml5',
+                  text: 'Save as Excel',
+                  
+              },
+              'print']
+            });
+
+
+          })
+        },2000)
+      }
         $('html').css({"height":"auto"});
       }
       else{
@@ -156,6 +198,7 @@ export class ReportComponent {
     else{
       $('html').css({"height":"auto"});
     } 
+ 
   }
 
  // Format Data for charts and table
@@ -487,7 +530,98 @@ export class ReportComponent {
       </html>`
     );
     popupWin.document.close();
-}
+  }
+
+  generate_head_body(Data,ids,fromDateStr,toDateStr){
+    this.head1= [];
+    this.head2=[];
+    this.body=[];
+    var id_length= ids.length;
+
+  //head 1
+    this.head1.push("");
+    this.head1.push("");
+    for( var i =0; i< id_length; i++){
+      this.head1.push(ids[i]);
+      this.head1.push("");
+      this.head1.push("");
+    }
+    this.head1.push("");
+    this.head1.push("");
+    this.head1.push("");
+    this.head1.push("");
+
+  //head2
+    this.head2.push("Date");
+    this.head2.push("Day");
+    for( var i =0; i< id_length; i++){
+      this.head2.push("Sale");
+      this.head2.push("300ml Glass Sold");
+      this.head2.push("1l Bottle Sold");
+    }
+    this.head2.push("Total Sale");
+    this.head2.push("Deposit");
+    this.head2.push("Cash In Hand");
+    this.head2.push("Remark");
+
+    //body
+    var date_indexed_Data = [];
+    for (let id of ids){
+      date_indexed_Data[id]=[]
+      for(let row of Data[id]){
+        date_indexed_Data[id][row.date]=row;
+      }
+    }
+    
+    var toDate = new Date(toDateStr)
+    var fromDate = new Date(fromDateStr)
+    var currDate =fromDate;
+    currDate.setDate(currDate.getDate()-1);
+    var numberOfDays = (toDate.getTime()-fromDate.getTime())/(60*60*24*1000);
+    var dates = [];
+    var days = [];
+    this.body.push(this.head2);
+
+    for(let i = 0;i <numberOfDays; i++){
+      currDate.setDate(currDate.getDate()+1);
+      var currDateStr = currDate.toISOString().slice(0,10);
+      var currDay = currDate.toString().slice(0,3);
+      var table_row = [];
+      var total_sale : number = 0;
+
+      table_row.push(currDateStr);
+      table_row.push(currDay);
+      for(let j = 0; j<id_length ;j++){
+        // console.log(date_indexed_Data[ids[j]],currDateStr,'here');
+        table_row.push(date_indexed_Data[ids[j]][currDateStr]?(date_indexed_Data[ids[j]][currDateStr]['Total_Collection_Sale']?date_indexed_Data[ids[j]][currDateStr]['Total_Collection_Sale']:0):0);
+        total_sale+=parseFloat(date_indexed_Data[ids[j]][currDateStr]?(date_indexed_Data[ids[j]][currDateStr]['Total_Collection_Sale']?date_indexed_Data[ids[j]][currDateStr]['Total_Collection_Sale']:0):0);
+        console.log(date_indexed_Data[ids[j]][currDateStr]?(date_indexed_Data[ids[j]][currDateStr]['Total_Collection_Sale']?date_indexed_Data[ids[j]][currDateStr]['Total_Collection_Sale']:0):0,total_sale,'debug');
+
+        table_row.push(parseInt(date_indexed_Data[ids[j]][currDateStr]?(date_indexed_Data[ids[j]][currDateStr]['TotalCupsDispensed']?date_indexed_Data[ids[j]][currDateStr]['TotalCupsDispensed']:0):0));
+        table_row.push(parseInt(date_indexed_Data[ids[j]][currDateStr]?(date_indexed_Data[ids[j]][currDateStr]['Total_Volume_Dispensed']?date_indexed_Data[ids[j]][currDateStr]['Total_Volume_Dispensed']:0):0));
+      }
+      table_row.push(total_sale);
+      table_row.push('');
+      table_row.push('');
+      table_row.push('');
+
+      this.body.push(table_row);
+      table_row=[];
+
+    }
+    console.log(this.head1,this.head2,this.body);
+
+
+    
+
+
+    // console.log(this.head1,this.head2,test,test1,numberOfDays,'no of days');
+    // currDate.setDate(fromDate.getDate()+i);
+    
+
+
+
+  }
 }
 
 

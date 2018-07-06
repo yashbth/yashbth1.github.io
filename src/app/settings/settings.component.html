@@ -1,3 +1,4 @@
+
 <!-- Message Failure and Success Alerts -->
 <div *ngIf = "message_success" class="alert alert-success" style="justify-content: center; text-align: center;"><span style="justify-content: center "><b>Success! </b>{{message_success}}</span></div>
 <div *ngIf = "message_failure" class="alert alert-danger" style="justify-content: center; text-align: center;"><span style="justify-content: center"><b>Warning! </b>{{message_failure}}</span></div>
@@ -165,7 +166,7 @@
     <h2 class="text-center" *ngIf = "global.admin&&tableActive">Configurations</h2>
 <!-- Configuration File table -->
         <div  class="container-fluid table-responsive-xs maxHeight" *ngIf = "global.admin&&tableActive">
-            <table id="table" class="table table-hover " >
+            <table id="table" class="table table-hover display" >
                 <thead class="thead-dark">
                     <tr>
                         <th *ngFor="let thead of config_data[1];let rowIndex = index">{{thead}} <span *ngIf = "config_data[2][rowIndex] != ''">(in {{config_data[2][rowIndex]}})</span></th>

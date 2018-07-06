@@ -39,8 +39,8 @@ $conn->close();
 
 setcookie('priv-vis','1',time() + (60), "/");
 
-header("Location: "."https://swajal.in/iiot/#/".$_COOKIE['cluster']."/".$_COOKIE['id']."/settings");
-// header("Location: "."http://localhost:4200/#/".$_COOKIE['cluster']."/".$_COOKIE['id']."/settings");
+// header("Location: "."https://swajal.in/iiot/#/".$_COOKIE['cluster']."/".$_COOKIE['id']."/settings");
+header("Location: "."http://localhost:4200/#/".$_COOKIE['cluster']."/".$_COOKIE['id']."/settings");
 
 exit;
 

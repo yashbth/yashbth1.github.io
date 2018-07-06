@@ -98,12 +98,11 @@
           <span class="heading">
               <h3>
                   Id : {{id}}
-                  <i class="fas fa-download" (click)="print(id)"></i>
                 </h3>
               </span>
               <div id="{{id}}">
                 <!-- Table -->
-                <table class="table table-striped text-center" >
+                <table class="table table-striped text-center" id = "{{id}}dt">
                   <thead class="thead-dark">
                     <tr>
                       <th>Date</th>
@@ -123,38 +122,21 @@
 </div>
 <!-- Special Table for selected parameters -->
 <div class="col-sm-12 table" *ngIf="specialtableActive">
-  <i class="fas fa-download" (click)="print('specialTable')"></i>
       <div id="specialTable">
-        <table class="table table-striped text-center" >
+        <table class="table table-striped text-center" id = "table" >
           <!-- Thead for main table -->
           <thead class="thead-dark">
-            <tr>
-              <th>Date</th>
-              <th>Day</th>
-              <th *ngFor="let id of selectedIds">
-                  {{id}}
-                  <table width="100%">
-                    <tr>
-                      <th>Sale</th><th>300ml Glass Sold</th><th>1l Bottle Sold</th>
-                    </tr>
-                  </table>
-              </th>
-              <th>Total Sale</th><th>Deposit</th><th>Cash In Hand</th><th>Remark</th>
-            </tr>
+            <!-- <tr>
+              <th colspan="2">DeviceID:</th>
+              <th *ngFor = "let id of selectedIds" colspan="3">{{id}}</th>
+              <th colspan="4"></th>
+            </tr> -->
+            <tr><th *ngFor = "let head of head1">{{head}}</th></tr>
           </thead>
           <!-- Body of main table -->
           <tbody >
-            <tr *ngFor="let info of tableData[selectedIds[0]];let rowIndex=index">
-              <td>{{info['date']}}</td>
-              <td>{{info['date']| date:'EEEE'}}</td>
-              <td *ngFor="let id of selectedIds;">
-                <table width="100%">
-                  <tr>
-                    <td>{{tableData[id][rowIndex]['Total_Collection_Sale']}}</td><td>{{tableData[id][rowIndex]['TotalCupsDispensed']?tableData[id][rowIndex]['TotalupsDispensed']:0}}</td><td>{{tableData[id][rowIndex]['Total_Volume_Dispensed']}}</td>
-                  </tr>
-                </table>
-              </td>
-              <td>{{getSale(rowIndex)}}</td>
+            <tr *ngFor = "let row of body" id = "{{row[0]}}">
+              <td *ngFor = "let info of row" >{{info}}</td>
             </tr>
           </tbody>
         </table>

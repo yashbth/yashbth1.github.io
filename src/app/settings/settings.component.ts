@@ -45,9 +45,9 @@ export class SettingsComponent implements OnInit {
   tableActive : boolean = false;
 
 
-  // url = "http://localhost/~yashbahetiiitk/swajal_dashboard/src/assets/Php";
+  url = "http://localhost/~yashbahetiiitk/swajal_dashboard/src/assets/Php";
   // url = "http://localhost:8000/assets/Php";
-  url = "/iiot/assets/Php"
+  // url = "/iiot/assets/Php"
   
   
   constructor(private Cluster: Cluster, private cookieService:CookieService,private global : GlobalService,private service : FetchWaterDispenseDataService,@Inject(SESSION_STORAGE) private storage : StorageService) { }
@@ -68,7 +68,11 @@ export class SettingsComponent implements OnInit {
     setTimeout(()=>{
       this.tableActive=true;
       $(document).ready(function(){
-        $('#table').DataTable()
+        $('#table').DataTable({
+          scrollX: true,
+          dom: 'Bfrtip',
+          buttons: ['csv', 'excel','print']
+        });
       })
     },1000)
     // All the properties which are present in Cluster file are first created as obj then pushed in selectedparameter [0] array

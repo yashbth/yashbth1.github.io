@@ -18,9 +18,9 @@ const httpOptions = {
 })
 export class FetchWaterDispenseDataService {
 
-  // private url = 'http://localhost/~yashbahetiiitk/swajal_dashboard/src/assets/Php/';
+  private url = 'http://localhost/~yashbahetiiitk/swajal_dashboard/src/assets/Php/';
   // private url = 'http://localhost:8000/assets/Php/';
-  private url = '/iiot/assets/Php/';
+  // private url = '/iiot/assets/Php/';
   
   cluster: string;
   id : string;

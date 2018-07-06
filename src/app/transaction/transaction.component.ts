@@ -93,7 +93,12 @@ export class TransactionComponent implements OnInit {
     this.service.getData_trans_params(this.id,this.table,this.filename,this.property1,this.fromDate,this.toDate).subscribe(info=>this.info=info,(err)=>console.error(err),()=>{      
       // if( !this.info || Object.keys(this.info).length==0 ){
       //   this.router.navigateByUrl('/'+this.cluster+'/'+this.id +'/error')              
-        $('#table').DataTable();
+        $('#table').DataTable({
+          retrieve: true,
+          "ordering": false,
+          dom: 'Bfrtip',
+          buttons: ['csv', 'excel','print']
+        });
         // }
         this.info.forEach(element => {
           if(element.CardNo=='2017000000'){
@@ -122,7 +127,12 @@ export class TransactionComponent implements OnInit {
       // Show and hide of table data
       this.dataAvailable1 =true;
       $(document).ready(function(){
-        $('#table').DataTable()
+        $('#table').DataTable({
+          retrieve: true,
+          "ordering": false,
+          dom: 'Bfrtip',
+          buttons: ['csv', 'excel','print']
+        })
         $('.paginate_button').css({"padding":"10px","border":"none"});
         $('.fas').css({"padding-left":"10px"});
       })
